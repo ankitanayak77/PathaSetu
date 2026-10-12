@@ -181,7 +181,7 @@ try {
     await fs.writeFile(SCREENSHOT, Buffer.from(screenshot.data, 'base64'));
   } catch (error) { result.screenshotError = error.message; }
   add('no uncaught page exceptions or console errors', pageErrors.length === 0, pageErrors.slice(0, 3).join(' | ') || '0 browser page errors');
-  result.browser = { version: (await fetch(`http://${HOST}:${remotePort}/json/version`).then((r) => r.json()).catch(() => ({})).Browser) || 'unknown', errors: pageErrors, screenshot: SCREENSHOT };
+  result.browser = { version: ((await fetch(`http://${HOST}:${remotePort}/json/version`).then((r) => r.json()).catch(() => ({}))).Browser) || 'unknown', errors: pageErrors, screenshot: SCREENSHOT };
 } catch (error) {
   if (error.browserBlocked || String(error.message).includes('ERR_BLOCKED_BY_ADMINISTRATOR')) {
     addBlocked('Chromium E2E journey', error.message);
