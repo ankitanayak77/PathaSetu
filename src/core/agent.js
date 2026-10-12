@@ -30,6 +30,40 @@ export function appendTrace(state, event) {
   if (state.trace.length > MAX_TRACE) state.trace.splice(0, state.trace.length - MAX_TRACE);
 }
 
+// A provider that keeps failing would otherwise add one trace line per retry and push every useful decision out of the
+// 200-event window. Repeats of the same failure for the same queue entry update one line instead.
+function appendFailureTrace(state, event) {
+  const last = state.trace.at(-1);
+  if (last && last.type === event.type && last.queueId === event.queueId) {
+    last.attempts = event.attempts;
+    last.at = new Date().toISOString();
+    last.repeats = (last.repeats ?? 1) + 1;
+    if (event.details !== undefined) last.details = event.details;
+    return;
+  }
+  appendTrace(state, event);
+}
+
+// Repairs references that no longer exist in the current content pack. Never guesses an answer.
+export function reconcileState(state, pack) {
+  const ids = new Set(pack.items.map((item) => item.id));
+  let changed = false;
+  if (pack.items.length && !ids.has(state.learner.currentItemId)) {
+    const prior = state.learner.currentItemId;
+    state.learner.currentItemId = pack.items[0].id;
+    appendTrace(state, { type: 'content_mismatch_recovered', previousItemId: prior, nextItemId: pack.items[0].id });
+    changed = true;
+  }
+  const next = state.learner.nextRecommendedItemId;
+  if (next && !ids.has(next)) {
+    state.learner.nextRecommendedItemId = null;
+    appendTrace(state, { type: 'recommendation_cleared', previousItemId: next, reason: 'The recommended question is not in the current content pack.' });
+    changed = true;
+  }
+  if (changed) state.lastUpdated = new Date().toISOString();
+  return changed;
+}
+
 export function chooseNextItem(state, pack, excludeId = null, focusConceptId = null) {
   const usable = pack.items;
   if (!usable.length) return null;
@@ -48,6 +82,11 @@ export function submitAnswer({ state, pack, itemId, optionId, explanation, onlin
   if (!item) throw new Error('question_not_found');
   if (!item.options.some((option) => option.id === optionId)) throw new Error('option_not_found');
   if (state.queue.length >= MAX_QUEUE) throw new Error('recheck_queue_full');
+  const lastAnswer = state.answers.at(-1);
+  if (lastAnswer && lastAnswer.itemId === itemId && state.learner.currentItemId === itemId && state.learner.nextRecommendedItemId && state.learner.nextRecommendedItemId !== itemId) {
+    // The learner has already answered this question and has not continued yet (for example a double tap).
+    throw new Error('already_answered_awaiting_continue');
+  }
   const cleanExplanation = String(explanation ?? '').trim().slice(0, 1000);
   const proposal = proposeDiagnosis({ item, optionId, explanation: cleanExplanation });
   const checked = validateDiagnosis(proposal, item);
@@ -86,7 +125,7 @@ export function recordRecheckDeferred({ state, queueId, reason = 'provider_unava
   entry.lastAttemptAt = now;
   entry.lastFailure = String(reason).slice(0, 120);
   state.lastUpdated = now;
-  appendTrace(state, { type: 'recheck_deferred', itemId: entry.itemId, queueId, attempts: entry.attempts, reason: 'provider_unavailable_or_invalid', details: entry.lastFailure });
+  appendFailureTrace(state, { type: 'recheck_deferred', itemId: entry.itemId, queueId, attempts: entry.attempts, reason: 'provider_unavailable_or_invalid', details: entry.lastFailure });
   return { recorded: true, entry };
 }
 
@@ -113,7 +152,7 @@ export function recheckQueued({ state, pack, queueId, online = true, diagnosisOv
     queueItem.lastAttemptAt = new Date().toISOString();
     queueItem.lastFailure = checked.reason;
     state.lastUpdated = queueItem.lastAttemptAt;
-    appendTrace(state, { type: 'recheck_rejected', itemId: item.id, reason: checked.reason, queueId, attempts: queueItem.attempts });
+    appendFailureTrace(state, { type: 'recheck_rejected', itemId: item.id, reason: checked.reason, queueId, attempts: queueItem.attempts });
     return { state, drained: false, reason: checked.reason };
   }
   const prior = answer.diagnosis;
