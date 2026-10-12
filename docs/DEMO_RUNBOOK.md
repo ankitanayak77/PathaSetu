@@ -21,6 +21,18 @@ If showing draft content from a production-mode deployment, set both `PATHASETU_
 
 Keep the default mock unless a real call is needed. If using Groq, configure `PATHASETU_MODEL_PROVIDER=groq`, `GROQ_API_KEY`, `GROQ_MODEL=openai/gpt-oss-20b` and `PATHASETU_DEMO_ACCESS_CODE` in the server process environment. Review current data-retention controls first. Run `npm run smoke` with synthetic samples only. Do not expose the key to the browser, and do not interpret a successful smoke call as model accuracy evidence.
 
-## Known test limitation in this workspace
+## Verifying the build
 
-`npm test` passes and `npm run check` passes here. `npm run capture` passes its HTTP/API checks, but this managed environment blocks the Chromium local-URL navigation with `ERR_BLOCKED_BY_ADMINISTRATOR`. Run `npm run capture` from the team's development machine, use its installed Chromium/Chrome by setting `CHROME_PATH` if needed, and save the generated evidence JSON. This is not a reason to skip the phone protocol in `PHONE_TEST_PLAN.md`.
+```bash
+npm ci
+npm test            # unit and static tests
+npm run check       # syntax checks
+CHROME_PATH=/path/to/chrome npm run capture   # server/API checks and one browser journey
+CHROME_PATH=/path/to/chrome npm run e2e       # browser regression suite
+```
+
+`CHROME_PATH` must point at a Chrome or Chromium binary on the machine running the tests. Chromium navigation to local URLs was blocked by policy in an earlier managed environment; if your machine blocks it too, record the exact error and mark the browser checks BLOCKED rather than passed. Browser results do not replace the physical-phone protocol in `PHONE_TEST_PLAN.md`.
+
+## Bridge Practice in the demo
+
+Offline-capable and local only: open a question, find the Bridge Practice card, choose a term pair, read the feedback, reveal the source mapping, and open the decision trace to show the recorded attempt. Every mapping is `UNREVIEWED_DRAFT`; say so, and do not describe the content as teacher-approved.

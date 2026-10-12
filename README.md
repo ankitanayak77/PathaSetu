@@ -4,19 +4,19 @@ Pathasetu is an offline-first, agentic science-learning prototype for an Odia-me
 
 ## Current status
 
-- **Implemented:** mobile-first web shell, Electricity demo pack, bounded option-linked mock, diagnosis validator, deterministic planner/state transitions, IndexedDB persistence, draft-per-question storage, feedback-first post-answer view, explicit continue-to-next action, queue/re-check path, local trace export, app-shell service worker.
-- **Unit-tested:** current suite is 40/40 passing, including content publication gates, diagnosis validation, queue/re-check behavior, provider fake-server behavior, protected API checks, storage fallback, and static UI/service-worker checks.
-- **Browser-tested:** not verified in this managed environment. `npm run capture` checks the HTTP/API behavior and attempts a Chromium E2E path; local navigation was blocked by environment policy. Run it on your development machine and inspect the freshly written `evidence/capture-latest.json`. No physical-device results are included by default.
-- **Implemented but not live-tested:** optional Groq adapter using structured JSON output, per-question allowed-ID limits, bounded timeout and safe errors. The default remains the mock provider. No Groq call has been made from this workspace.
-- **Not implemented:** model evaluation harness UI, deployment hardening, teacher review workflow UI, multi-learner profiles.
-- **Not validated:** Odia wording, subject content by a qualified teacher, actual Odia language understanding, real-device behavior, offline behavior on an iPhone/Samsung device, learning impact.
+Details, evidence and the claim ledger are in `docs/BUILD_STATUS.md`. Summary of the 12 Oct 2026 verification (headless Chromium 153, Node 22, not a phone):
 
-All seed items are `UNREVIEWED_DRAFT`. The current UI deliberately labels them as draft and labels diagnosis results as deterministic mock proposals. The option-linked mock does not interpret free-text Odia and never confirms mastery. Do not use this pack for real learners until a qualified subject/Odia reviewer has reviewed and approved it.
+- **Implemented and browser-tested:** mobile-first shell, Electricity demo pack, option-linked mock, diagnosis validator, deterministic planner, IndexedDB state and per-question drafts, offline queue with reachability probing and bounded re-check requests, feedback-first flow with explicit continue, read-only second tab, service-worker offline shell and update notice, decision trace, and **Bridge Practice** (local matching exercise built only from the pack's bridge fields).
+- **Verified:** `npm test` 66/66, `npm run capture` 19 passed / 0 failed, `npm run e2e` 53 passed / 0 failed (14 scenarios), `npm run check` exit 0.
+- **Implemented but never run live:** the optional Groq adapter (tested only against local fake responses). The default is the labelled mock.
+- **Not done or not validated:** physical-phone tests, teacher review of content and Odia wording, language understanding by any model, learning impact, deployment hardening.
+
+All items and Odia text are `UNREVIEWED_DRAFT`. The mock does not interpret free text and never confirms mastery. Do not use this pack with real learners before a qualified reviewer approves it.
 
 ## Requirements
 
-- Node.js 20 or later; no npm dependencies are needed for the core suite.
-- Chromium is needed only for `npm run capture`.
+- Node.js 20 or later; no npm dependencies.
+- A Chrome or Chromium binary for `npm run capture`, `npm run e2e` and `scripts/capture-screens.mjs`, supplied through `CHROME_PATH`.
 
 ## Run
 
@@ -33,7 +33,16 @@ Open `http://127.0.0.1:4173`. The app saves the pack and learning state locally 
 
 ## Commands and evidence
 
-`npm test` runs the Node test suite, including local fake-server tests for the Groq adapter. `npm run capture` starts the server, checks HTTP/API restrictions, then attempts a bounded Chromium E2E journey. It does not replace physical-phone tests. The live provider smoke test is `npm run smoke` and makes 13 requests using synthetic text only; it requires an explicitly configured Groq key and access code. That smoke test checks response shape, not accuracy or Odia proficiency. The model-evaluation claim must remain unvalidated until an annotated set has been independently reviewed.
+| Command | Purpose |
+| --- | --- |
+| `npm test` | Unit and static tests (core, validator, content gates, queue, Groq fake server, API guards, service-worker and UI wiring, Bridge Practice) |
+| `npm run check` | Syntax checks |
+| `CHROME_PATH=... npm run capture` | HTTP/API guard checks and one browser journey; writes `evidence/capture-latest.json` |
+| `CHROME_PATH=... npm run e2e` | Browser regression suite (offline reload, cold start, double submit, focus, stale content, two tabs, service-worker update, provider failures, draft reload, Bridge Practice); writes `evidence/browser-regression-latest.json` |
+| `CHROME_PATH=... node scripts/capture-screens.mjs` | Phone-sized screenshots into `evidence/iteration2/screenshots/` |
+| `npm run smoke` | Live provider smoke test with 13 synthetic cases; needs an explicit Groq key; not run |
+
+Saved results: `evidence/iteration2/baseline/` (the received code) and `evidence/iteration2/final/` (this iteration), with exit codes. Browser results do not replace the physical-phone protocol in `docs/PHONE_TEST_PLAN.md`.
 
 ## Security and privacy notes
 
@@ -45,7 +54,7 @@ Open `http://127.0.0.1:4173`. The app saves the pack and learning state locally 
 
 ## Provenance
 
-This workspace was generated with AI assistance. Record the real dates, tools, collaborators and permissions for any later commit or competition submission. Do not backdate commits or make inaccurate claims about when code was written.
+This workspace was generated with AI assistance: an earlier session produced the archive that the first commit records, and iteration 2 (12 Oct 2026, Claude) added the browser suite, the fixes in `docs/BUILD_STATUS.md` and Bridge Practice. The work predates the published competition build window and relied on a verbal organizer permission that is not confirmed in writing. Record the real dates, tools, collaborators and permissions for any submission. Do not backdate commits or misstate when or how code was written.
 
 ## Optional live Groq check (synthetic cases only)
 

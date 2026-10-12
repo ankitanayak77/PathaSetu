@@ -1,0 +1,414 @@
+{
+  "startedAt": "2026-10-12T18:16:55.733Z",
+  "checks": [
+    {
+      "id": "A1",
+      "title": "initial question loads with 4 options",
+      "passed": true,
+      "detail": "QUESTION EL01 · CLOSED CIRCUIT"
+    },
+    {
+      "id": "A2",
+      "title": "provider label says MOCK",
+      "passed": true,
+      "detail": "provider label = \"MOCK PROVIDER · DEMO RULES · NO LIVE AI\""
+    },
+    {
+      "id": "A3",
+      "title": "draft-content labels are visible (badge and prototype warning)",
+      "passed": true,
+      "detail": "badge=\"UNREVIEWED DRAFT\""
+    },
+    {
+      "id": "A4",
+      "title": "a first visit does not announce an \"App update ready\" notice",
+      "passed": true,
+      "detail": "!\nPrototype content · not for real learners\nThe Electricity questions and Odia bridge fields are unr"
+    },
+    {
+      "id": "B1",
+      "title": "answer shows provisional feedback and remediation while the current question stays",
+      "passed": true,
+      "detail": "question=QUESTION EL01 · CLOSED CIRCUIT"
+    },
+    {
+      "id": "B2",
+      "title": "recommendation is offered but not applied automatically",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "id": "B3",
+      "title": "applying the recommendation explicitly changes the question",
+      "passed": true,
+      "detail": "QUESTION EL02 · CLOSED CIRCUIT"
+    },
+    {
+      "id": "C1",
+      "title": "one answer and one queue entry despite a double submit",
+      "passed": true,
+      "detail": "answers=1; queue=1; persisted answers=1; persisted queue=1"
+    },
+    {
+      "id": "C2",
+      "title": "one learning session is consumed",
+      "passed": true,
+      "detail": "10 learning sessions left -> 9 learning sessions left"
+    },
+    {
+      "id": "D1",
+      "title": "queue drains after reconnect with no manual action",
+      "passed": true,
+      "detail": "✓\nRe-check processed · MOCK\n1 queued re-check processed. The result remains provisional; n"
+    },
+    {
+      "id": "D2",
+      "title": "typed draft and selected option stay on the same question",
+      "passed": true,
+      "detail": "question=QUESTION EL03 · ENERGY TRANSFER; option=C; text=\"Draft on EL03 must stay with EL03.\""
+    },
+    {
+      "id": "D3",
+      "title": "focus and caret survive the reconnect re-render",
+      "passed": true,
+      "detail": "focus=\"explanation-input\"; caret=5"
+    },
+    {
+      "id": "D4",
+      "title": "the draft is never stored under another question",
+      "passed": true,
+      "detail": "stored draft ids=EL01,EL02,EL03"
+    },
+    {
+      "id": "E1",
+      "title": "offline reload serves the app shell, content and saved answers",
+      "passed": true,
+      "detail": "answers=1; queue=1; connection=OFFLINE · local mode"
+    },
+    {
+      "id": "E2",
+      "title": "the connection indicator says offline while offline",
+      "passed": true,
+      "detail": "OFFLINE · local mode"
+    },
+    {
+      "id": "E3",
+      "title": "queue drains after reconnect following a reload",
+      "passed": true,
+      "detail": "✓\nRe-check processed · MOCK\n1 queued re-check processed. The result remains prov"
+    },
+    {
+      "id": "E4",
+      "title": "a queue left by a closed tab is recovered on a cold start without a tap",
+      "passed": true,
+      "detail": "from EL02; answers=2; queue=0"
+    },
+    {
+      "id": "L1",
+      "title": "the draft is stored in IndexedDB under its own question",
+      "passed": true,
+      "detail": "stored={\"optionId\":\"C\",\"explanation\":\"A half-written explanation that must survive a reload.\",\"updatedAt\":\"2026-10-12T18:17:08."
+    },
+    {
+      "id": "L2",
+      "title": "after a full reload the draft text and selected option come back on the same question",
+      "passed": true,
+      "detail": "option=C; text=\"A half-written explanation that must survive a reload.\""
+    },
+    {
+      "id": "F1",
+      "title": "a missing current item is replaced and stale queue entries are dropped",
+      "passed": true,
+      "detail": "question=QUESTION EL01 · CLOSED CIRCUIT; queue=0"
+    },
+    {
+      "id": "F2",
+      "title": "recovery is recorded in the trace",
+      "passed": true,
+      "detail": "plan_selected,content_mismatch_recovered,recommendation_cleared,queue_dropped,queue_dropped"
+    },
+    {
+      "id": "F3",
+      "title": "the recommendation never points at a missing item",
+      "passed": true,
+      "detail": "null"
+    },
+    {
+      "id": "F4",
+      "title": "recovery causes no page exceptions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "id": "G1",
+      "title": "the second tab is read-only with a persistent banner and disabled controls",
+      "passed": true,
+      "detail": "!\nRead-only session\nAnother Pathasetu tab owns the writable session. This tab will not sav"
+    },
+    {
+      "id": "G2",
+      "title": "closing the read-only tab does not overwrite the writer's progress",
+      "passed": true,
+      "detail": "persisted answers=1"
+    },
+    {
+      "id": "G3",
+      "title": "the writer tab still has its answer after a reload",
+      "passed": true,
+      "detail": "answers=1"
+    },
+    {
+      "id": "G5",
+      "title": "the read-only tab sends no re-check request",
+      "passed": true,
+      "detail": "tab B re-check requests=0"
+    },
+    {
+      "id": "G7",
+      "title": "the read-only state stays visible (a transient notice cannot hide it)",
+      "passed": true,
+      "detail": "banner visible=true"
+    },
+    {
+      "id": "G6",
+      "title": "the queued answer is re-checked exactly once across both tabs",
+      "passed": true,
+      "detail": "total re-check POSTs=1; persisted answers=1"
+    },
+    {
+      "id": "K1",
+      "title": "three options, an everyday Odia prompt, the UNREVIEWED DRAFT label and an offline tag",
+      "passed": true,
+      "detail": "options=3; badge=\"UNREVIEWED DRAFT\""
+    },
+    {
+      "id": "K2",
+      "title": "the answer is not shown in the bridge card while the exercise is unanswered",
+      "passed": true,
+      "detail": "Everyday Odia ତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ। School Odia te"
+    },
+    {
+      "id": "K3",
+      "title": "an option can be chosen from the keyboard and gives immediate feedback; focus stays on it",
+      "passed": true,
+      "detail": "feedback=\"Matches the pack’s draft mapping. The mapping itself has not\"; focus=B1"
+    },
+    {
+      "id": "K4",
+      "title": "exactly one of the three options is correct and each choice gets immediate feedback",
+      "passed": true,
+      "detail": "correct,wrong,wrong"
+    },
+    {
+      "id": "K5",
+      "title": "after an attempt the full mapping appears in the bridge card",
+      "passed": true,
+      "detail": "Everyday Odia ତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ। School Odia te"
+    },
+    {
+      "id": "K6",
+      "title": "revealing shows the source mapping with its UNREVIEWED_DRAFT status",
+      "passed": true,
+      "detail": "Everyday Odia ତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ। School Odia te"
+    },
+    {
+      "id": "K7",
+      "title": "three attempts and the reveal are in the persisted decision trace with network:false",
+      "passed": true,
+      "detail": "attempts=3; counter=3"
+    },
+    {
+      "id": "K8",
+      "title": "the trace panel shows the bridge attempts to the learner",
+      "passed": true,
+      "detail": "06:17:20 PM | bridge mapping revealed | "
+    },
+    {
+      "id": "K9",
+      "title": "the whole interaction made no API request (the background reachability probe is excluded)",
+      "passed": true,
+      "detail": "non-probe API requests=0; offline=true"
+    },
+    {
+      "id": "K10",
+      "title": "Try another builds a fresh, different exercise deterministically from the saved attempt count",
+      "passed": true,
+      "detail": "options changed and the reveal is closed"
+    },
+    {
+      "id": "G4",
+      "title": "without Web Locks the app shows a persistent single-tab warning",
+      "passed": true,
+      "detail": "!\nSingle-tab protection unavailable\nThis browser does not provide Web Locks here"
+    },
+    {
+      "id": "H1",
+      "title": "no /api/ response is stored in any cache",
+      "passed": true,
+      "detail": "11 cached; api entries=0"
+    },
+    {
+      "id": "I1",
+      "title": "an updated service worker announces the update",
+      "passed": true,
+      "detail": "✓\nApp update ready\nThe refreshed application is available. Reload once to apply "
+    },
+    {
+      "id": "I2",
+      "title": "one reload runs the new code (not stranded on the old shell)",
+      "passed": true,
+      "detail": "before=null; after=next"
+    },
+    {
+      "id": "J1",
+      "title": "provider HTTP 500: answer kept, entry stays queued with a counted attempt",
+      "passed": true,
+      "detail": "queue=1; attempts=1"
+    },
+    {
+      "id": "J1b",
+      "title": "provider HTTP 500: the entry drains once the provider works again",
+      "passed": true,
+      "detail": "queue after recovery=0"
+    },
+    {
+      "id": "J2",
+      "title": "invalid JSON: answer kept, entry stays queued with a counted attempt",
+      "passed": true,
+      "detail": "queue=1; attempts=1"
+    },
+    {
+      "id": "J2b",
+      "title": "invalid JSON: the entry drains once the provider works again",
+      "passed": true,
+      "detail": "queue after recovery=0"
+    },
+    {
+      "id": "J3",
+      "title": "invalid diagnosis: answer kept, entry stays queued with a counted attempt",
+      "passed": true,
+      "detail": "queue=1; attempts=1"
+    },
+    {
+      "id": "J3b",
+      "title": "invalid diagnosis: the entry drains once the provider works again",
+      "passed": true,
+      "detail": "queue after recovery=0"
+    },
+    {
+      "id": "J4",
+      "title": "a hung provider request times out: the entry stays queued with a counted attempt",
+      "passed": true,
+      "detail": "queue=1; attempts=1 after up to 16 s"
+    },
+    {
+      "id": "J4b",
+      "title": "after a hang the queue drains once the provider works again",
+      "passed": true,
+      "detail": "queue after recovery=0"
+    },
+    {
+      "id": "J5",
+      "title": "no uncaught exceptions during failure handling",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "id": "Z1",
+      "title": "no uncaught exceptions or console errors across the verified journeys",
+      "passed": true,
+      "detail": "0 errors"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "A",
+      "title": "initial load, labels, first visit",
+      "ms": 2400,
+      "completed": true
+    },
+    {
+      "id": "B",
+      "title": "answer, feedback, explicit continue",
+      "ms": 1407,
+      "completed": true
+    },
+    {
+      "id": "C",
+      "title": "offline answer is queued exactly once",
+      "ms": 2158,
+      "completed": true
+    },
+    {
+      "id": "D",
+      "title": "reconnect drains the queue without disturbing a draft",
+      "ms": 2288,
+      "completed": true
+    },
+    {
+      "id": "E",
+      "title": "reload offline, cold start, queue survives",
+      "ms": 3518,
+      "completed": true
+    },
+    {
+      "id": "L",
+      "title": "an unsent draft survives a reload",
+      "ms": 2066,
+      "completed": true
+    },
+    {
+      "id": "F",
+      "title": "missing or stale content cannot strand the learner",
+      "ms": 1230,
+      "completed": true
+    },
+    {
+      "id": "G",
+      "title": "two tabs: read-only second tab, no lost update",
+      "ms": 2976,
+      "completed": true
+    },
+    {
+      "id": "G3",
+      "title": "two tabs: a read-only tab never processes the queue",
+      "ms": 5659,
+      "completed": true
+    },
+    {
+      "id": "K",
+      "title": "Bridge Practice works offline, by keyboard, and is traced",
+      "ms": 1947,
+      "completed": true
+    },
+    {
+      "id": "G2",
+      "title": "no Web Locks: a visible warning",
+      "ms": 1087,
+      "completed": true
+    },
+    {
+      "id": "H",
+      "title": "service worker: shell offline, API never cached",
+      "ms": 1261,
+      "completed": true
+    },
+    {
+      "id": "I",
+      "title": "service worker update is announced and applied",
+      "ms": 3561,
+      "completed": true
+    },
+    {
+      "id": "J",
+      "title": "provider failures leave state consistent and entries retryable",
+      "ms": 11426,
+      "completed": true
+    }
+  ],
+  "limitation": "Headless Chromium on one machine. Not a physical-phone test, not Samsung Internet, not iPhone Safari, not educational validation.",
+  "browser": "HeadlessChrome/153.0.8010.0",
+  "completedAt": "2026-10-12T18:17:38.720Z",
+  "passCount": 53,
+  "failCount": 0
+}

@@ -1,0 +1,41 @@
+{
+  "startedAt": "2026-10-12T17:53:39.404Z",
+  "checks": [
+    {
+      "id": "G5",
+      "title": "the read-only tab sends no re-check request",
+      "passed": false,
+      "detail": "tab B re-check requests=1"
+    },
+    {
+      "id": "G7",
+      "title": "the read-only state stays visible (a transient notice cannot hide it)",
+      "passed": false,
+      "detail": "banner visible=false"
+    },
+    {
+      "id": "G6",
+      "title": "the queued answer is re-checked exactly once across both tabs",
+      "passed": false,
+      "detail": "total re-check POSTs=2; persisted answers=1"
+    },
+    {
+      "id": "Z1",
+      "title": "no uncaught exceptions or console errors across the verified journeys",
+      "passed": true,
+      "detail": "0 errors"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "G3",
+      "title": "two tabs: a read-only tab never processes the queue",
+      "ms": 5779,
+      "completed": true
+    }
+  ],
+  "limitation": "Headless Chromium on one machine. Not a physical-phone test, not Samsung Internet, not iPhone Safari, not educational validation.",
+  "completedAt": "2026-10-12T17:53:45.185Z",
+  "passCount": 1,
+  "failCount": 3
+}

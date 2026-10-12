@@ -1,0 +1,95 @@
+{
+  "startedAt": "2026-10-12T17:52:48.825Z",
+  "checks": [
+    {
+      "id": "F1",
+      "title": "a missing current item is replaced and stale queue entries are dropped",
+      "passed": true,
+      "detail": "question=QUESTION EL01 · CLOSED CIRCUIT; queue=0"
+    },
+    {
+      "id": "F2",
+      "title": "recovery is recorded in the trace",
+      "passed": true,
+      "detail": "plan_selected,content_mismatch_recovered,queue_dropped,queue_dropped"
+    },
+    {
+      "id": "F3",
+      "title": "the recommendation never points at a missing item",
+      "passed": false,
+      "detail": "EL98"
+    },
+    {
+      "id": "F4",
+      "title": "recovery causes no page exceptions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "id": "G1",
+      "title": "the second tab is read-only with a clear message",
+      "passed": true,
+      "detail": "!\nSession already open\nThis tab is read-only because another tab owns the writable session"
+    },
+    {
+      "id": "G2",
+      "title": "closing the read-only tab does not overwrite the writer's progress",
+      "passed": true,
+      "detail": "persisted answers=1"
+    },
+    {
+      "id": "G3",
+      "title": "the writer tab still has its answer after a reload",
+      "passed": true,
+      "detail": "answers=1"
+    },
+    {
+      "id": "G4",
+      "title": "without Web Locks the app warns about the single-tab limitation",
+      "passed": true,
+      "detail": "!\nSingle-tab protection unavailable\nThis browser does not provide Web Locks here"
+    },
+    {
+      "id": "H1",
+      "title": "no /api/ response is stored in any cache",
+      "passed": true,
+      "detail": "10 cached; api entries=0"
+    },
+    {
+      "id": "Z1",
+      "title": "no uncaught exceptions or console errors across the verified journeys",
+      "passed": true,
+      "detail": "0 errors"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "F",
+      "title": "missing or stale content cannot strand the learner",
+      "ms": 1490,
+      "completed": true
+    },
+    {
+      "id": "G",
+      "title": "two tabs: read-only second tab, no lost update",
+      "ms": 2896,
+      "completed": true
+    },
+    {
+      "id": "G2",
+      "title": "no Web Locks: a visible warning",
+      "ms": 1045,
+      "completed": true
+    },
+    {
+      "id": "H",
+      "title": "service worker: shell offline, API never cached",
+      "ms": 1206,
+      "completed": true
+    }
+  ],
+  "limitation": "Headless Chromium on one machine. Not a physical-phone test, not Samsung Internet, not iPhone Safari, not educational validation.",
+  "completedAt": "2026-10-12T17:52:55.465Z",
+  "passCount": 9,
+  "failCount": 1
+}

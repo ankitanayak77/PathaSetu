@@ -1,0 +1,2 @@
+node v22.22.2; npm 10.9.7; 2026-10-12T18:16:48+00:00
+browser binary: /tmp/chromium (bundled headless build from @sparticuz/chromium 153.0.0)

@@ -1,0 +1,37 @@
+
+== A: initial load, labels, first visit
+PASS  A1  initial question loads with 4 options — QUESTION EL01 · CLOSED CIRCUIT
+FAIL  A2  provider label says MOCK — provider label = "DEMO RULES · NO LIVE AI"
+PASS  A3  draft-content labels are visible (badge and prototype warning) — badge="UNREVIEWED DRAFT"
+FAIL  A4  a first visit does not announce an "App update ready" notice — ✓
+App update ready
+The refreshed application is available. Reload once to apply it. Your saved learn
+
+== B: answer, feedback, explicit continue
+PASS  B1  answer shows provisional feedback and remediation while the current question stays — question=QUESTION EL01 · CLOSED CIRCUIT
+PASS  B2  recommendation is offered but not applied automatically
+PASS  B3  applying the recommendation explicitly changes the question — QUESTION EL02 · CLOSED CIRCUIT
+
+== C: offline answer is queued exactly once
+FAIL  C1  one answer and one queue entry despite a double submit — answers=2; queue=2; persisted answers=2; persisted queue=2
+FAIL  C2  one learning session is consumed — 10 learning sessions left -> 8 learning sessions left
+
+== D: reconnect drains the queue without disturbing a draft
+PASS  D1  queue drains after reconnect with no manual action — ✓
+Re-check processed · MOCK
+1 queued re-check processed. The result remains provisional; n
+PASS  D2  typed draft and selected option stay on the same question — question=QUESTION EL03 · ENERGY TRANSFER; option=C; text="Draft on EL03 must stay with EL03."
+FAIL  D3  focus and caret survive the reconnect re-render — focus=""; caret=0
+PASS  D4  the draft is never stored under another question — stored draft ids=EL01,EL02,EL03
+
+== E: reload offline, cold start, queue survives
+PASS  E1  offline reload serves the app shell, content and saved answers — answers=1; queue=1; connection=OFFLINE · local mode
+PASS  E2  the connection indicator says offline while offline — OFFLINE · local mode
+PASS  E3  queue drains after reconnect following a reload — ✓
+Re-check processed · MOCK
+1 queued re-check processed. The result remains prov
+PASS  E4  a queue left by a closed tab is recovered on a cold start without a tap — from EL02; answers=2; queue=0
+PASS  Z1  no uncaught exceptions or console errors across the verified journeys — 0 errors
+
+Browser regression: 13 passed, 5 failed; /home/claude/pw/Pathasetu_MVP/evidence/browser-regression-latest.json
+exit=1

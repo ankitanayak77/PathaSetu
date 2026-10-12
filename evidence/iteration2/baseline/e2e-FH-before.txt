@@ -1,0 +1,25 @@
+
+== F: missing or stale content cannot strand the learner
+PASS  F1  a missing current item is replaced and stale queue entries are dropped — question=QUESTION EL01 · CLOSED CIRCUIT; queue=0
+PASS  F2  recovery is recorded in the trace — plan_selected,content_mismatch_recovered,queue_dropped,queue_dropped
+FAIL  F3  the recommendation never points at a missing item — EL98
+PASS  F4  recovery causes no page exceptions
+
+== G: two tabs: read-only second tab, no lost update
+PASS  G1  the second tab is read-only with a clear message — !
+Session already open
+This tab is read-only because another tab owns the writable session
+PASS  G2  closing the read-only tab does not overwrite the writer's progress — persisted answers=1
+PASS  G3  the writer tab still has its answer after a reload — answers=1
+
+== G2: no Web Locks: a visible warning
+PASS  G4  without Web Locks the app warns about the single-tab limitation — !
+Single-tab protection unavailable
+This browser does not provide Web Locks here
+
+== H: service worker: shell offline, API never cached
+PASS  H1  no /api/ response is stored in any cache — 10 cached; api entries=0
+PASS  Z1  no uncaught exceptions or console errors across the verified journeys — 0 errors
+
+Browser regression: 9 passed, 1 failed; /home/claude/pw/Pathasetu_MVP/evidence/browser-regression-latest.json
+exit=1

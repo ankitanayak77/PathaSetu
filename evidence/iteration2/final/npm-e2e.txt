@@ -1,0 +1,99 @@
+
+> pathasetu-mvp@0.1.0 e2e
+> node scripts/browser-regression.mjs
+
+
+== A: initial load, labels, first visit
+PASS  A1  initial question loads with 4 options — QUESTION EL01 · CLOSED CIRCUIT
+PASS  A2  provider label says MOCK — provider label = "MOCK PROVIDER · DEMO RULES · NO LIVE AI"
+PASS  A3  draft-content labels are visible (badge and prototype warning) — badge="UNREVIEWED DRAFT"
+PASS  A4  a first visit does not announce an "App update ready" notice — !
+Prototype content · not for real learners
+The Electricity questions and Odia bridge fields are unr
+
+== B: answer, feedback, explicit continue
+PASS  B1  answer shows provisional feedback and remediation while the current question stays — question=QUESTION EL01 · CLOSED CIRCUIT
+PASS  B2  recommendation is offered but not applied automatically
+PASS  B3  applying the recommendation explicitly changes the question — QUESTION EL02 · CLOSED CIRCUIT
+
+== C: offline answer is queued exactly once
+PASS  C1  one answer and one queue entry despite a double submit — answers=1; queue=1; persisted answers=1; persisted queue=1
+PASS  C2  one learning session is consumed — 10 learning sessions left -> 9 learning sessions left
+
+== D: reconnect drains the queue without disturbing a draft
+PASS  D1  queue drains after reconnect with no manual action — ✓
+Re-check processed · MOCK
+1 queued re-check processed. The result remains provisional; n
+PASS  D2  typed draft and selected option stay on the same question — question=QUESTION EL03 · ENERGY TRANSFER; option=C; text="Draft on EL03 must stay with EL03."
+PASS  D3  focus and caret survive the reconnect re-render — focus="explanation-input"; caret=5
+PASS  D4  the draft is never stored under another question — stored draft ids=EL01,EL02,EL03
+
+== E: reload offline, cold start, queue survives
+PASS  E1  offline reload serves the app shell, content and saved answers — answers=1; queue=1; connection=OFFLINE · local mode
+PASS  E2  the connection indicator says offline while offline — OFFLINE · local mode
+PASS  E3  queue drains after reconnect following a reload — ✓
+Re-check processed · MOCK
+1 queued re-check processed. The result remains prov
+PASS  E4  a queue left by a closed tab is recovered on a cold start without a tap — from EL02; answers=2; queue=0
+
+== L: an unsent draft survives a reload
+PASS  L1  the draft is stored in IndexedDB under its own question — stored={"optionId":"C","explanation":"A half-written explanation that must survive a reload.","updatedAt":"2026-10-12T18:17:08.
+PASS  L2  after a full reload the draft text and selected option come back on the same question — option=C; text="A half-written explanation that must survive a reload."
+
+== F: missing or stale content cannot strand the learner
+PASS  F1  a missing current item is replaced and stale queue entries are dropped — question=QUESTION EL01 · CLOSED CIRCUIT; queue=0
+PASS  F2  recovery is recorded in the trace — plan_selected,content_mismatch_recovered,recommendation_cleared,queue_dropped,queue_dropped
+PASS  F3  the recommendation never points at a missing item — null
+PASS  F4  recovery causes no page exceptions
+
+== G: two tabs: read-only second tab, no lost update
+PASS  G1  the second tab is read-only with a persistent banner and disabled controls — !
+Read-only session
+Another Pathasetu tab owns the writable session. This tab will not sav
+PASS  G2  closing the read-only tab does not overwrite the writer's progress — persisted answers=1
+PASS  G3  the writer tab still has its answer after a reload — answers=1
+
+== G3: two tabs: a read-only tab never processes the queue
+PASS  G5  the read-only tab sends no re-check request — tab B re-check requests=0
+PASS  G7  the read-only state stays visible (a transient notice cannot hide it) — banner visible=true
+PASS  G6  the queued answer is re-checked exactly once across both tabs — total re-check POSTs=1; persisted answers=1
+
+== K: Bridge Practice works offline, by keyboard, and is traced
+PASS  K1  three options, an everyday Odia prompt, the UNREVIEWED DRAFT label and an offline tag — options=3; badge="UNREVIEWED DRAFT"
+PASS  K2  the answer is not shown in the bridge card while the exercise is unanswered — Everyday Odia ତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ। School Odia te
+PASS  K3  an option can be chosen from the keyboard and gives immediate feedback; focus stays on it — feedback="Matches the pack’s draft mapping. The mapping itself has not"; focus=B1
+PASS  K4  exactly one of the three options is correct and each choice gets immediate feedback — correct,wrong,wrong
+PASS  K5  after an attempt the full mapping appears in the bridge card — Everyday Odia ତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ। School Odia te
+PASS  K6  revealing shows the source mapping with its UNREVIEWED_DRAFT status — Everyday Odia ତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ। School Odia te
+PASS  K7  three attempts and the reveal are in the persisted decision trace with network:false — attempts=3; counter=3
+PASS  K8  the trace panel shows the bridge attempts to the learner — 06:17:20 PM | bridge mapping revealed | 
+PASS  K9  the whole interaction made no API request (the background reachability probe is excluded) — non-probe API requests=0; offline=true
+PASS  K10  Try another builds a fresh, different exercise deterministically from the saved attempt count — options changed and the reveal is closed
+
+== G2: no Web Locks: a visible warning
+PASS  G4  without Web Locks the app shows a persistent single-tab warning — !
+Single-tab protection unavailable
+This browser does not provide Web Locks here
+
+== H: service worker: shell offline, API never cached
+PASS  H1  no /api/ response is stored in any cache — 11 cached; api entries=0
+
+== I: service worker update is announced and applied
+PASS  I1  an updated service worker announces the update — ✓
+App update ready
+The refreshed application is available. Reload once to apply 
+PASS  I2  one reload runs the new code (not stranded on the old shell) — before=null; after=next
+
+== J: provider failures leave state consistent and entries retryable
+PASS  J1  provider HTTP 500: answer kept, entry stays queued with a counted attempt — queue=1; attempts=1
+PASS  J1b  provider HTTP 500: the entry drains once the provider works again — queue after recovery=0
+PASS  J2  invalid JSON: answer kept, entry stays queued with a counted attempt — queue=1; attempts=1
+PASS  J2b  invalid JSON: the entry drains once the provider works again — queue after recovery=0
+PASS  J3  invalid diagnosis: answer kept, entry stays queued with a counted attempt — queue=1; attempts=1
+PASS  J3b  invalid diagnosis: the entry drains once the provider works again — queue after recovery=0
+PASS  J4  a hung provider request times out: the entry stays queued with a counted attempt — queue=1; attempts=1 after up to 16 s
+PASS  J4b  after a hang the queue drains once the provider works again — queue after recovery=0
+PASS  J5  no uncaught exceptions during failure handling
+PASS  Z1  no uncaught exceptions or console errors across the verified journeys — 0 errors
+
+Browser regression: 53 passed, 0 failed; /home/claude/pw/Pathasetu_MVP/evidence/browser-regression-latest.json

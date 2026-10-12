@@ -1,0 +1,9 @@
+
+== G3: two tabs: a read-only tab never processes the queue
+FAIL  G5  the read-only tab sends no re-check request — tab B re-check requests=1
+FAIL  G7  the read-only state stays visible (a transient notice cannot hide it) — banner visible=false
+FAIL  G6  the queued answer is re-checked exactly once across both tabs — total re-check POSTs=2; persisted answers=1
+PASS  Z1  no uncaught exceptions or console errors across the verified journeys — 0 errors
+
+Browser regression: 1 passed, 3 failed; /home/claude/pw/Pathasetu_MVP/evidence/browser-regression-latest.json
+exit=1

@@ -1,0 +1,149 @@
+{
+  "startedAt": "2026-10-12T17:52:32.607Z",
+  "checks": [
+    {
+      "id": "A1",
+      "title": "initial question loads with 4 options",
+      "passed": true,
+      "detail": "QUESTION EL01 · CLOSED CIRCUIT"
+    },
+    {
+      "id": "A2",
+      "title": "provider label says MOCK",
+      "passed": false,
+      "detail": "provider label = \"DEMO RULES · NO LIVE AI\""
+    },
+    {
+      "id": "A3",
+      "title": "draft-content labels are visible (badge and prototype warning)",
+      "passed": true,
+      "detail": "badge=\"UNREVIEWED DRAFT\""
+    },
+    {
+      "id": "A4",
+      "title": "a first visit does not announce an \"App update ready\" notice",
+      "passed": false,
+      "detail": "✓\nApp update ready\nThe refreshed application is available. Reload once to apply it. Your saved learn"
+    },
+    {
+      "id": "B1",
+      "title": "answer shows provisional feedback and remediation while the current question stays",
+      "passed": true,
+      "detail": "question=QUESTION EL01 · CLOSED CIRCUIT"
+    },
+    {
+      "id": "B2",
+      "title": "recommendation is offered but not applied automatically",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "id": "B3",
+      "title": "applying the recommendation explicitly changes the question",
+      "passed": true,
+      "detail": "QUESTION EL02 · CLOSED CIRCUIT"
+    },
+    {
+      "id": "C1",
+      "title": "one answer and one queue entry despite a double submit",
+      "passed": false,
+      "detail": "answers=2; queue=2; persisted answers=2; persisted queue=2"
+    },
+    {
+      "id": "C2",
+      "title": "one learning session is consumed",
+      "passed": false,
+      "detail": "10 learning sessions left -> 8 learning sessions left"
+    },
+    {
+      "id": "D1",
+      "title": "queue drains after reconnect with no manual action",
+      "passed": true,
+      "detail": "✓\nRe-check processed · MOCK\n1 queued re-check processed. The result remains provisional; n"
+    },
+    {
+      "id": "D2",
+      "title": "typed draft and selected option stay on the same question",
+      "passed": true,
+      "detail": "question=QUESTION EL03 · ENERGY TRANSFER; option=C; text=\"Draft on EL03 must stay with EL03.\""
+    },
+    {
+      "id": "D3",
+      "title": "focus and caret survive the reconnect re-render",
+      "passed": false,
+      "detail": "focus=\"\"; caret=0"
+    },
+    {
+      "id": "D4",
+      "title": "the draft is never stored under another question",
+      "passed": true,
+      "detail": "stored draft ids=EL01,EL02,EL03"
+    },
+    {
+      "id": "E1",
+      "title": "offline reload serves the app shell, content and saved answers",
+      "passed": true,
+      "detail": "answers=1; queue=1; connection=OFFLINE · local mode"
+    },
+    {
+      "id": "E2",
+      "title": "the connection indicator says offline while offline",
+      "passed": true,
+      "detail": "OFFLINE · local mode"
+    },
+    {
+      "id": "E3",
+      "title": "queue drains after reconnect following a reload",
+      "passed": true,
+      "detail": "✓\nRe-check processed · MOCK\n1 queued re-check processed. The result remains prov"
+    },
+    {
+      "id": "E4",
+      "title": "a queue left by a closed tab is recovered on a cold start without a tap",
+      "passed": true,
+      "detail": "from EL02; answers=2; queue=0"
+    },
+    {
+      "id": "Z1",
+      "title": "no uncaught exceptions or console errors across the verified journeys",
+      "passed": true,
+      "detail": "0 errors"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "A",
+      "title": "initial load, labels, first visit",
+      "ms": 2153,
+      "completed": true
+    },
+    {
+      "id": "B",
+      "title": "answer, feedback, explicit continue",
+      "ms": 1197,
+      "completed": true
+    },
+    {
+      "id": "C",
+      "title": "offline answer is queued exactly once",
+      "ms": 2178,
+      "completed": true
+    },
+    {
+      "id": "D",
+      "title": "reconnect drains the queue without disturbing a draft",
+      "ms": 2208,
+      "completed": true
+    },
+    {
+      "id": "E",
+      "title": "reload offline, cold start, queue survives",
+      "ms": 3271,
+      "completed": true
+    }
+  ],
+  "limitation": "Headless Chromium on one machine. Not a physical-phone test, not Samsung Internet, not iPhone Safari, not educational validation.",
+  "completedAt": "2026-10-12T17:52:43.617Z",
+  "passCount": 13,
+  "failCount": 5
+}

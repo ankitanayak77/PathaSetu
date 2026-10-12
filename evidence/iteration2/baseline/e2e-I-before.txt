@@ -1,0 +1,10 @@
+
+== I: service worker update is announced and applied
+PASS  I1  an updated service worker announces the update — ✓
+App update ready
+The refreshed application is available. Reload once to apply 
+PASS  I2  one reload runs the new code (not stranded on the old shell) — before=null; after=next
+PASS  Z1  no uncaught exceptions or console errors across the verified journeys — 0 errors
+
+Browser regression: 3 passed, 0 failed; /home/claude/pw/Pathasetu_MVP/evidence/browser-regression-latest.json
+exit=0

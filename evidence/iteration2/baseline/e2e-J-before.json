@@ -1,0 +1,77 @@
+{
+  "startedAt": "2026-10-12T17:54:57.057Z",
+  "checks": [
+    {
+      "id": "J1",
+      "title": "provider HTTP 500: answer kept, entry stays queued with a counted attempt",
+      "passed": true,
+      "detail": "queue=1; attempts=1"
+    },
+    {
+      "id": "J1b",
+      "title": "provider HTTP 500: the entry drains once the provider works again",
+      "passed": true,
+      "detail": "queue after recovery=0"
+    },
+    {
+      "id": "J2",
+      "title": "invalid JSON: answer kept, entry stays queued with a counted attempt",
+      "passed": true,
+      "detail": "queue=1; attempts=1"
+    },
+    {
+      "id": "J2b",
+      "title": "invalid JSON: the entry drains once the provider works again",
+      "passed": true,
+      "detail": "queue after recovery=0"
+    },
+    {
+      "id": "J3",
+      "title": "invalid diagnosis: answer kept, entry stays queued with a counted attempt",
+      "passed": true,
+      "detail": "queue=1; attempts=1"
+    },
+    {
+      "id": "J3b",
+      "title": "invalid diagnosis: the entry drains once the provider works again",
+      "passed": true,
+      "detail": "queue after recovery=0"
+    },
+    {
+      "id": "J4",
+      "title": "a hung provider request times out: the entry stays queued with a counted attempt",
+      "passed": false,
+      "detail": "queue=1; attempts=0 after up to 16 s"
+    },
+    {
+      "id": "J4b",
+      "title": "after a hang the queue drains once the provider works again",
+      "passed": false,
+      "detail": "queue after recovery=1"
+    },
+    {
+      "id": "J5",
+      "title": "no uncaught exceptions during failure handling",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "id": "Z1",
+      "title": "no uncaught exceptions or console errors across the verified journeys",
+      "passed": true,
+      "detail": "0 errors"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "J",
+      "title": "provider failures leave state consistent and entries retryable",
+      "ms": 45056,
+      "completed": true
+    }
+  ],
+  "limitation": "Headless Chromium on one machine. Not a physical-phone test, not Samsung Internet, not iPhone Safari, not educational validation.",
+  "completedAt": "2026-10-12T17:55:42.114Z",
+  "passCount": 8,
+  "failCount": 2
+}

@@ -1,0 +1,35 @@
+{
+  "startedAt": "2026-10-12T17:54:48.324Z",
+  "checks": [
+    {
+      "id": "I1",
+      "title": "an updated service worker announces the update",
+      "passed": true,
+      "detail": "✓\nApp update ready\nThe refreshed application is available. Reload once to apply "
+    },
+    {
+      "id": "I2",
+      "title": "one reload runs the new code (not stranded on the old shell)",
+      "passed": true,
+      "detail": "before=null; after=next"
+    },
+    {
+      "id": "Z1",
+      "title": "no uncaught exceptions or console errors across the verified journeys",
+      "passed": true,
+      "detail": "0 errors"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "I",
+      "title": "service worker update is announced and applied",
+      "ms": 3634,
+      "completed": true
+    }
+  ],
+  "limitation": "Headless Chromium on one machine. Not a physical-phone test, not Samsung Internet, not iPhone Safari, not educational validation.",
+  "completedAt": "2026-10-12T17:54:51.960Z",
+  "passCount": 3,
+  "failCount": 0
+}
