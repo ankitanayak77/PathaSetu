@@ -41,8 +41,68 @@ test('all authored executable assets are local rather than third-party scripts',
   assert.match(css, /@media\(max-width:700px\)/);
 });
 
-test('service worker shell cache version is bumped for the revised feedback-first flow', () => {
-  assert.match(sw, /pathasetu-shell-v2/);
+test('service worker shell cache version is bumped for the revised feedback-first flow and Bridge Practice (v3)', () => {
+  assert.match(sw, /pathasetu-shell-v3/);
+  assert.doesNotMatch(sw, /pathasetu-shell-v2/);
   assert.match(app, /Review the feedback and remediation below/);
   assert.match(app, /Continue to \$\{next\.id\}/);
+});
+
+// ---- Iteration 2 static guards ------------------------------------------------------------------------------------
+function importedBrowserModules() {
+  // Every /core/*.js module reachable from the browser entry point must be in the offline shell, or the app breaks offline.
+  const seen = new Set();
+  const queue = [...app.matchAll(/from '\/core\/([a-zA-Z0-9_-]+\.js)'/g)].map((m) => m[1]);
+  while (queue.length) {
+    const file = queue.pop();
+    if (seen.has(file)) continue;
+    seen.add(file);
+    const text = read(`src/core/${file}`);
+    for (const m of text.matchAll(/from '\.\/([a-zA-Z0-9_-]+\.js)'/g)) queue.push(m[1]);
+  }
+  return [...seen].sort();
+}
+
+test('the offline shell caches every core module the browser app imports (including Bridge Practice)', () => {
+  const modules = importedBrowserModules();
+  assert.ok(modules.includes('bridge.js') && modules.includes('agent.js'));
+  const shell = sw.match(/const SHELL = \[([^\]]+)\]/)[1];
+  for (const file of modules) assert.ok(shell.includes(`'/core/${file}'`), `${file} missing from the service worker shell`);
+  for (const asset of ['/index.html', '/styles.css', '/app.js']) assert.ok(shell.includes(`'${asset}'`), `${asset} missing from the shell`);
+});
+
+test('the provider label visibly says MOCK when the mock provider is active', () => {
+  assert.match(html, /<span id="provider-label">MOCK PROVIDER/);
+  assert.match(app, /'MOCK PROVIDER · DEMO RULES · NO LIVE AI'/);
+});
+
+test('read-only tabs are blocked from writing, draining the queue and practising, and the banner is persistent', () => {
+  assert.match(app, /if \(!ui\.pack \|\| !ui\.state \|\| !ui\.writable\) return;/);
+  assert.match(app, /if \(!ui\.writable\) return; \/\/ only the writable tab may process queued work/);
+  assert.match(html, /id="writer-banner"/);
+  assert.match(app, /renderWriterBanner\(\);/);
+});
+
+test('re-check requests have a client timeout so a stalled provider cannot freeze the queue', () => {
+  assert.match(app, /const RECHECK_TIMEOUT_MS = \d+;/);
+  assert.match(app, /signal: controller\.signal/);
+  assert.match(app, /recheck_timeout/);
+});
+
+test('Bridge Practice is wired in, local-only and draft-labelled', () => {
+  assert.match(html, /id="bridge-practice-content"/);
+  assert.match(app, /from '\/core\/bridge\.js'/);
+  const start = app.indexOf('function renderBridgePractice');
+  const end = app.indexOf('function renderPlan');
+  const block = app.slice(start, end);
+  assert.doesNotMatch(block, /fetch\(/);
+  assert.match(block, /UNREVIEWED DRAFT/);
+  assert.match(block, /aria-live="polite"/);
+  assert.match(block, /aria-pressed/);
+  assert.match(css, /\.bridge-option\{[^}]*min-height:48px/);
+});
+
+test('only the first install is allowed to claim the page silently; a later controller change announces an update', () => {
+  assert.match(app, /let hadController = Boolean\(navigator\.serviceWorker\.controller\)/);
+  assert.match(app, /if \(!hadController\) \{ hadController = true; return; \}/);
 });

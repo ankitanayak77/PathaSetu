@@ -30,6 +30,7 @@
       <div class="trust-strip"><span class="draft-dot"></span><strong>Draft demo pack</strong><span>Odia wording awaits teacher review</span></div>
     </section>
     <div id="notice-region" class="notice-region" aria-live="polite"></div>
+    <div id="writer-banner" class="notice warning hidden" role="status"></div>
     <div class="layout-grid">
       <section class="learning-column" aria-label="Learning activity">
         <div class="section-heading"><div><span class="section-kicker">YOUR LEARNING PATH</span><h2>One small step</h2></div><span id="step-counter" class="step-counter">STEP 01</span></div>
@@ -49,6 +50,10 @@
           <div id="bridge-content" class="bridge-content"><div class="bridge-row"><span>Everyday Odia</span><strong>[review needed]</strong></div><div class="bridge-row"><span>School Odia term</span><strong>[review needed]</strong></div><div class="bridge-row"><span>English term</span><strong>Loading…</strong></div></div>
           <p class="bridge-footnote">Everyday Odia and school terminology must be reviewed by a qualified speaker/teacher before publication.</p>
         </section>
+        <section class="side-card bridge-practice-card" aria-labelledby="bridge-practice-title">
+          <div class="card-heading"><span class="bridge-icon" aria-hidden="true">✎</span><div><span class="section-kicker">BRIDGE PRACTICE</span><h3 id="bridge-practice-title">Match the meaning</h3></div></div>
+          <div id="bridge-practice-content" class="bridge-practice-content"><p class="bridge-disabled">Loading practice…</p></div>
+        </section>
         <section class="side-card progress-card">
           <div class="card-heading"><span class="progress-icon" aria-hidden="true">◎</span><div><span class="section-kicker">YOUR PROGRESS</span><h3>Learning state</h3></div></div>
           <div class="metric-grid"><div class="metric"><strong id="answers-count">0</strong><span>answers saved</span></div><div class="metric"><strong id="queue-count">0</strong><span>pending re-checks</span></div></div>
@@ -60,7 +65,7 @@
       <button id="trace-toggle" class="trace-toggle" type="button" aria-expanded="false" aria-controls="trace-panel"><span class="trace-toggle-left"><span class="trace-icon">⌘</span><span><strong>Agent decision trace</strong><small>See what Pathasetu did and why</small></span></span><span id="trace-chevron" class="chevron">⌄</span></button>
       <div id="trace-panel" class="trace-panel hidden"><div id="trace-list" class="trace-list"></div><button id="download-trace" class="secondary-button" type="button">Download trace JSON</button></div>
     </section>
-    <footer class="footer"><span>Pathasetu <span class="footer-dot">•</span> Built for learning that can continue offline.</span><span id="provider-label">DEMO RULES · NO LIVE AI</span></footer>
+    <footer class="footer"><span>Pathasetu <span class="footer-dot">•</span> Built for learning that can continue offline.</span><span id="provider-label">MOCK PROVIDER · DEMO RULES · NO LIVE AI</span></footer>
   </main>
   <div id="access-overlay" class="access-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="access-title"><form id="access-form" class="access-dialog"><div class="section-kicker">PRIVATE DEMO</div><h2 id="access-title">Unlock Pathasetu</h2><p>This demo endpoint is access-protected. Enter the session code provided by the team. It is not the model API key.</p><label for="access-code">Session access code</label><input id="access-code" type="password" autocomplete="current-password" required maxlength="160"><p id="access-error" class="access-error hidden" role="alert"></p><button class="primary-button" type="submit">Unlock demo <span aria-hidden="true">→</span></button></form></div>
   <script type="module" src="/app.js"></script>

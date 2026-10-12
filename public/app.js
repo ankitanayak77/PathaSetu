@@ -1,9 +1,11 @@
-import { initialState, submitAnswer, recheckQueued, appendTrace, recordRecheckDeferred } from '/core/agent.js';
+import { initialState, submitAnswer, recheckQueued, appendTrace, recordRecheckDeferred, reconcileState } from '/core/agent.js';
+import { buildBridgeExercise, gradeBridgeAnswer, recordBridgeAttempt, recordBridgeReveal } from '/core/bridge.js';
 import { createIndexedDbStorage } from '/core/storage.js';
 
 const $ = (id) => document.getElementById(id);
 const storage = createIndexedDbStorage();
-const ui = { reachable: false, probing: true, provider: 'mock', model: null, accessRequired: false, accessAuthorized: true, writerMode: 'starting', writable: true, releaseWriterLock: null, notice: null, lastResult: null, probeDelay: 2000, probeTimer: null, draftTimer: null, draining: false, traceOpen: false, pack: null, state: null, drafts: {}, loaded: false };
+const ui = { reachable: false, probing: true, provider: 'mock', model: null, accessRequired: false, accessAuthorized: true, writerMode: 'starting', writable: true, releaseWriterLock: null, notice: null, lastResult: null, probeDelay: 2000, probeTimer: null, draftTimer: null, draining: false, traceOpen: false, pack: null, state: null, drafts: {}, loaded: false, submitting: false, bridge: null };
+const RECHECK_TIMEOUT_MS = 8000;
 
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const currentItem = () => ui.pack?.items?.find((item) => item.id === ui.state?.learner?.currentItemId) ?? null;
@@ -18,7 +20,8 @@ function renderNotice() {
 }
 
 async function saveRecord() {
-  if (!ui.pack || !ui.state) return;
+  // A read-only tab must never write: it would overwrite the writer tab's newer progress.
+  if (!ui.pack || !ui.state || !ui.writable) return;
   try { await storage.save({ pack: ui.pack, state: ui.state, drafts: ui.drafts, savedAt: new Date().toISOString() }); }
   catch (error) { notice('warning', 'Local save warning', 'The browser could not confirm that progress was saved. Keep this session open and export the trace if needed.'); console.error('local_save_failed', error?.name ?? 'Error'); }
   const status = $('storage-status');
@@ -31,12 +34,31 @@ async function saveRecord() {
 
 function persistDraftFromDom() {
   const item = currentItem();
-  if (!item) return;
+  if (!item || !ui.writable) return;
   const selected = document.querySelector('input[name="answer-option"]:checked')?.value ?? ui.drafts[item.id]?.optionId ?? '';
   const text = $('explanation-input')?.value ?? ui.drafts[item.id]?.explanation ?? '';
   ui.drafts[item.id] = { optionId: selected, explanation: text.slice(0, 1000), updatedAt: new Date().toISOString() };
   if (ui.draftTimer) clearTimeout(ui.draftTimer);
   ui.draftTimer = setTimeout(() => void saveRecord(), 150);
+}
+
+function snapshotFocus(root, itemId) {
+  if (root.dataset.itemId !== itemId) return null; // never carry focus onto a different question
+  const el = document.activeElement;
+  if (!el || !root.contains(el)) return null;
+  if (el.id === 'explanation-input') return { kind: 'textarea', start: el.selectionStart, end: el.selectionEnd, direction: el.selectionDirection, scrollTop: el.scrollTop };
+  if (el.matches?.('input[name="answer-option"]')) return { kind: 'radio', value: el.value };
+  return null;
+}
+function restoreFocus(root, snap) {
+  if (!snap) return;
+  if (snap.kind === 'textarea') {
+    const area = $('explanation-input');
+    if (area && !area.disabled) { area.focus({ preventScroll: true }); try { area.setSelectionRange(snap.start, snap.end, snap.direction ?? 'none'); } catch { /* ignore */ } area.scrollTop = snap.scrollTop; }
+  } else if (snap.kind === 'radio') {
+    const radio = root.querySelector(`input[name="answer-option"][value="${CSS.escape(snap.value)}"]`);
+    if (radio && !radio.disabled) radio.focus({ preventScroll: true });
+  }
 }
 
 function renderQuestion() {
@@ -49,6 +71,7 @@ function renderQuestion() {
     $('plan-reason').textContent = 'There is no published question to schedule. Draft items are not learner-release content.';
     return;
   }
+  const focusSnap = snapshotFocus(root, item.id);
   const draft = ui.drafts[item.id] ?? { optionId: '', explanation: '' };
   const prior = answerFor(item.id);
   const recommendedId = ui.state?.learner?.nextRecommendedItemId;
@@ -80,14 +103,79 @@ function renderQuestion() {
     ui.drafts[item.id] = { optionId: selected.value, explanation, updatedAt: new Date().toISOString() };
     await doSubmit(item.id, selected.value, explanation);
   });
+  root.dataset.itemId = item.id;
+  restoreFocus(root, focusSnap);
+}
+
+function newBridgeSession(itemId) {
+  const attempt = ui.state?.learner?.bridgeAttempts?.[itemId] ?? 0;
+  return { itemId, exercise: buildBridgeExercise({ pack: ui.pack, itemId, attempt }), selectedId: null, revealed: false, focusOption: null };
+}
+function ensureBridgeSession() {
+  const item = currentItem();
+  if (!item) { ui.bridge = null; return null; }
+  if (!ui.bridge || ui.bridge.itemId !== item.id) ui.bridge = newBridgeSession(item.id);
+  return ui.bridge;
 }
 
 function renderBridge(item = currentItem()) {
   const bridge = item?.bridge;
   const root = $('bridge-content');
   if (!bridge) { root.innerHTML = `<div class="bridge-row"><span>Review state</span><strong>Awaiting reviewed content</strong></div>`; return; }
-  root.innerHTML = `<div class="bridge-row"><span>Everyday Odia</span><strong>${esc(bridge.everydayOdia || '[review needed]')}</strong></div><div class="bridge-row"><span>School Odia term</span><strong>${esc(bridge.schoolOdiaTerm || '[review needed]')}</strong></div><div class="bridge-row"><span>English term</span><strong>${esc(bridge.englishTerm || '[not mapped]')}</strong></div>`;
+  const session = ensureBridgeSession();
+  // While an unanswered practice exercise is open, the school term and English term are hidden so the exercise is not a lookup.
+  const hidden = Boolean(session?.exercise?.enabled && !session.selectedId && !session.revealed);
+  root.innerHTML = `<div class="bridge-row"><span>Everyday Odia</span><strong lang="or">${esc(bridge.everydayOdia || '[review needed]')}</strong></div><div class="bridge-row"><span>School Odia term</span><strong lang="or">${hidden ? 'Hidden for practice' : esc(bridge.schoolOdiaTerm || '[review needed]')}</strong></div><div class="bridge-row"><span>English term</span><strong>${hidden ? 'Hidden for practice' : esc(bridge.englishTerm || '[not mapped]')}</strong></div>`;
 }
+
+function renderBridgePractice() {
+  const root = $('bridge-practice-content');
+  const session = ensureBridgeSession();
+  if (!session) { root.innerHTML = '<p class="bridge-disabled">There is no current question to practise.</p>'; return; }
+  const ex = session.exercise;
+  if (!ex.enabled) { root.innerHTML = `<p class="bridge-disabled" role="status"><strong>Bridge Practice is off for this question.</strong> ${esc(ex.reason)}</p>`; return; }
+  const graded = session.selectedId ? gradeBridgeAnswer(ex, session.selectedId) : null;
+  const disabled = ui.writable ? '' : 'disabled';
+  const letters = ['A', 'B', 'C'];
+  const options = ex.options.map((option, index) => {
+    const picked = session.selectedId === option.id;
+    const state = picked && graded?.ok ? (graded.correct ? ' correct' : ' wrong') : '';
+    return `<button type="button" class="bridge-option${state}" data-bridge-option="${esc(option.id)}" aria-pressed="${picked}" ${disabled}><span class="option-key">${letters[index]}</span><span class="bridge-option-text"><span lang="or">${esc(option.schoolOdiaTerm)}</span><span>${esc(option.englishTerm)}</span></span></button>`;
+  }).join('');
+  const feedback = !graded?.ok ? 'Choose the pair that names the idea in the sentence. This works offline and uses no AI.' : graded.correct ? 'Matches the pack’s draft mapping. The mapping itself has not been teacher-reviewed.' : 'Not this pair. Try another option, or reveal the source mapping.';
+  const reveal = session.revealed ? `<div class="bridge-reveal" role="region" aria-label="Source mapping"><div class="bridge-row"><span>Everyday Odia</span><strong lang="or">${esc(ex.target.everydayOdia)}</strong></div><div class="bridge-row"><span>School Odia term</span><strong lang="or">${esc(ex.target.schoolOdiaTerm)}</strong></div><div class="bridge-row"><span>English term</span><strong>${esc(ex.target.englishTerm)}</strong></div><p class="bridge-footnote">Source: this question’s bridge fields · status ${esc(ex.target.status)}</p></div>` : '';
+  root.innerHTML = `<div class="bridge-practice-meta">${ex.draft ? '<span class="draft-badge">UNREVIEWED DRAFT</span>' : ''}<span class="bridge-offline-tag">Offline · no AI · no network</span></div><p class="bridge-prompt" lang="or">${esc(ex.prompt)}</p><p class="bridge-question">Which school Odia term and English term name this idea?</p><div class="bridge-options" role="group" aria-label="Choose the matching terms">${options}</div><p class="bridge-feedback" role="status" aria-live="polite">${esc(feedback)}</p><div class="bridge-actions"><button type="button" class="text-button" data-bridge-action="reveal" ${disabled}>Reveal the source mapping</button><button type="button" class="text-button" data-bridge-action="next" ${disabled}>Try another →</button></div>${reveal}${ui.writable ? '' : '<p class="bridge-footnote">Read-only session: practice is disabled here.</p>'}`;
+  if (session.focusOption) {
+    const target = root.querySelector(`[data-bridge-option="${CSS.escape(session.focusOption)}"]`) ?? root.querySelector(`[data-bridge-action="${CSS.escape(session.focusOption)}"]`);
+    target?.focus({ preventScroll: true });
+    session.focusOption = null;
+  }
+}
+
+$('bridge-practice-content').addEventListener('click', async (event) => {
+  if (!ui.writable || !ui.loaded) return;
+  const session = ensureBridgeSession();
+  if (!session?.exercise?.enabled) return;
+  const optionButton = event.target.closest('[data-bridge-option]');
+  const actionButton = event.target.closest('[data-bridge-action]');
+  if (optionButton) {
+    const result = recordBridgeAttempt(ui.state, session.exercise, optionButton.dataset.bridgeOption);
+    if (!result.ok) return;
+    session.selectedId = optionButton.dataset.bridgeOption;
+    session.focusOption = session.selectedId;
+    await saveRecord();
+    renderBridge(); renderBridgePractice(); renderTrace();
+  } else if (actionButton?.dataset.bridgeAction === 'reveal') {
+    recordBridgeReveal(ui.state, session.exercise);
+    session.revealed = true; session.focusOption = 'reveal';
+    await saveRecord();
+    renderBridge(); renderBridgePractice(); renderTrace();
+  } else if (actionButton?.dataset.bridgeAction === 'next') {
+    ui.bridge = newBridgeSession(session.itemId);
+    ui.bridge.focusOption = 'next';
+    renderBridge(); renderBridgePractice();
+  }
+});
 
 function renderPlan() {
   const item = currentItem();
@@ -138,15 +226,25 @@ function renderConnection() {
   pill.classList.toggle('online', ui.reachable);
   pill.classList.toggle('offline', !ui.reachable && !ui.probing);
   $('connection-label').textContent = ui.probing ? 'Checking connection' : ui.reachable ? 'ONLINE · sync available' : 'OFFLINE · local mode';
-  $('provider-label').textContent = ui.provider === 'groq' ? `CONFIGURED · GROQ${ui.model ? ` · ${ui.model}` : ''} · ACCURACY UNVALIDATED` : 'DEMO RULES · NO LIVE AI';
+  $('provider-label').textContent = ui.provider === 'groq' ? `CONFIGURED · GROQ${ui.model ? ` · ${ui.model}` : ''} · ACCURACY UNVALIDATED` : 'MOCK PROVIDER · DEMO RULES · NO LIVE AI';
+}
+
+function renderWriterBanner() {
+  const root = $('writer-banner');
+  const messages = { locked: ['Read-only session', 'Another Pathasetu tab owns the writable session. This tab will not save answers or process re-checks. Close the other tab, then reload this one.'], unavailable: ['Single-tab protection unavailable', 'This browser does not provide Web Locks here. Keep only one Pathasetu tab open to avoid conflicting progress.'] };
+  const message = messages[ui.writerMode];
+  root.classList.toggle('hidden', !message);
+  root.innerHTML = message ? `<span class="notice-icon" aria-hidden="true">!</span><div><strong>${esc(message[0])}</strong>${esc(message[1])}</div>` : '';
 }
 
 function renderAll() {
   if (!ui.loaded) return;
   renderNotice();
+  renderWriterBanner();
   renderConnection();
   renderQuestion();
   renderBridge();
+  renderBridgePractice();
   renderPlan();
   renderProgress();
   renderTrace();
@@ -156,6 +254,9 @@ function renderAll() {
 }
 
 async function doSubmit(itemId, optionId, explanation) {
+  if (ui.submitting) return; // a double tap must not record the answer twice
+  ui.submitting = true;
+  $('submit-answer')?.setAttribute('disabled', '');
   const online = ui.reachable;
   try {
     submitAnswer({ state: ui.state, pack: ui.pack, itemId, optionId, explanation, online });
@@ -171,13 +272,15 @@ async function doSubmit(itemId, optionId, explanation) {
     renderAll();
     if (online) void drainQueue();
   } catch (error) {
-    if (error?.message === 'recheck_queue_full') {
+    if (error?.message === 'already_answered_awaiting_continue') {
+      console.info('duplicate_submit_ignored');
+    } else if (error?.message === 'recheck_queue_full') {
       notice('warning', 'Re-check queue is full', 'Reconnect and let pending re-checks finish before submitting another answer. Your new answer was not recorded.');
     } else {
       notice('warning', 'Could not save this answer', 'The current answer was not accepted. Keep the page open and try again.');
     }
-    console.error('submit_failed', error?.message ?? 'Error');
-  }
+    if (error?.message !== 'already_answered_awaiting_continue') console.error('submit_failed', error?.message ?? 'Error');
+  } finally { ui.submitting = false; }
 }
 
 async function refreshHealth() {
@@ -213,6 +316,7 @@ function scheduleProbe() {
 }
 
 async function drainQueue() {
+  if (!ui.writable) return; // only the writable tab may process queued work
   if (ui.draining || !ui.reachable || !ui.state?.queue?.length) return;
   if (ui.accessRequired && !ui.accessAuthorized) { $('access-overlay').classList.remove('hidden'); return; }
   ui.draining = true;
@@ -231,10 +335,18 @@ async function drainQueue() {
       }
       try {
         const accessCode = sessionStorage.getItem('pathasetu_demo_code') || '';
-        const response = await fetch('/api/recheck', { method: 'POST', cache: 'no-store', headers: { 'content-type': 'application/json', accept: 'application/json', ...(accessCode ? { 'x-pathasetu-demo-code': accessCode } : {}) }, body: JSON.stringify({ itemId: item.id, optionId: answer.optionId, explanation: answer.explanation }) });
-        if (response.status === 401) { ui.accessAuthorized = false; if (ui.accessRequired) $('access-overlay').classList.remove('hidden'); break; }
-        if (!response.ok) throw new Error(`recheck_http_${response.status}`);
-        const data = await response.json();
+        // A stalled network or provider must not freeze the queue: abort after RECHECK_TIMEOUT_MS and count an attempt.
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), RECHECK_TIMEOUT_MS);
+        let response; let data;
+        try {
+          response = await fetch('/api/recheck', { method: 'POST', cache: 'no-store', signal: controller.signal, headers: { 'content-type': 'application/json', accept: 'application/json', ...(accessCode ? { 'x-pathasetu-demo-code': accessCode } : {}) }, body: JSON.stringify({ itemId: item.id, optionId: answer.optionId, explanation: answer.explanation }) });
+          if (response.status === 401) { ui.accessAuthorized = false; if (ui.accessRequired) $('access-overlay').classList.remove('hidden'); break; }
+          if (!response.ok) throw new Error(`recheck_http_${response.status}`);
+          data = await response.json();
+        } catch (fetchError) {
+          throw fetchError?.name === 'AbortError' ? new Error('recheck_timeout') : fetchError;
+        } finally { clearTimeout(timer); }
         if (!['mock', 'groq'].includes(data.provider)) throw new Error('unexpected_provider');
         const result = recheckQueued({ state: ui.state, pack: ui.pack, queueId: entry.id, online: true, diagnosisOverride: data.diagnosis, trusted: false, provider: data.provider });
         if (!result.drained) {
@@ -295,12 +407,7 @@ async function load() {
   }
   ui.state = saved?.state ?? initialState(ui.pack);
   ui.drafts = saved?.drafts && typeof saved.drafts === 'object' ? saved.drafts : {};
-  const currentIsValid = ui.pack.items.some((item) => item.id === ui.state.learner.currentItemId);
-  if (!currentIsValid && ui.pack.items.length) {
-    const prior = ui.state.learner.currentItemId;
-    ui.state.learner.currentItemId = ui.pack.items[0].id;
-    appendTrace(ui.state, { type: 'content_mismatch_recovered', previousItemId: prior, nextItemId: ui.pack.items[0].id });
-  }
+  reconcileState(ui.state, ui.pack);
   if (ui.pack.demoDraftMode || ui.pack.items.some((item) => item.status !== 'PUBLISHED')) {
     notice('warning', 'Prototype content · not for real learners', 'The Electricity questions and Odia bridge fields are unreviewed drafts. Any diagnosis remains provisional until content review and model evaluation are complete.');
   }
@@ -335,10 +442,12 @@ document.addEventListener('visibilitychange', () => { if (document.visibilitySta
 window.addEventListener('pagehide', () => { if (ui.probeTimer) clearTimeout(ui.probeTimer); ui.releaseWriterLock?.(); void saveRecord(); });
 
 if ('serviceWorker' in navigator) {
+  let hadController = Boolean(navigator.serviceWorker.controller);
   navigator.serviceWorker.register('/sw.js').then((registration) => {
     void registration.update();
     document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') void registration.update(); });
     navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!hadController) { hadController = true; return; } // first install claiming the page is not an update
       notice('success', 'App update ready', 'The refreshed application is available. Reload once to apply it. Your saved learning state stays on this device.');
     });
   }).catch(() => notice('warning', 'Offline shell unavailable', 'This browser did not install the offline application shell. Keep the app online for the demo.'));
@@ -385,7 +494,6 @@ $('access-form').addEventListener('submit', async (event) => {
 async function startApp() {
   await acquireWriterLock();
   await load();
-  if (ui.loaded && ui.writerMode === 'locked') notice('warning', 'Session already open', 'This tab is read-only because another tab owns the writable session. Close the other tab before continuing.');
-  else if (ui.loaded && ui.writerMode === 'unavailable') notice('warning', 'Single-tab protection unavailable', 'This browser does not provide Web Locks here. Keep only one Pathasetu tab open to avoid conflicting progress.');
+  if (ui.loaded) renderWriterBanner();
 }
 void startApp();
