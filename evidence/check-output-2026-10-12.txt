@@ -1,0 +1,4 @@
+
+> pathasetu-mvp@0.1.0 check
+> node --check src/server/server.js && node --check public/app.js && node --check src/core/agent.js && node --check src/core/validator.js
+

@@ -1,0 +1,17 @@
+{
+  "name": "pathasetu-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Pathasetu: offline-first bilingual science-learning agent MVP",
+  "scripts": {
+    "start": "node src/server/server.js",
+    "test": "node --test tests/*.test.js",
+    "check": "node --check src/server/server.js && node --check public/app.js && node --check src/core/agent.js && node --check src/core/validator.js",
+    "capture": "node scripts/capture.mjs",
+    "smoke": "node scripts/model-smoke.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

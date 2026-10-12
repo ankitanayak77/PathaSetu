@@ -1,0 +1,10 @@
+{
+  "name": "Pathasetu — Learning, connected",
+  "short_name": "Pathasetu",
+  "description": "An offline-first science learning bridge.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f7f9",
+  "theme_color": "#102442",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

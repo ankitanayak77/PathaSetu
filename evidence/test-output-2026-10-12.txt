@@ -1,0 +1,254 @@
+
+> pathasetu-mvp@0.1.0 test
+> node --test tests/*.test.js
+
+TAP version 13
+# Subtest: initial state records why the first question was selected
+ok 1 - initial state records why the first question was selected
+  ---
+  duration_ms: 8.114715
+  type: 'test'
+  ...
+# Subtest: offline submission persists a provisional proposal and queues a re-check
+ok 2 - offline submission persists a provisional proposal and queues a re-check
+  ---
+  duration_ms: 18.292485
+  type: 'test'
+  ...
+# Subtest: uncertain/empty explanation never confirms a misconception
+ok 3 - uncertain/empty explanation never confirms a misconception
+  ---
+  duration_ms: 0.438536
+  type: 'test'
+  ...
+# Subtest: answer cannot be submitted for a missing question or invalid option
+ok 4 - answer cannot be submitted for a missing question or invalid option
+  ---
+  duration_ms: 0.676453
+  type: 'test'
+  ...
+# Subtest: recheck with an invalid diagnosis is rejected and leaves the queue pending
+ok 5 - recheck with an invalid diagnosis is rejected and leaves the queue pending
+  ---
+  duration_ms: 0.820233
+  type: 'test'
+  ...
+# Subtest: mock re-check drains the queue but remains provisional and preserves current question
+ok 6 - mock re-check drains the queue but remains provisional and preserves current question
+  ---
+  duration_ms: 0.804279
+  type: 'test'
+  ...
+# Subtest: trusted changed diagnosis updates confirmed state without double-counting the prior proposal
+ok 7 - trusted changed diagnosis updates confirmed state without double-counting the prior proposal
+  ---
+  duration_ms: 2.015053
+  type: 'test'
+  ...
+# Subtest: planner prefers an alternative item for a follow-up within the same concept
+ok 8 - planner prefers an alternative item for a follow-up within the same concept
+  ---
+  duration_ms: 0.237018
+  type: 'test'
+  ...
+# Subtest: queue capacity rejects another answer without partially changing learner state
+ok 9 - queue capacity rejects another answer without partially changing learner state
+  ---
+  duration_ms: 1.420156
+  type: 'test'
+  ...
+# Subtest: deferred provider failures increment attempts and append a durable diagnostic trace
+ok 10 - deferred provider failures increment attempts and append a durable diagnostic trace
+  ---
+  duration_ms: 0.895458
+  type: 'test'
+  ...
+# Subtest: the Electricity pack is structurally valid and every option mapping is allowlisted
+ok 11 - the Electricity pack is structurally valid and every option mapping is allowlisted
+  ---
+  duration_ms: 1.989884
+  type: 'test'
+  ...
+# Subtest: bilingual draft fields are populated but clearly remain unreviewed
+ok 12 - bilingual draft fields are populated but clearly remain unreviewed
+  ---
+  duration_ms: 6.440228
+  type: 'test'
+  ...
+# Subtest: draft content cannot enter the published release set
+ok 13 - draft content cannot enter the published release set
+  ---
+  duration_ms: 0.759367
+  type: 'test'
+  ...
+# Subtest: invalid content whose option maps to a non-allowlisted misconception is rejected
+ok 14 - invalid content whose option maps to a non-allowlisted misconception is rejected
+  ---
+  duration_ms: 0.265871
+  type: 'test'
+  ...
+# Subtest: content pack rejects an incorrect option without an allowed misconception mapping
+ok 15 - content pack rejects an incorrect option without an allowed misconception mapping
+  ---
+  duration_ms: 1.438581
+  type: 'test'
+  ...
+# Subtest: content pack rejects a correct option mapped to a misconception
+ok 16 - content pack rejects a correct option mapped to a misconception
+  ---
+  duration_ms: 1.049733
+  type: 'test'
+  ...
+# Subtest: content pack rejects an allowlisted misconception that no incorrect option can produce
+ok 17 - content pack rejects an allowlisted misconception that no incorrect option can produce
+  ---
+  duration_ms: 2.27611
+  type: 'test'
+  ...
+# Subtest: reviewed and published content requires reviewer identity and a valid review timestamp
+ok 18 - reviewed and published content requires reviewer identity and a valid review timestamp
+  ---
+  duration_ms: 2.237411
+  type: 'test'
+  ...
+# Subtest: the pack contains two draft questions for each of four Electricity concepts
+ok 19 - the pack contains two draft questions for each of four Electricity concepts
+  ---
+  duration_ms: 0.481467
+  type: 'test'
+  ...
+# Subtest: Groq request uses strict allowed-ID schema, bounded synthetic context, and server-side key
+ok 20 - Groq request uses strict allowed-ID schema, bounded synthetic context, and server-side key
+  ---
+  duration_ms: 1.663487
+  type: 'test'
+  ...
+# Subtest: NONE sentinel is normalized to null before independent validation
+ok 21 - NONE sentinel is normalized to null before independent validation
+  ---
+  duration_ms: 0.495646
+  type: 'test'
+  ...
+# Subtest: strict-schema-related HTTP 400 retries once with best-effort schema
+ok 22 - strict-schema-related HTTP 400 retries once with best-effort schema
+  ---
+  duration_ms: 1.194633
+  type: 'test'
+  ...
+# Subtest: other upstream errors do not expose provider response body
+ok 23 - other upstream errors do not expose provider response body
+  ---
+  duration_ms: 0.607978
+  type: 'test'
+  ...
+# Subtest: timeout aborts a hanging fetch and exposes only a safe timeout code
+ok 24 - timeout aborts a hanging fetch and exposes only a safe timeout code
+  ---
+  duration_ms: 10.481685
+  type: 'test'
+  ...
+# Subtest: request builder rejects an option that does not belong to the item
+ok 25 - request builder rejects an option that does not belong to the item
+  ---
+  duration_ms: 0.217003
+  type: 'test'
+  ...
+# Subtest: server enforces demo access for session/re-check and hides draft content in production
+ok 26 - server enforces demo access for session/re-check and hides draft content in production
+  ---
+  duration_ms: 183.942108
+  type: 'test'
+  ...
+# Subtest: server applies an in-memory per-client re-check rate limit with Retry-After
+ok 27 - server applies an in-memory per-client re-check rate limit with Retry-After
+  ---
+  duration_ms: 124.141251
+  type: 'test'
+  ...
+# Subtest: memory storage returns copies and can clear state
+ok 28 - memory storage returns copies and can clear state
+  ---
+  duration_ms: 1.40582
+  type: 'test'
+  ...
+# Subtest: IndexedDB failures downgrade visibly to memory storage without throwing
+ok 29 - IndexedDB failures downgrade visibly to memory storage without throwing
+  ---
+  duration_ms: 1.422661
+  type: 'test'
+  ...
+# Subtest: every static DOM selector in the app maps to an existing HTML ID
+ok 30 - every static DOM selector in the app maps to an existing HTML ID
+  ---
+  duration_ms: 1.71927
+  type: 'test'
+  ...
+# Subtest: language bridge visibly marks the Odia prompt and options as unreviewed drafts
+ok 31 - language bridge visibly marks the Odia prompt and options as unreviewed drafts
+  ---
+  duration_ms: 0.295494
+  type: 'test'
+  ...
+# Subtest: service worker never caches API responses and has an offline navigation fallback
+ok 32 - service worker never caches API responses and has an offline navigation fallback
+  ---
+  duration_ms: 0.113926
+  type: 'test'
+  ...
+# Subtest: all authored executable assets are local rather than third-party scripts
+ok 33 - all authored executable assets are local rather than third-party scripts
+  ---
+  duration_ms: 0.209769
+  type: 'test'
+  ...
+# Subtest: service worker shell cache version is bumped for the revised feedback-first flow
+ok 34 - service worker shell cache version is bumped for the revised feedback-first flow
+  ---
+  duration_ms: 0.288467
+  type: 'test'
+  ...
+# Subtest: validator accepts an allowed structured proposal
+ok 35 - validator accepts an allowed structured proposal
+  ---
+  duration_ms: 0.942353
+  type: 'test'
+  ...
+# Subtest: validator rejects an unallowed misconception ID
+ok 36 - validator rejects an unallowed misconception ID
+  ---
+  duration_ms: 0.398588
+  type: 'test'
+  ...
+# Subtest: validator rejects a question-ID mismatch
+ok 37 - validator rejects a question-ID mismatch
+  ---
+  duration_ms: 0.263111
+  type: 'test'
+  ...
+# Subtest: validator rejects malformed output and invalid confidence
+ok 38 - validator rejects malformed output and invalid confidence
+  ---
+  duration_ms: 0.134427
+  type: 'test'
+  ...
+# Subtest: uncertain output is valid without a misconception ID
+ok 39 - uncertain output is valid without a misconception ID
+  ---
+  duration_ms: 0.162954
+  type: 'test'
+  ...
+# Subtest: non-uncertain output below the confidence threshold is rejected
+ok 40 - non-uncertain output below the confidence threshold is rejected
+  ---
+  duration_ms: 0.133168
+  type: 'test'
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1253.098151

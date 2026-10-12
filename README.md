@@ -1,0 +1,62 @@
+# Pathasetu — MVP workspace
+
+Pathasetu is an offline-first, agentic science-learning prototype for an Odia-medium Class 10 learner. It aims to bridge everyday Odia, Odia school terminology and English scientific terms while helping a learner repair one concept at a time.
+
+## Current status
+
+- **Implemented:** mobile-first web shell, Electricity demo pack, bounded option-linked mock, diagnosis validator, deterministic planner/state transitions, IndexedDB persistence, draft-per-question storage, feedback-first post-answer view, explicit continue-to-next action, queue/re-check path, local trace export, app-shell service worker.
+- **Unit-tested:** current suite is 40/40 passing, including content publication gates, diagnosis validation, queue/re-check behavior, provider fake-server behavior, protected API checks, storage fallback, and static UI/service-worker checks.
+- **Browser-tested:** not verified in this managed environment. `npm run capture` checks the HTTP/API behavior and attempts a Chromium E2E path; local navigation was blocked by environment policy. Run it on your development machine and inspect the freshly written `evidence/capture-latest.json`. No physical-device results are included by default.
+- **Implemented but not live-tested:** optional Groq adapter using structured JSON output, per-question allowed-ID limits, bounded timeout and safe errors. The default remains the mock provider. No Groq call has been made from this workspace.
+- **Not implemented:** model evaluation harness UI, deployment hardening, teacher review workflow UI, multi-learner profiles.
+- **Not validated:** Odia wording, subject content by a qualified teacher, actual Odia language understanding, real-device behavior, offline behavior on an iPhone/Samsung device, learning impact.
+
+All seed items are `UNREVIEWED_DRAFT`. The current UI deliberately labels them as draft and labels diagnosis results as deterministic mock proposals. The option-linked mock does not interpret free-text Odia and never confirms mastery. Do not use this pack for real learners until a qualified subject/Odia reviewer has reviewed and approved it.
+
+## Requirements
+
+- Node.js 20 or later; no npm dependencies are needed for the core suite.
+- Chromium is needed only for `npm run capture`.
+
+## Run
+
+```bash
+npm ci
+npm test
+npm run check
+npm start
+```
+
+The default server binds to `127.0.0.1:4173` and uses the mock. Draft demonstration content is deliberately exposed in development mode, with prominent draft labels. Production mode excludes unreviewed content unless `PATHASETU_ALLOW_DRAFT_DEMO=true` is explicitly configured for a protected demonstration environment.
+
+Open `http://127.0.0.1:4173`. The app saves the pack and learning state locally on first online load. For an actual offline test, open it online once, allow the service worker to install, then use the browser/DevTools to emulate network interruption. `/api/*` responses are deliberately not cached by the service worker.
+
+## Commands and evidence
+
+`npm test` runs the Node test suite, including local fake-server tests for the Groq adapter. `npm run capture` starts the server, checks HTTP/API restrictions, then attempts a bounded Chromium E2E journey. It does not replace physical-phone tests. The live provider smoke test is `npm run smoke` and makes 13 requests using synthetic text only; it requires an explicitly configured Groq key and access code. That smoke test checks response shape, not accuracy or Odia proficiency. The model-evaluation claim must remain unvalidated until an annotated set has been independently reviewed.
+
+## Security and privacy notes
+
+- The default provider is mock-only and requires no API key. Groq is optional and must be explicitly configured.
+- Server API requests are same-origin checked when an Origin header is present and limited to 16 KB JSON payloads. `/api/session` and `/api/recheck` also have configurable, in-memory, per-client-IP fixed-window limits (`PATHASETU_SESSION_RATE_LIMIT`, `PATHASETU_RECHECK_RATE_LIMIT`, `PATHASETU_RATE_WINDOW_MS`). A 429 response includes `Retry-After`.
+- The server does not accept learner IDs or persist server-side learner state.
+- When Groq is enabled, `PATHASETU_DEMO_ACCESS_CODE` must be at least 16 characters. The model-backed route must not be exposed publicly without access protection, rate/quota controls, privacy review and provider permission/retention review. The limiter is process-local and uses the socket peer IP; clients may share a quota behind a proxy/tunnel, and limits reset on restart. It is not a production API gateway; use a private tunnel or access-controlled host for the demo.
+- In production, draft items are hidden unless `PATHASETU_ALLOW_DRAFT_DEMO=true` is explicitly configured; a production draft demo also requires a random `PATHASETU_DEMO_ACCESS_CODE` of at least 16 characters. Never enable that flag for real learners.
+
+## Provenance
+
+This workspace was generated with AI assistance. Record the real dates, tools, collaborators and permissions for any later commit or competition submission. Do not backdate commits or make inaccurate claims about when code was written.
+
+## Optional live Groq check (synthetic cases only)
+
+Do not run a live provider until you have reviewed the provider's current retention/data-control settings and accepted the cost/rate-limit implications. Never use real children's explanations in the smoke test. Enable Groq Zero Data Retention in the account console before a live call if your account supports it.
+
+```bash
+export PATHASETU_MODEL_PROVIDER=groq
+export GROQ_MODEL=openai/gpt-oss-20b
+export GROQ_API_KEY='set-this-locally-never-in-chat'
+export PATHASETU_DEMO_ACCESS_CODE="$(node -e "console.log(require('node:crypto').randomBytes(24).toString('hex'))")"
+npm run smoke
+```
+
+The 13 smoke cases test the live endpoint and response shape only. They do not evaluate correctness, language proficiency or educational effect. To return to the safe default, unset the Groq key/provider variables or start a new shell with `PATHASETU_MODEL_PROVIDER=mock`.
