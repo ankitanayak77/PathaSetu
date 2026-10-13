@@ -38,7 +38,9 @@ try {
   const base = `http://${HOST}:${port}`;
   const health = await waitForServer(base);
   if (health.provider !== 'groq') throw new Error(`server_provider_mismatch:${health.provider}`);
-  const pack = await fetch(`${base}/api/pack`).then((r) => r.json());
+  const packResponse = await fetch(`${base}/api/pack`, { headers: { 'x-pathasetu-demo-code': process.env.PATHASETU_DEMO_ACCESS_CODE ?? '' } });
+  if (!packResponse.ok) throw new Error(`pack_access_refused:${packResponse.status}`);
+  const pack = await packResponse.json();
   const byId = new Map(pack.items.map((item) => [item.id, item]));
   for (const testCase of cases) {
     const started = Date.now();

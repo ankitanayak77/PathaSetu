@@ -395,13 +395,23 @@ async function checkHealthOnly() {
 async function load() {
   const saved = await storage.load().catch(() => null);
   let latestPack = null;
+  let packRefused = false;
   try {
-    const response = await fetch('/api/pack', { cache: 'no-store' });
+    const code = sessionStorage.getItem('pathasetu_demo_code') || '';
+    const response = await fetch('/api/pack', { cache: 'no-store', headers: code ? { 'x-pathasetu-demo-code': code } : {} });
     if (response.ok) latestPack = await response.json();
+    else if (response.status === 401) {
+      // Draft content needs the session code. Keep any pack already saved on this device and ask for the code.
+      packRefused = true; ui.accessRequired = true; ui.accessAuthorized = false;
+      sessionStorage.removeItem('pathasetu_demo_code');
+      $('access-overlay').classList.remove('hidden');
+    }
   } catch { /* offline: use the content pack persisted on first online use */ }
   ui.pack = latestPack?.items ? latestPack : saved?.pack ?? null;
   if (!ui.pack) {
-    $('question-card').innerHTML = `<div class="loading-state"><div><strong>Pathasetu has no local content pack yet.</strong><br><span>Open the app once online so its content can be saved on this device.</span></div></div>`;
+    $('question-card').innerHTML = packRefused
+      ? `<div class="loading-state"><div><strong>Enter the session code to load the demo content.</strong><br><span>The Electricity pack is unreviewed draft content and is protected on this server.</span></div></div>`
+      : `<div class="loading-state"><div><strong>Pathasetu has no local content pack yet.</strong><br><span>Open the app once online so its content can be saved on this device.</span></div></div>`;
     ui.probing = false; ui.loaded = false; renderConnection();
     return;
   }
@@ -487,6 +497,7 @@ $('access-form').addEventListener('submit', async (event) => {
     if (!response.ok) { $('access-error').textContent = 'That session code was not accepted.'; $('access-error').classList.remove('hidden'); return; }
     sessionStorage.setItem('pathasetu_demo_code', code); ui.accessAuthorized = true; $('access-error').classList.add('hidden'); $('access-overlay').classList.add('hidden');
     notice('success', 'Demo unlocked', 'The session code was accepted. The model API key remains server-side.');
+    if (!ui.loaded) await load();
     void drainQueue();
   } catch { $('access-error').textContent = 'The server could not verify the code. Check the connection and try again.'; $('access-error').classList.remove('hidden'); }
 });

@@ -293,6 +293,34 @@ await scenario('K', 'Bridge Practice works offline, by keyboard, and is traced',
   allErrors.push(...page.errors);
 }));
 
+await scenario('M', 'protected draft demo: the code gates content, the UI still works once authorised', async () => {
+  const CODE = 'browser-test-access-code-0123456789';
+  await withEnv(async ({ chrome, base }) => {
+    const page = await chrome.newPage(`${base}/`);
+    const OVERLAY = `(() => ({ overlayHidden: document.querySelector('#access-overlay').classList.contains('hidden'), error: document.querySelector('#access-error')?.classList.contains('hidden') ? '' : document.querySelector('#access-error')?.innerText, body: document.body.innerText, question: document.querySelector('.question-id')?.textContent || '' }))()`;
+    const locked = await page.waitFor(OVERLAY, (v) => v.overlayHidden === false, 12000, 'access overlay');
+    check('M1', 'without a code the overlay shows and no draft question is rendered', !/EL0\d/.test(locked.body.replace(/Hidden/g, '')) && locked.question === '', `question="${locked.question}"`);
+    const direct = await page.evaluate("fetch('/api/pack').then(async (r) => ({ status: r.status, text: await r.text() }))");
+    check('M2', 'an unauthorised pack request from the page gets 401 with no content', direct.status === 401 && !/EL01|stem|bridge/i.test(direct.text), `status=${direct.status}`);
+    const submitCode = (code) => page.evaluate(`(() => { document.querySelector('#access-code').value = ${JSON.stringify(code)}; document.querySelector('#access-form').requestSubmit(); })()`);
+    await submitCode('wrong-code-wrong-code-0000');
+    const wrong = await page.waitFor(OVERLAY, (v) => /not accepted/i.test(v.error ?? ''), 6000, 'wrong code message');
+    check('M3', 'a wrong code is refused and the overlay stays', wrong.overlayHidden === false && wrong.question === '', wrong.error);
+    await submitCode(CODE);
+    const ok = await page.waitFor(OVERLAY, (v) => v.overlayHidden === true && /EL01/.test(v.question), 12000, 'authorised load');
+    check('M4', 'the right code unlocks the overlay and loads the first question without a reload', /EL01/.test(ok.question), ok.question);
+    await page.reload();
+    const again = await page.waitFor(OVERLAY, (v) => /EL01/.test(v.question), 12000, 'reload with session code');
+    check('M5', 'a reload in the same tab keeps working through the session-held code', again.overlayHidden === true, again.question);
+    await page.evaluate(submitExpr('A', 'The current keeps building up in the wire.'));
+    const done = await page.waitFor(UI, (v) => v.answers === '1' && v.queue === '0', 12000, 'authorised re-check');
+    check('M6', 'an authorised answer is re-checked by the protected route', done.queue === '0', done.notice.slice(0, 80));
+    const store = await page.evaluate(`(async () => { const rec = await ${READ_DB}; return { inDb: JSON.stringify(rec ?? {}).includes(${JSON.stringify(CODE)}), inLocal: JSON.stringify(Object.entries(localStorage)).includes(${JSON.stringify(CODE)}), inSession: sessionStorage.getItem('pathasetu_demo_code') === ${JSON.stringify(CODE)} }; })()`);
+    check('M7', 'the code lives only in session storage: not in IndexedDB and not in localStorage', store.inDb === false && store.inLocal === false && store.inSession === true, JSON.stringify(store));
+    allErrors.push(...page.errors);
+  }, { serverEnv: { NODE_ENV: 'production', PATHASETU_ALLOW_DRAFT_DEMO: 'true', PATHASETU_DEMO_ACCESS_CODE: CODE } });
+});
+
 await scenario('G2', 'no Web Locks: a visible warning', async () => withEnv(async ({ chrome, base }) => {
   const page = await chrome.newPage();
   await page.cdp.call('Page.addScriptToEvaluateOnNewDocument', { source: "Object.defineProperty(Navigator.prototype, 'locks', { get() { return undefined; }, configurable: true });" });

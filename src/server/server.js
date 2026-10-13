@@ -124,6 +124,10 @@ const server = http.createServer(async (req, res) => {
       return send(res, authorized ? 200 : 401, { ok: authorized, accessRequired: Boolean(ACCESS_CODE) });
     }
     if (req.method === 'GET' && url.pathname === '/api/pack') {
+      // Draft content gets the same demo authorisation as the model-backed route. A published-only pack stays open.
+      const exposesDrafts = draftDemoEnabled() && PACK.items.some((candidate) => candidate.status !== 'PUBLISHED');
+      if (exposesDrafts && ACCESS_CODE && enforceRateLimit(req, res, 'pack', SESSION_RATE_LIMIT)) return;
+      if (exposesDrafts && !hasValidAccessCode(req)) return send(res, 401, { error: 'demo_access_required', accessRequired: true });
       const allowDraftDemo = draftDemoEnabled();
       const items = allowDraftDemo ? PACK.items : selectPublishedItems(PACK);
       return send(res, 200, { packId: PACK.packId, subject: PACK.subject, topic: PACK.topic, classLevel: PACK.classLevel, medium: PACK.medium, languageBridge: PACK.languageBridge, demoDraftMode: allowDraftDemo && items.some((item) => item.status !== 'PUBLISHED'), items });

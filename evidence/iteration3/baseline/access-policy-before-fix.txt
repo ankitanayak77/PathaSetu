@@ -1,0 +1,124 @@
+TAP version 13
+# Subtest: development with a configured access code: /api/pack and /api/recheck refuse an unauthorised client and serve an authorised one
+not ok 1 - development with a configured access code: /api/pack and /api/recheck refuse an unauthorised client and serve an authorised one
+  ---
+  duration_ms: 331.538027
+  type: 'test'
+  location: '/home/claude/pw/Pathasetu_MVP/tests/access-policy.test.js:36:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    draft content must not be served without the access code
+    
+    200 !== 401
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 401
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    file:///home/claude/pw/Pathasetu_MVP/tests/access-policy.test.js:39:14
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async withServer (file:///home/claude/pw/Pathasetu_MVP/tests/access-policy.test.js:26:12)
+    async TestContext.<anonymous> (file:///home/claude/pw/Pathasetu_MVP/tests/access-policy.test.js:37:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: production with draft demo enabled: /api/pack and /api/recheck refuse an unauthorised client and serve an authorised one
+not ok 2 - production with draft demo enabled: /api/pack and /api/recheck refuse an unauthorised client and serve an authorised one
+  ---
+  duration_ms: 374.411389
+  type: 'test'
+  location: '/home/claude/pw/Pathasetu_MVP/tests/access-policy.test.js:36:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    draft content must not be served without the access code
+    
+    200 !== 401
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 401
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    file:///home/claude/pw/Pathasetu_MVP/tests/access-policy.test.js:39:14
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async withServer (file:///home/claude/pw/Pathasetu_MVP/tests/access-policy.test.js:26:12)
+    async TestContext.<anonymous> (file:///home/claude/pw/Pathasetu_MVP/tests/access-policy.test.js:37:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: development without an access code keeps the documented local experience open
+ok 3 - development without an access code keeps the documented local experience open
+  ---
+  duration_ms: 278.014483
+  type: 'test'
+  ...
+# Subtest: production without draft demo serves no unreviewed item, even to an unauthorised client, and offers no draft re-check
+ok 4 - production without draft demo serves no unreviewed item, even to an unauthorised client, and offers no draft re-check
+  ---
+  duration_ms: 270.661229
+  type: 'test'
+  ...
+# Subtest: the smoke script sends the demo access header for the pack as well as the re-check, and stops on a refusal
+not ok 5 - the smoke script sends the demo access header for the pack as well as the re-check, and stops on a refusal
+  ---
+  duration_ms: 0.901752
+  type: 'test'
+  location: '/home/claude/pw/Pathasetu_MVP/tests/access-policy.test.js:88:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /x-pathasetu-demo-code/. Input:
+    
+    '  const pack = await fetch(`${base}/api/pack`).then((r) => r.json());'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: '  const pack = await fetch(`${base}/api/pack`).then((r) => r.json());'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/Pathasetu_MVP/tests/access-policy.test.js:91:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: the browser client sends the session-held access code with its pack request and never a provider key
+not ok 6 - the browser client sends the session-held access code with its pack request and never a provider key
+  ---
+  duration_ms: 0.615861
+  type: 'test'
+  location: '/home/claude/pw/Pathasetu_MVP/tests/access-policy.test.js:95:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /x-pathasetu-demo-code/. Input:
+    
+    "    const response = await fetch('/api/pack', { cache: 'no-store' });"
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: "    const response = await fetch('/api/pack', { cache: 'no-store' });"
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/Pathasetu_MVP/tests/access-policy.test.js:98:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 2
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1345.882298
