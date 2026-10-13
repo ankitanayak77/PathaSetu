@@ -3,4 +3,4 @@
 > node scripts/evaluate-diagnosis.mjs
 
 BASELINE (deterministic option-linked rule, no network): valid 47/47 · agreement 34/47 · false-positive misconceptions on correct reasoning 0/8 · proper abstention 2/12
-written: evidence/iteration3/evaluation/evaluation-baseline-2026-10-13T05-00-39.json and .md
+written: evidence/iteration3/evaluation/evaluation-baseline-2026-10-13T05-09-27.json and .md

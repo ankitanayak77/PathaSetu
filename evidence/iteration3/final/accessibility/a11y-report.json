@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-10-13T05:00:39.080Z",
+    "generatedAt": "2026-10-13T05:09:27.597Z",
     "blocked": null,
     "browser": "CHROME_PATH override",
     "limitation": "Headless Chromium with viewport emulation. Not a screen-reader test, not a real-phone test, not proof of WCAG conformance.",

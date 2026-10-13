@@ -37,7 +37,7 @@ Re-check processed · MOCK
 PASS  E4  a queue left by a closed tab is recovered on a cold start without a tap — from EL02; answers=2; queue=0
 
 == L: an unsent draft survives a reload
-PASS  L1  the draft is stored in IndexedDB under its own question — stored={"optionId":"C","explanation":"A half-written explanation that must survive a reload.","updatedAt":"2026-10-13T04:58:17.
+PASS  L1  the draft is stored in IndexedDB under its own question — stored={"optionId":"C","explanation":"A half-written explanation that must survive a reload.","updatedAt":"2026-10-13T05:07:06.
 PASS  L2  after a full reload the draft text and selected option come back on the same question — option=C; text="A half-written explanation that must survive a reload."
 
 == F: missing or stale content cannot strand the learner
@@ -66,7 +66,7 @@ PASS  K4  exactly one of the three options is correct and each choice gets immed
 PASS  K5  after an attempt the full mapping appears in the bridge card — Everyday Odia ତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ। School Odia te
 PASS  K6  revealing shows the source mapping with its UNREVIEWED_DRAFT status — Everyday Odia ତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ। School Odia te
 PASS  K7  three attempts and the reveal are in the persisted decision trace with network:false — attempts=3; counter=3
-PASS  K8  the trace panel shows the bridge attempts to the learner — 10:28:29 AM | bridge mapping revealed | 
+PASS  K8  the trace panel shows the bridge attempts to the learner — 10:37:18 AM | bridge mapping revealed | 
 PASS  K9  the whole interaction made no API request (the background reachability probe is excluded) — non-probe API requests=0; offline=true
 PASS  K10  Try another builds a fresh, different exercise deterministically from the saved attempt count — options changed and the reveal is closed
 
@@ -107,7 +107,7 @@ PASS  R1  a totally unreadable record starts a fresh session with a clear notice
 PASS  R2  the unreadable record is kept under a separate key, not deleted — backup state="this is not a state object"
 PASS  R3  saving works again after recovery and the status says saved — errors=0
 PASS  R4  partial corruption is repaired: the valid answer and queued re-check survive and the queue drains once — answers=1; queue=0
-PASS  R5  the repair is recorded in the trace as counts only — answer_submitted,saved_state_repaired,recheck_complete
+PASS  R5  the repair is recorded in the trace as counts only — answer_submitted,recheck_complete,saved_state_repaired
 
 == P2: persistent-storage reporting (stubbed browser responses)
 PASS  P2.granted.a  granted: before any answer nothing is requested — calls=0; text="Persistent storage is requested after your first saved answe"

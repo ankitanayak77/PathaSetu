@@ -6,897 +6,915 @@ TAP version 13
 # Subtest: a clean report passes every check
 ok 1 - a clean report passes every check
   ---
-  duration_ms: 2.274322
+  duration_ms: 2.375112
   type: 'test'
   ...
 # Subtest: each kind of defect is reported by its own check
 ok 2 - each kind of defect is reported by its own check
   ---
-  duration_ms: 2.35352
+  duration_ms: 2.244727
   type: 'test'
   ...
 # Subtest: the documented thresholds are the ones the audit uses
 ok 3 - the documented thresholds are the ones the audit uses
   ---
-  duration_ms: 0.312076
+  duration_ms: 0.367849
   type: 'test'
   ...
 # Subtest: the stylesheet keeps the accessibility rules the audit depends on
 ok 4 - the stylesheet keeps the accessibility rules the audit depends on
   ---
-  duration_ms: 0.360011
+  duration_ms: 0.265136
   type: 'test'
   ...
 # Subtest: the page declares language, viewport zoom, landmarks and decorative glyphs correctly
 ok 5 - the page declares language, viewport zoom, landmarks and decorative glyphs correctly
   ---
-  duration_ms: 0.568762
+  duration_ms: 0.403192
   type: 'test'
   ...
 # Subtest: development with a configured access code: /api/pack and /api/recheck refuse an unauthorised client and serve an authorised one
 ok 6 - development with a configured access code: /api/pack and /api/recheck refuse an unauthorised client and serve an authorised one
   ---
-  duration_ms: 367.457191
+  duration_ms: 406.873957
   type: 'test'
   ...
 # Subtest: production with draft demo enabled: /api/pack and /api/recheck refuse an unauthorised client and serve an authorised one
 ok 7 - production with draft demo enabled: /api/pack and /api/recheck refuse an unauthorised client and serve an authorised one
   ---
-  duration_ms: 394.91236
+  duration_ms: 390.121117
   type: 'test'
   ...
 # Subtest: development without an access code keeps the documented local experience open
 ok 8 - development without an access code keeps the documented local experience open
   ---
-  duration_ms: 278.13865
+  duration_ms: 374.198277
   type: 'test'
   ...
 # Subtest: production without draft demo serves no unreviewed item, even to an unauthorised client, and offers no draft re-check
 ok 9 - production without draft demo serves no unreviewed item, even to an unauthorised client, and offers no draft re-check
   ---
-  duration_ms: 371.811928
+  duration_ms: 374.433365
   type: 'test'
   ...
 # Subtest: the smoke script sends the demo access header for the pack as well as the re-check, and stops on a refusal
 ok 10 - the smoke script sends the demo access header for the pack as well as the re-check, and stops on a refusal
   ---
-  duration_ms: 0.769424
+  duration_ms: 0.586524
   type: 'test'
   ...
 # Subtest: the browser client sends the session-held access code with its pack request and never a provider key
 ok 11 - the browser client sends the session-held access code with its pack request and never a provider key
   ---
-  duration_ms: 0.998924
+  duration_ms: 0.642866
   type: 'test'
   ...
 # Subtest: initial state records why the first question was selected
 ok 12 - initial state records why the first question was selected
   ---
-  duration_ms: 1.410884
+  duration_ms: 2.003565
   type: 'test'
   ...
 # Subtest: offline submission persists a provisional proposal and queues a re-check
 ok 13 - offline submission persists a provisional proposal and queues a re-check
   ---
-  duration_ms: 9.572917
+  duration_ms: 14.677161
   type: 'test'
   ...
 # Subtest: uncertain/empty explanation never confirms a misconception
 ok 14 - uncertain/empty explanation never confirms a misconception
   ---
-  duration_ms: 0.316136
+  duration_ms: 0.414189
   type: 'test'
   ...
 # Subtest: answer cannot be submitted for a missing question or invalid option
 ok 15 - answer cannot be submitted for a missing question or invalid option
   ---
-  duration_ms: 0.575252
+  duration_ms: 0.768584
   type: 'test'
   ...
 # Subtest: recheck with an invalid diagnosis is rejected and leaves the queue pending
 ok 16 - recheck with an invalid diagnosis is rejected and leaves the queue pending
   ---
-  duration_ms: 0.699212
+  duration_ms: 1.035633
   type: 'test'
   ...
 # Subtest: mock re-check drains the queue but remains provisional and preserves current question
 ok 17 - mock re-check drains the queue but remains provisional and preserves current question
   ---
-  duration_ms: 0.379593
+  duration_ms: 0.480299
   type: 'test'
   ...
 # Subtest: trusted changed diagnosis updates confirmed state without double-counting the prior proposal
 ok 18 - trusted changed diagnosis updates confirmed state without double-counting the prior proposal
   ---
-  duration_ms: 0.329768
+  duration_ms: 0.474408
   type: 'test'
   ...
 # Subtest: planner prefers an alternative item for a follow-up within the same concept
 ok 19 - planner prefers an alternative item for a follow-up within the same concept
   ---
-  duration_ms: 0.136354
+  duration_ms: 0.179298
   type: 'test'
   ...
 # Subtest: queue capacity rejects another answer without partially changing learner state
 ok 20 - queue capacity rejects another answer without partially changing learner state
   ---
-  duration_ms: 1.028599
+  duration_ms: 1.543933
   type: 'test'
   ...
 # Subtest: deferred provider failures increment attempts and append a durable diagnostic trace
 ok 21 - deferred provider failures increment attempts and append a durable diagnostic trace
   ---
-  duration_ms: 0.787646
+  duration_ms: 2.229385
   type: 'test'
   ...
 # Subtest: the pack yields eight distinct usable mappings
 ok 22 - the pack yields eight distinct usable mappings
   ---
-  duration_ms: 1.955152
+  duration_ms: 1.668789
   type: 'test'
   ...
 # Subtest: incomplete, placeholder and duplicate mappings are not usable
 ok 23 - incomplete, placeholder and duplicate mappings are not usable
   ---
-  duration_ms: 1.459066
+  duration_ms: 1.766811
   type: 'test'
   ...
 # Subtest: mappings that share a term conflict and cannot be options for each other
 ok 24 - mappings that share a term conflict and cannot be options for each other
   ---
-  duration_ms: 0.345761
+  duration_ms: 0.416863
   type: 'test'
   ...
 # Subtest: every question in the pack yields a valid exercise: one correct option, two distinct distractors from other mappings
 ok 25 - every question in the pack yields a valid exercise: one correct option, two distinct distractors from other mappings
   ---
-  duration_ms: 13.841645
+  duration_ms: 14.915144
   type: 'test'
   ...
 # Subtest: the exercise only uses strings that already exist in the pack (nothing is invented)
 ok 26 - the exercise only uses strings that already exist in the pack (nothing is invented)
   ---
-  duration_ms: 6.56519
+  duration_ms: 7.149635
   type: 'test'
   ...
 # Subtest: the exercise is deterministic and rotates with the attempt number
 ok 27 - the exercise is deterministic and rotates with the attempt number
   ---
-  duration_ms: 2.046506
+  duration_ms: 2.020506
   type: 'test'
   ...
 # Subtest: the exercise is disabled, with an explanation, when fewer than three distinct mappings exist
 ok 28 - the exercise is disabled, with an explanation, when fewer than three distinct mappings exist
   ---
-  duration_ms: 0.540317
+  duration_ms: 0.481219
   type: 'test'
   ...
 # Subtest: the exercise is disabled when too few mappings differ from the target to avoid ambiguity
 ok 29 - the exercise is disabled when too few mappings differ from the target to avoid ambiguity
   ---
-  duration_ms: 0.177022
+  duration_ms: 0.16393
   type: 'test'
   ...
 # Subtest: grading is exact, and a wrong answer still reveals the source mapping
 ok 30 - grading is exact, and a wrong answer still reveals the source mapping
   ---
-  duration_ms: 0.513231
+  duration_ms: 0.590396
   type: 'test'
   ...
 # Subtest: unreviewed mappings keep the UNREVIEWED_DRAFT label; only a fully reviewed set drops it
 ok 31 - unreviewed mappings keep the UNREVIEWED_DRAFT label; only a fully reviewed set drops it
   ---
-  duration_ms: 0.614759
+  duration_ms: 0.67872
   type: 'test'
   ...
 # Subtest: an attempt is recorded in the existing decision trace and a per-question counter
 ok 32 - an attempt is recorded in the existing decision trace and a per-question counter
   ---
-  duration_ms: 1.045861
+  duration_ms: 0.883315
   type: 'test'
   ...
 # Subtest: revealing the source mapping is traced too
 ok 33 - revealing the source mapping is traced too
   ---
-  duration_ms: 0.451189
+  duration_ms: 0.340848
   type: 'test'
   ...
 # Subtest: Bridge Practice is offline by construction: no network or model API is referenced or called
 ok 34 - Bridge Practice is offline by construction: no network or model API is referenced or called
   ---
-  duration_ms: 0.551946
+  duration_ms: 0.617585
   type: 'test'
   ...
 # Subtest: CSV helper: quotes, commas, newlines, doubled quotes and a BOM round-trip
 ok 35 - CSV helper: quotes, commas, newlines, doubled quotes and a BOM round-trip
   ---
-  duration_ms: 2.900085
+  duration_ms: 3.183179
   type: 'test'
   ...
 # Subtest: the shipped pack, worksheet and evaluation template are consistent, and every item is still a draft
 ok 36 - the shipped pack, worksheet and evaluation template are consistent, and every item is still a draft
   ---
-  duration_ms: 6.785369
+  duration_ms: 7.600348
   type: 'test'
   ...
 # Subtest: the worksheet carries the expected columns and the shipped not-started markers are read as "not reviewed"
 ok 37 - the worksheet carries the expected columns and the shipped not-started markers are read as "not reviewed"
   ---
-  duration_ms: 1.243507
+  duration_ms: 1.856181
   type: 'test'
   ...
 # Subtest: pack integrity: two correct options, a wrong key, an unused or foreign misconception and a missing bridge are all reported
 ok 38 - pack integrity: two correct options, a wrong key, an unused or foreign misconception and a missing bridge are all reported
   ---
-  duration_ms: 0.710249
+  duration_ms: 0.947343
   type: 'test'
   ...
 # Subtest: worksheet drift from the pack is reported field by field
 ok 39 - worksheet drift from the pack is reported field by field
   ---
-  duration_ms: 3.895105
+  duration_ms: 3.99504
   type: 'test'
   ...
 # Subtest: a worksheet row that is not in the pack, a duplicate row and a missing column are reported
 ok 40 - a worksheet row that is not in the pack, a duplicate row and a missing column are reported
   ---
-  duration_ms: 5.125744
+  duration_ms: 9.962111
   type: 'test'
   ...
 # Subtest: a reviewer or review date cannot appear on an item that is still a draft
 ok 41 - a reviewer or review date cannot appear on an item that is still a draft
   ---
-  duration_ms: 2.975285
+  duration_ms: 4.558758
   type: 'test'
   ...
 # Subtest: REVIEWED or PUBLISHED needs a real worksheet approval and a matching reviewer name and date in the pack
 ok 42 - REVIEWED or PUBLISHED needs a real worksheet approval and a matching reviewer name and date in the pack
   ---
-  duration_ms: 5.277064
+  duration_ms: 4.941581
   type: 'test'
   ...
 # Subtest: an approval in the worksheet needs a reviewer name and PASS in all four checks, and values must be from the allowed lists
 ok 43 - an approval in the worksheet needs a reviewer name and PASS in all four checks, and values must be from the allowed lists
   ---
-  duration_ms: 2.289775
+  duration_ms: 2.266154
   type: 'test'
   ...
 # Subtest: a fully approved worksheet row only produces a note: the pack status is never changed by code
 ok 44 - a fully approved worksheet row only produces a note: the pack status is never changed by code
   ---
-  duration_ms: 2.003667
+  duration_ms: 2.114286
   type: 'test'
   ...
-# Subtest: evaluation template: drift, filled reviewer fields, authored Odia and missing blank categories are reported
-ok 45 - evaluation template: drift, filled reviewer fields, authored Odia and missing blank categories are reported
+# Subtest: the shipped evaluation template has every reviewer field empty and no authored Odia: nobody has reviewed anything
+ok 45 - the shipped evaluation template has every reviewer field empty and no authored Odia: nobody has reviewed anything
   ---
-  duration_ms: 4.625198
+  duration_ms: 0.793657
+  type: 'test'
+  ...
+# Subtest: evaluation template: drift from cases.json and missing language/category rows are reported
+ok 46 - evaluation template: drift from cases.json and missing language/category rows are reported
+  ---
+  duration_ms: 6.670843
+  type: 'test'
+  ...
+# Subtest: evaluation template: a reviewer can complete rows and the check accepts them only when they are consistent
+ok 47 - evaluation template: a reviewer can complete rows and the check accepts them only when they are consistent
+  ---
+  duration_ms: 10.02431
+  type: 'test'
+  ...
+# Subtest: evaluation template: reviewer-authored Odia rows need a name, date, label and option, and an empty row cannot carry reviewer fields
+ok 48 - evaluation template: reviewer-authored Odia rows need a name, date, label and option, and an empty row cannot carry reviewer fields
+  ---
+  duration_ms: 5.842763
   type: 'test'
   ...
 # Subtest: the checker CLI succeeds on the shipped files
-ok 46 - the checker CLI succeeds on the shipped files
+ok 49 - the checker CLI succeeds on the shipped files
   ---
-  duration_ms: 53.150491
+  duration_ms: 57.629917
   type: 'test'
   ...
 # Subtest: the Electricity pack is structurally valid and every option mapping is allowlisted
-ok 47 - the Electricity pack is structurally valid and every option mapping is allowlisted
+ok 50 - the Electricity pack is structurally valid and every option mapping is allowlisted
   ---
-  duration_ms: 1.972951
+  duration_ms: 2.160584
   type: 'test'
   ...
 # Subtest: bilingual draft fields are populated but clearly remain unreviewed
-ok 48 - bilingual draft fields are populated but clearly remain unreviewed
+ok 51 - bilingual draft fields are populated but clearly remain unreviewed
   ---
-  duration_ms: 0.299185
+  duration_ms: 0.313917
   type: 'test'
   ...
 # Subtest: draft content cannot enter the published release set
-ok 49 - draft content cannot enter the published release set
+ok 52 - draft content cannot enter the published release set
   ---
-  duration_ms: 0.525239
+  duration_ms: 0.529873
   type: 'test'
   ...
 # Subtest: invalid content whose option maps to a non-allowlisted misconception is rejected
-ok 50 - invalid content whose option maps to a non-allowlisted misconception is rejected
+ok 53 - invalid content whose option maps to a non-allowlisted misconception is rejected
   ---
-  duration_ms: 0.179764
+  duration_ms: 0.174266
   type: 'test'
   ...
 # Subtest: content pack rejects an incorrect option without an allowed misconception mapping
-ok 51 - content pack rejects an incorrect option without an allowed misconception mapping
+ok 54 - content pack rejects an incorrect option without an allowed misconception mapping
   ---
-  duration_ms: 0.78834
+  duration_ms: 0.819881
   type: 'test'
   ...
 # Subtest: content pack rejects a correct option mapped to a misconception
-ok 52 - content pack rejects a correct option mapped to a misconception
+ok 55 - content pack rejects a correct option mapped to a misconception
   ---
-  duration_ms: 0.624954
+  duration_ms: 0.714902
   type: 'test'
   ...
 # Subtest: content pack rejects an allowlisted misconception that no incorrect option can produce
-ok 53 - content pack rejects an allowlisted misconception that no incorrect option can produce
+ok 56 - content pack rejects an allowlisted misconception that no incorrect option can produce
   ---
-  duration_ms: 1.515609
+  duration_ms: 1.741712
   type: 'test'
   ...
 # Subtest: reviewed and published content requires reviewer identity and a valid review timestamp
-ok 54 - reviewed and published content requires reviewer identity and a valid review timestamp
+ok 57 - reviewed and published content requires reviewer identity and a valid review timestamp
   ---
-  duration_ms: 0.613361
+  duration_ms: 0.567294
   type: 'test'
   ...
 # Subtest: the pack contains two draft questions for each of four Electricity concepts
-ok 55 - the pack contains two draft questions for each of four Electricity concepts
+ok 58 - the pack contains two draft questions for each of four Electricity concepts
   ---
-  duration_ms: 0.488075
+  duration_ms: 0.421283
   type: 'test'
   ...
 # Subtest: Wilson interval matches known values and handles the edges
-ok 56 - Wilson interval matches known values and handles the edges
+ok 59 - Wilson interval matches known values and handles the edges
   ---
-  duration_ms: 2.441916
+  duration_ms: 2.321902
   type: 'test'
   ...
 # Subtest: percentile uses the nearest-rank rule and ignores non-numbers
-ok 57 - percentile uses the nearest-rank rule and ignores non-numbers
+ok 60 - percentile uses the nearest-rank rule and ignores non-numbers
   ---
-  duration_ms: 0.287373
+  duration_ms: 0.265547
   type: 'test'
   ...
 # Subtest: both abstention-style reference labels expect UNCERTAIN
-ok 58 - both abstention-style reference labels expect UNCERTAIN
+ok 61 - both abstention-style reference labels expect UNCERTAIN
   ---
-  duration_ms: 0.130612
+  duration_ms: 0.130775
   type: 'test'
   ...
 # Subtest: scoring: a fully matching run, with known counts
-ok 59 - scoring: a fully matching run, with known counts
+ok 62 - scoring: a fully matching run, with known counts
   ---
-  duration_ms: 1.266363
+  duration_ms: 1.292156
   type: 'test'
   ...
 # Subtest: scoring: wrong ids, false positives, false confidence and over-abstention are counted separately
-ok 60 - scoring: wrong ids, false positives, false confidence and over-abstention are counted separately
+ok 63 - scoring: wrong ids, false positives, false confidence and over-abstention are counted separately
   ---
-  duration_ms: 0.578802
+  duration_ms: 0.63448
   type: 'test'
   ...
 # Subtest: scoring: errors and rejections count as disagreement, and compatibility is reported apart from agreement
-ok 61 - scoring: errors and rejections count as disagreement, and compatibility is reported apart from agreement
+ok 64 - scoring: errors and rejections count as disagreement, and compatibility is reported apart from agreement
   ---
-  duration_ms: 1.758006
+  duration_ms: 1.467963
   type: 'test'
   ...
 # Subtest: per-misconception precision and recall are reported only with at least 3 reference cases
-ok 62 - per-misconception precision and recall are reported only with at least 3 reference cases
+ok 65 - per-misconception precision and recall are reported only with at least 3 reference cases
   ---
-  duration_ms: 0.418703
+  duration_ms: 0.471207
   type: 'test'
   ...
 # Subtest: a prompt-injection probe is flagged only if the system followed the injected instruction
-ok 63 - a prompt-injection probe is flagged only if the system followed the injected instruction
+ok 66 - a prompt-injection probe is flagged only if the system followed the injected instruction
   ---
-  duration_ms: 0.303038
+  duration_ms: 0.445844
   type: 'test'
   ...
 # Subtest: dataset: every case is consistent with the pack (items, options, allowed ids) and its category
-ok 64 - dataset: every case is consistent with the pack (items, options, allowed ids) and its category
+ok 67 - dataset: every case is consistent with the pack (items, options, allowed ids) and its category
   ---
-  duration_ms: 0.577616
+  duration_ms: 0.612874
   type: 'test'
   ...
 # Subtest: dataset: all four categories are present, every item is covered, and no Odia text is included without a reviewer
-ok 65 - dataset: all four categories are present, every item is covered, and no Odia text is included without a reviewer
+ok 68 - dataset: all four categories are present, every item is covered, and no Odia text is included without a reviewer
   ---
-  duration_ms: 0.615586
+  duration_ms: 0.67231
   type: 'test'
   ...
 # Subtest: the deterministic baseline follows its documented rule on every case and always passes validation
-ok 66 - the deterministic baseline follows its documented rule on every case and always passes validation
+ok 69 - the deterministic baseline follows its documented rule on every case and always passes validation
   ---
-  duration_ms: 0.628184
+  duration_ms: 1.078224
   type: 'test'
   ...
 # Subtest: the report states what the numbers are not, separates compatibility from agreement, and never claims Odia ability
-ok 67 - the report states what the numbers are not, separates compatibility from agreement, and never claims Odia ability
+ok 70 - the report states what the numbers are not, separates compatibility from agreement, and never claims Odia ability
   ---
-  duration_ms: 1.415542
+  duration_ms: 1.808062
   type: 'test'
   ...
 # Subtest: the runner reports BLOCKED (exit 2) and writes no live results when credentials are absent
-ok 68 - the runner reports BLOCKED (exit 2) and writes no live results when credentials are absent
+ok 71 - the runner reports BLOCKED (exit 2) and writes no live results when credentials are absent
   ---
-  duration_ms: 61.643976
+  duration_ms: 73.5245
   type: 'test'
   ...
 # Subtest: Groq request uses strict allowed-ID schema, bounded synthetic context, and server-side key
-ok 69 - Groq request uses strict allowed-ID schema, bounded synthetic context, and server-side key
+ok 72 - Groq request uses strict allowed-ID schema, bounded synthetic context, and server-side key
   ---
-  duration_ms: 1.599547
+  duration_ms: 1.635367
   type: 'test'
   ...
 # Subtest: NONE sentinel is normalized to null before independent validation
-ok 70 - NONE sentinel is normalized to null before independent validation
+ok 73 - NONE sentinel is normalized to null before independent validation
   ---
-  duration_ms: 0.473835
+  duration_ms: 0.412862
   type: 'test'
   ...
 # Subtest: strict-schema-related HTTP 400 retries once with best-effort schema
-ok 71 - strict-schema-related HTTP 400 retries once with best-effort schema
+ok 74 - strict-schema-related HTTP 400 retries once with best-effort schema
   ---
-  duration_ms: 1.820003
+  duration_ms: 1.686383
   type: 'test'
   ...
 # Subtest: other upstream errors do not expose provider response body
-ok 72 - other upstream errors do not expose provider response body
+ok 75 - other upstream errors do not expose provider response body
   ---
-  duration_ms: 0.595256
+  duration_ms: 0.613414
   type: 'test'
   ...
 # Subtest: timeout aborts a hanging fetch and exposes only a safe timeout code
-ok 73 - timeout aborts a hanging fetch and exposes only a safe timeout code
+ok 76 - timeout aborts a hanging fetch and exposes only a safe timeout code
   ---
-  duration_ms: 10.132325
+  duration_ms: 11.029398
   type: 'test'
   ...
 # Subtest: request builder rejects an option that does not belong to the item
-ok 74 - request builder rejects an option that does not belong to the item
+ok 77 - request builder rejects an option that does not belong to the item
   ---
-  duration_ms: 0.279125
+  duration_ms: 0.289065
   type: 'test'
   ...
 # Subtest: a second submit for an already-answered question that has not been continued is rejected (double tap)
-ok 75 - a second submit for an already-answered question that has not been continued is rejected (double tap)
+ok 78 - a second submit for an already-answered question that has not been continued is rejected (double tap)
   ---
-  duration_ms: 9.227993
+  duration_ms: 9.301053
   type: 'test'
   ...
 # Subtest: after the learner continues, the same question can legitimately be answered again later
-ok 76 - after the learner continues, the same question can legitimately be answered again later
+ok 79 - after the learner continues, the same question can legitimately be answered again later
   ---
-  duration_ms: 0.534343
+  duration_ms: 0.60699
   type: 'test'
   ...
 # Subtest: reconcileState replaces a missing current item and clears a recommendation that points at a missing item
-ok 77 - reconcileState replaces a missing current item and clears a recommendation that points at a missing item
+ok 80 - reconcileState replaces a missing current item and clears a recommendation that points at a missing item
   ---
-  duration_ms: 0.379696
+  duration_ms: 0.425746
   type: 'test'
   ...
 # Subtest: reconcileState leaves a consistent state untouched and adds no trace
-ok 78 - reconcileState leaves a consistent state untouched and adds no trace
+ok 81 - reconcileState leaves a consistent state untouched and adds no trace
   ---
-  duration_ms: 0.165121
+  duration_ms: 0.217262
   type: 'test'
   ...
 # Subtest: 50 repeated provider failures count 50 attempts but occupy one trace line
-ok 79 - 50 repeated provider failures count 50 attempts but occupy one trace line
+ok 82 - 50 repeated provider failures count 50 attempts but occupy one trace line
   ---
-  duration_ms: 2.153413
+  duration_ms: 2.200902
   type: 'test'
   ...
 # Subtest: a different event in between starts a new failure line instead of rewriting history
-ok 80 - a different event in between starts a new failure line instead of rewriting history
+ok 83 - a different event in between starts a new failure line instead of rewriting history
   ---
-  duration_ms: 0.357479
+  duration_ms: 0.411219
   type: 'test'
   ...
 # Subtest: repeated invalid diagnoses for one queue entry are coalesced and keep the entry retryable
-ok 81 - repeated invalid diagnoses for one queue entry are coalesced and keep the entry retryable
+ok 84 - repeated invalid diagnoses for one queue entry are coalesced and keep the entry retryable
   ---
-  duration_ms: 0.800013
+  duration_ms: 0.63531
   type: 'test'
   ...
 # Subtest: the plan lists the four required devices with their browsers, and HTTPS for iPhone
-ok 82 - the plan lists the four required devices with their browsers, and HTTPS for iPhone
+ok 85 - the plan lists the four required devices with their browsers, and HTTPS for iPhone
   ---
-  duration_ms: 0.964054
+  duration_ms: 1.008946
   type: 'test'
   ...
 # Subtest: the numbered steps are contiguous and the results template has one row per combination and step
-ok 83 - the numbered steps are contiguous and the results template has one row per combination and step
+ok 86 - the numbered steps are contiguous and the results template has one row per combination and step
   ---
-  duration_ms: 2.3753
+  duration_ms: 2.084193
   type: 'test'
   ...
 # Subtest: every row of the shipped template is NOT TESTED with no tester, date, version or evidence filled in
-ok 84 - every row of the shipped template is NOT TESTED with no tester, date, version or evidence filled in
+ok 87 - every row of the shipped template is NOT TESTED with no tester, date, version or evidence filled in
   ---
-  duration_ms: 1.52199
+  duration_ms: 1.296105
   type: 'test'
   ...
 # Subtest: the mandatory steps in the template match the acceptance rule written in the plan
-ok 85 - the mandatory steps in the template match the acceptance rule written in the plan
+ok 88 - the mandatory steps in the template match the acceptance rule written in the plan
   ---
-  duration_ms: 0.263998
+  duration_ms: 0.31088
   type: 'test'
   ...
 # Subtest: the plan never records a phone as tested, and states what the headless audit does not cover
-ok 86 - the plan never records a phone as tested, and states what the headless audit does not cover
+ok 89 - the plan never records a phone as tested, and states what the headless audit does not cover
   ---
-  duration_ms: 0.38603
+  duration_ms: 0.316102
   type: 'test'
   ...
 # Subtest: by default a POST whose Origin differs from the Host the server sees is refused
-ok 87 - by default a POST whose Origin differs from the Host the server sees is refused
+ok 90 - by default a POST whose Origin differs from the Host the server sees is refused
   ---
-  duration_ms: 296.943154
+  duration_ms: 404.118089
   type: 'test'
   ...
 # Subtest: an exact origin listed in PATHASETU_ALLOWED_ORIGINS is accepted behind a Host-rewriting proxy; every other origin is not
-ok 88 - an exact origin listed in PATHASETU_ALLOWED_ORIGINS is accepted behind a Host-rewriting proxy; every other origin is not
+ok 91 - an exact origin listed in PATHASETU_ALLOWED_ORIGINS is accepted behind a Host-rewriting proxy; every other origin is not
   ---
-  duration_ms: 387.398686
+  duration_ms: 386.338076
   type: 'test'
   ...
 # Subtest: the allow-list does not weaken the access code: a protected demo still needs it
-ok 89 - the allow-list does not weaken the access code: a protected demo still needs it
+ok 92 - the allow-list does not weaken the access code: a protected demo still needs it
   ---
-  duration_ms: 266.768941
+  duration_ms: 367.867068
   type: 'test'
   ...
 # Subtest: malformed allow-list entries stop the server at startup instead of being ignored
-ok 90 - malformed allow-list entries stop the server at startup instead of being ignored
+ok 93 - malformed allow-list entries stop the server at startup instead of being ignored
   ---
-  duration_ms: 3140.120923
+  duration_ms: 3281.998859
   type: 'test'
   ...
 # Subtest: the default policy is conservative: 5 automatic attempts, 5 s base, doubling, 60 s cap
-ok 91 - the default policy is conservative: 5 automatic attempts, 5 s base, doubling, 60 s cap
+ok 94 - the default policy is conservative: 5 automatic attempts, 5 s base, doubling, 60 s cap
   ---
-  duration_ms: 2.69355
+  duration_ms: 3.494618
   type: 'test'
   ...
 # Subtest: an invalid policy falls back to safe values instead of retrying forever
-ok 92 - an invalid policy falls back to safe values instead of retrying forever
+ok 95 - an invalid policy falls back to safe values instead of retrying forever
   ---
-  duration_ms: 0.253403
+  duration_ms: 0.395613
   type: 'test'
   ...
 # Subtest: backoff progression is written onto the entry after each failure, with the injected clock
-ok 93 - backoff progression is written onto the entry after each failure, with the injected clock
+ok 96 - backoff progression is written onto the entry after each failure, with the injected clock
   ---
-  duration_ms: 8.749456
+  duration_ms: 14.482936
   type: 'test'
   ...
 # Subtest: after the maximum the entry pauses, stays queued with its answer, and is never due again automatically
-ok 94 - after the maximum the entry pauses, stays queued with its answer, and is never due again automatically
+ok 97 - after the maximum the entry pauses, stays queued with its answer, and is never due again automatically
   ---
-  duration_ms: 0.80607
+  duration_ms: 1.312305
   type: 'test'
   ...
 # Subtest: rejected diagnoses are bounded in the same way as provider failures
-ok 95 - rejected diagnoses are bounded in the same way as provider failures
+ok 98 - rejected diagnoses are bounded in the same way as provider failures
   ---
-  duration_ms: 0.647765
+  duration_ms: 1.088272
   type: 'test'
   ...
 # Subtest: queue state survives a save and reload (JSON round trip) while waiting and while paused
-ok 96 - queue state survives a save and reload (JSON round trip) while waiting and while paused
+ok 99 - queue state survives a save and reload (JSON round trip) while waiting and while paused
   ---
-  duration_ms: 0.438381
+  duration_ms: 0.775692
   type: 'test'
   ...
 # Subtest: an entry saved by an earlier version (no retry fields) is due, and still becomes bounded
-ok 97 - an entry saved by an earlier version (no retry fields) is due, and still becomes bounded
+ok 100 - an entry saved by an earlier version (no retry fields) is due, and still becomes bounded
   ---
-  duration_ms: 0.252929
+  duration_ms: 0.513588
   type: 'test'
   ...
 # Subtest: manual retry resets only retry state: no new answer, session, queue entry, draft or current question
-ok 98 - manual retry resets only retry state: no new answer, session, queue entry, draft or current question
+ok 101 - manual retry resets only retry state: no new answer, session, queue entry, draft or current question
   ---
-  duration_ms: 0.510939
+  duration_ms: 0.916382
   type: 'test'
   ...
 # Subtest: eventual recovery after a pause: manual retry then success drains the entry with exactly one answer and no extra session
-ok 99 - eventual recovery after a pause: manual retry then success drains the entry with exactly one answer and no extra session
+ok 102 - eventual recovery after a pause: manual retry then success drains the entry with exactly one answer and no extra session
   ---
-  duration_ms: 2.044577
+  duration_ms: 1.230353
   type: 'test'
   ...
 # Subtest: recovery also works from the waiting state, and repeated manual retries never duplicate the entry
-ok 100 - recovery also works from the waiting state, and repeated manual retries never duplicate the entry
+ok 103 - recovery also works from the waiting state, and repeated manual retries never duplicate the entry
   ---
-  duration_ms: 0.660378
+  duration_ms: 1.1893
   type: 'test'
   ...
 # Subtest: trace growth is bounded and distinct events stay interpretable
-ok 101 - trace growth is bounded and distinct events stay interpretable
+ok 104 - trace growth is bounded and distinct events stay interpretable
   ---
-  duration_ms: 0.910259
+  duration_ms: 1.602366
   type: 'test'
   ...
 # Subtest: queueStatus describes waiting and paused entries for the UI
-ok 102 - queueStatus describes waiting and paused entries for the UI
+ok 105 - queueStatus describes waiting and paused entries for the UI
   ---
-  duration_ms: 0.47389
+  duration_ms: 0.844898
   type: 'test'
   ...
 # Subtest: server enforces demo access for session/re-check and hides draft content in production
-ok 103 - server enforces demo access for session/re-check and hides draft content in production
+ok 106 - server enforces demo access for session/re-check and hides draft content in production
   ---
-  duration_ms: 231.605429
+  duration_ms: 266.558365
   type: 'test'
   ...
 # Subtest: server applies an in-memory per-client re-check rate limit with Retry-After
-ok 104 - server applies an in-memory per-client re-check rate limit with Retry-After
+ok 107 - server applies an in-memory per-client re-check rate limit with Retry-After
   ---
-  duration_ms: 236.50411
+  duration_ms: 238.081349
   type: 'test'
   ...
 # Subtest: IndexedDB open failure: the app learns it is memory-only, with a safe reason, and keeps working in memory
-ok 105 - IndexedDB open failure: the app learns it is memory-only, with a safe reason, and keeps working in memory
+ok 108 - IndexedDB open failure: the app learns it is memory-only, with a safe reason, and keeps working in memory
   ---
-  duration_ms: 8.085904
+  duration_ms: 9.025443
   type: 'test'
   ...
 # Subtest: no IndexedDB at all reports memory-only with a reason
-ok 106 - no IndexedDB at all reports memory-only with a reason
+ok 109 - no IndexedDB at all reports memory-only with a reason
   ---
-  duration_ms: 0.264931
+  duration_ms: 0.221125
   type: 'test'
   ...
 # Subtest: a rejected write downgrades visibly: durable saved time stops, reason is the error name only, latest data stays in memory
-ok 107 - a rejected write downgrades visibly: durable saved time stops, reason is the error name only, latest data stays in memory
+ok 110 - a rejected write downgrades visibly: durable saved time stops, reason is the error name only, latest data stays in memory
   ---
-  duration_ms: 2.913369
+  duration_ms: 2.848859
   type: 'test'
   ...
 # Subtest: quarantine keeps an unreadable record under a separate key without touching the main record
-ok 108 - quarantine keeps an unreadable record under a separate key without touching the main record
+ok 111 - quarantine keeps an unreadable record under a separate key without touching the main record
   ---
-  duration_ms: 2.40419
+  duration_ms: 2.310525
   type: 'test'
   ...
 # Subtest: corrupt record (null record) never throws: a fresh state is started and the record is flagged unreadable
-ok 109 - corrupt record (null record) never throws: a fresh state is started and the record is flagged unreadable
+ok 112 - corrupt record (null record) never throws: a fresh state is started and the record is flagged unreadable
   ---
-  duration_ms: 0.932372
+  duration_ms: 1.196909
   type: 'test'
   ...
 # Subtest: corrupt record (string record) never throws: a fresh state is started and the record is flagged unreadable
-ok 110 - corrupt record (string record) never throws: a fresh state is started and the record is flagged unreadable
+ok 113 - corrupt record (string record) never throws: a fresh state is started and the record is flagged unreadable
   ---
-  duration_ms: 0.266745
+  duration_ms: 0.274204
   type: 'test'
   ...
 # Subtest: corrupt record (number record) never throws: a fresh state is started and the record is flagged unreadable
-ok 111 - corrupt record (number record) never throws: a fresh state is started and the record is flagged unreadable
+ok 114 - corrupt record (number record) never throws: a fresh state is started and the record is flagged unreadable
   ---
-  duration_ms: 0.104231
+  duration_ms: 0.107751
   type: 'test'
   ...
 # Subtest: corrupt record (array record) never throws: a fresh state is started and the record is flagged unreadable
-ok 112 - corrupt record (array record) never throws: a fresh state is started and the record is flagged unreadable
+ok 115 - corrupt record (array record) never throws: a fresh state is started and the record is flagged unreadable
   ---
-  duration_ms: 0.114165
+  duration_ms: 0.107612
   type: 'test'
   ...
 # Subtest: corrupt record (state is a string) never throws: a fresh state is started and the record is flagged unreadable
-ok 113 - corrupt record (state is a string) never throws: a fresh state is started and the record is flagged unreadable
+ok 116 - corrupt record (state is a string) never throws: a fresh state is started and the record is flagged unreadable
   ---
-  duration_ms: 0.33807
+  duration_ms: 0.321867
   type: 'test'
   ...
 # Subtest: corrupt record (state is an array) never throws: a fresh state is started and the record is flagged unreadable
-ok 114 - corrupt record (state is an array) never throws: a fresh state is started and the record is flagged unreadable
+ok 117 - corrupt record (state is an array) never throws: a fresh state is started and the record is flagged unreadable
   ---
-  duration_ms: 0.390385
+  duration_ms: 0.337799
   type: 'test'
   ...
 # Subtest: corrupt record (state is null) never throws: a fresh state is started and the record is flagged unreadable
-ok 115 - corrupt record (state is null) never throws: a fresh state is started and the record is flagged unreadable
+ok 118 - corrupt record (state is null) never throws: a fresh state is started and the record is flagged unreadable
   ---
-  duration_ms: 0.166029
+  duration_ms: 0.133361
   type: 'test'
   ...
 # Subtest: corrupt record (empty object) never throws: a fresh state is started and the record is flagged unreadable
-ok 116 - corrupt record (empty object) never throws: a fresh state is started and the record is flagged unreadable
+ok 119 - corrupt record (empty object) never throws: a fresh state is started and the record is flagged unreadable
   ---
-  duration_ms: 0.077438
+  duration_ms: 0.069664
   type: 'test'
   ...
 # Subtest: a valid record passes through untouched with no repairs
-ok 117 - a valid record passes through untouched with no repairs
+ok 120 - a valid record passes through untouched with no repairs
   ---
-  duration_ms: 9.712293
+  duration_ms: 8.512423
   type: 'test'
   ...
 # Subtest: partial corruption keeps every usable answer, queue entry, draft and counter and removes only the broken ones
-ok 118 - partial corruption keeps every usable answer, queue entry, draft and counter and removes only the broken ones
+ok 121 - partial corruption keeps every usable answer, queue entry, draft and counter and removes only the broken ones
   ---
-  duration_ms: 1.723562
+  duration_ms: 0.530947
   type: 'test'
   ...
 # Subtest: queue recovery: a repaired queue entry is still processed once, with one answer and no extra session
-ok 119 - queue recovery: a repaired queue entry is still processed once, with one answer and no extra session
+ok 122 - queue recovery: a repaired queue entry is still processed once, with one answer and no extra session
   ---
-  duration_ms: 0.691914
+  duration_ms: 1.4756
   type: 'test'
   ...
 # Subtest: oversized collections are capped instead of growing without bound
-ok 120 - oversized collections are capped instead of growing without bound
+ok 123 - oversized collections are capped instead of growing without bound
   ---
-  duration_ms: 0.361247
+  duration_ms: 0.386541
   type: 'test'
   ...
 # Subtest: a stale content reference in an otherwise valid record is handled by reconcileState without a crash
-ok 121 - a stale content reference in an otherwise valid record is handled by reconcileState without a crash
+ok 124 - a stale content reference in an otherwise valid record is handled by reconcileState without a crash
   ---
-  duration_ms: 0.245398
+  duration_ms: 0.30618
   type: 'test'
   ...
 # Subtest: repair never throws on hostile input shapes
-ok 122 - repair never throws on hostile input shapes
+ok 125 - repair never throws on hostile input shapes
   ---
-  duration_ms: 0.586469
+  duration_ms: 0.553571
   type: 'test'
   ...
 # Subtest: the export omits typed explanations and drafts, keeps decisions and traces, and carries storage and persistence facts
-ok 123 - the export omits typed explanations and drafts, keeps decisions and traces, and carries storage and persistence facts
+ok 126 - the export omits typed explanations and drafts, keeps decisions and traces, and carries storage and persistence facts
   ---
-  duration_ms: 0.942989
+  duration_ms: 1.052548
   type: 'test'
   ...
 # Subtest: the export redacts access codes, API keys, bearer tokens and environment assignments wherever they appear
-ok 124 - the export redacts access codes, API keys, bearer tokens and environment assignments wherever they appear
+ok 127 - the export redacts access codes, API keys, bearer tokens and environment assignments wherever they appear
   ---
-  duration_ms: 0.423661
+  duration_ms: 0.526651
   type: 'test'
   ...
 # Subtest: persistent storage: unsupported, already granted, granted on request, denied and failing browsers are all reported without throwing
-ok 125 - persistent storage: unsupported, already granted, granted on request, denied and failing browsers are all reported without throwing
+ok 128 - persistent storage: unsupported, already granted, granted on request, denied and failing browsers are all reported without throwing
   ---
-  duration_ms: 0.528769
+  duration_ms: 0.56794
   type: 'test'
   ...
 # Subtest: persistent storage is requested at most once per requester, however often it is called
-ok 126 - persistent storage is requested at most once per requester, however often it is called
+ok 129 - persistent storage is requested at most once per requester, however often it is called
   ---
-  duration_ms: 0.162488
+  duration_ms: 0.16311
   type: 'test'
   ...
 # Subtest: persistence wording never promises retention
-ok 127 - persistence wording never promises retention
+ok 130 - persistence wording never promises retention
   ---
-  duration_ms: 0.600318
+  duration_ms: 0.606772
   type: 'test'
   ...
 # Subtest: memory storage returns copies and can clear state
-ok 128 - memory storage returns copies and can clear state
+ok 131 - memory storage returns copies and can clear state
   ---
-  duration_ms: 1.273672
+  duration_ms: 1.144953
   type: 'test'
   ...
 # Subtest: IndexedDB failures downgrade visibly to memory storage without throwing
-ok 129 - IndexedDB failures downgrade visibly to memory storage without throwing
+ok 132 - IndexedDB failures downgrade visibly to memory storage without throwing
   ---
-  duration_ms: 2.432987
+  duration_ms: 2.028129
   type: 'test'
   ...
 # Subtest: every static DOM selector in the app maps to an existing HTML ID
-ok 130 - every static DOM selector in the app maps to an existing HTML ID
+ok 133 - every static DOM selector in the app maps to an existing HTML ID
   ---
-  duration_ms: 2.452302
+  duration_ms: 2.522859
   type: 'test'
   ...
 # Subtest: language bridge visibly marks the Odia prompt and options as unreviewed drafts
-ok 131 - language bridge visibly marks the Odia prompt and options as unreviewed drafts
+ok 134 - language bridge visibly marks the Odia prompt and options as unreviewed drafts
   ---
-  duration_ms: 0.344381
+  duration_ms: 0.326236
   type: 'test'
   ...
 # Subtest: service worker never caches API responses and has an offline navigation fallback
-ok 132 - service worker never caches API responses and has an offline navigation fallback
+ok 135 - service worker never caches API responses and has an offline navigation fallback
   ---
-  duration_ms: 0.13816
+  duration_ms: 0.177072
   type: 'test'
   ...
 # Subtest: all authored executable assets are local rather than third-party scripts
-ok 133 - all authored executable assets are local rather than third-party scripts
+ok 136 - all authored executable assets are local rather than third-party scripts
   ---
-  duration_ms: 0.252118
+  duration_ms: 0.281806
   type: 'test'
   ...
 # Subtest: service worker shell cache version is bumped for the revised feedback-first flow and Bridge Practice (v5)
-ok 134 - service worker shell cache version is bumped for the revised feedback-first flow and Bridge Practice (v5)
+ok 137 - service worker shell cache version is bumped for the revised feedback-first flow and Bridge Practice (v5)
   ---
-  duration_ms: 0.12263
+  duration_ms: 0.16433
   type: 'test'
   ...
 # Subtest: the offline shell caches every core module the browser app imports (including Bridge Practice)
-ok 135 - the offline shell caches every core module the browser app imports (including Bridge Practice)
+ok 138 - the offline shell caches every core module the browser app imports (including Bridge Practice)
   ---
-  duration_ms: 0.830694
+  duration_ms: 0.844181
   type: 'test'
   ...
 # Subtest: the provider label visibly says MOCK when the mock provider is active
-ok 136 - the provider label visibly says MOCK when the mock provider is active
+ok 139 - the provider label visibly says MOCK when the mock provider is active
   ---
-  duration_ms: 0.171388
+  duration_ms: 0.14468
   type: 'test'
   ...
 # Subtest: read-only tabs are blocked from writing, draining the queue and practising, and the banner is persistent
-ok 137 - read-only tabs are blocked from writing, draining the queue and practising, and the banner is persistent
+ok 140 - read-only tabs are blocked from writing, draining the queue and practising, and the banner is persistent
   ---
-  duration_ms: 0.138857
+  duration_ms: 0.164741
   type: 'test'
   ...
 # Subtest: re-check requests have a client timeout so a stalled provider cannot freeze the queue
-ok 138 - re-check requests have a client timeout so a stalled provider cannot freeze the queue
+ok 141 - re-check requests have a client timeout so a stalled provider cannot freeze the queue
   ---
-  duration_ms: 1.600267
+  duration_ms: 0.38911
   type: 'test'
   ...
 # Subtest: Bridge Practice is wired in, local-only and draft-labelled
-ok 139 - Bridge Practice is wired in, local-only and draft-labelled
+ok 142 - Bridge Practice is wired in, local-only and draft-labelled
   ---
-  duration_ms: 0.534809
+  duration_ms: 1.462322
   type: 'test'
   ...
 # Subtest: only the first install is allowed to claim the page silently; a later controller change announces an update
-ok 140 - only the first install is allowed to claim the page silently; a later controller change announces an update
+ok 143 - only the first install is allowed to claim the page silently; a later controller change announces an update
   ---
-  duration_ms: 0.187138
+  duration_ms: 0.258642
   type: 'test'
   ...
 # Subtest: bounded retries are wired into the browser: gating, timer, persistent status and a deliberate Retry now action
-ok 141 - bounded retries are wired into the browser: gating, timer, persistent status and a deliberate Retry now action
+ok 144 - bounded retries are wired into the browser: gating, timer, persistent status and a deliberate Retry now action
   ---
-  duration_ms: 0.218611
+  duration_ms: 0.291593
   type: 'test'
   ...
 # Subtest: the retry-delay override is test-only plumbing and the shipped defaults are the conservative ones
-ok 142 - the retry-delay override is test-only plumbing and the shipped defaults are the conservative ones
+ok 145 - the retry-delay override is test-only plumbing and the shipped defaults are the conservative ones
   ---
-  duration_ms: 0.172945
+  duration_ms: 0.208475
   type: 'test'
   ...
 # Subtest: validator accepts an allowed structured proposal
-ok 143 - validator accepts an allowed structured proposal
+ok 146 - validator accepts an allowed structured proposal
   ---
-  duration_ms: 1.117679
+  duration_ms: 1.036001
   type: 'test'
   ...
 # Subtest: validator rejects an unallowed misconception ID
-ok 144 - validator rejects an unallowed misconception ID
+ok 147 - validator rejects an unallowed misconception ID
   ---
-  duration_ms: 0.280581
+  duration_ms: 0.206842
   type: 'test'
   ...
 # Subtest: validator rejects a question-ID mismatch
-ok 145 - validator rejects a question-ID mismatch
+ok 148 - validator rejects a question-ID mismatch
   ---
-  duration_ms: 0.150089
+  duration_ms: 0.145929
   type: 'test'
   ...
 # Subtest: validator rejects malformed output and invalid confidence
-ok 146 - validator rejects malformed output and invalid confidence
+ok 149 - validator rejects malformed output and invalid confidence
   ---
-  duration_ms: 0.163856
+  duration_ms: 0.117909
   type: 'test'
   ...
 # Subtest: uncertain output is valid without a misconception ID
-ok 147 - uncertain output is valid without a misconception ID
+ok 150 - uncertain output is valid without a misconception ID
   ---
-  duration_ms: 0.165659
+  duration_ms: 0.122374
   type: 'test'
   ...
 # Subtest: non-uncertain output below the confidence threshold is rejected
-ok 148 - non-uncertain output below the confidence threshold is rejected
+ok 151 - non-uncertain output below the confidence threshold is rejected
   ---
-  duration_ms: 0.222331
+  duration_ms: 0.195183
   type: 'test'
   ...
-1..148
-# tests 148
+1..151
+# tests 151
 # suites 0
-# pass 148
+# pass 151
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 8565.901189
+# duration_ms 9236.718326

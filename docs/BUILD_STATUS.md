@@ -13,10 +13,12 @@
 
 ## Fresh verification (files in `evidence/iteration3/final/`)
 
+Run on 13 Oct 2026 at commit `bb1b359` with a clean working tree (`evidence/iteration3/final/environment.txt`). The commit that follows adds the saved evidence and updates the test counts in these documents; it changes no code.
+
 | Check | Result | Exit code |
 | --- | --- | --- |
 | `npm ci` | PASS (no third-party dependencies) | 0 |
-| `npm test` | PASS: 148 of 148, 0 skipped | 0 |
+| `npm test` | PASS: 151 of 151, 0 skipped | 0 |
 | `npm run check` | PASS (syntax of all server, browser, core and script files) | 0 |
 | `npm run check:content` | PASS: 8 items, 8 worksheet rows, 47 evaluation cases, 0 problems; all items still `UNREVIEWED_DRAFT` | 0 |
 | `npm run capture` | PASS: 19 passed, 0 failed, 0 blocked | 0 |
@@ -28,7 +30,7 @@
 | Physical Samsung S23 / S25 / S25 FE / iPhone 16 tests | **NOT TESTED** | n/a |
 | Odia and science review | **NOT REVIEWED** | n/a |
 
-Baseline, re-run against the iteration 2 commit `8a139ae` (`evidence/iteration3/baseline/`): `npm test` 66/66, `npm run capture` 19 passed/0 failed, `npm run e2e` 53 passed/0 failed, `npm ci` and `npm run check` exit 0. So iteration 3 added 82 unit tests and 38 browser checks without regressing any earlier one.
+Baseline, re-run against the iteration 2 commit `8a139ae` (`evidence/iteration3/baseline/`): `npm test` 66/66, `npm run capture` 19 passed/0 failed, `npm run e2e` 53 passed/0 failed, `npm ci` and `npm run check` exit 0. So iteration 3 added 85 unit tests and 38 browser checks without regressing any earlier one.
 
 Browser commands need `CHROME_PATH`. If your machine blocks local navigation, report BLOCKED, not PASS.
 

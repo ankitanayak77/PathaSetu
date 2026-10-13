@@ -2,5 +2,5 @@
 > pathasetu-mvp@0.1.0 check:content
 > node scripts/check-content-consistency.mjs
 
-{"items":8,"worksheetRows":8,"itemStatuses":{"UNREVIEWED_DRAFT":8},"evaluationCases":47,"templateRows":47,"templateBlankRows":24,"problems":0,"notes":0}
+{"items":8,"worksheetRows":8,"itemStatuses":{"UNREVIEWED_DRAFT":8},"evaluationCases":47,"templateRows":47,"templateBlankRows":24,"templateReviewerAuthoredRows":0,"problems":0,"notes":0}
 OK: pack, worksheet and evaluation files are consistent. Every item is still UNREVIEWED_DRAFT until a qualified reviewer approves it.
