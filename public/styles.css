@@ -34,3 +34,48 @@
 .queue-status strong{display:block;color:#5a3d0f;margin-bottom:2px}
 .queue-status .text-button{margin-top:6px;min-height:44px}
 #writer-banner{display:grid;gap:10px}
+
+/* ===== Accessibility pass (Iteration 3) =====
+   Contrast to WCAG AA, no text below 12px, 44px touch targets, one consistent focus ring, a skip link that appears when focused.
+   Colours darkened and sizes raised only; the layout and design are unchanged. Verified by `npm run a11y` (automated; not a screen-reader or real-phone test). */
+:root{--muted:#4a5a6e}
+:focus-visible{outline:3px solid #1a3a63;outline-offset:2px}
+.topbar a:focus-visible,.topbar button:focus-visible,.footer a:focus-visible{outline-color:#ffd998}
+.skip-link:focus,.skip-link:focus-visible{left:8px;top:8px;padding:12px 14px;border-radius:8px;font-weight:700;color:#102442;outline:3px solid #1a3a63;outline-offset:2px}
+.explanation-input:focus-visible{outline:3px solid #1a3a63;outline-offset:2px;border-color:#1a3a63;box-shadow:none}
+.explanation-input::placeholder{color:#66758a}
+.option-label:has(input:focus-visible){outline:3px solid #1a3a63;outline-offset:2px}
+.trace-toggle:focus-visible{outline-offset:-3px}
+.brand{min-height:44px}
+.text-button{min-height:44px;display:inline-flex;align-items:center;padding:8px 0;color:#7a4f12}
+.secondary-button,.primary-button{min-height:44px}
+.eyebrow,.section-kicker,.card-heading .section-kicker{font-size:12px;color:#855410}
+.brand-copy small,.brand-copy strong+small{font-size:12px}
+.prototype-tag{font-size:12px}
+.connection-pill,.connection-pill #connection-label{font-size:12px}
+.step-counter{font-size:12px;color:#4f5f75}
+.question-id{font-size:12px;color:#4f5f75}
+.draft-badge{font-size:12px;color:#7a4f12}
+.language-draft-label{font-size:12px;color:#7a4f12}
+.option-key{font-size:12px;color:#4f5f75}
+.option-odia em{font-size:12px;color:#855410}
+.optional-tag,.form-hint{font-size:12px;color:#4f5f75}
+.bridge-row span{font-size:12px;color:#6b5a40}
+.bridge-row strong{font-size:14px}
+.bridge-footnote{font-size:12px;color:#6b5a40}
+.bridge-offline-tag{font-size:12px}
+.metric span,.progress-rule span,#sessions-label{font-size:12px;color:#4f5f75}
+.storage-status{font-size:12px;color:#4f5f75}
+.storage-status.warning{color:#7a4f12}
+.storage-status.good{color:#2a5f4c}
+.trace-toggle small{font-size:12px;color:#4f5f75}
+.footer,.footer>span:last-child{font-size:12px;color:#4f5f75}
+.trust-strip span:last-child{color:#6b5a40}
+@media(max-width:700px){.connection-pill{font-size:12px}.step-counter{font-size:12px}.brand-copy small{font-size:12px}}
+.result-kicker{font-size:12px;color:#1f5f4e}
+.trace-time{font-size:12px;color:#4f5f75}
+.trace-main strong{font-size:13px}
+.trace-main p{font-size:12px;color:#4a5a6e}
+.bridge-option-text span:last-child{color:#4f5f75}
+.secondary-button{font-size:12px}
+.trace-row{grid-template-columns:max-content 1fr}

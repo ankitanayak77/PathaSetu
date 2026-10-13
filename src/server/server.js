@@ -75,12 +75,29 @@ function send(res, status, body, type = 'application/json; charset=utf-8', heade
   res.end(type.startsWith('application/json') ? JSON.stringify(body) : body);
 }
 
+// Browser Origin must match the Host the server saw. A tunnel or reverse proxy that rewrites Host (for example to
+// 127.0.0.1:4173) would then reject every POST, so exact extra origins can be listed in PATHASETU_ALLOWED_ORIGINS
+// (comma-separated, https only, or http for localhost). No wildcards, no paths. Preserving the Host header remains the first choice.
+function parseAllowedOrigins(value) {
+  const origins = new Set();
+  for (const raw of String(value || '').split(',').map((part) => part.trim()).filter(Boolean)) {
+    let url;
+    try { url = new URL(raw); } catch { throw new Error(`PATHASETU_ALLOWED_ORIGINS has an invalid entry: ${raw}`); }
+    const local = url.hostname === 'localhost' || url.hostname === '127.0.0.1' || url.hostname === '[::1]';
+    if (url.origin !== raw || !(url.protocol === 'https:' || (url.protocol === 'http:' && local))) throw new Error(`PATHASETU_ALLOWED_ORIGINS entries must be exact origins such as https://demo.example.com (https, or http for localhost; no path, no wildcard): ${raw}`);
+    origins.add(url.origin);
+  }
+  return origins;
+}
+const ALLOWED_ORIGINS = parseAllowedOrigins(process.env.PATHASETU_ALLOWED_ORIGINS);
+
 function originAllowed(req) {
   const origin = req.headers.origin;
   if (!origin) return true;
   try {
     const parsed = new URL(origin);
     const host = req.headers.host;
+    if (ALLOWED_ORIGINS.has(parsed.origin)) return true;
     return (parsed.protocol === 'https:' || parsed.protocol === 'http:') && parsed.host === host;
   } catch { return false; }
 }
