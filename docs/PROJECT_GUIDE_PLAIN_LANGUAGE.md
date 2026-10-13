@@ -20,6 +20,7 @@ Every claim carries one of these labels. They are the only ones used.
 | **expected benefit** | What we hope the design does. Not measured. |
 | **measured result** | A number from a run, with the environment named. |
 | **team-reported** | The team told us; we have not seen the evidence. |
+| **learning-outcome-measured** | A comparison showing learners improved. **None; no study has been run.** |
 | **not tested / not reviewed** | Nobody has done it. |
 | **unknown** | We do not have the information. |
 
@@ -52,10 +53,20 @@ This is a **scoping decision by the team**, not a research finding. We have no i
 | Subject and topic | Science, **Electricity** only — 8 questions in `content/electricity-pack.json` |
 | Language assumption | Learner reads Odia and meets English terms. The screen shows English first with an Odia draft beside it. |
 | Goal | Board-exam preparation |
-| Device | One shared smartphone, short sessions, intermittent connection (assumption; **untested** with real learners) |
+| Device | A phone that may be shared by a family (assumption; **untested** with real learners). Today the app keeps **one local session record** per browser profile, so it does not safely separate several learners on one profile |
 | Not supported | Kui or any tribal language; spoken or voice input; other grades, subjects or languages; teachers, parents or schools as users; accounts; an all-purpose chat tutor |
 
 **What we borrowed from Sunita's case:** the Odisha setting, the shared phone, weak connectivity, Odia as the language of instruction and English terms in textbooks. **What is different:** her grade (we chose Class 10, not Class 9), no Kui, and a single subject chapter instead of a whole school programme. We say "Class 10 and Electricity" because it is a bounded exam topic with clear misconceptions that a small question set can cover; that is a team choice, not evidence that it is the most important topic.
+
+#### Unvalidated assumptions about the user
+
+- The learner reads Odia script comfortably and the draft wording matches how she speaks and how the textbook writes (not reviewed by anyone qualified).
+- She can use a phone for short sessions; which phone and browser is **unknown**, because no phone has run the app.
+- She is willing to type a short explanation (the box is optional).
+- A phone may be shared by a family. Pathasetu keeps **one local session record** per browser profile and does not separate several learners, so shared use would mix their progress.
+- The signal is weak, not absent: the first load needs the server once, after which the service worker keeps the shell.
+- Electricity is a good first chapter. That is a team choice with no evidence behind it yet.
+- No learner, parent or teacher has been interviewed or observed.
 
 ### 1.4 "Geography" does not mean the subject
 
@@ -90,7 +101,7 @@ Each topic uses five parts: **In one line**, **Explain like I'm new to software*
 
 **In one line.** A phone-first learning helper for Class 10 Electricity that finds the likely misconception behind a wrong answer, suggests the next step, and keeps working when the connection drops.
 
-**Like I'm new to software.** *Pathasetu* is the team's name. The words *patha* (path) and *setu* (bridge) are Sanskrit-origin words used in Odia and other Indian languages; the intent is a bridge on the learner's path between the language they speak, the language the textbook uses and the English of exams. The repository does not record the team's own reasoning for the name (**unknown**, so confirm it with the team before you say more). The "bridge" is also in the app: a card shows the three forms of one idea. For example, "when there is a gap in the wire, the electricity's whole road is not there" (everyday Odia, draft) → *ଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥ* (school Odia, draft) → *open circuit / closed circuit* (English).
+**Like I'm new to software.** *Pathasetu* is the team's name. As we read it, *patha* means path and *setu* means bridge; the intent is a bridge on the learner's path between the language they speak, the language the textbook uses and the English of exams. Our intended meaning for Pathasetu is a bridge for learning between languages: everyday Odia, school terminology and English science terms. We use the name to express the product's purpose; we are not claiming a formally verified literal translation. (team's stated intent; the Sanskrit-origin reading of *patha* and *setu* has not been checked with a qualified language source.) The "bridge" is also in the app: a card shows the three forms of one idea. For example, "when there is a gap in the wire, the electricity's whole road is not there" (everyday Odia, draft) → *ଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥ* (school Odia, draft) → *open circuit / closed circuit* (English).
 
 **Technical detail.** A single-page web app in `public/` (HTML, CSS, vanilla JavaScript) plus a small Node server in `src/server/`. The shared logic (agent, validator, retry, bridge, storage) lives in `src/core/` and runs in the browser.
 
@@ -170,6 +181,18 @@ Offline-capable web apps, multiple-choice quizzes, bilingual content and misconc
 5. Observed task completion by a few consenting learners using the app unaided.
 6. Only then, and with proper approval, a small learning study with a comparison group. **None of these has happened.**
 
+### 2.9 How we would measure learning improvement in a future approved study
+
+This is a design, not a result. Nothing below has been run, and the label **learning-outcome-measured** applies to nothing today.
+
+1. **Approvals first.** School and guardian permission and the institution's ethics or review route; consent for any logging beyond counts. Until then, synthetic text only.
+2. **Frozen, reviewed content.** A qualified Odia-medium science teacher signs off the items and the bridge mappings; the version used is recorded.
+3. **Pre-test and post-test** on the Electricity chapter, using questions that are not the practice questions.
+4. **A comparison group** doing ordinary practice for the same time, assigned before the study starts.
+5. **Outcomes** fixed in advance: post-test gain; whether a named misconception reappears on re-asked items after a delay; unaided task completion; time on task. Counts only; no typed text kept without consent.
+6. **Diagnosis quality measured separately,** on reviewer-authored Odia-script and Roman-Odia cases, including false positives on correct reasoning and appropriate abstention.
+7. **Report honestly:** small samples, effect sizes with uncertainty, and what did not work.
+
 ## 3. The real technology stack (checked against the files on 13 Oct 2026)
 
 `package.json` declares **no `dependencies` and no `devDependencies`**; `package-lock.json` lists only the project itself; `npm ci` installs nothing. `engines.node` is `>=20`; the runs recorded here used Node v22.22.0. There is no `.github/` folder, so there is **no CI service** (tests are run by hand).
@@ -181,7 +204,7 @@ Plain-language definitions on first use: a **server** is a program that waits fo
 | HTML, CSS, vanilla JavaScript (ES modules), no framework | `public/index.html`, `public/styles.css`, `public/app.js` | The phone-first screen and all its behaviour | clicks and typing → updated page | implemented; browser-tested; a11y-audit (automated) |
 | Node.js built-in `http` module (no Express) | `src/server/server.js` | Serves the files and four API routes | requests → files or JSON | implemented; unit-tested (`tests/server.test.js` and others) |
 | API routes: `GET /api/health`, `GET /api/session`, `GET /api/pack`, `POST /api/recheck` | `src/server/server.js` | Health probe; check access code; send the question pack; second-check an answer | see `SYSTEM_ARCHITECTURE.md` | unit-tested; browser-tested |
-| Service worker + Cache Storage | `public/sw.js` (cache `pathasetu-shell-v7`) | Keeps the app shell and the browser-safe `/core/*.js` modules for offline reload. Never caches `/api/*`. | requests → cached or live files | browser-tested (E1, H1, I1, I2) |
+| Service worker + Cache Storage | `public/sw.js` (cache `pathasetu-shell-v8`) | Keeps the app shell and the browser-safe `/core/*.js` modules for offline reload. Never caches `/api/*`. | requests → cached or live files | browser-tested (E1, H1, I1, I2) |
 | IndexedDB (database `pathasetu-local-v1`, store `records`) | `src/core/storage.js` | Holds one record under key `session` (state, answers, queue, trace, drafts, the saved content pack) and, if needed, `session-unreadable-backup` | record ↔ browser database; memory fallback if blocked | unit-tested; browser-tested (L, P, R) |
 | `sessionStorage` | `public/app.js` | Holds the demo access code for the open tab only (`pathasetu_demo_code`) | typed code → header | browser-tested (M7) |
 | Content pack (JSON) | `content/electricity-pack.json`, validated by `src/core/content.js` | 8 Electricity questions, option→misconception links, remediation, Odia drafts, bridge fields | file → items | unit-tested; consistency-checked (`npm run check:content`); content-reviewed: **no** |
@@ -197,12 +220,37 @@ Plain-language definitions on first use: a **server** is a program that waits fo
 | Groq adapter (optional) | `src/server/groqModel.js` | Sends one chat-completion request to `https://api.groq.com/openai/v1/chat/completions` (default model `openai/gpt-oss-20b`, `store:false`, 5.2 s timeout) | item, option, text → proposal | unit-tested with a fake server only; **live-API-tested: no** |
 | Access control | `src/server/access.js`, `server.js` | Demo code check, failed-attempt window, rate limits, exact origin list | headers → allow, 401, 403, 429 | unit-tested; browser-tested |
 | Preflight | `scripts/preflight.mjs`, `scripts/lib/preflight.mjs` | Pre-demo safety check; mock-only loopback harness | env → PASS/FAIL | unit-tested |
-| Tests | `tests/*.test.js` (Node's built-in `node:test`) | 182 unit and static tests at baseline | — | measured result (below) |
+| Tests | `tests/*.test.js` (Node's built-in `node:test`) | 207 unit and static tests in the Iteration 6 final run (198 in Iteration 5, 182 at the Iteration 4 baseline) | — | measured result (below) |
 | Browser tests | `scripts/browser-regression.mjs`, `capture*.mjs`, `accessibility-audit.mjs`, `scripts/lib/devtools.mjs` | Drive headless Chromium over the Chrome DevTools Protocol, no library | — | measured result (below) |
 
 **Technologies we verified are not used:** React, Next.js, Express, LangChain, CrewAI, AutoGen, LlamaIndex, Smolagents, RAG (retrieval-augmented generation), embeddings, a vector database, an on-device or local language model, speech recognition or speech synthesis, a native Android or iOS app, and multi-agent orchestration. The check was a search of `package.json`, `package-lock.json`, `src/`, `public/` and `scripts/` on 13 Oct 2026; none of these names is imported or called. We did not infer anything from the event's examples.
 
-**Measured results** (headless Chromium 141, Node 22.22.0, Linux sandbox, 13 Oct 2026, `evidence/iteration5/baseline/`): `npm test` 182 of 182 passed; `npm run capture` 19 of 19; `npm run e2e` 95 of 95; `npm run a11y` 462 checks, 0 failed; `npm run check`, `check:content` and `preflight` exit 0. These are one machine's results. The team's own managed machine reported that the browser tests were **BLOCKED** by `ERR_BLOCKED_BY_ADMINISTRATOR`; that is a separate environment result and is not a pass. No phone has run any of this.
+**Measured results** (headless Chromium 141, Node 22.22.0, Linux sandbox, 13 Oct 2026, current final run in `evidence/iteration6/final/`): `npm test` 207 unit tests passed (the Iteration 5 final run had 198 and the Iteration 4 baseline 182); `npm run capture` 19 capture checks; `npm run e2e` 100 browser checks (the Iteration 5 run had 95; scenario Q adds five); `npm run a11y` 462 accessibility checks, 0 failed; `npm run check`, `check:content` and `preflight` exit 0. These are one machine's results, reproduced from the received Iteration 5 package in the baseline run (`evidence/iteration6/baseline/`). A separate audit environment and the team's managed machine reported browser navigation **BLOCKED** (`ERR_BLOCKED_BY_ADMINISTRATOR`) while its unit tests, `check`, `check:content` and `preflight` passed; those browser results are a different environment's and are not a pass here or there. No phone has run any of this.
+
+### 3.1 What the automated tests prove, and what they do not
+
+**They do show,** on synthetic inputs and in headless Chromium on Linux: the validator rejects malformed or out-of-list diagnoses; a double submit makes one answer and one queue entry; an offline reload serves the shell and keeps the answer; retries stop after five and a paused state offers Retry now; a second tab is read-only; storage failure and corrupt records are reported and repaired; the access code gates the routes and wrong guesses are throttled; security headers are present and traversal paths are refused; the labels name the provider the server reports (a stubbed Groq-configured server, scenario Q); and the documents keep to the status words and the current counts.
+
+**They do not show:** that a diagnosis is right for a real learner; that the Odia or the science is correct; how the app behaves on a Samsung or iPhone browser, with TalkBack or VoiceOver, or on a flaky mobile network; how any hosted model performs (none has been called); that anything is secure enough for production; that learners improve; or that every sentence in these documents is true (the document tests check wording and consistency, not truth). The 47 evaluation cases are English cases the team wrote; 34 of 47 agree with the team's labels, and that is a regression baseline for a rule, not accuracy.
+
+### 3.2 Where the learner’s words go
+
+| Moment | What leaves the phone | Where it goes |
+|---|---|---|
+| Typing, choosing an option | Nothing | Held in the page and saved to IndexedDB **when browser storage works** (otherwise memory only, and the screen says so) |
+| Submit while offline | Nothing | Saved locally with a waiting re-check |
+| A re-check runs (online) | Question ID, selected option and the typed explanation (up to 1,000 characters), sent to the Pathasetu server | The server runs the rule (mock) and replies; it keeps no learner data (only in-memory rate counters) |
+| Only if Groq is configured | Question, options, answer key, Odia drafts, selected option and explanation, sent on by the server to Groq with `store:false` requested | Groq's API. **Never run live.** Provider retention is unverified |
+| Download trace | A file the learner chooses to save | Typed text is replaced by its length; no access code |
+| Health probe | A GET with no learner data | `/api/health` |
+
+It is not true that everything stays on the phone: local state stays on the device, but the explanation is sent to the server whenever a re-check is attempted.
+
+### 3.3 Which routes need the access code, and the known security limits
+
+`/api/health` is open on purpose (the offline probe uses it) and reveals the provider label and whether a code is required. `/api/session`, `/api/pack` and `/api/recheck` need the code whenever one is configured, which is always in public-demo mode, with Groq, or for a production draft demo. The Groq key lives only in the server's environment and is never sent to the browser; the demo code is compared in constant time, kept in `sessionStorage` for the open tab, and kept out of IndexedDB, the trace export and logs. Other controls: a failed-attempt window (20 per 60 s per client), an exact-origin allow-list, a 16 KB body limit, a re-check rate limit, and security headers.
+
+**Known limits:** one shared code; in-memory counters that reset on restart and are keyed by socket address, so visitors behind one tunnel connection share a bucket; no accounts and no audit log; the answer key and draft pack reach any authorised browser, so this is practice, not an exam; browser modules are served from `src/core` by a file-name pattern. This is demo-grade protection, not production authentication.
 
 ## 4. What "agentic" means here, precisely
 
@@ -243,6 +291,7 @@ Pathasetu has one **workflow** and several **tools**. A tool is a function or a 
 
 - Default provider: **mock**. It is an option-linked rule. It does not understand Odia, English free text or anything else. The screen says so: "MOCK PROVIDER · DEMO RULES · NO LIVE AI".
 - Optional provider: **Groq** adapter exists (`src/server/groqModel.js`), checked only against a local fake server. **No live request has ever been sent** (`evidence/iteration5/gates/`: BLOCKED — credentials not configured). Until a live request is evidenced, do not call Pathasetu "LLM-powered".
+- **Before anyone can say "LLM-powered":** (1) a live request must reach a configured provider and the saved run must show it; (2) the UI footer and the trace must name that provider and model (they do, from the server's health report, and scenario Q tests the labels against a stub); (3) the same 47 cases must be evaluated against the rule and reported as agreement with team-written labels; (4) reviewer-authored Odia cases must exist before any claim about Odia. Until then do not use the phrase.
 - If Groq were switched on, the learner's typed explanation, the question, the options, the Odia drafts and the answer key for that item would be sent to Groq for each re-check (`buildBody` in `groqModel.js`). With the default mock the typed text goes only to the Pathasetu server on re-check and is not stored there (**the server keeps no learner data**).
 
 ### 4.6 What happens when the model side fails
@@ -290,13 +339,17 @@ We can defend: a working, tested, traceable, offline-tolerant agentic *workflow*
 | Clear trace of decisions | yes | Trust, debugging, judging | 34 events rendered in the capture journey |
 | Improved exam marks or learning gain | **not implemented / no evidence** | — | **none** |
 
+### 5.1 How to find the evidence for any claim
+
+Open `docs/CLAIM_EVIDENCE_MATRIX.csv`. Each row has a claim ID, the claim, the file or URL that backs it, the status label from section 0, the wording you may use and the wording you may not. To check a claim: find its row, open the evidence path, run the named command if it is a test, and compare the label with what you find. A claim with no row has no evidence trail and should not be said. The labels run from implemented through unit-tested, browser-tested (headless), phone-tested, live-API-tested and content-reviewed to learning-outcome-measured; today the last four have no entries.
+
 ## 6. Limits to volunteer before a judge asks
 
 1. All 8 questions and all Odia wording are AI-assisted drafts that no teacher has reviewed.
 2. The default "AI" is a rule that ignores the meaning of the explanation; no live model request has ever been made.
 3. No phone has run the app; every browser result is headless Chromium on Linux.
 4. Nothing is deployed; no tunnel has been run. The demo needs a persistent Node process and the team's own laptop.
-5. The repository was built on 12–13 Oct 2026 with AI assistance, before the 14–15 Oct event window. Rule 4.1 (<https://www.nirmit.space/rules>) says all code must be built during competition hours; the team's note says it relied on a verbal organiser permission that is not confirmed in writing. Keep the commit dates visible and get written confirmation (`docs/BUILD_STATUS.md`, Provenance).
+5. The repository was built on 12–13 Oct 2026 with AI assistance, before the 14–15 Oct event window. Rule 4.1 (<https://www.nirmit.space/rules>) says all code must be built during competition hours. The team reports that the organisers allowed early work and API use; that is **team-reported**, and no saved organiser message is in the repository materials. Keep the commit dates visible, say this plainly, and add the saved message to the repository if one exists (`docs/BUILD_STATUS.md`, Provenance).
 6. One shared demo code, in-memory limits that reset on restart: demo-grade protection, not production authentication.
 7. Class 10 Electricity only; one language pair (Odia/English); no Kui, no voice.
 
@@ -306,7 +359,7 @@ We can defend: a working, tested, traceable, offline-tolerant agentic *workflow*
 - **Stages** (event page): Stage 2 mid-evaluation (a GitHub commit audit, a working agent-workflow demo and the architecture), the bottom half eliminated; Stage 3 final on Day 2, a 7-minute live MVP pitch and 5 minutes of CTO questions. Weights on the event page: Autonomous Agentic Architecture 30%, Regional Language Localization 20%, Offline & Edge 20%, UI/UX & Grand Pitch Defense 30%; mid-evaluation 30% and final 70%.
 - **Problem PDF** separates **core criteria** (problem understanding, technical implementation, presentation, pitch deck) from **bonus criteria** (regional-language support beyond translated labels, ease of use/accessibility, offline compatibility, type of agentic framework). These are *not* the same list as the event-page weights, and the rules page has a third list (Innovation, Technical Execution, Presentation, Feasibility, Adherence to Constraints). Do not blend them; cite the page you are quoting.
 - **Ambiguities in the public pages:** the mid-evaluation slot is shown as 4:00–7:00 PM on Day 1 while Day 1 is listed as ending at 6:00 PM; the event is described as 24 hours while the listed hours add up to about 31; the weights (30/70) and the four jury metrics (30/20/20/30) are two different splits; the page says open-source LLM APIs are permitted while the team's note says all APIs are allowed. **Use the slot your team is assigned; if none has been given, say the schedule is ambiguous.** Do not guess.
-- **APIs and keys** (event page): external APIs are permitted and keys must be set through environment variables. Pathasetu reads `GROQ_API_KEY` and the access code from environment variables only (`src/server/server.js`).
+- **APIs and keys** (event page): external APIs are permitted and keys must be set through environment variables. The team reports an organiser clarification that all APIs are allowed (team-reported; the event page wording is narrower, so quote them separately). Pathasetu reads `GROQ_API_KEY` and the access code from environment variables only (`src/server/server.js`).
 - **Rule 4.1 / plagiarism checks** (rules page): code must be built during the event; diffs and commit timelines are audited. See limit 5 above.
 
 Pathasetu's mapping (implemented/status, not scores): agentic architecture → section 4 (deterministic workflow; honest about the mock); regional language → Odia drafts and the bridge (**draft, not reviewed; no Kui, no voice**); offline and edge → service worker + IndexedDB + queue (**headless-tested, not phone-tested**); UI/UX and pitch → `PITCH_SCRIPTS.md`, accessibility audit (automated only).

@@ -10,11 +10,18 @@ Written 13 October 2026. These scripts say only what the evidence supports. Ever
 
 ## A. Short versions
 
+### A0. Three precise lines to have ready (name, data, shared phones)
+
+- **The name.** "Our intended meaning for Pathasetu is a bridge for learning between languages: everyday Odia, school terminology and English science terms. We use the name to express the product's purpose; we are not claiming a formally verified literal translation."
+- **Where the words go.** "Progress, drafts and the waiting queue are kept in the phone's browser storage when storage works. When a re-check runs, the answer and the typed explanation are sent to the Pathasetu server; if a hosted model is ever switched on, the question, options and explanation go on to that provider. Today the checker is the demo rule."
+- **Shared phones.** "The target setting can include a family phone, but today Pathasetu keeps one local session record and does not safely separate several learners on one browser profile."
+- **Permission.** "The team reports that the organisers allowed early work and API use. That is team-reported; the saved message is not in the repository."
+
 ### A1. 15-second elevator introduction
 "Pathasetu helps an Odia-medium Class 10 student find the wrong idea behind a wrong science answer, gives a small next step, and keeps working when the signal drops. It's an early prototype: tested in software, not yet on phones."
 
 ### A2. 30-second product explanation
-"Many students learn science in a language different from the one they speak at home, on a shared phone with a weak signal, with no one to ask why they were wrong. Pathasetu is a phone-first helper for Class 10 Electricity. It names the likely misconception behind an answer, shows a next activity, explains why it chose the next question, and saves everything on the phone so it works through a dropped connection. Today the diagnosis step is a demo rule, the Odia is an unreviewed draft, and it has been tested in a browser, not yet on phones."
+"Many students learn science in a language different from the one they speak at home, on a shared phone with a weak signal, with no one to ask why they were wrong. Pathasetu is a phone-first helper for Class 10 Electricity. It names the likely misconception behind an answer, shows a next activity, explains why it chose the next question, and keeps the answer in the phone's browser storage when storage works, so it can be checked again after a dropped connection. Today the diagnosis step is a demo rule, the Odia is an unreviewed draft, and it has been tested in a browser, not yet on phones."
 
 ### A3. 60-second layman explanation
 "Imagine a Class 10 student in Odisha. The textbook says one thing in Odia, the exam paper uses English terms, and at home she speaks something else. She answers a question about electricity wrongly. Nobody is there to ask why. Pathasetu is a small web app on her phone. After she answers and types a few words of her reasoning, it says what wrong idea might be behind it. For example, thinking a bulb uses up the current. It marks that as a guess, shows one small activity to fix it, and tells her why the next question was chosen. If the signal drops, her answer is saved on the phone and checked again when the network returns. A little matching game helps her connect everyday Odia, the textbook term and the English term. Honestly: the checker in our demo is a simple rule, not yet a live language model; the Odia is a draft no teacher has reviewed; we have tested it in a browser and not yet on phones. What we built and tested is the workflow around that checker."
@@ -35,7 +42,7 @@ Written 13 October 2026. These scripts say only what the evidence supports. Ever
 | 0:20–1:00 | "Observe state, propose a diagnosis, validate it, update state, choose the next action, write the reason. Proposer is a swappable slot; validator is an allow-list; only two functions write state." | `docs/SYSTEM_ARCHITECTURE.md` diagram, two boxes (phone and server) |
 | 1:00–1:50 | "Submit → local rule → validator → save → queue entry → planner picks next question and explains why." | Answer EL01 option A with a typed reason; open **Agent decision trace** |
 | 1:50–2:30 | "Offline: same loop with the network off. The re-check waits; five bounded tries, then paused with Retry now." | Browser offline switch; answer; show "pending re-checks 1"; turn network on |
-| 2:30–3:00 | "Evidence: 182 unit tests, 95 browser checks in headless Chromium, 462 accessibility checks. Not on phones. No live model call yet." | `evidence/iteration5/baseline/` folder |
+| 2:30–3:00 | "Evidence: 207 unit tests, 100 browser checks in headless Chromium, 462 accessibility checks. Not on phones. No live model call yet." | `evidence/iteration6/final/` folder |
 
 ## C. Seven-minute final presentation and live demo
 
@@ -51,7 +58,7 @@ Based on the story order in the Iteration 5 brief: problem and persona → solut
 | 2:00–2:45 | 4. Architecture | "Almost everything runs on the phone. The server serves files and the question pack and does the second check. The model slot sits behind a validator. The model can never write the learner's state." | Show `SYSTEM_ARCHITECTURE.md` Mermaid diagram (phone box, server box, dashed model box) | Skip the table; point at three arrows |
 | 2:45–4:15 | 5. Live learning loop | "Question one. I pick the wrong option and give a reason." | (1) Show why EL01 was first on the plan card. (2) Pick option **A**, type "The current keeps building up in the wire." (3) Press **Check my thinking**. (4) Read "Possible concept gap — provisional" and the "Next learning action". (5) Open **Agent decision trace**. (6) Point at **Continue to EL02 →** and say it does not move by itself. | Headless runs recommended EL02 after answering EL01 with A. If your screen shows another, say what it shows and why (the plan card states the reason). |
 | 4:15–5:30 | 6. Offline, reconnect, Bridge Practice | "Now I lose the network." | (1) DevTools **Network → Offline**; pill says OFFLINE. (2) Press **Continue**, answer the next question; point to "Saved offline · re-check queued" and "pending re-checks 1". (3) Do **Bridge Practice**: pick a pair, read the feedback, **Reveal the source mapping**, then show the trace line with `network:false`. (4) Network back **Online**; wait for "Re-check processed · MOCK"; point at the plan card's updated recommendation and say the open question and typed text did not move. | The re-check may take a few seconds. Fill the time with the trace explanation. |
-| 5:30–6:10 | 7. Evidence | "182 unit tests, 95 browser checks, 462 accessibility checks. All in headless Chromium on Linux. The team's own managed machine blocked browsers by policy, so those are recorded as blocked. Evaluation: 47 English cases we wrote; 34 agree with our labels; the rule abstained on only 2 of 12 unclear cases. That is a weakness we know." | Slide of the evidence table (numbers from `evidence/iteration5/baseline/`) | Do not add numbers that are not on the slide |
+| 5:30–6:10 | 7. Evidence | "207 unit tests, 100 browser checks, 462 accessibility checks. All in headless Chromium on Linux. The team's own managed machine blocked browsers by policy, so those are recorded as blocked. Evaluation: 47 English cases we wrote; 34 agree with our labels; the rule abstained on only 2 of 12 unclear cases. That is a weakness we know." | Slide of the evidence table (numbers from `evidence/iteration6/final/`) | Do not add numbers that are not on the slide |
 | 6:10–7:00 | 8. Limits and next | "Before you ask: the diagnosis here is a rule; no live model call has been made; the Odia is a draft no teacher has reviewed; no phone has run it; the code was built with AI assistance on 12–13 October, before the event window, and we are being open about that. Next: teacher review, phones, an Odia evaluation. Closing line A5." | Slide: three limits, three next steps | — |
 
 **Do not say during the demo:** "fully offline", "works on all phones", "understands what the child wrote", "the AI explains", "teacher-approved".
@@ -62,7 +69,7 @@ The event page says the checkpoint covers a GitHub commit audit, a working agent
 
 | Time | Show | Say |
 |---|---|---|
-| 0:00–0:25 | GitHub (or `git log`): the history | "Full history, nothing rewritten. It began from an AI-generated archive on 12 Oct (hash in the first commit message). Every commit is authored by the AI-assisted build; here is what each of us did: *[team: fill in truthfully]*. We are asking the organisers to confirm in writing how pre-event work is treated under rule 4.1." |
+| 0:00–0:25 | GitHub (or `git log`): the history | "Full history, nothing rewritten. It began from an AI-generated archive on 12 Oct (hash in the first commit message). Every commit is authored by the AI-assisted build; here is what each of us did: *[team: fill in truthfully]*. The team reports that the organisers allowed early work (team-reported; the saved message is not in the repository), and rule 4.1 says code is built during competition hours, so we say it openly." |
 | 0:25–1:15 | Live: answer EL01 option A with a reason, open the trace | "Observe, propose, validate, act, plan, trace." |
 | 1:15–1:40 | Network offline → answer → online | "Queued, re-checked, replanned." |
 | 1:40–2:00 | Architecture diagram | "Phone box, server box, model slot behind a validator." |
@@ -103,4 +110,4 @@ Keep the provider on **mock** for every phone and stage demo unless a live run h
 
 ## G. Rehearsal record
 
-The 8-step story (unlock; why this question; answer and diagnosis; airplane mode; queue and restore; re-check, failure, replanning; Bridge Practice offline; provider status and limits) is mapped to the automated checks that exercised each step in `evidence/iteration5/final/REHEARSAL_MAPPING.md`. That mapping is **headless Chromium evidence only**; a human rehearsal on the event laptop and phone is **NOT DONE** and should be done and timed before the event.
+The 8-step story (unlock; why this question; answer and diagnosis; airplane mode; queue and restore; re-check, failure, replanning; Bridge Practice offline; provider status and limits) is mapped to the automated checks that exercised each step in `evidence/iteration6/final/REHEARSAL_MAPPING.md` (updated from the Iteration 5 mapping in `evidence/iteration5/final/`). That mapping is **headless Chromium evidence only**; a human rehearsal on the event laptop and phone is **NOT DONE** and should be done and timed before the event.

@@ -124,7 +124,7 @@ function renderQuestion() {
     <div class="language-draft-block" lang="or"><div class="language-draft-label">ODIA QUESTION · UNREVIEWED DRAFT</div><p>${esc(item.promptOdiaDraft || '[Odia wording needs review]')}</p></div>
     <form id="answer-form">
       <fieldset class="option-list"><legend class="field-heading"><label>Choose the answer that best fits your reasoning</label><span class="optional-tag">Select one</span></legend>${options}</fieldset>
-      <div class="explanation-block"><div class="field-heading"><label for="explanation-input">How would you explain your choice?</label><span class="optional-tag">Optional, but helpful</span></div><textarea id="explanation-input" class="explanation-input" maxlength="1000" ${disabled} placeholder="Type in your own words. This mock does not interpret the explanation.">${esc(draft.explanation)}</textarea><div class="form-footer"><span class="form-hint">${awaitingContinue ? 'Review the feedback and remediation below, then continue to the recommended activity.' : 'Any result is provisional. The configured provider’s Odia understanding has not been validated.'}</span><button id="submit-answer" class="primary-button" type="submit" ${draft.optionId && ui.writable && !awaitingContinue ? '' : 'disabled'}>Check my thinking <span aria-hidden="true">→</span></button></div></div>
+      <div class="explanation-block"><div class="field-heading"><label for="explanation-input">How would you explain your choice?</label><span class="optional-tag">Optional, but helpful</span></div><textarea id="explanation-input" class="explanation-input" maxlength="1000" ${disabled} placeholder="${explanationPlaceholder()}">${esc(draft.explanation)}</textarea><div class="form-footer"><span class="form-hint">${awaitingContinue ? 'Review the feedback and remediation below, then continue to the recommended activity.' : 'Any result is provisional. The configured provider’s Odia understanding has not been validated.'}</span><button id="submit-answer" class="primary-button" type="submit" ${draft.optionId && ui.writable && !awaitingContinue ? '' : 'disabled'}>Check my thinking <span aria-hidden="true">→</span></button></div></div>
     </form>
     ${prior ? `<div class="result-card"><div class="result-kicker">LATEST ATTEMPT · ${esc(prior.mode.replaceAll('_', ' '))}</div><h4 class="result-title">${prior.diagnosis.type === 'UNCERTAIN' ? 'Let’s clarify your thinking' : prior.diagnosis.type === 'NONE' ? 'Answer key match (not independently verified)' : 'Possible concept gap — provisional'}</h4><p class="result-text">${esc(prior.diagnosis.rationale)} ${prior.mode.includes('GROQ') ? 'This hosted-model proposal remains provisional and has not been evaluated for learning accuracy.' : 'This result is from a deterministic demo rule, not semantic understanding of the explanation.'}</p><div class="result-action"><strong>Next learning action</strong><br>${esc(item.remediation)}</div></div>` : ''}`;
 
@@ -299,11 +299,19 @@ function renderTrace() {
   }).join('') : `<p class="trace-main">No decisions recorded yet.</p>`;
 }
 
+function explanationPlaceholder() {
+  return ui.provider === 'groq'
+    ? 'Type in your own words. When the check runs it is sent to the server and on to the configured hosted model; that model’s accuracy has not been validated.'
+    : 'Type in your own words. This mock does not interpret the explanation.';
+}
+
 function renderConnection() {
   const pill = $('connection-pill');
   pill.classList.toggle('online', ui.reachable);
   pill.classList.toggle('offline', !ui.reachable && !ui.probing);
   $('connection-label').textContent = ui.probing ? 'Checking connection' : ui.reachable ? 'ONLINE · sync available' : 'OFFLINE · local mode';
+  const explanationBox = document.getElementById('explanation-input');
+  if (explanationBox) explanationBox.placeholder = explanationPlaceholder();
   $('provider-label').textContent = ui.provider === 'groq' ? `CONFIGURED · GROQ${ui.model ? ` · ${ui.model}` : ''} · ACCURACY UNVALIDATED` : 'MOCK PROVIDER · DEMO RULES · NO LIVE AI';
 }
 

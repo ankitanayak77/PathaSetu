@@ -4,7 +4,7 @@ Purpose: show the demo on real phones (iPhone Safari needs HTTPS) without leavin
 
 **What this is not.** The access code is lightweight demo protection for a private, short-lived tunnel. It is **not** production-grade authentication: one shared code, in-memory throttling that resets on restart, no user accounts, no audit log. Nothing in this repository has been deployed, no tunnel or host account was created, and no public endpoint was opened while writing this document. Every command below that runs on your own computer was executed locally against this build (see `evidence/iteration4/final/runbook-dry-run.txt`); the tunnel/host step itself is yours and has **not** been run.
 
-**Iteration 5 gate status (13 Oct 2026).** The real tunnel step is still **BLOCKED / NOT TESTED**: the build sandbox has no tunnel tool, account or outbound route to one, so nothing here was run against a real HTTPS origin and no iPhone Safari result exists. Only the local preflight with a placeholder origin was re-run (`evidence/iteration5/gates/`). Record real results in `PHONE_TEST_RESULTS_TEMPLATE.csv`; do not treat this runbook as validated until you have.
+**Iteration 5 gate status (13 Oct 2026).** The real tunnel step is still **BLOCKED / NOT TESTED**: the build sandbox has no tunnel tool, account or outbound route to one, so nothing here was run against a real HTTPS origin and no iPhone Safari result exists. Only the local preflight with a placeholder origin was re-run (`evidence/iteration5/gates/`). Iteration 6 (13 Oct 2026) re-checked this: still no tunnel tool or account, so the gate remains **BLOCKED / NOT TESTED** and the simulated dry run is not a deployment test. Record real results in `PHONE_TEST_RESULTS_TEMPLATE.csv`; do not treat this runbook as validated until you have.
 
 **Hosting requirement.** The server is one long-running Node process (`src/server/server.js`, Node 20+). It keeps rate-limit counters in memory, reads the static app from disk and serves `/api/*` from the same process. It therefore needs a host that runs an ordinary persistent Node process, or a tunnel/reverse proxy in front of one on your own computer. It does **not** work as a serverless function, an edge worker or a static-only site (no process to hold the counters, no `/api/*`). Do not pick a platform that only offers those.
 
@@ -157,7 +157,7 @@ Do not run Groq behind the tunnel for the phone tests; the offline and reconnect
 | Page loads, re-check fails with 403 | Host-rewriting tunnel; list the exact origin (section 4). |
 | Unlock dialog says "Too many attempts" | the failure budget is used up for this client; wait the stated seconds, or enter the correct code, which is still accepted. |
 | Learner screen empty in production | `PATHASETU_ALLOW_DRAFT_DEMO=true` is missing (no item is reviewed and published). |
-| Phone keeps showing an old screen after an update | the app shell is cached by the service worker (cache `pathasetu-shell-v7`); close all tabs of the app, reload twice, or clear site data. |
+| Phone keeps showing an old screen after an update | the app shell is cached by the service worker (cache `pathasetu-shell-v8`); close all tabs of the app, reload twice, or clear site data. |
 | Mixed-content or "not secure" warning | the phone is not on the HTTPS address. |
 
 ## 12. What passing this runbook does and does not establish

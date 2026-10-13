@@ -25,7 +25,7 @@ flowchart TB
     RC["Repair on load<br/>recovery.js"]
     PS["Persistent-storage request<br/>persistence.js"]
     EX["Trace export JSON<br/>export.js, typed text removed"]
-    SW["Service worker + Cache Storage<br/>sw.js cache pathasetu-shell-v7<br/>app shell and listed core modules,<br/>never /api/*"]
+    SW["Service worker + Cache Storage<br/>sw.js cache pathasetu-shell-v8<br/>app shell and listed core modules,<br/>never /api/*"]
     SS[("sessionStorage<br/>demo access code, this tab only")]
   end
 
@@ -125,7 +125,7 @@ Failure and recovery paths are in the diagram as well as the happy path: *server
 | Persistent-storage request | Ask the browser not to clear data | `src/core/persistence.js` | `navigator.storage` | status text | requester (once per page) | `saveRecord` | Unsupported/denied/error shown without promising retention | `storage-resilience.test.js`; e2e |
 | Bridge Practice | Offline matching exercise | `src/core/bridge.js`; UI in `app.js` | pack, item, attempt count | 3 options, one correct | `learner.bridgeAttempts[itemId]` | `renderBridgePractice` | Disabled with a stated reason if the item has no complete mapping or fewer than 3 distinct mappings exist | `bridge.test.js`; e2e K |
 | Trace export | Evidence download | `src/core/export.js` | state, provider, storage status | JSON (format 2) with typed text removed and secrets redacted | none | Download button | Redaction patterns for API keys, bearer tokens, code header, known secrets | `storage-resilience.test.js`; e2e S |
-| Service worker | Offline shell | `public/sw.js` | requests | cached or live responses | Cache Storage `pathasetu-shell-v7` | the browser | Navigation falls back to the cached `/index.html`; `/api/*` and non-GET are never touched | `uiStatic.test.js`; e2e E1, H1, I1, I2 |
+| Service worker | Offline shell | `public/sw.js` | requests | cached or live responses | Cache Storage `pathasetu-shell-v8` | the browser | Navigation falls back to the cached `/index.html`; `/api/*` and non-GET are never touched | `uiStatic.test.js`; e2e E1, H1, I1, I2 |
 | Server and routes | Serve files, four API routes | `src/server/server.js` | HTTP | files, JSON | in-memory rate counters (per route and socket address, capped at 2048 entries) | the browser | 400/401/403/404/405/413/422/429/502/504 as listed in section 5 | `server.test.js`, `access-policy.test.js`, `public-demo.test.js`, `proxy-origin.test.js`; capture |
 | Access control | Demo gate | `src/server/access.js`, `server.js` | `x-pathasetu-demo-code`, `Origin`, `Host` | allow, 401, 403, 429 | failed-attempt window (default 20 per 60 s per client) | routes | Correct code is never refused by the failed-attempt window; counters reset on restart | `access-policy.test.js`, `public-demo.test.js`, `proxy-origin.test.js`; e2e M, T |
 | Mock provider (server) | Default second opinion | `mockModel.js` | body of `/api/recheck` | diagnosis | none | `getDiagnosis` | — | `server.test.js`; capture |

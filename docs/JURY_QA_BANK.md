@@ -9,7 +9,7 @@ Written 13 October 2026. 126 anticipated questions in the order the team listed 
 
 Short spoken answers should be learned. The technical lines should be understood, not memorised. If you do not know, say "that is not tested yet" — every `NOT TESTED` below is true on 13 Oct 2026.
 
-Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_Statement_BW.pdf>, event page <https://www.nirmit.space/events/nextech>, rules <https://www.nirmit.space/rules>. Test numbers: 182 unit tests, 19 capture checks, 95 browser checks and 462 accessibility checks were run on 13 Oct 2026 in a Linux sandbox with headless Chromium 141 and Node 22.22.0 (`evidence/iteration5/baseline/`); after the Iteration 5 document tests the unit total is 198 (`evidence/iteration5/final/`). None of this ran on a phone.
+Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_Statement_BW.pdf>, event page <https://www.nirmit.space/events/nextech>, rules <https://www.nirmit.space/rules>. Test numbers (Iteration 6 final): 207 unit tests, 19 capture checks, 100 browser checks and 462 accessibility checks, run on 13 Oct 2026 in a Linux sandbox with headless Chromium 141 and Node 22.22.0 (`evidence/iteration6/final/`). Earlier figures are history: Iteration 5 final had 198 unit tests and 95 browser checks, and the Iteration 4 baseline had 182 unit tests (`evidence/iteration5/`). None of this ran on a phone, and browser navigation was blocked on the team's managed machine and in a second audit environment, so those browser results are not reproduced there.
 
 ## Problem and user
 
@@ -82,10 +82,10 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 ## Solution and benefits
 
 ### Q12. What is Pathasetu and why that name?
-**Say:** A phone-first helper for Class 10 Electricity. The name joins "path" and "bridge" — a bridge on the learner's path between home language, textbook language and English.
-**Technical:** The words *patha* and *setu* are Sanskrit-origin words used in Odia. The repository does not record the team's own rationale for the name.
-**Evidence:** `public/index.html` (the header reads "A bridge to understanding"); rationale for the name: **unknown** — confirm with the team.
-**Avoid / status:** Do not invent a story about the name; say what you know.
+**Say:** Our intended meaning for Pathasetu is a bridge for learning between languages: everyday Odia, school terminology and English science terms. We use the name to express the product's purpose; we are not claiming a formally verified literal translation.
+**Technical:** As we read the words, *patha* is path and *setu* is bridge. The meaning is the team's stated intent, recorded here as the team's own explanation. The etymology has not been checked with a qualified language source, and the app shows the same idea as its tagline ("A bridge to understanding").
+**Evidence:** team-reported intent; `public/index.html` (the header reads "A bridge to understanding"); `docs/PROJECT_GUIDE_PLAIN_LANGUAGE.md` section 2.1.
+**Avoid / status:** Do not call it a dictionary translation or an authoritative etymology. Do not say the name was reviewed by a language expert.
 
 ### Q13. Show the complete user journey in 30 seconds.
 **Say:** Open the page, unlock with the code, read the question, pick an answer, type why, tap Check my thinking. See the possible gap and the next step. Switch off the network, answer another question, see it queued, switch on, see the re-check and the new plan.
@@ -102,7 +102,7 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 ### Q15. What benefit is implemented, what is expected, and what is measured?
 **Say:** Implemented: saved answers, queue, diagnosis labels, bridge practice, trace. Expected: faster misconception repair. Measured: only software tests — nothing about learners.
 **Technical:** See the table in guide section 5.
-**Evidence:** implemented/unit/browser as in the claim matrix; measured result: 182 unit tests etc.; learning gain: **none measured**.
+**Evidence:** implemented/unit/browser as in the claim matrix; measured result: 207 unit tests etc.; learning gain: **none measured**.
 **Avoid / status:** Never "increases scores". Safer: "we have not measured learning outcomes".
 
 ### Q16. How can it help a learner who gets a question wrong?
@@ -296,14 +296,14 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 **Avoid / status:** The checker validates structure, not correctness. All 8 items are `UNREVIEWED_DRAFT`.
 
 ### Q47. What is IndexedDB in simple terms and what records does it store?
-**Say:** It is a small database inside the browser. It keeps the learner's progress on their own phone.
+**Say:** It is a small database inside the browser. When browser storage works, it keeps the learner's progress, drafts and waiting re-checks on their own phone. The typed explanation is still sent to the Pathasetu server whenever a re-check runs (Q89).
 **Technical:** Database `pathasetu-local-v1`, store `records`. Key `session` holds `{pack, state, drafts, savedAt}`, where state has `learner`, `answers`, `queue`, `trace`, `schemaVersion`, `lastUpdated`; drafts are keyed by question ID. Key `session-unreadable-backup` holds a copy of a record that could not be read. If IndexedDB is unavailable the code uses an in-memory copy and says so on screen.
 **Evidence:** `src/core/storage.js`; `tests/storage.test.js`; e2e L, P, R.
 **Avoid / status:** Browsers can clear it; the app says it is best effort and never promises retention.
 
 ### Q48. What is a service worker and what files does it cache?
 **Say:** A small script that sits between the page and the network so the page can open without a connection. It keeps the app's own files; it never keeps any answers from the server.
-**Technical:** `public/sw.js`, cache name `pathasetu-shell-v7`. Pre-cached: `/`, `/index.html`, `/styles.css`, `/app.js`, `/manifest.webmanifest`, `/favicon.svg` and the core modules `agent`, `mockModel`, `validator`, `storage`, `bridge`, `retry`, `recovery`, `export`, `persistence`. It ignores `/api/*` and non-GET requests; navigations fall back to cached `/index.html`.
+**Technical:** `public/sw.js`, cache name `pathasetu-shell-v8`. Pre-cached: `/`, `/index.html`, `/styles.css`, `/app.js`, `/manifest.webmanifest`, `/favicon.svg` and the core modules `agent`, `mockModel`, `validator`, `storage`, `bridge`, `retry`, `recovery`, `export`, `persistence`. It ignores `/api/*` and non-GET requests; navigations fall back to cached `/index.html`.
 **Evidence:** `public/sw.js`; `tests/uiStatic.test.js` (fails if a module imported by the browser is missing from the list); e2e E1, H1, I1, I2.
 **Avoid / status:** Verified in headless Chromium only. iPhone Safari and Samsung Internet behaviour: **NOT TESTED**.
 
@@ -413,7 +413,7 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 
 ### Q66. What happens when the service worker detects an update?
 **Say:** The page shows "App update ready — reload once to apply it". Your saved progress stays.
-**Technical:** `registration.update()` on load and when the tab becomes visible; a `controllerchange` after the first install is treated as an update (the very first install is ignored). The new worker uses cache `pathasetu-shell-v7`; older `pathasetu-shell-*` caches are deleted on activate.
+**Technical:** `registration.update()` on load and when the tab becomes visible; a `controllerchange` after the first install is treated as an update (the very first install is ignored). The new worker uses cache `pathasetu-shell-v8`; older `pathasetu-shell-*` caches are deleted on activate.
 **Evidence:** `public/app.js`, `public/sw.js`; e2e A4, I1, I2.
 **Avoid / status:** Needs a second deployed build to test on a phone (phone step 16: **NOT TESTED**).
 
@@ -507,7 +507,7 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 
 ### Q81. What has passed in headless Chromium and what has run on a physical device?
 **Say:** All of the automated tests passed in headless Chromium on Linux. Nothing has run on a physical phone.
-**Technical:** 182 unit/static tests; 19 capture checks; 95 browser regression checks; 462 accessibility checks, all on 13 Oct 2026 (Node 22.22.0, Chromium 141.0.7390.37). Separately the team reported that on its managed machine the capture browser journey and e2e were blocked by browser policy (`ERR_BLOCKED_BY_ADMINISTRATOR`); that is recorded as BLOCKED, not as a pass.
+**Technical:** 207 unit/static tests; 19 capture checks; 100 browser regression checks; 462 accessibility checks, all on 13 Oct 2026 (Node 22.22.0, Chromium 141.0.7390.37; Iteration 5 had 198 and 95). Separately the team reported that on its managed machine the capture browser journey and e2e were blocked by browser policy (`ERR_BLOCKED_BY_ADMINISTRATOR`), and a second audit environment saw the same; that is recorded as BLOCKED, not as a pass.
 **Evidence:** `evidence/iteration5/baseline/`; `docs/PHONE_TEST_RESULTS_TEMPLATE.csv` (161 rows, all `NOT TESTED`).
 **Avoid / status:** Do not say "tested on mobile". Say "tested in headless Chromium with mobile-sized viewports".
 
@@ -618,8 +618,8 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 ## Testing and evaluation
 
 ### Q99. How many unit, browser, capture, accessibility and preflight checks passed in the exact current tree?
-**Say:** 182 unit tests, 95 browser checks, 19 capture checks, 462 accessibility checks, and preflight passes — at the Iteration 5 baseline. The final count with the new document tests is in the final evidence folder.
-**Technical:** Baseline (commit 937d42e code, run 13 Oct 2026 08:06–08:11 UTC): `npm test` 182/182; `npm run capture` 19 passed, 0 failed, 0 blocked; `npm run e2e` 95 passed, 0 failed; `npm run a11y` 33 state/viewport combinations, 462 checks, 0 failed; `check`, `check:content`, `preflight` exit 0. Final: unit total 198 (`evidence/iteration5/final/`).
+**Say:** 207 unit tests, 100 browser checks, 19 capture checks, 462 accessibility checks, and preflight passes — all in a Linux sandbox, none on a phone. Older figures (182 at the Iteration 4 baseline, 198 at Iteration 5) are history.
+**Technical:** Iteration 6 final (`evidence/iteration6/final/`): `npm test` 207/207; `npm run capture` 19 passed, 0 failed, 0 blocked; `npm run e2e` 100 passed, 0 failed; `npm run a11y` 33 state/viewport combinations, 462 checks, 0 failed; `check`, `check:content`, `preflight` exit 0. Iteration 6 baseline on the untouched Iteration 5 tree reproduced 198 unit tests, 95 browser checks and the rest (`evidence/iteration6/baseline/`). Iteration 4 baseline: 182 unit tests.
 **Evidence:** `evidence/iteration5/baseline/exit-codes.txt` and the `npm-*.txt` files.
 **Avoid / status:** Always quote the environment with the number (Q100).
 
@@ -632,8 +632,8 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 ### Q101. What does a unit test prove and what does it not prove?
 **Say:** It proves a piece of code does what we wrote it to do in a controlled case. It does not prove the app is useful or works on a phone.
 **Technical:** Unit tests here call functions with fixed inputs (for example `validateDiagnosis` with an unlisted ID) and also run the real server on a loopback port. They do not exercise a browser, a real network, a provider or a learner.
-**Evidence:** `tests/*.test.js` (182 at baseline).
-**Avoid / status:** Do not use "182 tests passed" as evidence of quality of education or Odia.
+**Evidence:** `tests/*.test.js` (207 in the Iteration 6 final run).
+**Avoid / status:** Do not use "207 tests passed" as evidence of quality of education or Odia.
 
 ### Q102. What does a headless browser test prove and what does it not prove?
 **Say:** That the page behaves as scripted in a real browser engine, including going offline. It is not a phone and not a person.
@@ -743,7 +743,7 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 
 ### Q119. What is the strongest technically evidenced feature?
 **Say:** The loop that keeps working through failure: answers are saved, queued, retried with a limit, recovered after a restart or corrupt state, and every step is traced.
-**Technical:** 182 unit tests and 95 browser checks cover duplicate submits, two tabs, offline reload, cold-start recovery, provider failures and timeouts, paused retries, storage failure and corrupt state (headless Chromium).
+**Technical:** 207 unit tests and 100 browser checks cover duplicate submits, two tabs, offline reload, cold-start recovery, provider failures and timeouts, paused retries, storage failure and corrupt state (headless Chromium).
 **Evidence:** `tests/retry.test.js`, `storage-resilience.test.js`; e2e C–R. browser-tested, **not phone-tested**.
 **Avoid / status:** "Evidenced in headless tests" is the honest phrase.
 
@@ -792,14 +792,14 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 ## Further questions found in the repository and the official rules
 
 ### Q127. Was the code built during the competition hours?
-**Say:** No. Most of it was built on 12–13 October with AI assistance, before the event. The rules say code must be built during competition hours. We are telling the organisers openly and we have not confirmed their permission in writing.
-**Technical:** The rules page (section 4.1) says all code and architecture must be built during the competition hours, forbids templates and pre-built repositories, and says GitHub plagiarism scanners and commit-timeline analysers are used. The event page says repositories are audited by commit diffs. The BUILD_STATUS note records a verbal organiser permission that is not confirmed in writing. Commit dates 12–13 Oct 2026 are visible and unaltered.
-**Evidence:** official rule/brief — <https://www.nirmit.space/rules> and event page; `docs/BUILD_STATUS.md` Provenance; `git log --date=iso`.
-**Avoid / status:** This is a disqualification-level risk if mishandled. Get written confirmation, and state the facts plainly. Do not say "permission was granted" without a document. **Status: unresolved.**
+**Say:** No. Most of it was built on 12–13 October with AI assistance, before the event, and the commit dates show that. The rules say code must be built during competition hours. The team reports that the organisers allowed early work; that is team-reported, and we have no saved message to show you.
+**Technical:** The rules page (section 4.1) says all code and architecture must be built during the competition hours, forbids templates and pre-built repositories, and says GitHub plagiarism scanners and commit-timeline analysers are used. The event page says repositories are audited by commit diffs. `docs/BUILD_STATUS.md` records the organiser clarification as team-reported. Commit dates 12–13 Oct 2026 are visible and unaltered; every commit is authored "Claude (AI-assisted build)".
+**Evidence:** official rule/brief — <https://www.nirmit.space/rules> and event page; team-reported clarification; `docs/BUILD_STATUS.md` Provenance; `git log --date=iso`.
+**Avoid / status:** This is a high-risk topic, so state the facts plainly and keep the dates visible. Do not say "the organisers approved it in writing" unless a saved message is added to the repository. **Status: team-reported; not inspectable here.**
 
 ### Q128. What if two learners share the same phone?
-**Say:** Today they would share one saved record, which is a real gap, since the official example is a shared family phone. Learner profiles are not built.
-**Technical:** One IndexedDB record under the key `session`; no profile selector, no PIN, no way to separate learners. A second learner's answers would add to the first's state and the planner would treat them as one person.
+**Say:** Today they would share one saved record, which is a real gap, since the official example is a shared family phone. Learner profiles are not built, so the app does not safely separate several learners.
+**Technical:** One local session record in IndexedDB under the key `session`; no profile selector, no PIN, no way to separate learners. A second learner's answers would add to the first's state and the planner would treat them as one person.
 **Evidence:** `src/core/storage.js`; `public/app.js`. **NOT IMPLEMENTED.**
 **Avoid / status:** Do not say it supports shared devices. It supports a device with weak connectivity; sharing is an unaddressed part of the brief.
 
@@ -852,10 +852,10 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 **Avoid / status:** Do not promise it.
 
 ### Q137. Why Groq, and is it allowed under the event rules?
-**Say:** Groq is the provider the team has access to and the adapter exists for. We have not used it live, and we haven't confirmed in writing that it is allowed.
-**Technical:** The event page says external open-source LLM API use is permitted and keys must be set through environment variables; the team's note says all APIs are allowed. These wordings differ. The default model name `openai/gpt-oss-20b` is an open-weight model served by Groq as far as we know; confirm before saying so. A free Gemini tier may train on submitted content, so it is not used for learner text.
-**Evidence:** official rule/brief — event page; `docs/BUILD_STATUS.md` Limits. eligibility: **unknown / unconfirmed**.
-**Avoid / status:** Do not say "the rules allow Groq" without the organiser's confirmation.
+**Say:** Groq is the provider the team has access to and the adapter is built for. We have not used it live. The team reports that the organisers said any API may be used; that is team-reported, and the event page's own wording is narrower.
+**Technical:** The event page says external open-source LLM API use is permitted and keys must be set through environment variables; the team's reported clarification says all APIs are allowed. Quote them separately. The default model name `openai/gpt-oss-20b` is an open-weight model served by Groq as far as we know. A free Gemini tier may train on submitted content, so it is not used for learner text.
+**Evidence:** official rule/brief — event page; team-reported clarification; `docs/BUILD_STATUS.md` Limits. Live use: **not run (BLOCKED, no credentials)**.
+**Avoid / status:** Do not say "the rules allow Groq" as if it were written on the event page; say what the page says and that the broader permission is team-reported.
 
 ### Q138. How much data does it use on a weak, expensive connection?
 **Say:** The app is small, about 140 KB of its own files without compression, and loads once. After that the only traffic is a small health check every 15 seconds and a short request for each re-check.
@@ -934,3 +934,10 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 **Technical:** `/api/pack` returns each full item including `correctOptionId`, explanations and remediation; the browser stores it in IndexedDB. A curious learner can read it with developer tools. The server also keeps the key and uses it only in the Groq request context.
 **Evidence:** `src/server/server.js` (`/api/pack`), `content/electricity-pack.json`.
 **Avoid / status:** Do not call it an assessment tool.
+
+### Q151. If a hosted model were switched on, how would the screen and the trace show it, and how do you know?
+**Say:** The footer would read CONFIGURED · GROQ, the model name and ACCURACY UNVALIDATED, the box where she types would say her text goes on to a hosted model, and the saved record would say the re-check came from GROQ. By default it says MOCK PROVIDER · DEMO RULES · NO LIVE AI.
+**Technical:** The labels come from the server's `/api/health` report, not from a setting in the page; each re-checked answer stores `RECHECKED_<PROVIDER>`, and the trace export carries the provider and model. A browser scenario (Q1–Q5) answers `/api/health` and `/api/recheck` with a stub that claims to be Groq and checks the footer, the hint, the result card, the notice and the exported trace. It found and fixed a defect: the answer-box hint used to say "This mock does not interpret the explanation" even for a Groq-configured server.
+**Evidence:** `public/app.js` (`explanationPlaceholder`, `renderConnection`); `scripts/browser-regression.mjs` scenario Q; `tests/iteration6-claims.test.js`; headless Chromium with a stub, **no live model call**.
+**Avoid / status:** The stub proves the labels, not model behaviour. Do not say the app is "LLM-powered": no live request has been made (live Groq is BLOCKED, credentials not configured).
+

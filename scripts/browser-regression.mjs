@@ -548,6 +548,35 @@ await scenario('S', 'the trace export hides typed text and secrets', async () =>
   }, { serverEnv: { NODE_ENV: 'production', PATHASETU_ALLOW_DRAFT_DEMO: 'true', PATHASETU_DEMO_ACCESS_CODE: CODE } });
 });
 
+await scenario('Q', 'provider labels follow what the server reports (stubbed Groq-configured server; no live call)', async () => withEnv(async ({ chrome, base }) => {
+  // /api/health and /api/recheck are answered by the test, so nothing leaves this machine. This proves the labels, not model quality.
+  const MODEL = 'openai/gpt-oss-20b';
+  const page = await pageWithScript(chrome, "(() => { const orig = URL.createObjectURL.bind(URL); URL.createObjectURL = (blob) => { blob.text().then((t) => { window.__exportText = t; }); return orig(blob); }; })();");
+  page.cdp.on('Fetch.requestPaused', async (p) => {
+    const send = (body) => page.cdp.call('Fetch.fulfillRequest', { requestId: p.requestId, responseCode: 200, responseHeaders: [{ name: 'content-type', value: 'application/json' }], body: Buffer.from(JSON.stringify(body)).toString('base64') }).catch(() => {});
+    if (p.request.url.includes('/api/health')) return send({ ok: true, provider: 'groq', model: MODEL, accessRequired: false, publicDemo: false, time: new Date().toISOString() });
+    return send({ provider: 'groq', model: MODEL, diagnosis: { questionId: 'EL01', type: 'UNCERTAIN', misconceptionId: null, confidence: 0.4, rationale: 'Stub response for a label test; not a live model.' }, note: 'stub' });
+  });
+  await page.cdp.call('Fetch.enable', { patterns: [{ urlPattern: '*/api/health*' }, { urlPattern: '*/api/recheck*' }] });
+  await page.goto(`${base}/`);
+  await ready(page);
+  const configured = await page.waitFor(UI, (v) => /GROQ/.test(v.provider), 8000, 'groq provider label');
+  check('Q1', 'when the server reports Groq, the footer names the provider and model and says accuracy is unvalidated', configured.provider.includes('CONFIGURED') && configured.provider.includes(MODEL) && /ACCURACY UNVALIDATED/.test(configured.provider) && !/NO LIVE AI|MOCK/.test(configured.provider), configured.provider);
+  const placeholder = await page.evaluate("document.querySelector('#explanation-input')?.placeholder || ''");
+  check('Q2', 'the answer box no longer says "This mock does not interpret the explanation" when Groq is configured, and says the text goes to a hosted model', !/This mock/i.test(placeholder) && /hosted model/i.test(placeholder), placeholder);
+  await page.evaluate(submitExpr('A', 'Synthetic explanation for the label test.'));
+  await page.waitFor(UI, (v) => v.answers === '1' && v.queue === '0', 12000, 'stubbed groq re-check');
+  const card = await page.evaluate("(() => ({ kicker: document.querySelector('.result-kicker')?.textContent || '', text: document.querySelector('.result-text')?.textContent || '' }))()");
+  check('Q3', 'the latest-attempt card says the re-check came from GROQ and that the hosted-model proposal is provisional, not a demo rule', /RECHECKED GROQ/.test(card.kicker) && /hosted-model proposal remains provisional/.test(card.text) && !/deterministic demo rule/.test(card.text), `${card.kicker} | ${card.text.slice(0, 120)}`);
+  const ui = await page.evaluate(UI);
+  check('Q4', 'the notice names the provider that processed the re-check', /Re-check processed · GROQ/.test(ui.notice), ui.notice.slice(0, 100));
+  await page.evaluate("document.querySelector('#download-trace').click()");
+  const text = await page.waitFor('window.__exportText ?? null', (x) => typeof x === 'string', 5000, 'export captured');
+  let data = null; try { data = JSON.parse(text); } catch { /* checked below */ }
+  check('Q5', 'the exported trace records provider groq, the model and the answer mode RECHECKED_GROQ', data?.provider === 'groq' && data?.model === MODEL && data?.state?.answers?.[0]?.mode === 'RECHECKED_GROQ', `provider=${data?.provider}; model=${data?.model}; mode=${data?.state?.answers?.[0]?.mode}`);
+  allErrors.push(...page.errors);
+}));
+
 await scenario('G2', 'no Web Locks: a visible warning', async () => withEnv(async ({ chrome, base }) => {
   const page = await chrome.newPage();
   await page.cdp.call('Page.addScriptToEvaluateOnNewDocument', { source: "Object.defineProperty(Navigator.prototype, 'locks', { get() { return undefined; }, configurable: true });" });
