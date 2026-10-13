@@ -1,5 +1,5 @@
 {
-  "startedAt": "2026-10-12T18:16:55.733Z",
+  "startedAt": "2026-10-13T04:39:35.908Z",
   "checks": [
     {
       "id": "A1",
@@ -107,7 +107,7 @@
       "id": "L1",
       "title": "the draft is stored in IndexedDB under its own question",
       "passed": true,
-      "detail": "stored={\"optionId\":\"C\",\"explanation\":\"A half-written explanation that must survive a reload.\",\"updatedAt\":\"2026-10-12T18:17:08."
+      "detail": "stored={\"optionId\":\"C\",\"explanation\":\"A half-written explanation that must survive a reload.\",\"updatedAt\":\"2026-10-13T04:39:48."
     },
     {
       "id": "L2",
@@ -221,7 +221,7 @@
       "id": "K8",
       "title": "the trace panel shows the bridge attempts to the learner",
       "passed": true,
-      "detail": "06:17:20 PM | bridge mapping revealed | "
+      "detail": "10:10:00 AM | bridge mapping revealed | "
     },
     {
       "id": "K9",
@@ -236,6 +236,234 @@
       "detail": "options changed and the reveal is closed"
     },
     {
+      "id": "M1",
+      "title": "without a code the overlay shows and no draft question is rendered",
+      "passed": true,
+      "detail": "question=\"\""
+    },
+    {
+      "id": "M2",
+      "title": "an unauthorised pack request from the page gets 401 with no content",
+      "passed": true,
+      "detail": "status=401"
+    },
+    {
+      "id": "M3",
+      "title": "a wrong code is refused and the overlay stays",
+      "passed": true,
+      "detail": "That session code was not accepted."
+    },
+    {
+      "id": "M4",
+      "title": "the right code unlocks the overlay and loads the first question without a reload",
+      "passed": true,
+      "detail": "QUESTION EL01 · CLOSED CIRCUIT"
+    },
+    {
+      "id": "M5",
+      "title": "a reload in the same tab keeps working through the session-held code",
+      "passed": true,
+      "detail": "QUESTION EL01 · CLOSED CIRCUIT"
+    },
+    {
+      "id": "M6",
+      "title": "an authorised answer is re-checked by the protected route",
+      "passed": true,
+      "detail": "✓\nRe-check processed · MOCK\n1 queued re-check processed. The result remains prov"
+    },
+    {
+      "id": "M7",
+      "title": "the code lives only in session storage: not in IndexedDB and not in localStorage",
+      "passed": true,
+      "detail": "{\"inDb\":false,\"inLocal\":false,\"inSession\":true}"
+    },
+    {
+      "id": "N1",
+      "title": "automatic attempts stop at the configured maximum and a persistent paused status with Retry now appears",
+      "passed": true,
+      "detail": "re-check POSTs=3; status=\"Re-check paused · needs attention Pathasetu stopped retrying automatically after 3 failed attempts. \""
+    },
+    {
+      "id": "N2",
+      "title": "reachability events and time passing cause no further automatic attempts",
+      "passed": true,
+      "detail": "re-check POSTs after 4 s=3"
+    },
+    {
+      "id": "N3",
+      "title": "the answer and the queue entry are still saved, flagged as needing attention, and no extra session was used",
+      "passed": true,
+      "detail": "queue=1; answers=1; needsAttention=true; attempts=3"
+    },
+    {
+      "id": "N4",
+      "title": "after a reload the paused state is still shown and nothing is retried automatically",
+      "passed": true,
+      "detail": "re-check POSTs=3"
+    },
+    {
+      "id": "N5",
+      "title": "a read-only tab shows the status with Retry now disabled and sends no re-check",
+      "passed": true,
+      "detail": "retryDisabled=true"
+    },
+    {
+      "id": "N6",
+      "title": "a manual retry recovers the queue with exactly one answer, no extra session, and one more request",
+      "passed": true,
+      "detail": "answers=1; sessions=\"9 learning sessions left\"; re-check POSTs=4"
+    },
+    {
+      "id": "N7",
+      "title": "the active question, the draft, the option and the caret are untouched by the retry",
+      "passed": true,
+      "detail": "question=QUESTION EL02 · CLOSED CIRCUIT; option=B; caret=6"
+    },
+    {
+      "id": "N8",
+      "title": "the status disappears after recovery and the trace explains the pause and the manual retry",
+      "passed": true,
+      "detail": "recheck_paused,learner_applied_updated_plan,recheck_manual_retry,recheck_complete"
+    },
+    {
+      "id": "N9",
+      "title": "after the first failure the status says waiting, shows the attempt count and the next try",
+      "passed": true,
+      "detail": "Re-check waiting · attempt 1 of 4 failed Your answer is saved. Next automatic try in about 4 s. Retry now"
+    },
+    {
+      "id": "N10",
+      "title": "no second automatic attempt happens before the backoff has elapsed",
+      "passed": true,
+      "detail": "re-check POSTs=1"
+    },
+    {
+      "id": "N11",
+      "title": "Retry now during the wait recovers immediately, once",
+      "passed": true,
+      "detail": "answers=1; re-check POSTs=2"
+    },
+    {
+      "id": "P1",
+      "title": "IndexedDB open failure: the app still runs, says progress is NOT saved, names the reason and never says \"Saved in this browser\"",
+      "passed": true,
+      "detail": "status=\"Not saved to this device: the browser blocked local storage (SecurityError). Progress is k\""
+    },
+    {
+      "id": "P2",
+      "title": "the learning loop still works in memory and the warning stays",
+      "passed": true,
+      "detail": "answers=1"
+    },
+    {
+      "id": "P3",
+      "title": "a rejected write flips the status to NOT saved with the reason, and a persistent banner appears",
+      "passed": true,
+      "detail": "before=\"Saved in this browser’s IndexedDB on thi\"; after=\"Not saved to this device: the browser blocked local storage (QuotaExce\""
+    },
+    {
+      "id": "P4",
+      "title": "the older durable record is left as it was: the re-check result after the failure is NOT claimed as saved",
+      "passed": true,
+      "detail": "durable queue=1; durable mode=LOCAL_PROPOSAL_PENDING_RECHECK; in-memory queue=0"
+    },
+    {
+      "id": "R1",
+      "title": "a totally unreadable record starts a fresh session with a clear notice instead of crashing",
+      "passed": true,
+      "detail": "answers=0; notice=\"! Saved progress could not be read Pathasetu started a fresh session. \""
+    },
+    {
+      "id": "R2",
+      "title": "the unreadable record is kept under a separate key, not deleted",
+      "passed": true,
+      "detail": "backup state=\"this is not a state object\""
+    },
+    {
+      "id": "R3",
+      "title": "saving works again after recovery and the status says saved",
+      "passed": true,
+      "detail": "errors=0"
+    },
+    {
+      "id": "R4",
+      "title": "partial corruption is repaired: the valid answer and queued re-check survive and the queue drains once",
+      "passed": true,
+      "detail": "answers=1; queue=0"
+    },
+    {
+      "id": "R5",
+      "title": "the repair is recorded in the trace as counts only",
+      "passed": true,
+      "detail": "answer_submitted,saved_state_repaired,recheck_complete"
+    },
+    {
+      "id": "P2.granted.a",
+      "title": "granted: before any answer nothing is requested",
+      "passed": true,
+      "detail": "calls=0; text=\"Persistent storage is requested after your first saved answe\""
+    },
+    {
+      "id": "P2.granted.b",
+      "title": "granted: reported truthfully and requested at most once",
+      "passed": true,
+      "detail": "calls=1; text=\"The browser granted persistent storage. That makes clearing less likely but does\""
+    },
+    {
+      "id": "P2.denied.a",
+      "title": "denied: before any answer nothing is requested",
+      "passed": true,
+      "detail": "calls=0; text=\"Persistent storage is requested after your first saved answe\""
+    },
+    {
+      "id": "P2.denied.b",
+      "title": "denied: reported truthfully and requested at most once",
+      "passed": true,
+      "detail": "calls=1; text=\"Persistent storage was not granted. The browser may clear this data when space i\""
+    },
+    {
+      "id": "P2.unsupported.a",
+      "title": "unsupported: before any answer nothing is requested",
+      "passed": true,
+      "detail": "calls=0; text=\"This browser cannot request persistent storage. It may clear\""
+    },
+    {
+      "id": "P2.unsupported.b",
+      "title": "unsupported: reported truthfully and requested at most once",
+      "passed": true,
+      "detail": "calls=0; text=\"This browser cannot request persistent storage. It may clear this data without w\""
+    },
+    {
+      "id": "P2.failing.a",
+      "title": "failing: before any answer nothing is requested",
+      "passed": true,
+      "detail": "calls=0; text=\"Persistent storage is requested after your first saved answe\""
+    },
+    {
+      "id": "P2.failing.b",
+      "title": "failing: reported truthfully and requested at most once",
+      "passed": true,
+      "detail": "calls=1; text=\"The persistent-storage request failed. Treat saved progress as clearable.\""
+    },
+    {
+      "id": "S1",
+      "title": "the export is valid JSON, marked as draft content, and lists decisions and the trace",
+      "passed": true,
+      "detail": "answers=1; trace=3"
+    },
+    {
+      "id": "S2",
+      "title": "the typed explanation is not exported (only its length)",
+      "passed": true,
+      "detail": "{\"redacted\":true,\"characters\":65}"
+    },
+    {
+      "id": "S3",
+      "title": "no access code, API-key-like string or header value appears in the export",
+      "passed": true,
+      "detail": "scanned the whole file"
+    },
+    {
       "id": "G4",
       "title": "without Web Locks the app shows a persistent single-tab warning",
       "passed": true,
@@ -245,7 +473,7 @@
       "id": "H1",
       "title": "no /api/ response is stored in any cache",
       "passed": true,
-      "detail": "11 cached; api entries=0"
+      "detail": "15 cached; api entries=0"
     },
     {
       "id": "I1",
@@ -324,91 +552,133 @@
     {
       "id": "A",
       "title": "initial load, labels, first visit",
-      "ms": 2400,
+      "ms": 2207,
       "completed": true
     },
     {
       "id": "B",
       "title": "answer, feedback, explicit continue",
-      "ms": 1407,
+      "ms": 1301,
       "completed": true
     },
     {
       "id": "C",
       "title": "offline answer is queued exactly once",
-      "ms": 2158,
+      "ms": 2220,
       "completed": true
     },
     {
       "id": "D",
       "title": "reconnect drains the queue without disturbing a draft",
-      "ms": 2288,
+      "ms": 2261,
       "completed": true
     },
     {
       "id": "E",
       "title": "reload offline, cold start, queue survives",
-      "ms": 3518,
+      "ms": 3406,
       "completed": true
     },
     {
       "id": "L",
       "title": "an unsent draft survives a reload",
-      "ms": 2066,
+      "ms": 2129,
       "completed": true
     },
     {
       "id": "F",
       "title": "missing or stale content cannot strand the learner",
-      "ms": 1230,
+      "ms": 1404,
       "completed": true
     },
     {
       "id": "G",
       "title": "two tabs: read-only second tab, no lost update",
-      "ms": 2976,
+      "ms": 3032,
       "completed": true
     },
     {
       "id": "G3",
       "title": "two tabs: a read-only tab never processes the queue",
-      "ms": 5659,
+      "ms": 5480,
       "completed": true
     },
     {
       "id": "K",
       "title": "Bridge Practice works offline, by keyboard, and is traced",
-      "ms": 1947,
+      "ms": 1970,
+      "completed": true
+    },
+    {
+      "id": "M",
+      "title": "protected draft demo: the code gates content, the UI still works once authorised",
+      "ms": 1816,
+      "completed": true
+    },
+    {
+      "id": "N",
+      "title": "bounded retries: pause, persistence, manual retry, recovery without duplicates",
+      "ms": 12366,
+      "completed": true
+    },
+    {
+      "id": "N2",
+      "title": "bounded retries: the waiting state and an early manual retry",
+      "ms": 1469,
+      "completed": true
+    },
+    {
+      "id": "P",
+      "title": "storage failures are reported honestly",
+      "ms": 2730,
+      "completed": true
+    },
+    {
+      "id": "R",
+      "title": "corrupt saved state recovers without crashing",
+      "ms": 4536,
+      "completed": true
+    },
+    {
+      "id": "P2",
+      "title": "persistent-storage reporting (stubbed browser responses)",
+      "ms": 7103,
+      "completed": true
+    },
+    {
+      "id": "S",
+      "title": "the trace export hides typed text and secrets",
+      "ms": 1485,
       "completed": true
     },
     {
       "id": "G2",
       "title": "no Web Locks: a visible warning",
-      "ms": 1087,
+      "ms": 1234,
       "completed": true
     },
     {
       "id": "H",
       "title": "service worker: shell offline, API never cached",
-      "ms": 1261,
+      "ms": 1355,
       "completed": true
     },
     {
       "id": "I",
       "title": "service worker update is announced and applied",
-      "ms": 3561,
+      "ms": 8098,
       "completed": true
     },
     {
       "id": "J",
       "title": "provider failures leave state consistent and entries retryable",
-      "ms": 11426,
+      "ms": 30700,
       "completed": true
     }
   ],
   "limitation": "Headless Chromium on one machine. Not a physical-phone test, not Samsung Internet, not iPhone Safari, not educational validation.",
-  "browser": "HeadlessChrome/153.0.8010.0",
-  "completedAt": "2026-10-12T18:17:38.720Z",
-  "passCount": 53,
+  "browser": "Chrome/141.0.7390.37",
+  "completedAt": "2026-10-13T04:41:14.216Z",
+  "passCount": 91,
   "failCount": 0
 }
