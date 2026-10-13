@@ -1,0 +1,362 @@
+TAP version 13
+# Subtest: the plan documents every column of the results template, and the template header has not drifted
+ok 1 - the plan documents every column of the results template, and the template header has not drifted
+  ---
+  duration_ms: 6.049149
+  type: 'test'
+  ...
+# Subtest: the plan describes the current access behaviour: public demo mode, the throttle message, and the HTTPS runbook
+not ok 2 - the plan describes the current access behaviour: public demo mode, the throttle message, and the HTTPS runbook
+  ---
+  duration_ms: 1.463523
+  type: 'test'
+  location: '/home/claude/pw/it4/Pathasetu_MVP/tests/handoff-docs.test.js:24:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /PATHASETU_PUBLIC_DEMO/. Input:
+    
+    '# Pathasetu phone verification plan\n' +
+      '\n' +
+      '**Status: no phone has been tested. Every cell in `docs/PHONE_TEST_RESULTS_TEMPLATE.csv` is `NOT TESTED`. Do not mark any device/browser combination tested until a human runs these steps on the actual device.** Use the mock provider for offline tests. The content is unreviewed draft material and must not be used with real learners.\n' +
+      '\n' +
+      '## Record for each run\n' +
+      '\n' +
+      '- Tester and date/time (IST)\n' +
+      '- Exact device model and OS version\n' +
+      '- Browser name and exact version\n' +
+      '- URL/host and whether HTTPS was used\n' +
+      '- Network path: Wi-Fi, mobile data, hotspot, or airplane mode\n' +
+      '- Result per step: PASS / FAIL / BLOCKED / NOT TESTED, with notes\n' +
+      '- Screenshot or screen recording, with no keys, learner identifiers or private text\n' +
+      '\n' +
+      '## Required device matrix\n' +
+      '\n' +
+      '| Device | Browser(s) | Needs | Current status |\n' +
+      '|---|---|---|---|\n' +
+      '| Samsung Galaxy S23 | Chrome, Samsung Internet | HTTPS or `localhost` via USB reverse-forwarding | NOT TESTED |\n' +
+      '| Samsung Galaxy S25 | Chrome, Samsung Internet | HTTPS or `localhost` via USB reverse-forwarding | NOT TESTED |\n' +
+      '| Samsung Galaxy S25 FE | Chrome, Samsung Internet | HTTPS or `localhost` via USB reverse-forwarding | NOT TESTED |\n' +
+      '| iPhone 16 | Safari | **HTTPS is required** (no `localhost` shortcut on the phone) | NOT TESTED |\n' +
+      '\n' +
+      'That is seven device/browser combinations. Each one is tested separately: nothing is inferred from Chrome, from another Samsung model, or from headless Chromium. Installed-app (home-screen) behaviour is a further variant to record, not a substitute for the in-browser run.\n' +
+      '\n' +
+      'Testing these flagship phones does not establish low-end-phone performance.\n' +
+      '\n' +
+      '## 23-step protocol\n' +
+      '\n' +
+      "1. Clear the site's data, open the URL online, wait for load, and record the connection indicator and current question.\n" +
+      '2. Confirm that the service worker has registered where the browser exposes that information. On iPhone, mark this step NOT TESTED if it cannot be observed.\n' +
+      '3. Enable airplane mode and reload. Verify that the app shell, current question and cached content return. Record failure if the app says there is no local pack.\n' +
+      '4. Offline, choose an answer and enter a synthetic agreed explanation. Submit. Verify a local result and a queue count of one.\n' +
+      '5. Disable airplane mode. Verify that the reachability indicator recovers, the re-check queue drains, a clearly labelled MOCK outcome appears, and the next-step recommendation is visible.\n' +
+      '6. Select an option and type a draft with the caret in the middle of the text. Toggle airplane mode on/off three times, then let a queued re-check finish. Verify the text, option, focus and caret position remain on the same question and the on-screen keyboard stays open. (Headless Chromium passes this; a phone may behave differently.)\n' +
+      '7. Type another draft, wait one second, then refresh. The app stores drafts per question in IndexedDB, so the text and option should return on the same question. Record what actually happens; headless Chromium passes, a phone has not been tested.\n' +
+      '8. Queue a synthetic answer offline, close/swipe away the browser, reopen online, and verify automatic queue recovery without a tap.\n' +
+      '9. Open a second tab. Verify that the second tab shows the persistent "Read-only session" banner, its controls (including Bridge Practice) are disabled, and it sends no re-check request. If the browser has no Web Locks, verify the persistent "Single-tab protection unavailable" warning instead; do not claim multi-tab protection in that case.\n' +
+      '10. Repeat the main journey in each required browser; do not infer Samsung Internet or Safari behavior from Chrome.\n' +
+      '11. Type a short synthetic phrase using the on-device Odia script keyboard and transliteration keyboard where available. Check rendering and caret position. This tests input rendering, not linguistic correctness.\n' +
+      '12. Repeat a queued re-check using venue Wi-Fi and mobile hotspot; record actual time-to-recheck rather than estimating it.\n' +
+      '13. Use Download Trace JSON. Verify the file is saved and inspect it for accidental secrets or sensitive information before retaining it.\n' +
+      '14. Bridge Practice offline: with airplane mode on, check that three term-pair options appear with the UNREVIEWED DRAFT badge and the school and English terms hidden in the Language Bridge card. Choose each option, confirm immediate feedback, reveal the source mapping, press Try another, and confirm no network is needed. Open the trace and confirm the attempts are listed.\n' +
+      '15. Bridge Practice input: operate it by touch; where a hardware keyboard or screen reader is available, also by keyboard (Tab, Enter or Space) and by screen reader. Record what works. Odia text must render, not appear as boxes.\n' +
+      '16. Update behaviour: after deploying a new build, open the installed app online. Verify an "App update ready" notice appears once (not on the very first visit) and one reload runs the new version.\n' +
+      '17. Server unreachable while the phone has Wi‑Fi: stop the server process (or block the host) so the phone is online but the app cannot be reached. Submit a synthetic answer. Verify it is saved locally, the queue shows one pending re-check and the connection indicator does not claim sync is available. Restart the server and verify the queue drains without a tap. (The bounded-retry pause and **Retry now** button are covered by headless tests only. Seeing the paused state on a phone needs a deliberately failing provider; record it as NOT TESTED unless you arranged one.)\n' +
+      '18. Storage and persistence reporting: after the first saved answer, read the storage line and the persistent-storage line and write down the exact wording shown (granted, denied, unsupported or not yet requested). Verify the wording promises nothing about retention. On iPhone Safari, note that websites not added to the Home Screen can have script-writable storage cleared after a period of inactivity; record what you actually observe, not what is documented.\n' +
+      '19. Storage failure honesty: open the app in a private or incognito tab and, if the browser blocks IndexedDB there, verify the app still works and the interface says progress is **not saved to this device**. If the browser allows storage, record that and mark the step NOT TESTED for the failure case.\n' +
+      '20. Access overlay (only when the server has `PATHASETU_DEMO_ACCESS_CODE`): verify the overlay appears before any question, a wrong code is refused, the right code unlocks and loads the first question without a manual reload, and the code is not visible in the address bar. Closing the tab and reopening should ask for the code again.\n' +
+      '21. Accessibility settings: set the system font size to its largest and the display size to its largest and reload; verify nothing is cut off or overlapping and every button is still reachable. Rotate to landscape. With TalkBack (Samsung) or VoiceOver (iPhone) on, move through the question, the options, the explanation box and **Check my thinking**; verify each control is announced with a sensible name and the result and connection changes are announced. With an external keyboard (if available) verify Tab order and a visible focus ring. The automated audit (`npm run a11y`) does none of this on a real device.\n' +
+      '22. Trace export content: open the downloaded JSON and confirm the typed explanation text is replaced by a `redacted` marker with a character count, there is no access code, no API key, no learner name, and the file states that content is `UNREVIEWED_DRAFT`.\n' +
+      '23. Home-screen install: add the app to the Home Screen (iPhone Safari: Share → Add to Home Screen; Android: Install app or Add to Home screen), launch it from the icon with airplane mode on, and verify the shell, current question and saved progress load. Record whether the installed app and the browser tab share the same saved progress; do not assume they do.\n' +
+      '\n' +
+      '## HTTPS access for the phones\n' +
+      '\n' +
+      "Service workers, installability and (on iPhone) a trustworthy offline test need a secure origin. Nothing below has been deployed or run from this repository's build environment; verify each tool's current instructions before relying on it.\n" +
+      '\n' +
+      '- **Android over USB (no certificate needed):** enable USB debugging, connect, open `chrome://inspect` on a computer running Chrome, forward the phone\'s port 4173 to the computer\'s `127.0.0.1:4173` ("Port forwarding"), then open `http://localhost:4173` on the phone. `localhost` is treated as a secure origin by Chrome. This path does not apply to iPhone and has not been verified for Samsung Internet.\n' +
+      "- **Any phone, HTTPS tunnel or reverse proxy:** run `npm start`, then expose `127.0.0.1:4173` through an HTTPS tunnel or reverse proxy you control (for example Cloudflare's `cloudflared tunnel --url http://127.0.0.1:4173` for a quick tunnel). A quick tunnel's URL is reachable by anyone who has it. Therefore set `PATHASETU_DEMO_ACCESS_CODE` (16+ characters, random) and, outside local development, `NODE_ENV=production` with `PATHASETU_ALLOW_DRAFT_DEMO=true`; the access code then protects the draft question pack and the re-check route. Keep `PATHASETU_MODEL_PROVIDER=mock` for phone tests.\n" +
+      '- **Proxies that rewrite the Host header:** the server refuses a POST whose `Origin` host differs from the `Host` it receives. If the proxy cannot preserve the original `Host`, list the exact public origin in `PATHASETU_ALLOWED_ORIGINS` (for example `https://your-demo-host.example`). Symptom if missing: re-checks fail with `origin_not_allowed` (HTTP 403) while the page itself loads.\n' +
+      '- **iPhone Safari:** use the HTTPS URL only. Record the URL scheme in the results sheet.\n' +
+      "- Never put a provider key, an access code or a real learner's text in a screenshot, a recording, a URL or the results sheet.\n" +
+      '\n' +
+      '## Recording results\n' +
+      '\n' +
+      'Copy `docs/PHONE_TEST_RESULTS_TEMPLATE.csv` (one row per device/browser/step, all `NOT TESTED`) and fill in `result` (PASS / FAIL / BLOCKED / NOT TESTED), `tester`, `date_ist`, `os_version`, `browser_version`, `https` (yes/no), `network`, `evidence_ref` and `notes` for each row you actually run. Leave a row `NOT TESTED` if you did '... 866 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    # Pathasetu phone verification plan
+    
+    **Status: no phone has been tested. Every cell in `docs/PHONE_TEST_RESULTS_TEMPLATE.csv` is `NOT TESTED`. Do not mark any device/browser combination tested until a human runs these steps on the actual device.** Use the mock provider for offline tests. The content is unreviewed draft material and must not be used with real learners.
+    
+    ## Record for each run
+    
+    - Tester and date/time (IST)
+    - Exact device model and OS version
+    - Browser name and exact version
+    - URL/host and whether HTTPS was used
+    - Network path: Wi-Fi, mobile data, hotspot, or airplane mode
+    - Result per step: PASS / FAIL / BLOCKED / NOT TESTED, with notes
+    - Screenshot or screen recording, with no keys, learner identifiers or private text
+    
+    ## Required device matrix
+    
+    | Device | Browser(s) | Needs | Current status |
+    |---|---|---|---|
+    | Samsung Galaxy S23 | Chrome, Samsung Internet | HTTPS or `localhost` via USB reverse-forwarding | NOT TESTED |
+    | Samsung Galaxy S25 | Chrome, Samsung Internet | HTTPS or `localhost` via USB reverse-forwarding | NOT TESTED |
+    | Samsung Galaxy S25 FE | Chrome, Samsung Internet | HTTPS or `localhost` via USB reverse-forwarding | NOT TESTED |
+    | iPhone 16 | Safari | **HTTPS is required** (no `localhost` shortcut on the phone) | NOT TESTED |
+    
+    That is seven device/browser combinations. Each one is tested separately: nothing is inferred from Chrome, from another Samsung model, or from headless Chromium. Installed-app (home-screen) behaviour is a further variant to record, not a substitute for the in-browser run.
+    
+    Testing these flagship phones does not establish low-end-phone performance.
+    
+    ## 23-step protocol
+    
+    1. Clear the site's data, open the URL online, wait for load, and record the connection indicator and current question.
+    2. Confirm that the service worker has registered where the browser exposes that information. On iPhone, mark this step NOT TESTED if it cannot be observed.
+    3. Enable airplane mode and reload. Verify that the app shell, current question and cached content return. Record failure if the app says there is no local pack.
+    4. Offline, choose an answer and enter a synthetic agreed explanation. Submit. Verify a local result and a queue count of one.
+    5. Disable airplane mode. Verify that the reachability indicator recovers, the re-check queue drains, a clearly labelled MOCK outcome appears, and the next-step recommendation is visible.
+    6. Select an option and type a draft with the caret in the middle of the text. Toggle airplane mode on/off three times, then let a queued re-check finish. Verify the text, option, focus and caret position remain on the same question and the on-screen keyboard stays open. (Headless Chromium passes this; a phone may behave differently.)
+    7. Type another draft, wait one second, then refresh. The app stores drafts per question in IndexedDB, so the text and option should return on the same question. Record what actually happens; headless Chromium passes, a phone has not been tested.
+    8. Queue a synthetic answer offline, close/swipe away the browser, reopen online, and verify automatic queue recovery without a tap.
+    9. Open a second tab. Verify that the second tab shows the persistent "Read-only session" banner, its controls (including Bridge Practice) are disabled, and it sends no re-check request. If the browser has no Web Locks, verify the persistent "Single-tab protection unavailable" warning instead; do not claim multi-tab protection in that case.
+    10. Repeat the main journey in each required browser; do not infer Samsung Internet or Safari behavior from Chrome.
+    11. Type a short synthetic phrase using the on-device Odia script keyboard and transliteration keyboard where available. Check rendering and caret position. This tests input rendering, not linguistic correctness.
+    12. Repeat a queued re-check using venue Wi-Fi and mobile hotspot; record actual time-to-recheck rather than estimating it.
+    13. Use Download Trace JSON. Verify the file is saved and inspect it for accidental secrets or sensitive information before retaining it.
+    14. Bridge Practice offline: with airplane mode on, check that three term-pair options appear with the UNREVIEWED DRAFT badge and the school and English terms hidden in the Language Bridge card. Choose each option, confirm immediate feedback, reveal the source mapping, press Try another, and confirm no network is needed. Open the trace and confirm the attempts are listed.
+    15. Bridge Practice input: operate it by touch; where a hardware keyboard or screen reader is available, also by keyboard (Tab, Enter or Space) and by screen reader. Record what works. Odia text must render, not appear as boxes.
+    16. Update behaviour: after deploying a new build, open the installed app online. Verify an "App update ready" notice appears once (not on the very first visit) and one reload runs the new version.
+    17. Server unreachable while the phone has Wi‑Fi: stop the server process (or block the host) so the phone is online but the app cannot be reached. Submit a synthetic answer. Verify it is saved locally, the queue shows one pending re-check and the connection indicator does not claim sync is available. Restart the server and verify the queue drains without a tap. (The bounded-retry pause and **Retry now** button are covered by headless tests only. Seeing the paused state on a phone needs a deliberately failing provider; record it as NOT TESTED unless you arranged one.)
+    18. Storage and persistence reporting: after the first saved answer, read the storage line and the persistent-storage line and write down the exact wording shown (granted, denied, unsupported or not yet requested). Verify the wording promises nothing about retention. On iPhone Safari, note that websites not added to the Home Screen can have script-writable storage cleared after a period of inactivity; record what you actually observe, not what is documented.
+    19. Storage failure honesty: open the app in a private or incognito tab and, if the browser blocks IndexedDB there, verify the app still works and the interface says progress is **not saved to this device**. If the browser allows storage, record that and mark the step NOT TESTED for the failure case.
+    20. Access overlay (only when the server has `PATHASETU_DEMO_ACCESS_CODE`): verify the overlay appears before any question, a wrong code is refused, the right code unlocks and loads the first question without a manual reload, and the code is not visible in the address bar. Closing the tab and reopening should ask for the code again.
+    21. Accessibility settings: set the system font size to its largest and the display size to its largest and reload; verify nothing is cut off or overlapping and every button is still reachable. Rotate to landscape. With TalkBack (Samsung) or VoiceOver (iPhone) on, move through the question, the options, the explanation box and **Check my thinking**; verify each control is announced with a sensible name and the result and connection changes are announced. With an external keyboard (if available) verify Tab order and a visible focus ring. The automated audit (`npm run a11y`) does none of this on a real device.
+    22. Trace export content: open the downloaded JSON and confirm the typed explanation text is replaced by a `redacted` marker with a character count, there is no access code, no API key, no learner name, and the file states that content is `UNREVIEWED_DRAFT`.
+    23. Home-screen install: add the app to the Home Screen (iPhone Safari: Share → Add to Home Screen; Android: Install app or Add to Home screen), launch it from the icon with airplane mode on, and verify the shell, current question and saved progress load. Record whether the installed app and the browser tab share the same saved progress; do not assume they do.
+    
+    ## HTTPS access for the phones
+    
+    Service workers, installability and (on iPhone) a trustworthy offline test need a secure origin. Nothing below has been deployed or run from this repository's build environment; verify each tool's current instructions before relying on it.
+    
+    - **Android over USB (no certificate needed):** enable USB debugging, connect, open `chrome://inspect` on a computer running Chrome, forward the phone's port 4173 to the computer's `127.0.0.1:4173` ("Port forwarding"), then open `http://localhost:4173` on the phone. `localhost` is treated as a secure origin by Chrome. This path does not apply to iPhone and has not been verified for Samsung Internet.
+    - **Any phone, HTTPS tunnel or reverse proxy:** run `npm start`, then expose `127.0.0.1:4173` through an HTTPS tunnel or reverse proxy you control (for example Cloudflare's `cloudflared tunnel --url http://127.0.0.1:4173` for a quick tunnel). A quick tunnel's URL is reachable by anyone who has it. Therefore set `PATHASETU_DEMO_ACCESS_CODE` (16+ characters, random) and, outside local development, `NODE_ENV=production` with `PATHASETU_ALLOW_DRAFT_DEMO=true`; the access code then protects the draft question pack and the re-check route. Keep `PATHASETU_MODEL_PROVIDER=mock` for phone tests.
+    - **Proxies that rewrite the Host header:** the server refuses a POST whose `Origin` host differs from the `Host` it receives. If the proxy cannot preserve the original `Host`, list the exact public origin in `PATHASETU_ALLOWED_ORIGINS` (for example `https://your-demo-host.example`). Symptom if missing: re-checks fail with `origin_not_allowed` (HTTP 403) while the page itself loads.
+    - **iPhone Safari:** use the HTTPS URL only. Record the URL scheme in the results sheet.
+    - Never put a provider key, an access code or a real learner's text in a screenshot, a recording, a URL or the results sheet.
+    
+    ## Recording results
+    
+    Copy `docs/PHONE_TEST_RESULTS_TEMPLATE.csv` (one row per device/browser/step, all `NOT TESTED`) and fill in `result` (PASS / FAIL / BLOCKED / NOT TESTED), `tester`, `date_ist`, `os_version`, `browser_version`, `https` (yes/no), `network`, `evidence_ref` and `notes` for each row you actually run. Leave a row `NOT TESTED` if you did not run it. Regenerate a blank template with `npm run generate:phone-matrix` after editing this plan.
+    
+    ## Acceptance and claim limits
+    
+    A device/browser combination passes only if all mandatory steps 1, 3–9, 14 and 18 pass, with exceptions explicitly recorded. Steps 2, 10–13, 15–17 and 19–23 are recorded but do not by themselves decide a pass: step 10 is the instruction to repeat the journey per browser, and steps 2, 19 and 20 depend on what the browser exposes or how the server is configured. Report every combination and version actually tested. Do not claim offline capability on any device based solely on HTTP tests, source inspection, or headless Chromium; do not claim language understanding or educational validity from UI testing; do not claim low-end-phone performance from flagship phones; do not claim screen-reader support from the automated audit.
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it4/Pathasetu_MVP/tests/handoff-docs.test.js:25:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: the event-day checklist exists and orders the work for all four devices and seven browser combinations
+not ok 3 - the event-day checklist exists and orders the work for all four devices and seven browser combinations
+  ---
+  duration_ms: 0.293883
+  type: 'test'
+  location: '/home/claude/pw/it4/Pathasetu_MVP/tests/handoff-docs.test.js:30:1'
+  failureType: 'testCodeFailure'
+  error: 'docs/EVENT_DAY_CHECKLIST.md must exist'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it4/Pathasetu_MVP/tests/handoff-docs.test.js:31:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: the checklist names the exact version fields to fill and where to read them on each device
+not ok 4 - the checklist names the exact version fields to fill and where to read them on each device
+  ---
+  duration_ms: 0.282419
+  type: 'test'
+  location: '/home/claude/pw/it4/Pathasetu_MVP/tests/handoff-docs.test.js:39:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /`os_version`/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it4/Pathasetu_MVP/tests/handoff-docs.test.js:40:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: the stop/go checklist gates offline reliability on real-device steps and content on a recorded qualified reviewer decision
+not ok 5 - the stop/go checklist gates offline reliability on real-device steps and content on a recorded qualified reviewer decision
+  ---
+  duration_ms: 0.236251
+  type: 'test'
+  location: '/home/claude/pw/it4/Pathasetu_MVP/tests/handoff-docs.test.js:49:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /\bGO\b/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it4/Pathasetu_MVP/tests/handoff-docs.test.js:50:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: the checklist records nothing as done: every status stays NOT TESTED, with no tester, date or result filled in
+not ok 6 - the checklist records nothing as done: every status stays NOT TESTED, with no tester, date or result filled in
+  ---
+  duration_ms: 0.153047
+  type: 'test'
+  location: '/home/claude/pw/it4/Pathasetu_MVP/tests/handoff-docs.test.js:60:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /NOT TESTED/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it4/Pathasetu_MVP/tests/handoff-docs.test.js:61:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: the teacher review guide covers every review dimension and keeps reviewer fields for the reviewer
+not ok 7 - the teacher review guide covers every review dimension and keeps reviewer fields for the reviewer
+  ---
+  duration_ms: 0.391674
+  type: 'test'
+  location: '/home/claude/pw/it4/Pathasetu_MVP/tests/handoff-docs.test.js:67:1'
+  failureType: 'testCodeFailure'
+  error: 'reviewer guide must cover misconception ID mapping'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    # Reviewer guide and checklist (Electricity pack)
+    
+    **Status today: all 8 items are `UNREVIEWED_DRAFT`. No reviewer has seen them. Nothing in this repository is approved content.**
+    Only a named, qualified person (a Class 10 BSE Odisha science teacher and an Odia-medium language reviewer, who may be the same person) can change that. Software here only checks that the files agree with each other; it cannot judge science or Odia.
+    
+    ## Files you will work in
+    
+    | File | What it is | What you fill |
+    |---|---|---|
+    | `docs/CONTENT_REVIEW_WORKSHEET.csv` | One row per question (EL01–EL08) copied from `content/electricity-pack.json` | The last seven columns only: `reviewer_name`, four check columns, `review_decision`, `reviewer_notes` |
+    | `evaluation/EVALUATION_REVIEW_TEMPLATE.csv` | 47 English test explanations the team wrote, plus 24 blank rows | `reviewer_agrees`, `reviewer_label`, `reviewer_misconception_id`, `reviewer_notes`, `reviewer_name`, `review_date`; and author the blank Odia-script / Roman-Odia rows yourself |
+    
+    Do not edit the copied columns (prompt, options, explanations, Odia drafts). If wording must change, write the corrected wording in `reviewer_notes`; the team edits the JSON pack, regenerates or updates the worksheet, and you re-review the changed row.
+    
+    ## Per-item checklist (worksheet)
+    
+    Mark each of the four check columns `PASS`, `FAIL` or `NEEDS_CHANGES`. Leave `NOT REVIEWED` until you have actually checked it.
+    
+    1. **Science correctness** (`science_accuracy`)
+       - The keyed correct option is right for the Class 10 syllabus; every other option is wrong.
+       - The English explanation and the remediation activity are correct and safe to do offline.
+    2. **Misconception validity** (`misconception_mapping`)
+       - Each wrong option maps to a misconception a real learner plausibly holds.
+       - The misconception descriptions match the option and are distinguishable from one another.
+       - No option maps to a misconception that is not in the item's allowed list.
+    3. **Natural Odia and readability** (`odia_language_quality`)
+       - Prompt, option text and explanation read naturally to an Odia-medium Class 10 learner; no machine-sounding phrasing.
+       - Sentences are short enough to read on a phone; script renders correctly.
+    4. **School terminology and English equivalent** (`terminology_mapping`)
+       - The everyday Odia phrase, the school Odia term and the English term all name the same concept, as in the textbook.
+    5. **Assessment design** (record in `reviewer_notes`; a problem here makes the decision `NEEDS_CHANGES`)
+       - Exactly one option is correct.
+       - No ambiguity in the question; distractors do not depend on trick wording.
+    
+    Then set `review_decision` to one of `APPROVE`, `APPROVE_WITH_EDITS`, `NEEDS_CHANGES`, `REJECT`, and write your name in `reviewer_name`.
+    An approval is only valid when your name is present and all four checks are `PASS`. The checker rejects anything else.
+    
+    ## Evaluation template (47 English rows + blank rows)
+    
+    - For each English row, `team_reference_label` is the team's own, unvalidated label. Set `reviewer_agrees` to `yes` or `no`. If `no`, give `reviewer_label` (`NONE`, `MISCONCEPTION`, `UNCERTAIN` or `INSUFFICIENT_EVIDENCE`) and, for a misconception, `reviewer_misconception_id` from that item's allowed list.
+    - Check that each category is what it claims to be: correct reasoning, genuine misconception, ambiguous, insufficient information.
+    - Blank rows are for Odia-script and Roman-Odia learner explanations. Write realistic examples a Class 10 learner might type; leave `team_reference_label` empty and give your own label. Do not copy text from a real child's work.
+    - Fill `reviewer_name` and `review_date` (as `YYYY-MM-DD`) on every row you touch. For your own Odia-script or Roman-Odia examples fill `item_id`, `option_id`, `explanation` and `reviewer_label` too (and `reviewer_misconception_id` when the label is `MISCONCEPTION`, using an ID from that item's allowed list). `npm run check:content` will then verify the rows are complete; it cannot verify who you are.
+    
+    ## What the team does after your review
+    
+    1. Checks the files: `npm run check:content` (must print `OK`).
+    2. Updates the pack by hand, never by script: item `status` and `review.status` to `REVIEWED`, `review.reviewer` and `review.reviewedAt` to match your worksheet row, `bridge.status` likewise. The checker verifies the match.
+    3. Only then may the interface drop the draft label for that item, and only for what you approved.
+    
+    ## What a review does not prove
+    
+    A passing review makes the content *reviewed*. It does not show that learners improve, that the model diagnoses Odia correctly, or that the app is accessible on real phones. Those are separate claims with separate evidence (`docs/BUILD_STATUS.md`).
+    
+    ## Do not
+    
+    - Do not enter a name, date or approval for anyone else.
+    - Do not mark `PASS` for a check you did not do.
+    - Do not paste real student answers, names or school details into either file.
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it4/Pathasetu_MVP/tests/handoff-docs.test.js:73:68)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 1
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 116.008256
+exit=1
+2026-10-13T05:47:39Z

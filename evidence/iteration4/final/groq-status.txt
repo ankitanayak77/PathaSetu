@@ -1,0 +1,16 @@
+# Task 5: Groq smoke and evaluation. Recorded 2026-10-13T05:46:50Z
+# Credential presence only (values are never read into this record):
+GROQ_API_KEY: NOT SET
+PATHASETU_MODEL_PROVIDER: NOT SET
+PATHASETU_DEMO_ACCESS_CODE: NOT SET
+PATHASETU_PROVIDER_DATA_CONTROLS_ACK: NOT SET
+
+## npm run smoke
+
+BLOCKED: set PATHASETU_MODEL_PROVIDER=groq and GROQ_API_KEY in your local environment. Never put a key in this script or chat.
+exit=2
+
+## npm run evaluate -- --provider groq
+
+BLOCKED: local credentials or settings not configured (GROQ_API_KEY, PATHASETU_DEMO_ACCESS_CODE, PATHASETU_MODEL_PROVIDER=groq, PATHASETU_PROVIDER_DATA_CONTROLS_ACK=true). No live evaluation was run. Values are never requested in chat.
+exit=2

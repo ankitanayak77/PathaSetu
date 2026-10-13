@@ -13,7 +13,7 @@ export const MIN_NODE_MAJOR = 20;
 export const REQUIRED_FILES = [
   'package.json', 'src/server/server.js', 'src/server/access.js', 'src/core/content.js', 'content/electricity-pack.json',
   'public/index.html', 'public/app.js', 'public/sw.js', 'public/manifest.webmanifest', 'public/styles.css',
-  'docs/PHONE_TEST_PLAN.md', 'docs/PHONE_TEST_RESULTS_TEMPLATE.csv', 'docs/CONTENT_REVIEW_WORKSHEET.csv', 'docs/HTTPS_DEMO_RUNBOOK.md', 'evaluation/cases.json'
+  'docs/PHONE_TEST_PLAN.md', 'docs/PHONE_TEST_RESULTS_TEMPLATE.csv', 'docs/CONTENT_REVIEW_WORKSHEET.csv', 'docs/HTTPS_DEMO_RUNBOOK.md', 'docs/EVENT_DAY_CHECKLIST.md', 'docs/REVIEWER_GUIDE.md', 'evaluation/cases.json'
 ];
 const LOOPBACK_HOSTS = new Set(['127.0.0.1', 'localhost', '::1', '[::1]']);
 

@@ -12,6 +12,24 @@ Only a named, qualified person (a Class 10 BSE Odisha science teacher and an Odi
 
 Do not edit the copied columns (prompt, options, explanations, Odia drafts). If wording must change, write the corrected wording in `reviewer_notes`; the team edits the JSON pack, regenerates or updates the worksheet, and you re-review the changed row.
 
+## Nine things to judge for every item, and where to record each
+
+The worksheet has four check columns. Five of the nine dimensions below are covered by them; the other four (difficulty, ambiguity, the learner's likely interpretation, and the everyday-versus-school split) go in `reviewer_notes` as short labelled lines, for example `DIFFICULTY: appropriate`, `AMBIGUITY: none`, `LEARNER READING: ...`. Do not add or rename columns; the checker depends on them.
+
+| # | Dimension | What to judge | Record in |
+|---|---|---|---|
+| 1 | **Science correctness** | The explanation, the remediation activity and every statement are correct for Class 10 BSE Odisha Electricity, and safe to do at home. | `science_accuracy` |
+| 2 | **Answer key** | The keyed correct option is correct, and each other option is wrong for a stated reason. Exactly one option is right. | `science_accuracy`; a problem with the key also makes the decision `NEEDS_CHANGES` |
+| 3 | **Misconception ID mapping** | Each wrong option maps to the right misconception ID, the ID's description fits what a learner choosing that option believes, and no option uses an ID outside the item's allowed list. | `misconception_mapping` |
+| 4 | **Everyday Odia** | The informal phrase a learner would say aloud names the same idea as the school term, in natural spoken Odia that a Class 10 student recognises. | `odia_language_quality` and `reviewer_notes` (`EVERYDAY ODIA: ...`) |
+| 5 | **Formal school Odia** | The textbook (school) Odia term is the one the syllabus uses, spelled and rendered correctly, and not a different term for a neighbouring idea. | `terminology_mapping` and `reviewer_notes` (`SCHOOL ODIA: ...`) |
+| 6 | **English terminology** | The English term matches the Odia terms and the term used in English-medium material and examinations. | `terminology_mapping` |
+| 7 | **Difficulty** | Pitched at an average Class 10 learner, not a Class 8 recall question and not a Class 12 derivation; reading load is reasonable on a phone. | `reviewer_notes` (`DIFFICULTY: too easy / appropriate / too hard`, and why) |
+| 8 | **Ambiguity** | A well-prepared learner could not reasonably justify a second option; no trick wording; the stem has one reading. | `reviewer_notes` (`AMBIGUITY: none / describe it`); any real ambiguity makes the decision `NEEDS_CHANGES` |
+| 9 | **The learner's likely interpretation** | Read each wrong option as a learner would. Would they pick it for the reason the misconception ID says, or for another reason (misreading the Odia, a different misconception)? Would a typical correct explanation be read as correct by the system's wording? | `reviewer_notes` (`LEARNER READING: ...`); a mismatch means the mapping needs changes |
+
+Judge the Odia as a reader would meet it on a phone, in Odia script, aloud and in the Roman-letter Odia a learner may type. Nothing in the software can judge any of these nine; it only checks that the files agree.
+
 ## Per-item checklist (worksheet)
 
 Mark each of the four check columns `PASS`, `FAIL` or `NEEDS_CHANGES`. Leave `NOT REVIEWED` until you have actually checked it.
