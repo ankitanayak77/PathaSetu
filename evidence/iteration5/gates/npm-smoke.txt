@@ -1,0 +1,5 @@
+
+> pathasetu-mvp@0.1.0 smoke
+> node scripts/model-smoke.mjs
+
+BLOCKED: set PATHASETU_MODEL_PROVIDER=groq and GROQ_API_KEY in your local environment. Never put a key in this script or chat.

@@ -2,38 +2,7 @@
 
 This describes the code in this workspace, not an aspiration. It is not a claim that the app is phone-tested, content-reviewed or educationally validated.
 
-```mermaid
-flowchart TD
-    Learner[Class 10 learner<br/>English + Odia draft content] --> UI[Mobile-first web UI<br/>public/app.js]
-    UI <--> Store[IndexedDB<br/>state, content pack, per-question drafts<br/>src/core/storage.js]
-    Store -->|on load| Repair[Validate and repair saved record<br/>src/core/recovery.js<br/>unreadable copy quarantined]
-    Repair --> UI
-    UI --> Agent[Deterministic agent core<br/>src/core/agent.js]
-    UI --> Bridge[Bridge Practice<br/>src/core/bridge.js<br/>local only, no network]
-    Bridge --> Trace
-    Agent --> Mock[Option-linked mock proposer<br/>always provisional]
-    Mock --> Validator[Allowlisted diagnosis validator]
-    Validator --> State[Learning state]
-    State --> Trace[Decision trace]
-    State --> Store
-    State --> Queue[Pending re-check queue]
-    Queue --> Retry[Bounded retry policy<br/>src/core/retry.js<br/>5 tries, 5 s doubling to 60 s,<br/>then paused: Retry now]
-    Trace --> Export[Trace export<br/>src/core/export.js<br/>typed text and secrets redacted]
-    Lock{Web Locks<br/>single writer} -->|writer tab only| UI
-    Persist[Persistent-storage request, once<br/>src/core/persistence.js<br/>wording never promises retention] --> UI
-    SW[Service worker v7<br/>app shell + core modules] --> UI
-    SW -.->|never touches /api/*| Routes[(API routes)]
-    UI -->|same-origin fetch, 8 s timeout,<br/>session-held access code| Server[Node server]
-    Retry -->|writer tab, server reachable, due| Server
-    Server --> Guard[Origin, size, access code first,<br/>failed-attempt window, then rate limits,<br/>publication guards<br/>/api/session, /api/pack, /api/recheck]
-    Guard --> Select{Configured provider}
-    Select -->|default| ServerMock[Deterministic mock]
-    Select -->|optional| Groq[Groq structured-output adapter<br/>never run live]
-    ServerMock --> ServerValidate[Core validator]
-    Groq --> ServerValidate
-    ServerValidate --> Recheck[Client re-validates, updates trace and plan]
-    Recheck --> Store
-```
+**The component diagram, every arrow, and the per-component table (role, file, input, output, state, callers, failure handling, tests) are in [`SYSTEM_ARCHITECTURE.md`](SYSTEM_ARCHITECTURE.md).** That file is the single as-built reference for the picture; this file keeps only the boundaries the tests enforce and the test layers, so the two cannot disagree. Updated 13 Oct 2026 (Iteration 5): no source file changed in this iteration, so the behaviour described below is the Iteration 4 behaviour, re-verified by the baseline in `evidence/iteration5/baseline/`.
 
 ## Boundaries that the tests enforce
 

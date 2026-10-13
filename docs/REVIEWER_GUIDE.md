@@ -30,6 +30,36 @@ The worksheet has four check columns. Five of the nine dimensions below are cove
 
 Judge the Odia as a reader would meet it on a phone, in Odia script, aloud and in the Roman-letter Odia a learner may type. Nothing in the software can judge any of these nine; it only checks that the files agree.
 
+## Four further checks added in Iteration 5 (record them in `reviewer_notes` as labelled lines)
+
+These cover the rest of the reviewer brief for this iteration. The worksheet has no separate column for them, so write each as a short labelled line; the checker does not read them, which means only you can say they were done.
+
+| # | Check | What to judge | Line to write in `reviewer_notes` |
+|---|---|---|---|
+| 10 | **Grade and BSE Odisha syllabus fit** | The concept, vocabulary and level belong in Class 10 Science (Electricity) for the Board of Secondary Education, Odisha, as taught in the Odia-medium textbook; nothing is from a different class or board. | `SYLLABUS FIT: yes / partly / no, and the chapter or topic it matches` |
+| 11 | **Diagnosis rationale** | For each wrong option, the sentence the app would show ("Possible concept gap ... candidate: <ID>") is a fair reading of why a learner would pick it, and does not blame the learner. The mock repeats a fixed sentence; judge the misconception description it points at. | `RATIONALE: fair / needs change, and why` |
+| 12 | **Clarity of explanation and remediation** | The English and Odia explanation and the "Next learning action" can be followed by a Class 10 learner without help, are short enough for a phone, and the activity is possible at home with ordinary things. | `EXPLANATION: clear / unclear` and `REMEDIATION: usable / not usable` |
+| 13 | **Insufficient evidence** | Say what a learner's answer would have to contain before you would call it a misconception, and what is not enough (for example a bare letter with a two-word reason). The app answers `UNCERTAIN` only for an explanation of fewer than 8 characters; a model should abstain more often. Your description is the standard the evaluation uses. | `ENOUGH EVIDENCE: ...` |
+
+## Each language-bridge mapping, reviewed on its own
+
+Every item carries a `bridge` object: an everyday Odia sentence, a school Odia term and an English term. Bridge Practice builds its three choices from these fields, so a mistake in one mapping appears as a wrong "correct answer" or as a misleading wrong choice. Judge each of the eight mappings separately from the question it sits in, and write one line per mapping in that item's `reviewer_notes`:
+
+`BRIDGE EL0x: everyday Odia = <natural / unnatural>; school Odia term = <textbook term / not the textbook term / different idea>; English term = <matches / does not match>; distinct from the other seven = <yes / shares a term with EL0y>`
+
+Bridge Practice checking a learner's choice against the pack only shows the choice is **consistent with the pack**. It is not evidence that the translation is right, and it must not be presented as such. Two mappings that share a term (for example both containing the same English word) are treated as conflicting and are never offered as each other's wrong choice, so tell the team if a shared term is a real overlap in meaning.
+
+## Authoring the Odia-script and Roman-Odia evaluation rows
+
+The template ships 24 blank rows: 12 with `language` = `odia_script` and 12 with `roman_odia`. Each language has 3 rows for each category: `correct_reasoning`, `genuine_misconception`, `ambiguous` and `insufficient_information`. The team will **not** machine-translate its English cases into Odia and will not call a translation reviewed. Write the explanations yourself, as a learner would type them, and give your own label. Suggested coverage per language, if time allows:
+
+- 3 correct explanations, from at least two different questions;
+- 3 genuine misconceptions, covering at least three different misconception IDs, one of them a "right option, wrong reason";
+- 3 ambiguous answers that could be read either way;
+- 3 insufficient answers (a bare letter, a copied phrase, "I don't know", an off-topic reply).
+
+If you cannot do all rows, do the ones you can and leave the rest blank. A partial subset is still useful; the team will report its size and will not describe it as a validated Odia test set.
+
 ## Per-item checklist (worksheet)
 
 Mark each of the four check columns `PASS`, `FAIL` or `NEEDS_CHANGES`. Leave `NOT REVIEWED` until you have actually checked it.

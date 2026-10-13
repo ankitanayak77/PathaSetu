@@ -1,6 +1,6 @@
-# Pathasetu MVP — build and verification status (iteration 4)
+# Pathasetu MVP — build and verification status (iteration 5)
 
-**Scope:** one learner, Class 10 Science, Electricity, bilingual draft experience, deterministic learning loop, local state, offline queue with bounded retry and reconnect re-check, a local Bridge Practice exercise, evaluation and review tooling, and (new in iteration 4) a fail-closed private demo mode, a preflight command and the real-device and reviewer handoff.
+**Scope:** one learner, Class 10 Science, Electricity, bilingual draft experience, deterministic learning loop, local state, offline queue with bounded retry and reconnect re-check, a local Bridge Practice exercise, evaluation and review tooling, and a fail-closed private demo mode, a preflight command and the real-device and reviewer handoff (iteration 4), and (new in iteration 5) the plain-language guide, architecture, navigation, jury Q&A, pitch scripts and claim-evidence matrix. Iteration 5 changed no source or browser file.
 **Status date:** 13 October 2026 (the day before the published competition build window).
 **Environment of every result below:** Node v22.22.0, npm 10.9.4, headless Chromium 141.0.7390.37 on Linux (this sandbox). Nothing here ran on a phone.
 **Environment results the team obtained themselves:** in the team's managed environment, `npm run capture`'s Chromium journey and `npm run e2e` were **BLOCKED** (`ERR_BLOCKED_BY_ADMINISTRATOR`), while `npm test` 151/151, `npm run check` and `npm run check:content` passed there. Those are the team's results for the Iteration 3 archive. They are neither overwritten nor promoted to passes by anything below; the results here are a separate record from a different environment where local navigation was permitted (`evidence/iteration4/baseline/README-baseline.txt`). If your machine blocks local navigation, report BLOCKED, not PASS.
@@ -11,9 +11,27 @@
 - Iteration 2 (commits `f9dc273`…`8a139ae`, 12 Oct 2026) and iteration 3 (commits `7ebd548`…, 13 Oct 2026) were done with AI assistance (Claude). Nothing is backdated or rewritten.
 - **Disclosure: iteration 3 was rebuilt.** The first iteration 3 working directory was lost in a sandbox reset before it was packaged. On 13 Oct 2026 the recorded edits and commands were replayed from the session transcript onto the iteration 2 tree, the commits were recreated (so their hashes and timestamps are the rebuild's, not the original session's), and every number below comes from runs made on the rebuilt tree. The baseline outputs were likewise re-run against the iteration 2 commit `8a139ae` (`evidence/iteration3/baseline/README-baseline.txt`). Earlier interim figures from before the reset are not used.
 - Iteration 4 (13 Oct 2026, Claude, commits after `e2d91cb`) continues from `Pathasetu_MVP_iteration3_2026-10-13.zip` (SHA-256 `e3abdd995cf95e208e128be33c941d5c807ba492b21667a18369de981a2210ed`, verified before use and left unchanged). History is appended, not rewritten; a patch against Iteration 3 is in the delivery.
+- Iteration 5 (13 Oct 2026, Claude, commits after `937d42e`) continues from `Pathasetu_MVP_iteration4_2026-10-13.zip`. History is appended, not rewritten. It added documents, tests and evidence only; `src/` and `public/` are byte-identical to Iteration 4. Every commit in this repository is authored "Claude (AI-assisted build)"; the team's own contribution is not recorded in git history and must be stated honestly if asked.
 - The competition rules say code must be built during competition hours. This work was done earlier, on the team's instruction, relying on a verbal organizer permission that has not been confirmed in writing. Keep these dates visible if the repository is submitted.
 
-## Fresh verification (files in `evidence/iteration4/final/`)
+## Iteration 5 — field validation and demo lock (files in `evidence/iteration5/`)
+
+Iteration 5 asked for real-world validation. The four external gates cannot be done from the build sandbox and are recorded as such, not simulated.
+
+| # | Task | Result | Label | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Baseline rerun of the Iteration 4 package | Every command exited 0: 182/182 unit tests, capture 19/0/0, e2e 95/0, a11y 462 checks 0 failed (headless Chromium, this sandbox). Separate from the team's own BLOCKED capture/e2e report, which stays BLOCKED. | BROWSER-TESTED (headless) | `evidence/iteration5/baseline/` |
+| 2 | Real HTTPS / tunnel validation | **BLOCKED** — no tunnel tool, account or network route in the sandbox. Only the local preflight with a placeholder origin ran. | NOT TESTED | `evidence/iteration5/gates/GATE_STATUS.md`, `npm-preflight-public-demo-placeholder-origin.txt` |
+| 3 | Real-device tests (S23, S25, S25 FE, iPhone 16) | **NOT TESTED** — no phone is reachable. The phone matrix is unchanged: all rows NOT TESTED. | NOT TESTED | `docs/PHONE_TEST_RESULTS_TEMPLATE.csv` |
+| 4 | Teacher review and the language bridge | **NOT REVIEWED** — no reviewer exists. All items and Bridge mappings remain `UNREVIEWED_DRAFT`. | NOT REVIEWED | `docs/REVIEWER_GUIDE.md` |
+| 5 | Live Groq smoke and evaluation | **BLOCKED — credentials not configured.** No live call was made. | not run | `gates/npm-smoke.txt`, `gates/npm-evaluate-groq.txt`, `gates/evaluation-groq-BLOCKED-*.txt` |
+| 6 | Demo rehearsal and claims audit | Headless mapping of the eight-step demo story to existing e2e/capture check IDs (not a live rehearsal); 47-row claim-evidence matrix; self-audit of the guide. | BROWSER-TESTED (headless) for the mapping | `evidence/iteration5/final/REHEARSAL_MAPPING.md`, `GUIDE_SELF_AUDIT.md`, `docs/CLAIM_EVIDENCE_MATRIX.csv` |
+| 7 | Explanation set (mandatory addendum) | `PROJECT_GUIDE_PLAIN_LANGUAGE.md`, `SYSTEM_ARCHITECTURE.md`, `NAVIGATION_AND_WORKFLOW.md`, `JURY_QA_BANK.md` (150 questions), `PITCH_SCRIPTS.md`, `CLAIM_EVIDENCE_MATRIX.csv`; README, ARCHITECTURE, REVIEWER_GUIDE, DEMO_RUNBOOK and HTTPS_DEMO_RUNBOOK aligned. | IMPLEMENTED (documents) | `docs/` |
+| 8 | Tests for documented behaviour | 16 new tests: security headers, traversal refusal, static route pattern, what the hosted-model request contains, `trusted:false` in the shipped client, and document consistency (matrix paths exist, no placeholders, every listed question present, claim statuses use the allowed vocabulary). | UNIT-TESTED | `tests/iteration5-evidence.test.js`, `tests/iteration5-docs.test.js` |
+
+Findings stated plainly in the new documents rather than hidden: the mock is a rule, not a model; the answer key and the draft pack ship to the browser (so this is not an exam); the re-check call from the shipped UI always sends `trusted:false`, so confirmed gaps are never set from the UI; there is no shared-phone support; the repository was built before the competition window; every commit is authored by the AI-assisted build.
+
+## Fresh verification (Iteration 4 results below; Iteration 5 results are in `evidence/iteration5/final/README-final.txt`)
 
 Run on 13 Oct 2026 at commit `b3e70ea` on a clean tree (the two untracked entries that `environment.txt` counts are the evidence files being written). The commit that follows adds the saved evidence and these documents and changes no code.
 
@@ -97,6 +115,9 @@ These numbers describe a simple rule on team-written English text. They are not 
 | Groq adapter | yes | fake-server tests only | no | **BLOCKED — credentials not configured** | no | n/a |
 | Diagnosis quality of any live model | not claimed | not claimed | not claimed | **not run** | not claimed | not claimed |
 | Odia wording and science content | drafts only | n/a | n/a | n/a | n/a | **NOT REVIEWED** |
+| Security headers on every response; traversal and private paths refused | yes | yes (iteration 5) | n/a | n/a | n/a | n/a |
+| Hosted-model request contents (typed explanation, answer key, Odia drafts; `store:false`) match the privacy answers | yes | yes (iteration 5, fake fetch) | n/a | no | n/a | n/a |
+| The shipped UI never sets a confirmed gap (`trusted:false` on every override) | yes | yes (iteration 5, source check) | partly | n/a | no | n/a |
 | Educational effect, language understanding | not claimed | not claimed | not claimed | not claimed | not claimed | not claimed |
 
 ## Limits and risks
@@ -113,6 +134,8 @@ These numbers describe a simple rule on team-written English text. They are not 
 - The iteration 3 history was rebuilt (see Provenance).
 
 ## Next priorities
+
+Iteration 5 did not retire any item below; each external gate is still open (see `evidence/iteration5/gates/GATE_STATUS.md`).
 
 1. Run `PHONE_TEST_PLAN.md` on the seven device/browser combinations over HTTPS, following `EVENT_DAY_CHECKLIST.md`, and fill `PHONE_TEST_RESULTS_TEMPLATE.csv` honestly. No offline-reliability claim before the mandatory steps pass on the real device.
 2. Have an Odia-medium science teacher review the pack with `REVIEWER_GUIDE.md`, then author the Odia script and Roman Odia evaluation cases. Do not change any status to REVIEWED or PUBLISHED without that.

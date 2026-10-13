@@ -1,0 +1,4 @@
+preflight exit=0
+smoke exit=2
+evaluate-groq exit=2
+preflight(public demo, PLACEHOLDER origin demo.example.test) exit=0

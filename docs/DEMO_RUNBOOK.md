@@ -11,6 +11,10 @@ npm start
 
 Open `http://127.0.0.1:4173`. The normal mode is the deterministic mock. All content and Odia wording are marked `UNREVIEWED_DRAFT`; this is a prototype demonstration pack.
 
+## The demo story and what to say
+
+Use `PITCH_SCRIPTS.md` (7-minute pitch, 2-minute and 30-second versions, the live-demo narration and the fallback if the network or the phone fails) and keep `JURY_QA_BANK.md` open for the CTO round. The eight-step story is: unlock the demo, see why the next question was chosen, answer with a typed explanation, read the diagnosis and the decision trace, go offline and answer again, reconnect and watch the queue drain, show a failed re-check and the replan, then Bridge Practice and the provider status. Iteration 5 mapped each step to existing headless e2e/capture checks (`evidence/iteration5/final/REHEARSAL_MAPPING.md`); that is a headless mapping, not a rehearsal on a phone. Say out loud that the mock is a rule and not a model, that no live Groq call has been made, and that the content is an unreviewed draft.
+
 ## Using a tunnel or HTTPS host
 
 Follow `HTTPS_DEMO_RUNBOOK.md` (exact commands, verified locally with a simulated tunnel; no tunnel or host was created). Summary:

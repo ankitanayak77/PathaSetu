@@ -4,6 +4,12 @@ Pathasetu is an offline-first, agentic science-learning prototype for an Odia-me
 
 ## Current status
 
+**Iteration 5 (13 Oct 2026): field validation and demo lock.** No source file changed. The Iteration 4 package was re-run in the build sandbox (`evidence/iteration5/baseline/`: `npm test` 182/182, `capture` 19/19, `e2e` 95/95, `a11y` 462 checks with 0 failed, `check`, `check:content`, `preflight` exit 0; headless Chromium only). Every external gate stayed **BLOCKED or NOT TESTED** because it needs something this sandbox does not have: a real HTTPS tunnel, the four phones, a qualified Odia-medium science teacher, and Groq credentials (`evidence/iteration5/gates/GATE_STATUS.md`). New this iteration are explanation and defence documents, not features: `docs/PROJECT_GUIDE_PLAIN_LANGUAGE.md`, `docs/SYSTEM_ARCHITECTURE.md` (the single architecture diagram), `docs/NAVIGATION_AND_WORKFLOW.md`, `docs/JURY_QA_BANK.md` (150 questions), `docs/PITCH_SCRIPTS.md` and `docs/CLAIM_EVIDENCE_MATRIX.csv`, plus reviewer-guide additions and tests that keep those documents honest (`tests/iteration5-docs.test.js`, `tests/iteration5-evidence.test.js`). The unit total after those tests is 198 (`evidence/iteration5/final/`).
+
+What the documents say plainly, so it is not a surprise: the diagnosis step in the demo is a rule that does not read free text; no live model request has ever been made; the Odia wording and all eight questions are unreviewed drafts; no phone has run the app; the code was built on 12-13 Oct 2026 with AI assistance, before the 14-15 Oct event window, and rule 4.1 of the event rules needs written confirmation from the organisers.
+
+Earlier iterations, unchanged:
+
 Details, evidence and the claim ledger are in `docs/BUILD_STATUS.md`. Summary of the 13 Oct 2026 iteration 4 verification (headless Chromium 141, Node 22, not a phone):
 
 - **Implemented and browser-tested:** mobile-first shell, Electricity demo pack, option-linked mock, diagnosis validator, deterministic planner, IndexedDB state and per-question drafts, offline queue with reachability probing, bounded retries (5 attempts, backoff, paused state, Retry now), honest storage status and corrupt-state repair, trace export without typed text or secrets, feedback-first flow, read-only second tab, service-worker offline shell and update notice, decision trace, and Bridge Practice (local matching exercise built only from the pack's bridge fields).
@@ -54,7 +60,7 @@ Open `http://127.0.0.1:4173`. The app saves the pack and learning state locally 
 
 Saved results: `evidence/iteration2/`, `evidence/iteration3/baseline/` and `final/`, and for this iteration `evidence/iteration4/baseline/` (the Iteration 3 archive re-run) and `evidence/iteration4/final/`, each with exit codes. Browser results do not replace the physical-phone protocol in `docs/PHONE_TEST_PLAN.md`.
 
-Other documents: `docs/ARCHITECTURE.md`, `docs/DEMO_RUNBOOK.md`, `docs/EVALUATION.md`, `docs/REVIEWER_GUIDE.md`, `docs/CONTENT_REVIEW_RUBRIC.md`, `docs/PHONE_TEST_PLAN.md`, `docs/HTTPS_DEMO_RUNBOOK.md`, `docs/EVENT_DAY_CHECKLIST.md`.
+Other documents: `docs/PROJECT_GUIDE_PLAIN_LANGUAGE.md` (start here), `docs/SYSTEM_ARCHITECTURE.md`, `docs/NAVIGATION_AND_WORKFLOW.md`, `docs/JURY_QA_BANK.md`, `docs/PITCH_SCRIPTS.md`, `docs/CLAIM_EVIDENCE_MATRIX.csv`, `docs/ARCHITECTURE.md` (enforced boundaries and test layers), `docs/DEMO_RUNBOOK.md`, `docs/EVALUATION.md`, `docs/REVIEWER_GUIDE.md`, `docs/CONTENT_REVIEW_RUBRIC.md`, `docs/PHONE_TEST_PLAN.md`, `docs/HTTPS_DEMO_RUNBOOK.md`, `docs/EVENT_DAY_CHECKLIST.md`.
 
 ## Security and privacy notes
 
@@ -69,7 +75,7 @@ Other documents: `docs/ARCHITECTURE.md`, `docs/DEMO_RUNBOOK.md`, `docs/EVALUATIO
 
 ## Provenance
 
-This workspace was generated with AI assistance: an earlier session produced the archive that the first commit records, iteration 2 (12 Oct 2026, Claude) added the browser suite, fixes and Bridge Practice, and iteration 3 (13 Oct 2026, Claude) added access control for draft content, bounded retries, storage resilience, evaluation and review tooling, and accessibility work, and iteration 4 (13 Oct 2026, Claude) added the fail-closed public demo mode, the failed-attempt throttle, preflight, the HTTPS runbook and the real-world validation handoff. Iteration 3 was rebuilt from the session record after a sandbox reset (see `docs/BUILD_STATUS.md`). The work predates the published competition build window and relied on a verbal organizer permission that is not confirmed in writing. Record the real dates, tools, collaborators and permissions for any submission. Do not backdate commits or misstate when or how code was written.
+This workspace was generated with AI assistance: an earlier session produced the archive that the first commit records, iteration 2 (12 Oct 2026, Claude) added the browser suite, fixes and Bridge Practice, and iteration 3 (13 Oct 2026, Claude) added access control for draft content, bounded retries, storage resilience, evaluation and review tooling, and accessibility work, and iteration 4 (13 Oct 2026, Claude) added the fail-closed public demo mode, the failed-attempt throttle, preflight, the HTTPS runbook and the real-world validation handoff, and iteration 5 (13 Oct 2026, Claude) was a documentation and validation iteration: it changed no source or browser code, added the plain-language guide, architecture, navigation, jury Q&A, pitch scripts, claim-evidence matrix and a few tests that pin documented behaviour, and recorded the tunnel, phone, teacher and live Groq gates as blocked. Iteration 3 was rebuilt from the session record after a sandbox reset (see `docs/BUILD_STATUS.md`). The work predates the published competition build window and relied on a verbal organizer permission that is not confirmed in writing. Record the real dates, tools, collaborators and permissions for any submission. Do not backdate commits or misstate when or how code was written.
 
 ## Optional live Groq check (synthetic cases only)
 
