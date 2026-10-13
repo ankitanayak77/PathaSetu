@@ -1,0 +1,4397 @@
+{
+  "summary": {
+    "generatedAt": "2026-10-13T09:10:53.251Z",
+    "blocked": null,
+    "browser": "CHROME_PATH override",
+    "limitation": "Headless Chromium with viewport emulation. Not a screen-reader test, not a real-phone test, not proof of WCAG conformance.",
+    "states": 33,
+    "checks": 462,
+    "failed": 0
+  },
+  "results": [
+    {
+      "viewport": "reflow floor (320x640, WCAG 1.4.10)",
+      "state": "initial question",
+      "report": {
+        "viewport": {
+          "width": 342,
+          "height": 684
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 84,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "320px / initial question: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "320px / initial question: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "320px / initial question: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "320px / initial question: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "320px / initial question: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "320px / initial question: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "320px / initial question: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "320px / initial question: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "320px / initial question: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "320px / initial question: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "320px / initial question: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "320px / initial question: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "320px / initial question: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "320px / initial question: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "reflow floor (320x640, WCAG 1.4.10)",
+      "state": "option chosen and explanation typed",
+      "report": {
+        "viewport": {
+          "width": 342,
+          "height": 684
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 85,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"The current keeps building up \"",
+          "button#submit-answer.primary-button \"Check my thinking →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 11
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "320px / option chosen and explanation typed: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "320px / option chosen and explanation typed: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "320px / option chosen and explanation typed: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "320px / option chosen and explanation typed: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "320px / option chosen and explanation typed: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=11 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "320px / option chosen and explanation typed: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "320px / option chosen and explanation typed: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "320px / option chosen and explanation typed: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "320px / option chosen and explanation typed: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "320px / option chosen and explanation typed: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "320px / option chosen and explanation typed: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "320px / option chosen and explanation typed: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "320px / option chosen and explanation typed: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "320px / option chosen and explanation typed: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "reflow floor (320x640, WCAG 1.4.10)",
+      "state": "result with recommendation",
+      "report": {
+        "viewport": {
+          "width": 342,
+          "height": 684
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 15,
+        "textElements": 92,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 9
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "320px / result with recommendation: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "320px / result with recommendation: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "320px / result with recommendation: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "320px / result with recommendation: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "320px / result with recommendation: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=9 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "320px / result with recommendation: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "320px / result with recommendation: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "320px / result with recommendation: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "320px / result with recommendation: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "320px / result with recommendation: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "320px / result with recommendation: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "320px / result with recommendation: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "320px / result with recommendation: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "320px / result with recommendation: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "reflow floor (320x640, WCAG 1.4.10)",
+      "state": "trace panel open, after a result",
+      "report": {
+        "viewport": {
+          "width": 342,
+          "height": 684
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 16,
+        "textElements": 102,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \"",
+          "button#download-trace.secondary-button \"Download trace JSON\""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "320px / trace panel open, after a result: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "320px / trace panel open, after a result: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "320px / trace panel open, after a result: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "320px / trace panel open, after a result: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "320px / trace panel open, after a result: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "320px / trace panel open, after a result: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "320px / trace panel open, after a result: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "320px / trace panel open, after a result: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "320px / trace panel open, after a result: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "320px / trace panel open, after a result: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "320px / trace panel open, after a result: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "320px / trace panel open, after a result: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "320px / trace panel open, after a result: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "320px / trace panel open, after a result: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "reflow floor (320x640, WCAG 1.4.10)",
+      "state": "Bridge Practice answered",
+      "report": {
+        "viewport": {
+          "width": 342,
+          "height": 684
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 84,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "320px / Bridge Practice answered: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "320px / Bridge Practice answered: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "320px / Bridge Practice answered: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "320px / Bridge Practice answered: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "320px / Bridge Practice answered: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "320px / Bridge Practice answered: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "320px / Bridge Practice answered: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "320px / Bridge Practice answered: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "320px / Bridge Practice answered: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "320px / Bridge Practice answered: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "320px / Bridge Practice answered: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "320px / Bridge Practice answered: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "320px / Bridge Practice answered: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "320px / Bridge Practice answered: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "reflow floor (320x640, WCAG 1.4.10)",
+      "state": "offline with one queued re-check",
+      "report": {
+        "viewport": {
+          "width": 329,
+          "height": 658
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 15,
+        "textElements": 92,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 9
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "320px / offline with one queued re-check: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "320px / offline with one queued re-check: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "320px / offline with one queued re-check: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "320px / offline with one queued re-check: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "320px / offline with one queued re-check: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=9 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "320px / offline with one queued re-check: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "320px / offline with one queued re-check: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "320px / offline with one queued re-check: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "320px / offline with one queued re-check: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "320px / offline with one queued re-check: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "320px / offline with one queued re-check: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "320px / offline with one queued re-check: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "320px / offline with one queued re-check: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "320px / offline with one queued re-check: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "narrow Android (360x780, Galaxy S23 class)",
+      "state": "initial question",
+      "report": {
+        "viewport": {
+          "width": 360,
+          "height": 780
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 84,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "360px / initial question: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "360px / initial question: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "360px / initial question: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "360px / initial question: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "360px / initial question: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "360px / initial question: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "360px / initial question: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "360px / initial question: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "360px / initial question: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "360px / initial question: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "360px / initial question: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "360px / initial question: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "360px / initial question: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "360px / initial question: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "narrow Android (360x780, Galaxy S23 class)",
+      "state": "option chosen and explanation typed",
+      "report": {
+        "viewport": {
+          "width": 360,
+          "height": 780
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 85,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"The current keeps building up \"",
+          "button#submit-answer.primary-button \"Check my thinking →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 11
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "360px / option chosen and explanation typed: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "360px / option chosen and explanation typed: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "360px / option chosen and explanation typed: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "360px / option chosen and explanation typed: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "360px / option chosen and explanation typed: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=11 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "360px / option chosen and explanation typed: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "360px / option chosen and explanation typed: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "360px / option chosen and explanation typed: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "360px / option chosen and explanation typed: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "360px / option chosen and explanation typed: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "360px / option chosen and explanation typed: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "360px / option chosen and explanation typed: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "360px / option chosen and explanation typed: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "360px / option chosen and explanation typed: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "narrow Android (360x780, Galaxy S23 class)",
+      "state": "result with recommendation",
+      "report": {
+        "viewport": {
+          "width": 360,
+          "height": 780
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 15,
+        "textElements": 92,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 9
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "360px / result with recommendation: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "360px / result with recommendation: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "360px / result with recommendation: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "360px / result with recommendation: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "360px / result with recommendation: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=9 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "360px / result with recommendation: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "360px / result with recommendation: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "360px / result with recommendation: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "360px / result with recommendation: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "360px / result with recommendation: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "360px / result with recommendation: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "360px / result with recommendation: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "360px / result with recommendation: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "360px / result with recommendation: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "narrow Android (360x780, Galaxy S23 class)",
+      "state": "trace panel open, after a result",
+      "report": {
+        "viewport": {
+          "width": 360,
+          "height": 780
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 16,
+        "textElements": 102,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \"",
+          "button#download-trace.secondary-button \"Download trace JSON\""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "360px / trace panel open, after a result: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "360px / trace panel open, after a result: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "360px / trace panel open, after a result: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "360px / trace panel open, after a result: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "360px / trace panel open, after a result: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "360px / trace panel open, after a result: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "360px / trace panel open, after a result: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "360px / trace panel open, after a result: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "360px / trace panel open, after a result: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "360px / trace panel open, after a result: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "360px / trace panel open, after a result: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "360px / trace panel open, after a result: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "360px / trace panel open, after a result: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "360px / trace panel open, after a result: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "narrow Android (360x780, Galaxy S23 class)",
+      "state": "Bridge Practice answered",
+      "report": {
+        "viewport": {
+          "width": 360,
+          "height": 780
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 84,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "360px / Bridge Practice answered: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "360px / Bridge Practice answered: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "360px / Bridge Practice answered: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "360px / Bridge Practice answered: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "360px / Bridge Practice answered: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "360px / Bridge Practice answered: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "360px / Bridge Practice answered: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "360px / Bridge Practice answered: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "360px / Bridge Practice answered: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "360px / Bridge Practice answered: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "360px / Bridge Practice answered: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "360px / Bridge Practice answered: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "360px / Bridge Practice answered: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "360px / Bridge Practice answered: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "narrow Android (360x780, Galaxy S23 class)",
+      "state": "offline with one queued re-check",
+      "report": {
+        "viewport": {
+          "width": 360,
+          "height": 780
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 15,
+        "textElements": 92,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 9
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "360px / offline with one queued re-check: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "360px / offline with one queued re-check: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "360px / offline with one queued re-check: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "360px / offline with one queued re-check: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "360px / offline with one queued re-check: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=9 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "360px / offline with one queued re-check: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "360px / offline with one queued re-check: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "360px / offline with one queued re-check: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "360px / offline with one queued re-check: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "360px / offline with one queued re-check: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "360px / offline with one queued re-check: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "360px / offline with one queued re-check: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "360px / offline with one queued re-check: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "360px / offline with one queued re-check: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "iPhone 16 class (393x852)",
+      "state": "initial question",
+      "report": {
+        "viewport": {
+          "width": 393,
+          "height": 852
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 84,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "393px / initial question: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "393px / initial question: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "393px / initial question: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "393px / initial question: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "393px / initial question: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "393px / initial question: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "393px / initial question: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "393px / initial question: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "393px / initial question: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "393px / initial question: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "393px / initial question: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "393px / initial question: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "393px / initial question: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "393px / initial question: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "iPhone 16 class (393x852)",
+      "state": "option chosen and explanation typed",
+      "report": {
+        "viewport": {
+          "width": 393,
+          "height": 852
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 85,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"The current keeps building up \"",
+          "button#submit-answer.primary-button \"Check my thinking →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 11
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "393px / option chosen and explanation typed: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "393px / option chosen and explanation typed: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "393px / option chosen and explanation typed: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "393px / option chosen and explanation typed: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "393px / option chosen and explanation typed: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=11 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "393px / option chosen and explanation typed: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "393px / option chosen and explanation typed: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "393px / option chosen and explanation typed: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "393px / option chosen and explanation typed: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "393px / option chosen and explanation typed: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "393px / option chosen and explanation typed: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "393px / option chosen and explanation typed: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "393px / option chosen and explanation typed: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "393px / option chosen and explanation typed: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "iPhone 16 class (393x852)",
+      "state": "result with recommendation",
+      "report": {
+        "viewport": {
+          "width": 393,
+          "height": 852
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 15,
+        "textElements": 92,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 9
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "393px / result with recommendation: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "393px / result with recommendation: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "393px / result with recommendation: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "393px / result with recommendation: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "393px / result with recommendation: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=9 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "393px / result with recommendation: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "393px / result with recommendation: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "393px / result with recommendation: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "393px / result with recommendation: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "393px / result with recommendation: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "393px / result with recommendation: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "393px / result with recommendation: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "393px / result with recommendation: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "393px / result with recommendation: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "iPhone 16 class (393x852)",
+      "state": "trace panel open, after a result",
+      "report": {
+        "viewport": {
+          "width": 393,
+          "height": 852
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 16,
+        "textElements": 102,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \"",
+          "button#download-trace.secondary-button \"Download trace JSON\""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "393px / trace panel open, after a result: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "393px / trace panel open, after a result: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "393px / trace panel open, after a result: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "393px / trace panel open, after a result: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "393px / trace panel open, after a result: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "393px / trace panel open, after a result: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "393px / trace panel open, after a result: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "393px / trace panel open, after a result: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "393px / trace panel open, after a result: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "393px / trace panel open, after a result: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "393px / trace panel open, after a result: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "393px / trace panel open, after a result: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "393px / trace panel open, after a result: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "393px / trace panel open, after a result: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "iPhone 16 class (393x852)",
+      "state": "Bridge Practice answered",
+      "report": {
+        "viewport": {
+          "width": 393,
+          "height": 852
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 84,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "393px / Bridge Practice answered: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "393px / Bridge Practice answered: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "393px / Bridge Practice answered: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "393px / Bridge Practice answered: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "393px / Bridge Practice answered: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "393px / Bridge Practice answered: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "393px / Bridge Practice answered: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "393px / Bridge Practice answered: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "393px / Bridge Practice answered: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "393px / Bridge Practice answered: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "393px / Bridge Practice answered: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "393px / Bridge Practice answered: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "393px / Bridge Practice answered: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "393px / Bridge Practice answered: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "iPhone 16 class (393x852)",
+      "state": "offline with one queued re-check",
+      "report": {
+        "viewport": {
+          "width": 393,
+          "height": 852
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 15,
+        "textElements": 92,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 9
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "393px / offline with one queued re-check: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "393px / offline with one queued re-check: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "393px / offline with one queued re-check: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "393px / offline with one queued re-check: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "393px / offline with one queued re-check: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=9 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "393px / offline with one queued re-check: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "393px / offline with one queued re-check: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "393px / offline with one queued re-check: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "393px / offline with one queued re-check: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "393px / offline with one queued re-check: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "393px / offline with one queued re-check: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "393px / offline with one queued re-check: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "393px / offline with one queued re-check: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "393px / offline with one queued re-check: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "large Android (412x915, S25 FE class)",
+      "state": "initial question",
+      "report": {
+        "viewport": {
+          "width": 412,
+          "height": 915
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 84,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "412px / initial question: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "412px / initial question: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "412px / initial question: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "412px / initial question: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "412px / initial question: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "412px / initial question: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "412px / initial question: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "412px / initial question: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "412px / initial question: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "412px / initial question: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "412px / initial question: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "412px / initial question: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "412px / initial question: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "412px / initial question: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "large Android (412x915, S25 FE class)",
+      "state": "option chosen and explanation typed",
+      "report": {
+        "viewport": {
+          "width": 412,
+          "height": 915
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 85,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"The current keeps building up \"",
+          "button#submit-answer.primary-button \"Check my thinking →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 11
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "412px / option chosen and explanation typed: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "412px / option chosen and explanation typed: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "412px / option chosen and explanation typed: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "412px / option chosen and explanation typed: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "412px / option chosen and explanation typed: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=11 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "412px / option chosen and explanation typed: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "412px / option chosen and explanation typed: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "412px / option chosen and explanation typed: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "412px / option chosen and explanation typed: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "412px / option chosen and explanation typed: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "412px / option chosen and explanation typed: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "412px / option chosen and explanation typed: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "412px / option chosen and explanation typed: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "412px / option chosen and explanation typed: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "large Android (412x915, S25 FE class)",
+      "state": "result with recommendation",
+      "report": {
+        "viewport": {
+          "width": 412,
+          "height": 915
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 15,
+        "textElements": 92,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 9
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "412px / result with recommendation: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "412px / result with recommendation: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "412px / result with recommendation: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "412px / result with recommendation: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "412px / result with recommendation: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=9 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "412px / result with recommendation: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "412px / result with recommendation: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "412px / result with recommendation: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "412px / result with recommendation: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "412px / result with recommendation: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "412px / result with recommendation: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "412px / result with recommendation: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "412px / result with recommendation: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "412px / result with recommendation: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "large Android (412x915, S25 FE class)",
+      "state": "trace panel open, after a result",
+      "report": {
+        "viewport": {
+          "width": 412,
+          "height": 915
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 16,
+        "textElements": 102,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \"",
+          "button#download-trace.secondary-button \"Download trace JSON\""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "412px / trace panel open, after a result: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "412px / trace panel open, after a result: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "412px / trace panel open, after a result: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "412px / trace panel open, after a result: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "412px / trace panel open, after a result: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "412px / trace panel open, after a result: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "412px / trace panel open, after a result: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "412px / trace panel open, after a result: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "412px / trace panel open, after a result: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "412px / trace panel open, after a result: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "412px / trace panel open, after a result: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "412px / trace panel open, after a result: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "412px / trace panel open, after a result: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "412px / trace panel open, after a result: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "large Android (412x915, S25 FE class)",
+      "state": "Bridge Practice answered",
+      "report": {
+        "viewport": {
+          "width": 412,
+          "height": 915
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 84,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "412px / Bridge Practice answered: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "412px / Bridge Practice answered: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "412px / Bridge Practice answered: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "412px / Bridge Practice answered: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "412px / Bridge Practice answered: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "412px / Bridge Practice answered: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "412px / Bridge Practice answered: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "412px / Bridge Practice answered: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "412px / Bridge Practice answered: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "412px / Bridge Practice answered: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "412px / Bridge Practice answered: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "412px / Bridge Practice answered: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "412px / Bridge Practice answered: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "412px / Bridge Practice answered: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "large Android (412x915, S25 FE class)",
+      "state": "offline with one queued re-check",
+      "report": {
+        "viewport": {
+          "width": 412,
+          "height": 915
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 15,
+        "textElements": 92,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 9
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "412px / offline with one queued re-check: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "412px / offline with one queued re-check: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "412px / offline with one queued re-check: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "412px / offline with one queued re-check: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "412px / offline with one queued re-check: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=9 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "412px / offline with one queued re-check: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "412px / offline with one queued re-check: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "412px / offline with one queued re-check: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "412px / offline with one queued re-check: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "412px / offline with one queued re-check: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "412px / offline with one queued re-check: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "412px / offline with one queued re-check: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "412px / offline with one queued re-check: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "412px / offline with one queued re-check: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "tablet / desktop floor (768x1024)",
+      "state": "initial question",
+      "report": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 85,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "768px / initial question: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "768px / initial question: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "768px / initial question: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "768px / initial question: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "768px / initial question: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "768px / initial question: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "768px / initial question: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "768px / initial question: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "768px / initial question: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "768px / initial question: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "768px / initial question: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "768px / initial question: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "768px / initial question: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "768px / initial question: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "tablet / desktop floor (768x1024)",
+      "state": "option chosen and explanation typed",
+      "report": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 86,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"The current keeps building up \"",
+          "button#submit-answer.primary-button \"Check my thinking →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 11
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "768px / option chosen and explanation typed: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "768px / option chosen and explanation typed: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "768px / option chosen and explanation typed: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "768px / option chosen and explanation typed: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "768px / option chosen and explanation typed: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=11 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "768px / option chosen and explanation typed: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "768px / option chosen and explanation typed: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "768px / option chosen and explanation typed: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "768px / option chosen and explanation typed: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "768px / option chosen and explanation typed: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "768px / option chosen and explanation typed: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "768px / option chosen and explanation typed: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "768px / option chosen and explanation typed: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "768px / option chosen and explanation typed: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "tablet / desktop floor (768x1024)",
+      "state": "result with recommendation",
+      "report": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 15,
+        "textElements": 93,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 9
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "768px / result with recommendation: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "768px / result with recommendation: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "768px / result with recommendation: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "768px / result with recommendation: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "768px / result with recommendation: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=9 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "768px / result with recommendation: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "768px / result with recommendation: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "768px / result with recommendation: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "768px / result with recommendation: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "768px / result with recommendation: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "768px / result with recommendation: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "768px / result with recommendation: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "768px / result with recommendation: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "768px / result with recommendation: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "tablet / desktop floor (768x1024)",
+      "state": "trace panel open, after a result",
+      "report": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 16,
+        "textElements": 103,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \"",
+          "button#download-trace.secondary-button \"Download trace JSON\""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "768px / trace panel open, after a result: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "768px / trace panel open, after a result: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "768px / trace panel open, after a result: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "768px / trace panel open, after a result: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "768px / trace panel open, after a result: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "768px / trace panel open, after a result: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "768px / trace panel open, after a result: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "768px / trace panel open, after a result: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "768px / trace panel open, after a result: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "768px / trace panel open, after a result: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "768px / trace panel open, after a result: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "768px / trace panel open, after a result: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "768px / trace panel open, after a result: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "768px / trace panel open, after a result: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "tablet / desktop floor (768x1024)",
+      "state": "Bridge Practice answered",
+      "report": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 14,
+        "textElements": 85,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "input \"A\"",
+          "textarea#explanation-input.explanation-input \"\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 10
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "768px / Bridge Practice answered: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "768px / Bridge Practice answered: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "768px / Bridge Practice answered: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "768px / Bridge Practice answered: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "768px / Bridge Practice answered: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=10 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "768px / Bridge Practice answered: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "768px / Bridge Practice answered: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "768px / Bridge Practice answered: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "768px / Bridge Practice answered: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "768px / Bridge Practice answered: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "768px / Bridge Practice answered: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "768px / Bridge Practice answered: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "768px / Bridge Practice answered: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "768px / Bridge Practice answered: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "tablet / desktop floor (768x1024)",
+      "state": "offline with one queued re-check",
+      "report": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 15,
+        "textElements": 93,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 8,
+        "dialogs": [],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#apply-plan-button.text-button \"Continue to EL02 →\"",
+          "button.bridge-option \"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen c\"",
+          "button.bridge-option \"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transf\"",
+          "button.bridge-option \"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍ତିresistor\"",
+          "button.text-button \"Reveal the source mapping\"",
+          "button.text-button \"Try another →\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 9
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "768px / offline with one queued re-check: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "768px / offline with one queued re-check: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "768px / offline with one queued re-check: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "768px / offline with one queued re-check: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "768px / offline with one queued re-check: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=9 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "768px / offline with one queued re-check: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "768px / offline with one queued re-check: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "768px / offline with one queued re-check: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "768px / offline with one queued re-check: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "768px / offline with one queued re-check: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "768px / offline with one queued re-check: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "768px / offline with one queued re-check: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=8"
+        },
+        {
+          "id": "dialogs",
+          "title": "768px / offline with one queued re-check: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[]"
+        },
+        {
+          "id": "images",
+          "title": "768px / offline with one queued re-check: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "reflow floor (320x640, WCAG 1.4.10)",
+      "state": "access overlay (protected demo)",
+      "report": {
+        "viewport": {
+          "width": 329,
+          "height": 658
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 5,
+        "textElements": 47,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 7,
+        "dialogs": [
+          {
+            "modal": true,
+            "named": true
+          }
+        ],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \"",
+          "input#access-code \"\"",
+          "button.primary-button \"Unlock demo →\""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 5
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "320px / access overlay: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "320px / access overlay: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "320px / access overlay: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "320px / access overlay: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "320px / access overlay: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=5 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "320px / access overlay: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "320px / access overlay: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "320px / access overlay: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "320px / access overlay: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "320px / access overlay: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "320px / access overlay: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "320px / access overlay: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=7"
+        },
+        {
+          "id": "dialogs",
+          "title": "320px / access overlay: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[{\"modal\":true,\"named\":true}]"
+        },
+        {
+          "id": "images",
+          "title": "320px / access overlay: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "narrow Android (360x780, Galaxy S23 class)",
+      "state": "access overlay (protected demo)",
+      "report": {
+        "viewport": {
+          "width": 360,
+          "height": 780
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 5,
+        "textElements": 47,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 7,
+        "dialogs": [
+          {
+            "modal": true,
+            "named": true
+          }
+        ],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \"",
+          "input#access-code \"\"",
+          "button.primary-button \"Unlock demo →\""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 5
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "360px / access overlay: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "360px / access overlay: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "360px / access overlay: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "360px / access overlay: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "360px / access overlay: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=5 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "360px / access overlay: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "360px / access overlay: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "360px / access overlay: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "360px / access overlay: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "360px / access overlay: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "360px / access overlay: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "360px / access overlay: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=7"
+        },
+        {
+          "id": "dialogs",
+          "title": "360px / access overlay: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[{\"modal\":true,\"named\":true}]"
+        },
+        {
+          "id": "images",
+          "title": "360px / access overlay: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "viewport": "iPhone 16 class (393x852)",
+      "state": "access overlay (protected demo)",
+      "report": {
+        "viewport": {
+          "width": 393,
+          "height": 852
+        },
+        "horizontalOverflowPx": 0,
+        "interactiveCount": 5,
+        "textElements": 47,
+        "unnamed": [],
+        "smallTargets": [],
+        "lowContrast": [],
+        "smallText": [],
+        "odiaWithoutLang": [],
+        "htmlLang": "en",
+        "h1Count": 1,
+        "headingSkips": false,
+        "viewportMeta": "width=device-width, initial-scale=1, viewport-fit=cover",
+        "zoomBlocked": false,
+        "hasMain": true,
+        "hasSkipLink": true,
+        "liveRegions": 7,
+        "dialogs": [
+          {
+            "modal": true,
+            "named": true
+          }
+        ],
+        "imagesWithoutAlt": [],
+        "unlabelledSvg": []
+      },
+      "tab": {
+        "stops": [
+          "a.skip-link \"Skip to learning activity\"",
+          "a.brand \"Pathasetu home\"",
+          "button#trace-toggle.trace-toggle \"⌘Agent decision traceSee what \"",
+          "input#access-code \"\"",
+          "button.primary-button \"Unlock demo →\""
+        ],
+        "noIndicator": [],
+        "unreached": [],
+        "leftThePage": true,
+        "count": 5
+      },
+      "checks": [
+        {
+          "id": "overflow",
+          "title": "393px / access overlay: no horizontal scrolling",
+          "passed": true,
+          "detail": "0px"
+        },
+        {
+          "id": "names",
+          "title": "393px / access overlay: every control has an accessible name",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "targets",
+          "title": "393px / access overlay: touch targets are at least 44px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "focus",
+          "title": "393px / access overlay: every keyboard stop shows a visible focus indicator (>= 2px outline or a shadow ring)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "keyboard-reach",
+          "title": "393px / access overlay: Tab reaches every visible control, and focus can leave the page (no trap)",
+          "passed": true,
+          "detail": "stops=5 unreached=none left=true"
+        },
+        {
+          "id": "contrast",
+          "title": "393px / access overlay: text contrast meets WCAG AA (4.5:1, large text 3:1)",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "fontsize",
+          "title": "393px / access overlay: no visible text is below 12px",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-odia",
+          "title": "393px / access overlay: Odia script is tagged lang=\"or\"",
+          "passed": true,
+          "detail": "none"
+        },
+        {
+          "id": "lang-page",
+          "title": "393px / access overlay: the page language is declared",
+          "passed": true,
+          "detail": "en"
+        },
+        {
+          "id": "headings",
+          "title": "393px / access overlay: one h1 and no skipped heading levels",
+          "passed": true,
+          "detail": "h1=1 skips=false"
+        },
+        {
+          "id": "zoom",
+          "title": "393px / access overlay: pinch zoom is not disabled",
+          "passed": true,
+          "detail": "width=device-width, initial-scale=1, viewport-fit=cover"
+        },
+        {
+          "id": "landmarks",
+          "title": "393px / access overlay: main landmark, skip link and live regions exist",
+          "passed": true,
+          "detail": "main=true skip=true live=7"
+        },
+        {
+          "id": "dialogs",
+          "title": "393px / access overlay: visible dialogs are modal and named",
+          "passed": true,
+          "detail": "[{\"modal\":true,\"named\":true}]"
+        },
+        {
+          "id": "images",
+          "title": "393px / access overlay: images have alt text and informative svg is labelled",
+          "passed": true,
+          "detail": "none"
+        }
+      ]
+    }
+  ]
+}
