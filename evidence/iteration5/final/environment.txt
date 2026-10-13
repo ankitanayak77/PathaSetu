@@ -1,0 +1,13 @@
+date: 2026-10-13T08:29:46+00:00
+HEAD: 9629263517fb3583fa03d44a60e5d66f6cf0e134
+commits: 19
+node v22.22.0; npm 10.9.4; os: Linux 6.18.44-fc-v114
+browser: Chromium 141.0.7390.37 
+GROQ_API_KEY: not set
+PATHASETU_MODEL_PROVIDER: not set
+PATHASETU_DEMO_ACCESS_CODE: not set
+PATHASETU_PROVIDER_DATA_CONTROLS_ACK: not set
+$ git status --short
+?? evidence/iteration5/final/
+$ git diff --stat 937d42e -- src public
+(empty above = src/ and public/ unchanged since the Iteration 4 baseline commit)

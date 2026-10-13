@@ -31,6 +31,21 @@ Iteration 5 asked for real-world validation. The four external gates cannot be d
 
 Findings stated plainly in the new documents rather than hidden: the mock is a rule, not a model; the answer key and the draft pack ship to the browser (so this is not an exam); the re-check call from the shipped UI always sends `trusted:false`, so confirmed gaps are never set from the UI; there is no shared-phone support; the repository was built before the competition window; every commit is authored by the AI-assisted build.
 
+## Iteration 5 final verification (files in `evidence/iteration5/final/`)
+
+Run on 13 Oct 2026 at commit `9629263`, headless Chromium 141 in the build sandbox, nothing on a phone. `src/` and `public/` are unchanged since Iteration 4, so these numbers differ from the Iteration 4 table only by the 16 new tests.
+
+| Check | Result | Exit code |
+| --- | --- | --- |
+| `npm ci`, `npm run check`, `npm run check:content`, `npm run preflight` | PASS | 0 |
+| `npm test` | PASS: 198 of 198, 0 skipped (182 + 16) | 0 |
+| `npm run capture` | PASS: 19 passed, 0 failed, 0 blocked | 0 |
+| `npm run e2e` | PASS: 95 passed, 0 failed | 0 |
+| `npm run a11y` | PASS: 33 states, 462 checks, 0 failed | 0 |
+| `npm run evaluate` | Done: deterministic baseline, 47 synthetic cases | 0 |
+| `npm run smoke`, `npm run evaluate -- --provider groq` | **BLOCKED — credentials not configured**; no live call | 2 / 2 |
+| Tunnel, phones, teacher review | **BLOCKED / NOT TESTED / NOT REVIEWED** | n/a |
+
 ## Fresh verification (Iteration 4 results below; Iteration 5 results are in `evidence/iteration5/final/README-final.txt`)
 
 Run on 13 Oct 2026 at commit `b3e70ea` on a clean tree (the two untracked entries that `environment.txt` counts are the evidence files being written). The commit that follows adds the saved evidence and these documents and changes no code.
