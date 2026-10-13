@@ -1,0 +1,9 @@
+$ git status --short
+?? evidence/iteration5/
+(entries: 1; the evidence files this script created account for them)
+$ git log -5 --oneline
+937d42e Iteration 4 Tasks 7-8: final verification evidence and documentation
+b3e70ea Iteration 4 Tasks 5-6: Groq status record and real-world validation handoff
+af4ca24 Iteration 4 Tasks 3-4: npm run preflight and the HTTPS demo runbook
+25e9375 Iteration 4 baseline + Task 2: fail-closed public/tunnel demo mode
+e2d91cb Evidence: final iteration 3 verification outputs and exit codes (151/151 unit, 19/19 capture, 91/91 e2e, 462/462 a11y checks; live Groq smoke and evaluation BLOCKED; no phone tests); test counts updated in README and BUILD_STATUS. No code changes.

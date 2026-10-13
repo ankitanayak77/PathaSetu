@@ -1,5 +1,5 @@
 {
-  "startedAt": "2026-10-13T05:52:31.849Z",
+  "startedAt": "2026-10-13T08:07:36.820Z",
   "checks": [
     {
       "id": "A1",
@@ -107,7 +107,7 @@
       "id": "L1",
       "title": "the draft is stored in IndexedDB under its own question",
       "passed": true,
-      "detail": "stored={\"optionId\":\"C\",\"explanation\":\"A half-written explanation that must survive a reload.\",\"updatedAt\":\"2026-10-13T05:52:44."
+      "detail": "stored={\"optionId\":\"C\",\"explanation\":\"A half-written explanation that must survive a reload.\",\"updatedAt\":\"2026-10-13T08:07:49."
     },
     {
       "id": "L2",
@@ -221,7 +221,7 @@
       "id": "K8",
       "title": "the trace panel shows the bridge attempts to the learner",
       "passed": true,
-      "detail": "11:22:57 AM | bridge mapping revealed | "
+      "detail": "01:38:02 PM | bridge mapping revealed | "
     },
     {
       "id": "K9",
@@ -576,139 +576,139 @@
     {
       "id": "A",
       "title": "initial load, labels, first visit",
-      "ms": 2418,
+      "ms": 2346,
       "completed": true
     },
     {
       "id": "B",
       "title": "answer, feedback, explicit continue",
-      "ms": 1437,
+      "ms": 1438,
       "completed": true
     },
     {
       "id": "C",
       "title": "offline answer is queued exactly once",
-      "ms": 2228,
+      "ms": 2239,
       "completed": true
     },
     {
       "id": "D",
       "title": "reconnect drains the queue without disturbing a draft",
-      "ms": 2396,
+      "ms": 2385,
       "completed": true
     },
     {
       "id": "E",
       "title": "reload offline, cold start, queue survives",
-      "ms": 3295,
+      "ms": 3523,
       "completed": true
     },
     {
       "id": "L",
       "title": "an unsent draft survives a reload",
-      "ms": 2147,
+      "ms": 2149,
       "completed": true
     },
     {
       "id": "F",
       "title": "missing or stale content cannot strand the learner",
-      "ms": 1577,
+      "ms": 1362,
       "completed": true
     },
     {
       "id": "G",
       "title": "two tabs: read-only second tab, no lost update",
-      "ms": 2963,
+      "ms": 3035,
       "completed": true
     },
     {
       "id": "G3",
       "title": "two tabs: a read-only tab never processes the queue",
-      "ms": 5481,
+      "ms": 5511,
       "completed": true
     },
     {
       "id": "K",
       "title": "Bridge Practice works offline, by keyboard, and is traced",
-      "ms": 2215,
+      "ms": 1826,
       "completed": true
     },
     {
       "id": "M",
       "title": "protected draft demo: the code gates content, the UI still works once authorised",
-      "ms": 1831,
+      "ms": 1805,
       "completed": true
     },
     {
       "id": "T",
       "title": "throttled access: a wait message, the right code still works, and a 429 never discards a saved pack or the code",
-      "ms": 7368,
+      "ms": 7406,
       "completed": true
     },
     {
       "id": "N",
       "title": "bounded retries: pause, persistence, manual retry, recovery without duplicates",
-      "ms": 12460,
+      "ms": 12375,
       "completed": true
     },
     {
       "id": "N2",
       "title": "bounded retries: the waiting state and an early manual retry",
-      "ms": 1459,
+      "ms": 1488,
       "completed": true
     },
     {
       "id": "P",
       "title": "storage failures are reported honestly",
-      "ms": 2582,
+      "ms": 2681,
       "completed": true
     },
     {
       "id": "R",
       "title": "corrupt saved state recovers without crashing",
-      "ms": 4458,
+      "ms": 4319,
       "completed": true
     },
     {
       "id": "P2",
       "title": "persistent-storage reporting (stubbed browser responses)",
-      "ms": 6995,
+      "ms": 7214,
       "completed": true
     },
     {
       "id": "S",
       "title": "the trace export hides typed text and secrets",
-      "ms": 1528,
+      "ms": 1530,
       "completed": true
     },
     {
       "id": "G2",
       "title": "no Web Locks: a visible warning",
-      "ms": 1282,
+      "ms": 1198,
       "completed": true
     },
     {
       "id": "H",
       "title": "service worker: shell offline, API never cached",
-      "ms": 1626,
+      "ms": 1478,
       "completed": true
     },
     {
       "id": "I",
       "title": "service worker update is announced and applied",
-      "ms": 8326,
+      "ms": 8125,
       "completed": true
     },
     {
       "id": "J",
       "title": "provider failures leave state consistent and entries retryable",
-      "ms": 31136,
+      "ms": 30884,
       "completed": true
     }
   ],
   "limitation": "Headless Chromium on one machine. Not a physical-phone test, not Samsung Internet, not iPhone Safari, not educational validation.",
   "browser": "Chrome/141.0.7390.37",
-  "completedAt": "2026-10-13T05:54:19.063Z",
+  "completedAt": "2026-10-13T08:09:23.145Z",
   "passCount": 95,
   "failCount": 0
 }
