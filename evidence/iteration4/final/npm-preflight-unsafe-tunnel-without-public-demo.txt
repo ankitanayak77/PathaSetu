@@ -1,0 +1,21 @@
+
+> pathasetu-mvp@0.1.0 preflight
+> node scripts/preflight.mjs
+
+PASS  P01   Node 22.22.0 (this project needs >= 20)
+PASS  P02   all 17 required files present
+PASS  P03   content pack loads: 8 items; statuses UNREVIEWED_DRAFT=8
+INFO  P03b  content is NOT reviewed: all 8 items are UNREVIEWED_DRAFT; no qualified Odia-medium science reviewer decision is recorded
+PASS  P04   content consistency check passes (pack, review worksheet and evaluation files agree). Consistency is not review.
+PASS  P05   provider: mock (no live provider request is possible)
+INFO  P06   public demo mode: off (local development behaviour)
+INFO  P07   PATHASETU_DEMO_ACCESS_CODE: not set (allowed only for local mock development)
+PASS  P08   HOST: 127.0.0.1 (loopback only)
+PASS  P09   PATHASETU_ALLOWED_ORIGINS: https://demo.example.test (exact origins)
+FAIL  P09b  a non-local origin is allowed but PATHASETU_PUBLIC_DEMO is not true: the tunnel would expose an open development server. Set PATHASETU_PUBLIC_DEMO=true with a strong PATHASETU_DEMO_ACCESS_CODE.
+INFO  P11   unreviewed draft items WILL be served (8 of 8), labelled as demo draft content; nothing is promoted by this setting
+SKIP  P12   local route checks skipped because configuration checks failed (fix the FAIL lines above first)
+INFO  P99   no live provider request was made: the harness runs with the mock provider and a blank API key
+
+PREFLIGHT: FAILED (7 pass, 0 warn, 1 fail)
+Fix every FAIL line, then run npm run preflight again. Nothing was exposed and no provider was contacted.

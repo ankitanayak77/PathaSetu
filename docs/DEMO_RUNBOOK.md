@@ -13,17 +13,20 @@ Open `http://127.0.0.1:4173`. The normal mode is the deterministic mock. All con
 
 ## Using a tunnel or HTTPS host
 
-This server is a Node HTTP server, not a static-only site and not a serverless handler. Run it on a trusted host or behind an HTTPS tunnel/reverse proxy that forwards to `127.0.0.1:4173`. Nothing has been deployed from this repository and no tunnel has been tested here; verify the tool's current instructions. A quick tunnel's URL is reachable by anyone who has it, so protect the demo with the app's own access code and, if available, the tunnel's access policy. This MVP does not have production-grade per-user quotas or rate limiting.
+Follow `HTTPS_DEMO_RUNBOOK.md` (exact commands, verified locally with a simulated tunnel; no tunnel or host was created). Summary:
 
-- **Draft content needs the access code.** Whenever `PATHASETU_DEMO_ACCESS_CODE` is set and the server would serve unreviewed items, both `/api/pack` and `/api/recheck` require it (header `x-pathasetu-demo-code`). The page asks for it in an overlay and keeps it only in the current tab's session storage; closing the tab means entering it again.
-- **Production-mode draft demo:** set `NODE_ENV=production`, `PATHASETU_ALLOW_DRAFT_DEMO=true` and a random `PATHASETU_DEMO_ACCESS_CODE` of at least 16 characters. Without the allow flag a production server serves no unreviewed item at all.
-- **Host-rewriting proxy:** if re-checks fail with HTTP 403 `origin_not_allowed` while the page loads, the proxy changed the `Host` header. Preferably preserve it; otherwise set `PATHASETU_ALLOWED_ORIGINS=https://your-demo-host.example` (exact origins only).
-- **Never** put a provider key, an access code or a real learner's text in a URL, screenshot, recording or the results sheet. Never expose a model-backed route without the code and an access-controlled host.
-- Phone steps, per-device HTTPS notes (iPhone Safari needs HTTPS) and the results template: `PHONE_TEST_PLAN.md`, `PHONE_TEST_RESULTS_TEMPLATE.csv`.
+- This server is a Node HTTP server and needs a persistent Node process. It is not a static site and not a serverless handler. Nothing has been deployed from this repository and no tunnel has been opened.
+- **Never expose a plain `npm start`.** Set `PATHASETU_PUBLIC_DEMO=true` and a random `PATHASETU_DEMO_ACCESS_CODE` (startup refuses without a strong one). Session, pack and re-check then all require the code (header `x-pathasetu-demo-code`). The page asks for it in an overlay and keeps it in session storage only.
+- **Draft demo in production mode:** `NODE_ENV=production` plus `PATHASETU_ALLOW_DRAFT_DEMO=true`. Without the flag a production server serves no unreviewed item, and `npm run preflight` fails that combination.
+- **Host-rewriting proxy:** if re-checks fail with HTTP 403 `origin_not_allowed` while the page loads, the proxy changed the `Host` header. Prefer a proxy that preserves it; otherwise set `PATHASETU_ALLOWED_ORIGINS=https://your-demo-host.example` (an exact origin; no wildcard, path or default port).
+- **Wrong guesses** are throttled per client (429 `too_many_attempts`); the correct code is never blocked by that.
+- **Run `npm run preflight -- --expect-origin https://your-demo-host.example` first.** It must print `PREFLIGHT: PASSED`.
+- **Never** put a provider key, an access code or a real learner's text in a URL, screenshot, recording or the results sheet. Never expose a model-backed route without the code and an access-controlled host. Keep the tunnel demo on the mock provider.
+- Phone steps and the results template: `PHONE_TEST_PLAN.md`, `PHONE_TEST_RESULTS_TEMPLATE.csv`; event-day order and stop/go gates: `EVENT_DAY_CHECKLIST.md`.
 
 ## Optional Groq provider
 
-Keep the default mock unless a real call is needed. If using Groq, configure `PATHASETU_MODEL_PROVIDER=groq`, `GROQ_API_KEY`, `GROQ_MODEL=openai/gpt-oss-20b` and `PATHASETU_DEMO_ACCESS_CODE` in the server process environment. Review current data-retention controls first. Run `npm run smoke` with synthetic samples only. Do not expose the key to the browser, and do not interpret a successful smoke call as model accuracy evidence.
+Keep the default mock unless a real call is needed. If using Groq, configure `PATHASETU_MODEL_PROVIDER=groq`, `GROQ_API_KEY`, `GROQ_MODEL=openai/gpt-oss-20b` and `PATHASETU_DEMO_ACCESS_CODE` in the server process environment. Set `PATHASETU_PROVIDER_DATA_CONTROLS_ACK=true` only after you have reviewed the provider's current data controls (smoke and evaluate refuse without it). Review current data-retention controls first. Run `npm run smoke` with synthetic samples only. Do not expose the key to the browser, and do not interpret a successful smoke call as model accuracy evidence.
 
 ## Verifying the build
 
@@ -32,6 +35,7 @@ npm ci
 npm test               # unit and static tests
 npm run check          # syntax checks
 npm run check:content  # pack <-> worksheet <-> evaluation files agree; nothing is marked reviewed
+npm run preflight      # configuration and local routes (mock-only harness); no secrets printed, no provider call
 CHROME_PATH=/path/to/chrome npm run capture   # server/API checks and one browser journey
 CHROME_PATH=/path/to/chrome npm run e2e       # browser regression suite
 CHROME_PATH=/path/to/chrome npm run a11y      # automated accessibility and mobile audit

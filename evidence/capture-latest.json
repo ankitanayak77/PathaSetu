@@ -1,11 +1,11 @@
 {
-  "startedAt": "2026-10-13T05:06:49.674Z",
-  "baseUrl": "http://127.0.0.1:35421",
+  "startedAt": "2026-10-13T05:52:27.839Z",
+  "baseUrl": "http://127.0.0.1:43007",
   "checks": [
     {
       "name": "server starts",
       "passed": true,
-      "detail": "Pathasetu listening on http://127.0.0.1:35421 provider=mock node=v22.22.0"
+      "detail": "Pathasetu listening on http://127.0.0.1:43007 provider=mock publicDemo=false node=v22.22.0"
     },
     {
       "name": "homepage returns HTML",
@@ -102,9 +102,9 @@
   "browser": {
     "version": "Chrome/141.0.7390.37",
     "errors": [],
-    "screenshot": "/home/claude/pw/Pathasetu_MVP/evidence/pathasetu-browser-latest.png"
+    "screenshot": "/home/claude/pw/it4/Pathasetu_MVP/evidence/pathasetu-browser-latest.png"
   },
-  "completedAt": "2026-10-13T05:06:51.946Z",
+  "completedAt": "2026-10-13T05:52:30.470Z",
   "passCount": 19,
   "failCount": 0,
   "blockedCount": 0

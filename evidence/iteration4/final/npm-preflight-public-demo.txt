@@ -1,0 +1,33 @@
+
+> pathasetu-mvp@0.1.0 preflight
+> node scripts/preflight.mjs --expect-origin https://demo.example.test
+
+PASS  P01   Node 22.22.0 (this project needs >= 20)
+PASS  P02   all 17 required files present
+PASS  P03   content pack loads: 8 items; statuses UNREVIEWED_DRAFT=8
+INFO  P03b  content is NOT reviewed: all 8 items are UNREVIEWED_DRAFT; no qualified Odia-medium science reviewer decision is recorded
+PASS  P04   content consistency check passes (pack, review worksheet and evaluation files agree). Consistency is not review.
+PASS  P05   provider: mock (no live provider request is possible)
+INFO  P06   public demo mode: ON (code required on session, pack and re-check)
+PASS  P07   PATHASETU_DEMO_ACCESS_CODE: set, 32 characters, passes the strength rules (value not shown)
+PASS  P08   HOST: 127.0.0.1 (loopback only)
+PASS  P09   PATHASETU_ALLOWED_ORIGINS: https://demo.example.test (exact origins)
+PASS  P10   the planned HTTPS origin https://demo.example.test is in PATHASETU_ALLOWED_ORIGINS
+INFO  P11   unreviewed draft items WILL be served (8 of 8), labelled as demo draft content; nothing is promoted by this setting
+PASS  P12   harness server started on a loopback port (provider forced to mock; PATHASETU_MODEL_PROVIDER=mock is validated above, not exercised)
+PASS  P13   GET /api/health: 200; provider=mock, publicDemo=true, accessRequired=true
+PASS  P14   GET /api/session with the configured code: 200
+PASS  P15   GET /api/session with no code: 401; with a wrong code: 401 (both must be 401)
+PASS  P16   GET /api/pack with the code: 200; 8 item(s) served
+PASS  P17   GET /api/pack with no code: 401; with a wrong code: 401; refusal carries no pack content: true
+PASS  P18   served item statuses match the pack file (8 unreviewed draft item(s) are served as drafts; none promoted)
+PASS  P19   POST /api/recheck with a synthetic answer and the code: 200 (expected 200); mock provider, no network
+PASS  P20   POST /api/recheck with no code: 401; with a wrong code: 401 (both must be 401)
+PASS  P21   GET /: 200
+PASS  P21   GET /sw.js: 200
+PASS  P21   GET /manifest.webmanifest: 200
+PASS  P22   Host-rewriting route: POST /api/recheck with Origin https://demo.example.test but a loopback Host: 200 (expected 200); an unlisted origin: 403 (expected 403)
+INFO  P99   no live provider request was made: the harness runs with the mock provider and a blank API key
+
+PREFLIGHT: PASSED (22 pass, 0 warn, 0 fail)
+This confirms configuration and local routes only. It does not review content, test a phone, or call a model provider.

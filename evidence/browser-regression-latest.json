@@ -1,5 +1,5 @@
 {
-  "startedAt": "2026-10-13T05:06:53.353Z",
+  "startedAt": "2026-10-13T05:52:31.849Z",
   "checks": [
     {
       "id": "A1",
@@ -107,7 +107,7 @@
       "id": "L1",
       "title": "the draft is stored in IndexedDB under its own question",
       "passed": true,
-      "detail": "stored={\"optionId\":\"C\",\"explanation\":\"A half-written explanation that must survive a reload.\",\"updatedAt\":\"2026-10-13T05:07:06."
+      "detail": "stored={\"optionId\":\"C\",\"explanation\":\"A half-written explanation that must survive a reload.\",\"updatedAt\":\"2026-10-13T05:52:44."
     },
     {
       "id": "L2",
@@ -221,7 +221,7 @@
       "id": "K8",
       "title": "the trace panel shows the bridge attempts to the learner",
       "passed": true,
-      "detail": "10:37:18 AM | bridge mapping revealed | "
+      "detail": "11:22:57 AM | bridge mapping revealed | "
     },
     {
       "id": "K9",
@@ -276,6 +276,30 @@
       "title": "the code lives only in session storage: not in IndexedDB and not in localStorage",
       "passed": true,
       "detail": "{\"inDb\":false,\"inLocal\":false,\"inSession\":true}"
+    },
+    {
+      "id": "T1",
+      "title": "repeated wrong codes end in a clear \"too many attempts, wait\" message, not a generic refusal",
+      "passed": true,
+      "detail": "Too many attempts from this connection. Wait about 59 seconds, then try again. The correct code is still accepted."
+    },
+    {
+      "id": "T2",
+      "title": "the right code still unlocks the demo while wrong guesses are being throttled",
+      "passed": true,
+      "detail": "QUESTION EL01 · CLOSED CIRCUIT"
+    },
+    {
+      "id": "T3",
+      "title": "a 429 from /api/session or /api/pack keeps the saved pack, the session code and the working screen",
+      "passed": true,
+      "detail": "{\"overlayHidden\":true,\"hasCode\":true,\"question\":\"QUESTION EL01 · CLOSED CIRCUIT\"}"
+    },
+    {
+      "id": "T4",
+      "title": "once the throttle lifts, the same tab continues without asking for the code again",
+      "passed": true,
+      "detail": "QUESTION EL01 · CLOSED CIRCUIT"
     },
     {
       "id": "N1",
@@ -395,7 +419,7 @@
       "id": "R5",
       "title": "the repair is recorded in the trace as counts only",
       "passed": true,
-      "detail": "answer_submitted,recheck_complete,saved_state_repaired"
+      "detail": "answer_submitted,saved_state_repaired,recheck_complete"
     },
     {
       "id": "P2.granted.a",
@@ -552,133 +576,139 @@
     {
       "id": "A",
       "title": "initial load, labels, first visit",
-      "ms": 2441,
+      "ms": 2418,
       "completed": true
     },
     {
       "id": "B",
       "title": "answer, feedback, explicit continue",
-      "ms": 1535,
+      "ms": 1437,
       "completed": true
     },
     {
       "id": "C",
       "title": "offline answer is queued exactly once",
-      "ms": 2232,
+      "ms": 2228,
       "completed": true
     },
     {
       "id": "D",
       "title": "reconnect drains the queue without disturbing a draft",
-      "ms": 2255,
+      "ms": 2396,
       "completed": true
     },
     {
       "id": "E",
       "title": "reload offline, cold start, queue survives",
-      "ms": 3477,
+      "ms": 3295,
       "completed": true
     },
     {
       "id": "L",
       "title": "an unsent draft survives a reload",
-      "ms": 2053,
+      "ms": 2147,
       "completed": true
     },
     {
       "id": "F",
       "title": "missing or stale content cannot strand the learner",
-      "ms": 1341,
+      "ms": 1577,
       "completed": true
     },
     {
       "id": "G",
       "title": "two tabs: read-only second tab, no lost update",
-      "ms": 2997,
+      "ms": 2963,
       "completed": true
     },
     {
       "id": "G3",
       "title": "two tabs: a read-only tab never processes the queue",
-      "ms": 5438,
+      "ms": 5481,
       "completed": true
     },
     {
       "id": "K",
       "title": "Bridge Practice works offline, by keyboard, and is traced",
-      "ms": 1854,
+      "ms": 2215,
       "completed": true
     },
     {
       "id": "M",
       "title": "protected draft demo: the code gates content, the UI still works once authorised",
-      "ms": 1753,
+      "ms": 1831,
+      "completed": true
+    },
+    {
+      "id": "T",
+      "title": "throttled access: a wait message, the right code still works, and a 429 never discards a saved pack or the code",
+      "ms": 7368,
       "completed": true
     },
     {
       "id": "N",
       "title": "bounded retries: pause, persistence, manual retry, recovery without duplicates",
-      "ms": 12437,
+      "ms": 12460,
       "completed": true
     },
     {
       "id": "N2",
       "title": "bounded retries: the waiting state and an early manual retry",
-      "ms": 1452,
+      "ms": 1459,
       "completed": true
     },
     {
       "id": "P",
       "title": "storage failures are reported honestly",
-      "ms": 2758,
+      "ms": 2582,
       "completed": true
     },
     {
       "id": "R",
       "title": "corrupt saved state recovers without crashing",
-      "ms": 4187,
+      "ms": 4458,
       "completed": true
     },
     {
       "id": "P2",
       "title": "persistent-storage reporting (stubbed browser responses)",
-      "ms": 6899,
+      "ms": 6995,
       "completed": true
     },
     {
       "id": "S",
       "title": "the trace export hides typed text and secrets",
-      "ms": 1500,
+      "ms": 1528,
       "completed": true
     },
     {
       "id": "G2",
       "title": "no Web Locks: a visible warning",
-      "ms": 1308,
+      "ms": 1282,
       "completed": true
     },
     {
       "id": "H",
       "title": "service worker: shell offline, API never cached",
-      "ms": 1790,
+      "ms": 1626,
       "completed": true
     },
     {
       "id": "I",
       "title": "service worker update is announced and applied",
-      "ms": 8121,
+      "ms": 8326,
       "completed": true
     },
     {
       "id": "J",
       "title": "provider failures leave state consistent and entries retryable",
-      "ms": 30920,
+      "ms": 31136,
       "completed": true
     }
   ],
   "limitation": "Headless Chromium on one machine. Not a physical-phone test, not Samsung Internet, not iPhone Safari, not educational validation.",
   "browser": "Chrome/141.0.7390.37",
-  "completedAt": "2026-10-13T05:08:32.116Z",
-  "passCount": 91,
+  "completedAt": "2026-10-13T05:54:19.063Z",
+  "passCount": 95,
   "failCount": 0
 }

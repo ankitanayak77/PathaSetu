@@ -32,3 +32,11 @@ Compatibility 47/47. Agreement 34/47 (72%, 95% CI 58% to 83%). Correct reasoning
 ## Limits
 
 Small counts give wide intervals; do not compare small differences. A real model may do better or worse than the baseline; that is unknown until the live run is done and the labels are reviewed. Smoke tests prove shape only.
+
+## Live runs, false confidence and abstention (iteration 4)
+
+- **Gate.** `npm run smoke` and `npm run evaluate -- --provider groq` need `PATHASETU_MODEL_PROVIDER=groq`, `GROQ_API_KEY`, a strong `PATHASETU_DEMO_ACCESS_CODE` and `PATHASETU_PROVIDER_DATA_CONTROLS_ACK=true` already set in your local environment (the last only records that you reviewed the provider's data controls). Otherwise they stop with `BLOCKED — credentials not configured` (exit 2) and make no request. Keys are never requested or printed. In this build both are BLOCKED (`evidence/iteration4/final/groq-status.txt`).
+- **Synthetic data only.** Both commands send only the team-authored synthetic cases. Never send a real child's response.
+- **Two questions stay apart.** Compatibility (A: valid shape, allowed IDs, accepted by the validator) says the plumbing works; agreement (B: match with the unvalidated reference labels) says nothing about correctness until a qualified reviewer confirms the labels.
+- **Languages stay apart.** Only English cases exist. Odia script and Roman Odia are **NOT EVALUATED**, and no figure may be extrapolated to them.
+- **False confidence and abstention are first-class outcomes.** A confident misconception on a correct explanation (false positive) and a confident answer on an ambiguous or insufficient-evidence case (false confidence) are reported on their own lines, as is correct abstention (`UNCERTAIN`/`INSUFFICIENT_EVIDENCE`) and over-abstention. The deterministic baseline abstains correctly on 2 of 12 such cases, so a high agreement figure must not be read as safe behaviour.
