@@ -1,0 +1,111 @@
+{
+  "startedAt": "2026-10-13T04:58:01.109Z",
+  "baseUrl": "http://127.0.0.1:40869",
+  "checks": [
+    {
+      "name": "server starts",
+      "passed": true,
+      "detail": "Pathasetu listening on http://127.0.0.1:40869 provider=mock node=v22.22.0"
+    },
+    {
+      "name": "homepage returns HTML",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "health endpoint reports mock provider",
+      "passed": true,
+      "detail": "provider=mock"
+    },
+    {
+      "name": "draft pack clearly identifies draft status",
+      "passed": true,
+      "detail": "items=8; bilingual drafts present; all unreviewed"
+    },
+    {
+      "name": "recheck returns a bounded mock proposal",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "invalid option is rejected",
+      "passed": true,
+      "detail": "HTTP 400"
+    },
+    {
+      "name": "oversized API request is rejected",
+      "passed": true,
+      "detail": "HTTP 413"
+    },
+    {
+      "name": "cross-origin API request is rejected",
+      "passed": true,
+      "detail": "HTTP 403"
+    },
+    {
+      "name": "browser-safe core module is served",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "service worker avoids caching API routes",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Chromium renders Pathasetu question and options",
+      "passed": true,
+      "detail": "question=QUESTION EL01 · CLOSED CIRCUIT; options=4"
+    },
+    {
+      "name": "UI visibly identifies draft content and mock provider",
+      "passed": true,
+      "detail": "provider=MOCK PROVIDER · DEMO RULES · NO LIVE AI"
+    },
+    {
+      "name": "online answer preserves the current question with remediation and an explicit next step",
+      "passed": true,
+      "detail": "current=QUESTION EL01 · CLOSED CIRCUIT; next=Updated recommendation · EL02\n"
+    },
+    {
+      "name": "learner explicitly continues to the recommended question",
+      "passed": true,
+      "detail": "current=QUESTION EL02 · CLOSED CIRCUIT"
+    },
+    {
+      "name": "offline answer is saved and queued while its feedback remains available",
+      "passed": true,
+      "detail": "queue=1; current=QUESTION EL02 · CLOSED CIRCUIT"
+    },
+    {
+      "name": "reconnect drains queue and keeps draft attached to original question",
+      "passed": true,
+      "detail": "current=QUESTION EL03 · ENERGY TRANSFER; queue=0; option=C"
+    },
+    {
+      "name": "reconnect exposes updated next-step plan without switching the active question",
+      "passed": true,
+      "detail": "recommendation=Updated recommendation · EL01 A complete circuit. Your current question and its draft remain unchang"
+    },
+    {
+      "name": "decision trace is visible and records reconnect behavior",
+      "passed": true,
+      "detail": "trace entries rendered=34"
+    },
+    {
+      "name": "no uncaught page exceptions or console errors",
+      "passed": true,
+      "detail": "0 browser page errors"
+    }
+  ],
+  "limitation": "Headless Chromium E2E is not a substitute for physical Samsung/iPhone testing or educational validation.",
+  "browser": {
+    "version": "Chrome/141.0.7390.37",
+    "errors": [],
+    "screenshot": "/home/claude/pw/Pathasetu_MVP/evidence/pathasetu-browser-latest.png"
+  },
+  "completedAt": "2026-10-13T04:58:03.274Z",
+  "passCount": 19,
+  "failCount": 0,
+  "blockedCount": 0
+}

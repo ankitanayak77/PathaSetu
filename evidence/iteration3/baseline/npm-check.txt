@@ -1,0 +1,4 @@
+
+> pathasetu-mvp@0.1.0 check
+> node --check src/server/server.js && node --check public/app.js && node --check public/sw.js && node --check src/core/agent.js && node --check src/core/validator.js && node --check src/core/bridge.js && node --check scripts/browser-regression.mjs && node --check scripts/lib/devtools.mjs && node --check scripts/capture-screens.mjs
+

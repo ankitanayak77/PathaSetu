@@ -1,7 +1,7 @@
 {
   "meta": {
     "label": "deterministic baseline (option-linked mock rule)",
-    "when": "2026-10-13T04:41:20.280Z",
+    "when": "2026-10-13T05:00:39.300Z",
     "provider": "mock-deterministic-baseline",
     "model": null,
     "datasetWarning": "Reference labels were written by the team with AI assistance and have NOT been reviewed by a qualified science or Odia reviewer. Results are not educational accuracy. English only: no Odia script or Roman Odia case is included because no reviewer can check them yet."
@@ -15,7 +15,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.13953300000000013
+      "elapsedMs": 0.14871800000000235
     },
     {
       "id": "E002",
@@ -25,7 +25,7 @@
         "misconceptionId": "CURRENT_ACCUMULATES",
         "confidence": 0.78
       },
-      "elapsedMs": 0.010891999999998347
+      "elapsedMs": 0.011230000000004736
     },
     {
       "id": "E003",
@@ -35,7 +35,7 @@
         "misconceptionId": "CURRENT_FLOWS_WITHOUT_CLOSED_PATH",
         "confidence": 0.78
       },
-      "elapsedMs": 0.01610900000000015
+      "elapsedMs": 0.00866999999999507
     },
     {
       "id": "E004",
@@ -45,7 +45,7 @@
         "misconceptionId": "CURRENT_CONSUMED_BY_COMPONENT",
         "confidence": 0.78
       },
-      "elapsedMs": 0.009785999999998296
+      "elapsedMs": 0.009888000000003672
     },
     {
       "id": "E005",
@@ -55,7 +55,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.006623999999995078
+      "elapsedMs": 0.00666500000000525
     },
     {
       "id": "E006",
@@ -65,7 +65,7 @@
         "misconceptionId": "CURRENT_ACCUMULATES",
         "confidence": 0.78
       },
-      "elapsedMs": 0.010840999999999212
+      "elapsedMs": 0.005438999999995531
     },
     {
       "id": "E007",
@@ -75,7 +75,7 @@
         "misconceptionId": "CURRENT_ACCUMULATES",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0051519999999953825
+      "elapsedMs": 0.0048620000000028085
     },
     {
       "id": "E008",
@@ -85,7 +85,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.004988000000004433
+      "elapsedMs": 0.006751999999998759
     },
     {
       "id": "E009",
@@ -95,7 +95,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.06775700000000029
+      "elapsedMs": 0.0684749999999994
     },
     {
       "id": "E010",
@@ -105,7 +105,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.017413000000004786
+      "elapsedMs": 0.018433000000001698
     },
     {
       "id": "E011",
@@ -115,7 +115,7 @@
         "misconceptionId": "BATTERY_INSTANTLY_EMPTY",
         "confidence": 0.78
       },
-      "elapsedMs": 0.00883400000000023
+      "elapsedMs": 0.01115000000000066
     },
     {
       "id": "E012",
@@ -125,7 +125,7 @@
         "misconceptionId": "CURRENT_STORED_IN_BULB",
         "confidence": 0.78
       },
-      "elapsedMs": 0.002549999999999386
+      "elapsedMs": 0.0027419999999978018
     },
     {
       "id": "E013",
@@ -135,7 +135,7 @@
         "misconceptionId": "CURRENT_TURNS_INTO_AIR",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0010890000000003397
+      "elapsedMs": 0.0011930000000006658
     },
     {
       "id": "E014",
@@ -145,7 +145,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.0034550000000024284
+      "elapsedMs": 0.0018129999999985102
     },
     {
       "id": "E015",
@@ -155,7 +155,7 @@
         "misconceptionId": "CURRENT_STORED_IN_BULB",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0009920000000036566
+      "elapsedMs": 0.0011529999999950746
     },
     {
       "id": "E016",
@@ -165,7 +165,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.000846000000002789
+      "elapsedMs": 0.001018999999999437
     },
     {
       "id": "E017",
@@ -175,7 +175,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.001406000000002905
+      "elapsedMs": 0.0012850000000028672
     },
     {
       "id": "E018",
@@ -185,7 +185,7 @@
         "misconceptionId": "ENERGY_DESTROYED",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0029490000000009786
+      "elapsedMs": 0.0009629999999987149
     },
     {
       "id": "E019",
@@ -195,7 +195,7 @@
         "misconceptionId": "ENERGY_CREATED",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0009949999999960824
+      "elapsedMs": 0.001170999999999367
     },
     {
       "id": "E020",
@@ -205,7 +205,7 @@
         "misconceptionId": "ENERGY_HAS_NO_TRANSFER",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0011519999999975994
+      "elapsedMs": 0.0010100000000008436
     },
     {
       "id": "E021",
@@ -215,7 +215,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.0008049999999997226
+      "elapsedMs": 0.0008969999999948186
     },
     {
       "id": "E022",
@@ -225,7 +225,7 @@
         "misconceptionId": null,
         "confidence": 0.4
       },
-      "elapsedMs": 0.004531000000000063
+      "elapsedMs": 0.004386000000003776
     },
     {
       "id": "E023",
@@ -235,7 +235,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.0013660000000044192
+      "elapsedMs": 0.0014849999999952956
     },
     {
       "id": "E024",
@@ -245,7 +245,7 @@
         "misconceptionId": "ENERGY_CREATED",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0009969999999981383
+      "elapsedMs": 0.002767999999996107
     },
     {
       "id": "E025",
@@ -255,7 +255,7 @@
         "misconceptionId": "ENERGY_DESTROYED",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0011049999999954707
+      "elapsedMs": 0.0011369999999999436
     },
     {
       "id": "E026",
@@ -265,7 +265,7 @@
         "misconceptionId": "CURRENT_STORED_IN_COMPONENT",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0009549999999975967
+      "elapsedMs": 0.0010379999999940992
     },
     {
       "id": "E027",
@@ -275,7 +275,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.03687800000000152
+      "elapsedMs": 0.0009140000000016357
     },
     {
       "id": "E028",
@@ -285,7 +285,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.001333000000002471
+      "elapsedMs": 0.002676999999998486
     },
     {
       "id": "E029",
@@ -295,7 +295,7 @@
         "misconceptionId": "CURRENT_INVERSE_TO_VOLTAGE",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0011599999999987176
+      "elapsedMs": 0.0009610000000037644
     },
     {
       "id": "E030",
@@ -305,7 +305,7 @@
         "misconceptionId": "CURRENT_INDEPENDENT_OF_VOLTAGE",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0010789999999971656
+      "elapsedMs": 0.0009829999999979577
     },
     {
       "id": "E031",
@@ -315,7 +315,7 @@
         "misconceptionId": "VOLTAGE_DOUBLES_RESISTANCE",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0031629999999935876
+      "elapsedMs": 0.0009790000000009513
     },
     {
       "id": "E032",
@@ -325,7 +325,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.0008630000000025007
+      "elapsedMs": 0.0008949999999998681
     },
     {
       "id": "E033",
@@ -335,7 +335,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.0013700000000014256
+      "elapsedMs": 0.0012139999999973838
     },
     {
       "id": "E034",
@@ -345,7 +345,7 @@
         "misconceptionId": "MULTIPLIES_VOLTAGE_AND_RESISTANCE",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0009829999999979577
+      "elapsedMs": 0.0009650000000007708
     },
     {
       "id": "E035",
@@ -355,7 +355,7 @@
         "misconceptionId": "DIVIDES_RESISTANCE_BY_VOLTAGE",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0009070000000050982
+      "elapsedMs": 0.0009719999999973084
     },
     {
       "id": "E036",
@@ -365,7 +365,7 @@
         "misconceptionId": "USES_RESISTANCE_AS_CURRENT",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0010960000000039827
+      "elapsedMs": 0.0010120000000028995
     },
     {
       "id": "E037",
@@ -375,7 +375,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.0008539999999968018
+      "elapsedMs": 0.0032820000000057803
     },
     {
       "id": "E038",
@@ -385,7 +385,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.00116599999999778
+      "elapsedMs": 0.0013629999999977827
     },
     {
       "id": "E039",
@@ -395,7 +395,7 @@
         "misconceptionId": "ADDS_PARALLEL_RESISTANCES",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0010340000000041982
+      "elapsedMs": 0.001122999999999763
     },
     {
       "id": "E040",
@@ -405,7 +405,7 @@
         "misconceptionId": "EQUIVALENT_PARALLEL_EQUALS_ONE_BRANCH",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0027170000000040773
+      "elapsedMs": 0.0013620000000003074
     },
     {
       "id": "E041",
@@ -415,7 +415,7 @@
         "misconceptionId": "PARALLEL_RESISTANCE_ALWAYS_ZERO",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0009119999999995798
+      "elapsedMs": 0.00401799999999497
     },
     {
       "id": "E042",
@@ -425,7 +425,7 @@
         "misconceptionId": "ADDS_PARALLEL_RESISTANCES",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0008599999999958641
+      "elapsedMs": 0.0014710000000022205
     },
     {
       "id": "E043",
@@ -435,7 +435,7 @@
         "misconceptionId": null,
         "confidence": 0.78
       },
-      "elapsedMs": 0.0011569999999991865
+      "elapsedMs": 0.0019929999999988013
     },
     {
       "id": "E044",
@@ -445,7 +445,7 @@
         "misconceptionId": "TREATS_SERIES_AS_PARALLEL",
         "confidence": 0.78
       },
-      "elapsedMs": 0.002308999999996786
+      "elapsedMs": 0.0015020000000021128
     },
     {
       "id": "E045",
@@ -455,7 +455,7 @@
         "misconceptionId": "MULTIPLIES_SERIES_RESISTANCES",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0009629999999987149
+      "elapsedMs": 0.0013430000000056452
     },
     {
       "id": "E046",
@@ -465,7 +465,7 @@
         "misconceptionId": "USES_LARGEST_SERIES_RESISTOR_ONLY",
         "confidence": 0.78
       },
-      "elapsedMs": 0.0009360000000029345
+      "elapsedMs": 0.0014380000000002724
     },
     {
       "id": "E047",
@@ -475,7 +475,7 @@
         "misconceptionId": null,
         "confidence": 0.4
       },
-      "elapsedMs": 0.0020260000000007494
+      "elapsedMs": 0.0028599999999983083
     }
   ],
   "metrics": {
@@ -514,8 +514,8 @@
       },
       "errorCodes": {},
       "latencyMs": {
-        "p50": 0.001333000000002471,
-        "p95": 0.03687800000000152
+        "p50": 0.0014380000000002724,
+        "p95": 0.018433000000001698
       }
     },
     "diagnosis": {

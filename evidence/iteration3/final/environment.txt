@@ -1,0 +1,12 @@
+date: 2026-10-13T04:57:50+00:00
+HEAD: aa3b24f3afc7b7a501ec42136b58a238fd8fdccb
+git status --short entries: 9
+aa3b24f Accessibility and mobile readiness: automated audit (npm run a11y: names, 44px targets, focu
+ac4f847 Content consistency: checker between the JSON pack, review worksheet and evaluation files (s
+d8af033 Evaluation tooling: 47 explicitly labelled synthetic English cases (TEAM_AUTHORED_UNVALIDATE
+node v22.22.0; npm 10.9.4; os: Linux 6.18.44-fc-v114
+browser: Chromium 141.0.7390.37  (CHROME_PATH=/tmp/chromium -> /opt/pw-browsers/chromium-1194)
+GROQ_API_KEY: not set
+PATHASETU_MODEL_PROVIDER: not set
+GROQ_MODEL: not set
+PATHASETU_DEMO_ACCESS_CODE: not set

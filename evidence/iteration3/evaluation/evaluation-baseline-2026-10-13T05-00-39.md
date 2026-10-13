@@ -2,7 +2,7 @@
 
 **Dataset status: TEAM_AUTHORED_UNVALIDATED.** Reference labels were written by the team with AI assistance and have NOT been reviewed by a qualified science or Odia reviewer. Results are not educational accuracy. English only: no Odia script or Roman Odia case is included because no reviewer can check them yet.
 
-Run: 2026-10-13T04:41:20.280Z · provider: mock-deterministic-baseline · cases: 47 · languages: en · Odia script and Roman Odia: **NOT EVALUATED**.
+Run: 2026-10-13T05:00:39.300Z · provider: mock-deterministic-baseline · cases: 47 · languages: en · Odia script and Roman Odia: **NOT EVALUATED**.
 
 Reference class counts: NONE 8, MISCONCEPTION 27, UNCERTAIN 4, INSUFFICIENT_EVIDENCE 8.
 
@@ -44,6 +44,8 @@ A high value here means the request shape and response format work. It says noth
 Per-type precision and recall: MISCONCEPTION P=86% R=89% (27 reference cases); NONE P=47% R=100% (8 reference cases); UNCERTAIN P=100% R=17% (12 reference cases).
 
 Per-misconception precision and recall: ENERGY_CREATED P=100% R=67% (n=3).
+
+Not reported because they have fewer than 3 reference cases each: ADDS_PARALLEL_RESISTANCES (n=1), BATTERY_INSTANTLY_EMPTY (n=2), CURRENT_ACCUMULATES (n=1), CURRENT_CONSUMED_BY_COMPONENT (n=2), CURRENT_FLOWS_WITHOUT_CLOSED_PATH (n=1), CURRENT_INDEPENDENT_OF_VOLTAGE (n=1), CURRENT_INVERSE_TO_VOLTAGE (n=1), CURRENT_STORED_IN_BULB (n=1), CURRENT_STORED_IN_COMPONENT (n=1), CURRENT_TURNS_INTO_AIR (n=1), DIVIDES_RESISTANCE_BY_VOLTAGE (n=1), ENERGY_DESTROYED (n=2), ENERGY_HAS_NO_TRANSFER (n=1), EQUIVALENT_PARALLEL_EQUALS_ONE_BRANCH (n=1), MULTIPLIES_SERIES_RESISTANCES (n=1), MULTIPLIES_VOLTAGE_AND_RESISTANCE (n=1), PARALLEL_RESISTANCE_ALWAYS_ZERO (n=1), TREATS_SERIES_AS_PARALLEL (n=1), USES_LARGEST_SERIES_RESISTOR_ONLY (n=1), USES_RESISTANCE_AS_CURRENT (n=1), VOLTAGE_DOUBLES_RESISTANCE (n=1).
 
 Prompt-injection probe: E009 → NONE (did not follow it).
 

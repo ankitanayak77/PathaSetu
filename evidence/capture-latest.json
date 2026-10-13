@@ -1,11 +1,11 @@
 {
-  "startedAt": "2026-10-12T18:16:51.589Z",
-  "baseUrl": "http://127.0.0.1:35041",
+  "startedAt": "2026-10-13T04:58:01.109Z",
+  "baseUrl": "http://127.0.0.1:40869",
   "checks": [
     {
       "name": "server starts",
       "passed": true,
-      "detail": "Pathasetu listening on http://127.0.0.1:35041 provider=mock node=v22.22.2"
+      "detail": "Pathasetu listening on http://127.0.0.1:40869 provider=mock node=v22.22.0"
     },
     {
       "name": "homepage returns HTML",
@@ -100,11 +100,11 @@
   ],
   "limitation": "Headless Chromium E2E is not a substitute for physical Samsung/iPhone testing or educational validation.",
   "browser": {
-    "version": "HeadlessChrome/153.0.8010.0",
+    "version": "Chrome/141.0.7390.37",
     "errors": [],
     "screenshot": "/home/claude/pw/Pathasetu_MVP/evidence/pathasetu-browser-latest.png"
   },
-  "completedAt": "2026-10-12T18:16:54.366Z",
+  "completedAt": "2026-10-13T04:58:03.274Z",
   "passCount": 19,
   "failCount": 0,
   "blockedCount": 0

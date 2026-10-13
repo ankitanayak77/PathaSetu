@@ -1,3 +1,5 @@
+
+> pathasetu-mvp@0.1.0 evaluate
+> node scripts/evaluate-diagnosis.mjs --provider groq
+
 BLOCKED: local credentials or settings not configured (GROQ_API_KEY, PATHASETU_DEMO_ACCESS_CODE, PATHASETU_MODEL_PROVIDER=groq). No live evaluation was run. Values are never requested in chat.
-Time: 2026-10-13T04:41:20.363Z
-The deterministic baseline on the same cases is in the evaluation-baseline files.

@@ -1,4 +1,5 @@
-BASELINE on commit 991923d (before the storage changes):
+BASELINE on commit d44b948 (before the storage changes):
 CORRUPT RECORD (state replaced by a string): question="" | page errors=1 | first error=exception: TypeError: Cannot read properties of undefined (reading 'currentItemId')
     at reconcileState (htt
 WRITE REJECTED after two writes: storage status="Memory-only fallback. Do not close or reload this tab; progress may be lost." | notice region="? Re-check processed ? MOCK 1 queued re-check processed. The result remains provisional; no mastery was confirmed. The updated plan recommends EL02; your current question and its draft were preserved."
+(Regenerated on 13 Oct 2026 when the Iteration 3 work was rebuilt after a sandbox reset; commit hashes are those of the rebuilt history, see docs/BUILD_STATUS.md.)

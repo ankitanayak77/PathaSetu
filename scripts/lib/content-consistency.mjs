@@ -109,24 +109,50 @@ export function checkWorksheet(pack, csvText) {
   return { ok: !problems.some((p) => p.severity !== 'info'), problems, rows: records.length };
 }
 
-export function checkEvaluationTemplate(dataset, csvText) {
+const EVAL_LABELS = ['NONE', 'MISCONCEPTION', 'UNCERTAIN', 'INSUFFICIENT_EVIDENCE'];
+const REVIEWER_FIELDS = ['reviewer_agrees', 'reviewer_label', 'reviewer_misconception_id', 'reviewer_notes', 'reviewer_name', 'review_date'];
+const validDate = (text) => /^\d{4}-\d{2}-\d{2}$/.test(text) && !Number.isNaN(Date.parse(text));
+
+// The shipped template has every reviewer field empty (a unit test pins that). A real reviewer then fills fields in; this check
+// accepts a completed row only when it is internally consistent. It cannot tell who typed a name, so it never proves a review happened.
+export function checkEvaluationTemplate(dataset, csvText, pack = null) {
   const problems = [];
   let parsed; try { parsed = parseCsv(csvText); } catch (error) { return { ok: false, problems: [{ scope: 'evaluation-template', message: `unreadable CSV: ${error.message}` }] }; }
-  const need = ['case_id', 'item_id', 'language', 'category', 'option_id', 'explanation', 'team_reference_label', 'team_reference_misconception_id', 'reviewer_agrees', 'reviewer_label', 'reviewer_misconception_id', 'reviewer_notes', 'reviewer_name', 'review_date'];
+  const need = ['case_id', 'item_id', 'language', 'category', 'option_id', 'explanation', 'team_reference_label', 'team_reference_misconception_id', ...REVIEWER_FIELDS];
   const missing = need.filter((c) => !parsed.header.includes(c));
   if (missing.length) problems.push({ scope: 'evaluation-template', message: `missing columns: ${missing.join(', ')}` });
+  const add = (message, itemId) => problems.push({ scope: 'evaluation-template', itemId, message });
+  const itemOf = (id) => pack?.items?.find((i) => i.id === id);
   const filled = parsed.records.filter((r) => r.case_id);
+  const authored = parsed.records.filter((r) => !r.case_id && (r.explanation || r.item_id));
   for (const c of dataset.cases) {
     const row = filled.find((r) => r.case_id === c.id);
-    if (!row) { problems.push({ scope: 'evaluation-template', itemId: c.itemId, message: `no row for case ${c.id}` }); continue; }
-    for (const [field, expected] of [['item_id', c.itemId], ['language', c.language], ['category', c.category], ['option_id', c.optionId], ['explanation', c.explanation], ['team_reference_label', c.reference.label], ['team_reference_misconception_id', c.reference.misconceptionId ?? '']]) if (row[field] !== expected) problems.push({ scope: 'evaluation-template', message: `${c.id}: ${field} does not match evaluation/cases.json` });
+    if (!row) { add(`no row for case ${c.id}`, c.itemId); continue; }
+    for (const [field, expected] of [['item_id', c.itemId], ['language', c.language], ['category', c.category], ['option_id', c.optionId], ['explanation', c.explanation], ['team_reference_label', c.reference.label], ['team_reference_misconception_id', c.reference.misconceptionId ?? '']]) if (row[field] !== expected) add(`${c.id}: ${field} does not match evaluation/cases.json`);
   }
-  for (const row of filled) if (!dataset.cases.some((c) => c.id === row.case_id)) problems.push({ scope: 'evaluation-template', message: `row ${row.case_id} is not in evaluation/cases.json` });
+  for (const row of filled) if (!dataset.cases.some((c) => c.id === row.case_id)) add(`row ${row.case_id} is not in evaluation/cases.json`);
+
+  const reviewerTouched = (row) => REVIEWER_FIELDS.some((f) => String(row[f] ?? '').trim());
   for (const row of parsed.records) {
-    if (row.reviewer_name || row.review_date || row.reviewer_agrees || row.reviewer_label) problems.push({ scope: 'evaluation-template', message: `${row.case_id || '(blank row)'}: reviewer fields must be empty in the shipped template` });
-    if (!row.case_id && row.explanation) problems.push({ scope: 'evaluation-template', message: 'a blank template row must not contain an explanation: only a qualified reviewer may author Odia examples' });
+    const where = row.case_id || '(reviewer-authored row)';
+    if (!reviewerTouched(row) && !(row.explanation && !row.case_id)) continue;
+    if (!row.reviewer_name.trim() || !validDate(row.review_date)) add(`${where}: a row with any reviewer field needs reviewer_name and a review_date as YYYY-MM-DD`);
+    if (!['', 'yes', 'no'].includes(row.reviewer_agrees)) add(`${where}: reviewer_agrees must be yes, no or empty`);
+    if (row.reviewer_agrees === 'no' && !EVAL_LABELS.includes(row.reviewer_label)) add(`${where}: when the reviewer disagrees, reviewer_label must be one of ${EVAL_LABELS.join(', ')}`);
+    if (row.reviewer_label && !EVAL_LABELS.includes(row.reviewer_label)) add(`${where}: reviewer_label must be one of ${EVAL_LABELS.join(', ')}`);
+    if (row.reviewer_label === 'MISCONCEPTION') {
+      const item = itemOf(row.item_id);
+      if (!row.reviewer_misconception_id) add(`${where}: a MISCONCEPTION label needs reviewer_misconception_id`);
+      else if (item && !item.allowedMisconceptionIds.includes(row.reviewer_misconception_id)) add(`${where}: ${row.reviewer_misconception_id} is not allowed for ${item.id}`);
+    } else if (row.reviewer_misconception_id) add(`${where}: reviewer_misconception_id only goes with a MISCONCEPTION label`);
+    if (!row.case_id && row.explanation) {
+      if (!EVAL_LABELS.includes(row.reviewer_label)) add(`${where}: a reviewer-authored example needs reviewer_label`);
+      if (pack && !itemOf(row.item_id)) add(`${where}: item_id is not in the pack`);
+      if (!row.option_id) add(`${where}: a reviewer-authored example needs option_id`);
+    }
   }
-  const blanks = parsed.records.filter((r) => !r.case_id);
-  for (const language of ['odia_script', 'roman_odia']) for (const category of ['correct_reasoning', 'genuine_misconception', 'ambiguous', 'insufficient_information']) if (!blanks.some((r) => r.language === language && r.category === category)) problems.push({ scope: 'evaluation-template', message: `no blank row for ${language} / ${category}` });
-  return { ok: problems.length === 0, problems, filledRows: filled.length, blankRows: blanks.length };
+  for (const row of parsed.records.filter((r) => !r.case_id && !r.explanation)) if (reviewerTouched(row)) add('a blank template row with reviewer fields but no explanation: write the example or clear the row');
+  const covered = parsed.records.filter((r) => !r.case_id);
+  for (const language of ['odia_script', 'roman_odia']) for (const category of ['correct_reasoning', 'genuine_misconception', 'ambiguous', 'insufficient_information']) if (!covered.some((r) => r.language === language && r.category === category)) add(`no row for ${language} / ${category}`);
+  return { ok: problems.length === 0, problems, filledRows: filled.length, blankRows: covered.filter((r) => !r.explanation).length, authoredRows: authored.length };
 }

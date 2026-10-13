@@ -1,0 +1,5 @@
+npm-ci: exit=0 duration_ms=415
+npm-test: exit=0 duration_ms=2413
+npm-check: exit=0 duration_ms=372
+npm-capture: exit=0 duration_ms=3759
+npm-e2e: exit=0 duration_ms=43025

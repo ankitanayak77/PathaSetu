@@ -40,7 +40,7 @@ An approval is only valid when your name is present and all four checks are `PAS
 - For each English row, `team_reference_label` is the team's own, unvalidated label. Set `reviewer_agrees` to `yes` or `no`. If `no`, give `reviewer_label` (`NONE`, `MISCONCEPTION`, `UNCERTAIN` or `INSUFFICIENT_EVIDENCE`) and, for a misconception, `reviewer_misconception_id` from that item's allowed list.
 - Check that each category is what it claims to be: correct reasoning, genuine misconception, ambiguous, insufficient information.
 - Blank rows are for Odia-script and Roman-Odia learner explanations. Write realistic examples a Class 10 learner might type; leave `team_reference_label` empty and give your own label. Do not copy text from a real child's work.
-- Fill `reviewer_name` and `review_date` on every row you touch.
+- Fill `reviewer_name` and `review_date` (as `YYYY-MM-DD`) on every row you touch. For your own Odia-script or Roman-Odia examples fill `item_id`, `option_id`, `explanation` and `reviewer_label` too (and `reviewer_misconception_id` when the label is `MISCONCEPTION`, using an ID from that item's allowed list). `npm run check:content` will then verify the rows are complete; it cannot verify who you are.
 
 ## What the team does after your review
 

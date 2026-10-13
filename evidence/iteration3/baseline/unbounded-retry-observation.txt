@@ -1,4 +1,4 @@
-OBSERVATION on the code at commit 369c0f2 (provider always answers HTTP 500), 65 seconds:
+OBSERVATION on the code at commit 7ebd548 (provider always answers HTTP 500), 65 seconds:
 t=5s total_recheck_POSTs=1
 t=15s total_recheck_POSTs=2
 t=30s total_recheck_POSTs=3
@@ -7,3 +7,4 @@ t=60s total_recheck_POSTs=5
 final total re-check POSTs: 5
 queue entry: {"attempts":5,"status":"PENDING_PROVIDER_RECHECK","hasNextAttemptAt":false,"hasNeedsAttention":false}
 conclusion: retries continue on every reachability cycle; nothing caps them or marks the entry as needing attention
+(Regenerated on 13 Oct 2026 when the Iteration 3 work was rebuilt after a sandbox reset; commit hashes are those of the rebuilt history, see docs/BUILD_STATUS.md.)

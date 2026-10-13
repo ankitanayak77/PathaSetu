@@ -33,7 +33,7 @@ test('the shipped pack, worksheet and evaluation template are consistent, and ev
   assert.deepEqual(messages(sheet), []);
   assert.equal(sheet.rows, p.items.length);
   assert.ok(p.items.every((item) => item.status === 'UNREVIEWED_DRAFT' && item.review.status === 'UNREVIEWED_DRAFT' && !item.review.reviewer && !item.review.reviewedAt));
-  const template = checkEvaluationTemplate(dataset(), templateText());
+  const template = checkEvaluationTemplate(dataset(), templateText(), p);
   assert.deepEqual(messages(template), []);
   assert.equal(template.filledRows, dataset().cases.length);
   assert.ok(template.blankRows >= 8);
@@ -126,17 +126,50 @@ test('a fully approved worksheet row only produces a note: the pack status is ne
   assert.ok(p.items.every((item) => item.status === 'UNREVIEWED_DRAFT'));
 });
 
-test('evaluation template: drift, filled reviewer fields, authored Odia and missing blank categories are reported', () => {
+test('the shipped evaluation template has every reviewer field empty and no authored Odia: nobody has reviewed anything', () => {
+  const { records } = parseCsv(templateText());
+  for (const row of records) {
+    for (const field of ['reviewer_agrees', 'reviewer_label', 'reviewer_misconception_id', 'reviewer_notes', 'reviewer_name', 'review_date']) assert.equal(row[field], '', `${row.case_id || '(blank)'} ${field}`);
+    if (!row.case_id) assert.equal(row.explanation, '', 'blank rows stay blank until a reviewer writes an example');
+  }
+});
+
+test('evaluation template: drift from cases.json and missing language/category rows are reported', () => {
   const data = dataset();
   const { header, records } = parseCsv(templateText());
   const mutate = (fn) => { const copy = records.map((r) => ({ ...r })); fn(copy); return toCsv(header, copy); };
+  assert.match(messages(checkEvaluationTemplate(data, mutate((r) => { r[0].explanation += ' x'; }), pack())).join('\n'), /E001: explanation does not match/);
+  assert.match(messages(checkEvaluationTemplate(data, mutate((r) => { r.splice(46, 1); }), pack())).join('\n'), /no row for case E047/);
+  assert.match(messages(checkEvaluationTemplate(data, mutate((r) => { for (let i = r.length - 1; i >= 0; i--) if (!r[i].case_id && r[i].language === 'roman_odia' && r[i].category === 'ambiguous') r.splice(i, 1); }), pack())).join('\n'), /no row for roman_odia \/ ambiguous/);
+  assert.match(messages(checkEvaluationTemplate(data, mutate((r) => { r.push({ ...r[0], case_id: 'E999' }); }), pack())).join('\n'), /E999 is not in evaluation\/cases.json/);
+});
 
-  assert.match(messages(checkEvaluationTemplate(data, mutate((r) => { r[0].explanation += ' x'; }))).join('\n'), /E001: explanation does not match/);
-  assert.match(messages(checkEvaluationTemplate(data, mutate((r) => { r[1].reviewer_name = 'Invented Name'; }))).join('\n'), /reviewer fields must be empty/);
-  const blank = records.findIndex((r) => !r.case_id);
-  assert.match(messages(checkEvaluationTemplate(data, mutate((r) => { r[blank].explanation = 'ଏକ ଉଦାହରଣ'; }))).join('\n'), /only a qualified reviewer may author Odia examples/);
-  assert.match(messages(checkEvaluationTemplate(data, mutate((r) => { r.splice(46, 1); }))).join('\n'), /no row for case E047/);
-  assert.match(messages(checkEvaluationTemplate(data, mutate((r) => { for (let i = r.length - 1; i >= 0; i--) if (!r[i].case_id && r[i].language === 'roman_odia' && r[i].category === 'ambiguous') r.splice(i, 1); }))).join('\n'), /no blank row for roman_odia \/ ambiguous/);
+test('evaluation template: a reviewer can complete rows and the check accepts them only when they are consistent', () => {
+  const data = dataset();
+  const { header, records } = parseCsv(templateText());
+  const mutate = (fn) => { const copy = records.map((r) => ({ ...r })); fn(copy); return toCsv(header, copy); };
+  const run = (fn) => messages(checkEvaluationTemplate(data, mutate(fn), pack())).join('\n');
+  // a consistent confirmation and a consistent correction
+  assert.equal(run((r) => { Object.assign(r[0], { reviewer_agrees: 'yes', reviewer_name: 'Test Reviewer', review_date: '2026-10-14' }); Object.assign(r[1], { reviewer_agrees: 'no', reviewer_label: 'NONE', reviewer_name: 'Test Reviewer', review_date: '2026-10-14', reviewer_notes: 'sound reasoning' }); }), '');
+  // incomplete or inconsistent rows
+  assert.match(run((r) => { r[1].reviewer_name = 'Test Reviewer'; }), /needs reviewer_name and a review_date as YYYY-MM-DD/);
+  assert.match(run((r) => { Object.assign(r[1], { reviewer_agrees: 'maybe', reviewer_name: 'T', review_date: '2026-10-14' }); }), /reviewer_agrees must be yes, no or empty/);
+  assert.match(run((r) => { Object.assign(r[1], { reviewer_agrees: 'no', reviewer_name: 'T', review_date: '2026-10-14' }); }), /when the reviewer disagrees, reviewer_label must be one of/);
+  assert.match(run((r) => { Object.assign(r[1], { reviewer_label: 'MISCONCEPTION', reviewer_misconception_id: 'NOT_AN_ALLOWED_ID', reviewer_name: 'T', review_date: '2026-10-14' }); }), /NOT_AN_ALLOWED_ID is not allowed for EL01/);
+  assert.match(run((r) => { Object.assign(r[1], { reviewer_label: 'NONE', reviewer_misconception_id: 'CURRENT_ACCUMULATES', reviewer_name: 'T', review_date: '2026-10-14' }); }), /only goes with a MISCONCEPTION label/);
+});
+
+test('evaluation template: reviewer-authored Odia rows need a name, date, label and option, and an empty row cannot carry reviewer fields', () => {
+  const data = dataset();
+  const { header, records } = parseCsv(templateText());
+  const blank = records.findIndex((r) => !r.case_id && r.language === 'odia_script' && r.category === 'ambiguous');
+  const mutate = (fn) => { const copy = records.map((r) => ({ ...r })); fn(copy); return toCsv(header, copy); };
+  const run = (fn) => messages(checkEvaluationTemplate(data, mutate(fn), pack())).join('\n');
+  assert.match(run((r) => { r[blank].explanation = 'ଏକ ଉଦାହରଣ'; }), /needs reviewer_name and a review_date/);
+  assert.equal(run((r) => { Object.assign(r[blank], { explanation: 'ଏକ ଉଦାହରଣ', item_id: 'EL01', option_id: 'A', reviewer_label: 'UNCERTAIN', reviewer_name: 'Test Reviewer', review_date: '2026-10-14' }); }), '');
+  assert.match(run((r) => { Object.assign(r[blank], { explanation: 'ଏକ ଉଦାହରଣ', item_id: 'EL01', reviewer_name: 'T', review_date: '2026-10-14' }); }), /needs reviewer_label/);
+  assert.match(run((r) => { Object.assign(r[blank], { item_id: 'EL99', explanation: 'x', option_id: 'A', reviewer_label: 'NONE', reviewer_name: 'T', review_date: '2026-10-14' }); }), /item_id is not in the pack/);
+  assert.match(run((r) => { r[blank].reviewer_notes = 'note'; r[blank].reviewer_name = 'T'; r[blank].review_date = '2026-10-14'; }), /blank template row with reviewer fields but no explanation/);
 });
 
 test('the checker CLI succeeds on the shipped files', async () => {
