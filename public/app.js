@@ -1,5 +1,8 @@
 import { initialState, submitAnswer, recheckQueued, appendTrace, recordRecheckDeferred, reconcileState, manualRetryQueue } from '/core/agent.js';
 import { RETRY_POLICY, normalisePolicy, isDue, nextDueAtMs, queueStatus } from '/core/retry.js';
+import { repairSavedRecord } from '/core/recovery.js';
+import { buildTraceExport } from '/core/export.js';
+import { PERSISTENCE, checkPersistence, createPersistenceRequester, describePersistence } from '/core/persistence.js';
 import { buildBridgeExercise, gradeBridgeAnswer, recordBridgeAttempt, recordBridgeReveal } from '/core/bridge.js';
 import { createIndexedDbStorage } from '/core/storage.js';
 
@@ -7,6 +10,8 @@ const $ = (id) => document.getElementById(id);
 const storage = createIndexedDbStorage();
 const ui = { reachable: false, probing: true, provider: 'mock', model: null, accessRequired: false, accessAuthorized: true, writerMode: 'starting', writable: true, releaseWriterLock: null, notice: null, lastResult: null, probeDelay: 2000, probeTimer: null, draftTimer: null, draining: false, traceOpen: false, pack: null, state: null, drafts: {}, loaded: false, submitting: false, bridge: null };
 const RECHECK_TIMEOUT_MS = 8000;
+const persistenceRequester = createPersistenceRequester();
+ui.persistence = { state: PERSISTENCE.NOT_REQUESTED };
 // Bounded automatic retries (see src/core/retry.js). The override exists only so browser tests can use short delays.
 function retryPolicy() { return normalisePolicy({ ...RETRY_POLICY, ...(globalThis.__PATHASETU_TEST_RETRY_POLICY__ ?? {}) }); }
 
@@ -25,14 +30,46 @@ function renderNotice() {
 async function saveRecord() {
   // A read-only tab must never write: it would overwrite the writer tab's newer progress.
   if (!ui.pack || !ui.state || !ui.writable) return;
+  const wasDurable = storage.persistent;
   try { await storage.save({ pack: ui.pack, state: ui.state, drafts: ui.drafts, savedAt: new Date().toISOString() }); }
-  catch (error) { notice('warning', 'Local save warning', 'The browser could not confirm that progress was saved. Keep this session open and export the trace if needed.'); console.error('local_save_failed', error?.name ?? 'Error'); }
-  const status = $('storage-status');
-  if (status) {
-    status.classList.toggle('good', storage.persistent);
-    status.classList.toggle('warning', !storage.persistent);
-    status.textContent = storage.persistent ? 'Saved in this browser’s IndexedDB on this device.' : 'Memory-only fallback. Do not close or reload this tab; progress may be lost.';
+  catch (error) { notice('warning', 'Local save warning', 'The browser could not confirm that progress was saved. Keep this session open and download the trace if needed.'); console.error('local_save_failed', error?.name ?? 'Error'); }
+  if (wasDurable && !storage.persistent) {
+    notice('warning', 'Progress is no longer being saved to this device', `The browser refused to store data${storage.status.lastError ? ` (${storage.status.lastError})` : ''}. Progress is now kept in memory only: closing or reloading this tab will lose it. Download the trace if you need a record.`);
   }
+  renderStorageStatus();
+  void maybeRequestPersistence();
+}
+
+// Never claims "saved" unless the last durable write succeeded.
+function renderStorageStatus() {
+  const element = $('storage-status');
+  if (!element) return;
+  const status = storage.status;
+  let text; let tone;
+  if (!status.persistent) { text = `Not saved to this device: the browser blocked local storage${status.lastError ? ` (${status.lastError})` : ''}. Progress is kept in memory only; closing or reloading this tab loses it.`; tone = 'warning'; }
+  else if (!status.lastSavedAt) { text = 'Not saved to this device yet.'; tone = 'neutral'; }
+  else { text = 'Saved in this browser’s IndexedDB on this device.'; tone = 'good'; }
+  element.classList.toggle('good', tone === 'good');
+  element.classList.toggle('warning', tone === 'warning');
+  element.textContent = text;
+  renderPersistence();
+  renderWriterBanner();
+}
+
+function renderPersistence() {
+  const element = $('persistence-status');
+  if (!element) return;
+  const description = describePersistence(ui.persistence.state);
+  element.classList.toggle('good', description.tone === 'good');
+  element.classList.toggle('warning', description.tone === 'warning');
+  element.textContent = description.text;
+}
+
+// Asked at most once per session, only after the learner has saved an answer and only if durable storage works.
+async function maybeRequestPersistence() {
+  if (!storage.persistent || !ui.state?.answers?.length || persistenceRequester.requested) return;
+  ui.persistence = { state: PERSISTENCE.REQUESTED }; renderPersistence();
+  ui.persistence = await persistenceRequester.request(); renderPersistence();
 }
 
 function persistDraftFromDom() {
@@ -207,9 +244,7 @@ function renderProgress() {
   $('queue-count').textContent = String(ui.state?.queue?.length ?? 0);
   const sessions = Math.max(0, Number(ui.state?.learner?.sessionsRemaining ?? 0));
   $('sessions-label').textContent = `${sessions} learning session${sessions === 1 ? '' : 's'} left`;
-  $('storage-status').classList.toggle('good', storage.persistent);
-  $('storage-status').classList.toggle('warning', !storage.persistent);
-  $('storage-status').textContent = storage.persistent ? 'Saved in this browser’s IndexedDB on this device.' : 'Memory-only fallback. Do not close or reload this tab; progress may be lost.';
+  renderStorageStatus();
   $('progress-bar').style.width = `${Math.min(100, Math.max(0, ((10 - sessions) / 10) * 100))}%`;
   renderQueueStatus();
 }
@@ -272,12 +307,15 @@ function renderConnection() {
   $('provider-label').textContent = ui.provider === 'groq' ? `CONFIGURED · GROQ${ui.model ? ` · ${ui.model}` : ''} · ACCURACY UNVALIDATED` : 'MOCK PROVIDER · DEMO RULES · NO LIVE AI';
 }
 
+// Persistent banner for conditions the learner must not miss: read-only session, no Web Locks, or storage that is not saving.
 function renderWriterBanner() {
   const root = $('writer-banner');
-  const messages = { locked: ['Read-only session', 'Another Pathasetu tab owns the writable session. This tab will not save answers or process re-checks. Close the other tab, then reload this one.'], unavailable: ['Single-tab protection unavailable', 'This browser does not provide Web Locks here. Keep only one Pathasetu tab open to avoid conflicting progress.'] };
-  const message = messages[ui.writerMode];
-  root.classList.toggle('hidden', !message);
-  root.innerHTML = message ? `<span class="notice-icon" aria-hidden="true">!</span><div><strong>${esc(message[0])}</strong>${esc(message[1])}</div>` : '';
+  const messages = [];
+  if (ui.writerMode === 'locked') messages.push(['Read-only session', 'Another Pathasetu tab owns the writable session. This tab will not save answers or process re-checks. Close the other tab, then reload this one.']);
+  else if (ui.writerMode === 'unavailable') messages.push(['Single-tab protection unavailable', 'This browser does not provide Web Locks here. Keep only one Pathasetu tab open to avoid conflicting progress.']);
+  if (ui.loaded && !storage.persistent) messages.push(['Progress is not being saved to this device', `The browser blocked local storage${storage.status.lastError ? ` (${storage.status.lastError})` : ''}. Progress is kept in memory only: closing or reloading this tab will lose it.`]);
+  root.classList.toggle('hidden', messages.length === 0);
+  root.innerHTML = messages.map(([title, text]) => `<span class="notice-icon" aria-hidden="true">!</span><div><strong>${esc(title)}</strong>${esc(text)}</div>`).join('');
 }
 
 function renderAll() {
@@ -466,12 +504,23 @@ async function load() {
     ui.probing = false; ui.loaded = false; renderConnection();
     return;
   }
-  ui.state = saved?.state ?? initialState(ui.pack);
-  ui.drafts = saved?.drafts && typeof saved.drafts === 'object' ? saved.drafts : {};
+  let repairNote = null;
+  if (saved) {
+    const repaired = repairSavedRecord(saved, ui.pack);
+    ui.state = repaired.state; ui.drafts = repaired.drafts;
+    if (repaired.discarded) {
+      await storage.quarantine(saved).catch(() => {});
+      repairNote = ['warning', 'Saved progress could not be read', 'Pathasetu started a fresh session. The unreadable record was kept on this device, not deleted, so it can be inspected.'];
+    } else if (repaired.repairs.length) {
+      repairNote = ['warning', 'Saved progress was partly repaired', 'Some saved entries could not be used and were removed. Valid answers, queued re-checks and progress were kept.'];
+    }
+  } else { ui.state = initialState(ui.pack); ui.drafts = {}; }
   reconcileState(ui.state, ui.pack);
   if (ui.pack.demoDraftMode || ui.pack.items.some((item) => item.status !== 'PUBLISHED')) {
     notice('warning', 'Prototype content · not for real learners', 'The Electricity questions and Odia bridge fields are unreviewed drafts. Any diagnosis remains provisional until content review and model evaluation are complete.');
   }
+  if (repairNote) notice(...repairNote);
+  ui.persistence = await checkPersistence();
   ui.loaded = true;
   await saveRecord();
   scheduleRetryTimer();
@@ -481,8 +530,8 @@ async function load() {
 
 $('trace-toggle').addEventListener('click', () => { ui.traceOpen = !ui.traceOpen; renderAll(); });
 $('download-trace').addEventListener('click', () => {
-  const payload = { product: 'Pathasetu', exportedAt: new Date().toISOString(), provider: ui.provider, model: ui.model, contentStatus: 'UNREVIEWED_DRAFT', state: ui.state };
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const exported = buildTraceExport({ state: ui.state, provider: ui.provider, model: ui.model, storage: storage.status, persistence: ui.persistence.state, knownSecrets: [sessionStorage.getItem('pathasetu_demo_code') || ''] });
+  const blob = new Blob([exported.json], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a'); link.href = url; link.download = `pathasetu-trace-${new Date().toISOString().slice(0, 10)}.json`; link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);

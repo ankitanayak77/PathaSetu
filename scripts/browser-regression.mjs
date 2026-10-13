@@ -389,6 +389,128 @@ await scenario('N2', 'bounded retries: the waiting state and an early manual ret
   allErrors.push(...page.errors);
 }));
 
+// ---- Storage durability and integrity -------------------------------------------------------------------------------
+const STORAGE = `(() => ({ status: document.querySelector('#storage-status')?.innerText || '', persistence: document.querySelector('#persistence-status')?.innerText || '', banner: document.querySelector('#writer-banner')?.classList.contains('hidden') ? '' : (document.querySelector('#writer-banner')?.innerText || ''), question: document.querySelector('.question-id')?.textContent || '', notice: document.querySelector('#notice-region')?.innerText || '', persistCalls: window.__persistCalls ?? 0 }))()`;
+const READ_KEY = (key) => `new Promise((res) => { const r = indexedDB.open('pathasetu-local-v1', 1); r.onerror = () => res(null); r.onsuccess = () => { try { const g = r.result.transaction('records', 'readonly').objectStore('records').get(${JSON.stringify(key)}); g.onsuccess = () => { r.result.close(); res(g.result ?? null); }; g.onerror = () => res(null); } catch { res(null); } }; })`;
+// Edits the saved record from a plain static page of the same origin, while the app is NOT running, so the app's own
+// pagehide save cannot overwrite the injected corruption.
+async function editDbOffApp(chrome, base, body) {
+  const tool = await chrome.newPage(`${base}/styles.css`);
+  await tool.waitFor('document.readyState', (x) => x === 'complete', 6000, 'static page');
+  await tool.evaluate(editDb(body));
+  await tool.close();
+}
+async function pageWithScript(chrome, source) { const page = await chrome.newPage(); if (source) await page.cdp.call('Page.addScriptToEvaluateOnNewDocument', { source }); return page; }
+
+await scenario('P', 'storage failures are reported honestly', async () => {
+  await withEnv(async ({ chrome, base }) => {
+    const page = await pageWithScript(chrome, "IDBFactory.prototype.open = function () { throw new DOMException('blocked', 'SecurityError'); };");
+    await page.goto(`${base}/`);
+    const u = await page.waitFor(STORAGE, (v) => /EL01/.test(v.question), 12000, 'app without IndexedDB');
+    check('P1', 'IndexedDB open failure: the app still runs, says progress is NOT saved, names the reason and never says "Saved in this browser"', /Not saved to this device/.test(u.status) && /SecurityError/.test(u.status) && !/Saved in this browser/.test(u.status) && /not being saved/i.test(u.banner), `status="${u.status.slice(0, 90)}"`);
+    await page.evaluate(submitExpr('A', 'The current keeps building up in the wire.'));
+    const after = await page.waitFor(UI, (v) => v.answers === '1' && v.queue === '0', 10000, 'answer without durable storage');
+    const st = await page.evaluate(STORAGE);
+    check('P2', 'the learning loop still works in memory and the warning stays', after.answers === '1' && /Not saved to this device/.test(st.status), `answers=${after.answers}`);
+    allErrors.push(...page.errors);
+  });
+  await withEnv(async ({ chrome, base }) => {
+    const page = await pageWithScript(chrome, "(() => { const orig = IDBObjectStore.prototype.put; let n = 0; IDBObjectStore.prototype.put = function (...a) { n += 1; if (n > 2) throw new DOMException('quota exceeded', 'QuotaExceededError'); return orig.apply(this, a); }; })();");
+    await page.goto(`${base}/`);
+    await page.waitFor(STORAGE, (v) => /EL01/.test(v.question), 12000, 'app');
+    const before = await page.evaluate(STORAGE);
+    await page.evaluate(submitExpr('A', 'The current keeps building up in the wire.'));
+    const u = await page.waitFor(STORAGE, (v) => /Not saved to this device/.test(v.status), 12000, 'storage status after a rejected write');
+    check('P3', 'a rejected write flips the status to NOT saved with the reason, and a persistent banner appears', /QuotaExceededError/.test(u.status) && /not being saved/i.test(u.banner) && /Saved in this browser/.test(before.status), `before="${before.status.slice(0, 40)}"; after="${u.status.slice(0, 70)}"`);
+    const rec = await page.evaluate(READ_DB);
+    const memoryQueue = (await page.evaluate(UI)).queue;
+    check('P4', 'the older durable record is left as it was: the re-check result after the failure is NOT claimed as saved', rec?.state?.queue?.length === 1 && !String(rec?.state?.answers?.[0]?.mode).startsWith('RECHECKED_') && memoryQueue === '0', `durable queue=${rec?.state?.queue?.length}; durable mode=${rec?.state?.answers?.[0]?.mode}; in-memory queue=${memoryQueue}`);
+    allErrors.push(...page.errors);
+  });
+});
+
+await scenario('R', 'corrupt saved state recovers without crashing', async () => {
+  await withEnv(async ({ chrome, base }) => {
+    const page = await chrome.newPage(`${base}/`);
+    await ready(page);
+    await page.evaluate(submitExpr('A', 'The current keeps building up in the wire.'));
+    await page.waitFor(UI, (v) => v.answers === '1' && v.queue === '0', 10000, 'first answer');
+    await page.close(); await sleep(300);
+    await editDbOffApp(chrome, base, "rec.state = 'this is not a state object';");
+    const page2 = await chrome.newPage(`${base}/`);
+    Object.assign(page, { evaluate: page2.evaluate, waitFor: page2.waitFor, errors: page2.errors });
+    const u = await page.waitFor(STORAGE, (v) => /EL01/.test(v.question) && /could not be read/i.test(v.notice), 12000, 'fresh start after corruption');
+    const backup = await page.evaluate(READ_KEY('session-unreadable-backup'));
+    const fresh = await page.evaluate(UI);
+    check('R1', 'a totally unreadable record starts a fresh session with a clear notice instead of crashing', fresh.answers === '0' && /EL01/.test(u.question), `answers=${fresh.answers}; notice="${u.notice.replace(/\s+/g, ' ').slice(0, 70)}"`);
+    check('R2', 'the unreadable record is kept under a separate key, not deleted', backup?.state === 'this is not a state object', `backup state=${JSON.stringify(backup?.state)}`);
+    await page.evaluate(submitExpr('B', 'A second synthetic answer after recovery.'));
+    const next = await page.waitFor(UI, (v) => v.answers === '1', 10000, 'answer after recovery');
+    const st = await page.evaluate(STORAGE);
+    check('R3', 'saving works again after recovery and the status says saved', next.answers === '1' && /Saved in this browser/.test(st.status) && page.errors.length === 0, `errors=${page.errors.length}`);
+    allErrors.push(...page.errors);
+  });
+  await withEnv(async ({ chrome, base }) => {
+    let page = await chrome.newPage(`${base}/`);
+    await ready(page); await controlled(page);
+    await page.offline(true); await page.waitFor('navigator.onLine', (x) => x === false, 6000, 'offline'); await sleep(300);
+    await page.evaluate(submitExpr('A', 'The battery becomes empty immediately.'));
+    await page.waitFor(UI, (v) => v.queue === '1' && v.answers === '1', 8000, 'queued offline');
+    await page.close(); await sleep(300);
+    await editDbOffApp(chrome, base, `rec.state.queue.push({ id: 'q-bad' }); rec.state.queue.push(5); rec.state.trace.push(null, { nope: true }); rec.state.answers.push('junk');`);
+    page = await chrome.newPage(`${base}/`);
+    const u = await page.waitFor(UI, (v) => /EL0\d/.test(v.question) && v.queue === '0' && v.answers === '1', 20000, 'repaired and drained');
+    const rec = await page.evaluate(READ_DB);
+    check('R4', 'partial corruption is repaired: the valid answer and queued re-check survive and the queue drains once', u.answers === '1' && u.queue === '0' && /partly repaired|re-check processed/i.test(u.notice), `answers=${u.answers}; queue=${u.queue}`);
+    check('R5', 'the repair is recorded in the trace as counts only', (rec?.state?.trace ?? []).some((t) => t.type === 'saved_state_repaired' && t.repairs && !JSON.stringify(t).includes('junk')), (rec?.state?.trace ?? []).slice(-3).map((t) => t.type).join(','));
+    allErrors.push(...page.errors);
+  });
+});
+
+await scenario('P2', 'persistent-storage reporting (stubbed browser responses)', async () => {
+  const stub = (persistedExpr, persistBody) => `Object.defineProperty(StorageManager.prototype, 'persisted', { configurable: true, value: async () => ${persistedExpr} }); Object.defineProperty(StorageManager.prototype, 'persist', { configurable: true, value: ${persistBody} });`;
+  const cases = [
+    ['granted', stub('false', 'async () => { window.__persistCalls = (window.__persistCalls || 0) + 1; return true; }'), /granted persistent storage/i, 1],
+    ['denied', stub('false', 'async () => { window.__persistCalls = (window.__persistCalls || 0) + 1; return false; }'), /not granted/i, 1],
+    ['unsupported', "Object.defineProperty(StorageManager.prototype, 'persist', { configurable: true, value: undefined });", /cannot request persistent storage/i, 0],
+    ['failing', stub('false', 'async () => { window.__persistCalls = (window.__persistCalls || 0) + 1; throw new Error("nope"); }'), /request failed/i, 1]
+  ];
+  for (const [name, source, expected, calls] of cases) {
+    await withEnv(async ({ chrome, base }) => {
+      const page = await pageWithScript(chrome, source);
+      await page.goto(`${base}/`);
+      const first = await page.waitFor(STORAGE, (v) => /EL01/.test(v.question), 12000, `${name}: app`);
+      check(`P2.${name}.a`, `${name}: before any answer nothing is requested`, first.persistCalls === 0 && /requested after your first saved answer|cannot request/i.test(first.persistence), `calls=${first.persistCalls}; text="${first.persistence.slice(0, 60)}"`);
+      await page.evaluate(submitExpr('A', 'The current keeps building up in the wire.'));
+      await page.waitFor(UI, (v) => v.answers === '1' && v.queue === '0', 10000, `${name}: answer`);
+      await page.evaluate("document.querySelector('#apply-plan-button')?.click()"); await sleep(400);
+      const done = await page.waitFor(STORAGE, (v) => expected.test(v.persistence), 6000, `${name}: status text`);
+      check(`P2.${name}.b`, `${name}: reported truthfully and requested at most once`, expected.test(done.persistence) && done.persistCalls === calls, `calls=${done.persistCalls}; text="${done.persistence.slice(0, 80)}"`);
+      allErrors.push(...page.errors);
+    });
+  }
+});
+
+await scenario('S', 'the trace export hides typed text and secrets', async () => {
+  const CODE = 'export-test-access-code-0123456789';
+  await withEnv(async ({ chrome, base }) => {
+    const page = await pageWithScript(chrome, "(() => { const orig = URL.createObjectURL.bind(URL); URL.createObjectURL = (blob) => { blob.text().then((t) => { window.__exportText = t; }); return orig(blob); }; })();");
+    await page.goto(`${base}/`);
+    await page.waitFor("document.querySelector('#access-overlay') && !document.querySelector('#access-overlay').classList.contains('hidden')", (x) => x === true, 12000, 'overlay');
+    await page.evaluate(`(() => { document.querySelector('#access-code').value = ${JSON.stringify(CODE)}; document.querySelector('#access-form').requestSubmit(); })()`);
+    await ready(page);
+    await page.evaluate(submitExpr('A', 'PRIVATE-LEARNER-TEXT gsk_ABCDEFGHIJKLMNOPQRSTUV is my explanation'));
+    await page.waitFor(UI, (v) => v.answers === '1' && v.queue === '0', 12000, 'protected answer');
+    await page.evaluate("document.querySelector('#download-trace').click()");
+    const text = await page.waitFor('window.__exportText ?? null', (x) => typeof x === 'string', 5000, 'export captured');
+    let data = null; try { data = JSON.parse(text); } catch { /* checked below */ }
+    check('S1', 'the export is valid JSON, marked as draft content, and lists decisions and the trace', data?.contentStatus === 'UNREVIEWED_DRAFT' && data?.state?.trace?.length > 0 && data?.state?.answers?.length === 1 && data.provider === 'mock', `answers=${data?.state?.answers?.length}; trace=${data?.state?.trace?.length}`);
+    check('S2', 'the typed explanation is not exported (only its length)', !text.includes('PRIVATE-LEARNER-TEXT') && data?.state?.answers?.[0]?.explanation?.redacted === true, JSON.stringify(data?.state?.answers?.[0]?.explanation));
+    check('S3', 'no access code, API-key-like string or header value appears in the export', !text.includes(CODE) && !/gsk_|sk-[A-Za-z0-9]{16}|Bearer\s/i.test(text), 'scanned the whole file');
+    allErrors.push(...page.errors);
+  }, { serverEnv: { NODE_ENV: 'production', PATHASETU_ALLOW_DRAFT_DEMO: 'true', PATHASETU_DEMO_ACCESS_CODE: CODE } });
+});
+
 await scenario('G2', 'no Web Locks: a visible warning', async () => withEnv(async ({ chrome, base }) => {
   const page = await chrome.newPage();
   await page.cdp.call('Page.addScriptToEvaluateOnNewDocument', { source: "Object.defineProperty(Navigator.prototype, 'locks', { get() { return undefined; }, configurable: true });" });

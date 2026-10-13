@@ -33,4 +33,4 @@
 .queue-status{margin-top:12px;padding:11px 12px;border-radius:11px;background:#fff8eb;border:1px solid #eedcba;font-size:12px;line-height:1.6;color:#6b4a14}
 .queue-status strong{display:block;color:#5a3d0f;margin-bottom:2px}
 .queue-status .text-button{margin-top:6px;min-height:44px}
-
+#writer-banner{display:grid;gap:10px}

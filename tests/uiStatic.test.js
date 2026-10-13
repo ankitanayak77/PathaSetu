@@ -41,9 +41,9 @@ test('all authored executable assets are local rather than third-party scripts',
   assert.match(css, /@media\(max-width:700px\)/);
 });
 
-test('service worker shell cache version is bumped for the revised feedback-first flow and Bridge Practice (v4)', () => {
-  assert.match(sw, /pathasetu-shell-v4/);
-  assert.doesNotMatch(sw, /pathasetu-shell-v3/);
+test('service worker shell cache version is bumped for the revised feedback-first flow and Bridge Practice (v5)', () => {
+  assert.match(sw, /pathasetu-shell-v5/);
+  assert.doesNotMatch(sw, /pathasetu-shell-v4/);
   assert.match(app, /Review the feedback and remediation below/);
   assert.match(app, /Continue to \$\{next\.id\}/);
 });
