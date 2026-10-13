@@ -7,6 +7,7 @@ import { loadPack, selectPublishedItems } from '../core/content.js';
 import { proposeDiagnosis } from '../core/mockModel.js';
 import { validateDiagnosis } from '../core/validator.js';
 import { createGroqModel } from './groqModel.js';
+import { assessAccessCode, describeAccessCodeProblems, parseAllowedOrigins, parsePublicDemoFlag, positiveInteger, DEFAULT_FAILED_ATTEMPT_LIMIT, GENERATE_CODE_HINT } from './access.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const PUBLIC = path.join(ROOT, 'public');
@@ -22,13 +23,12 @@ const ACCESS_CODE = process.env.PATHASETU_DEMO_ACCESS_CODE || '';
 const RATE_WINDOW_MS = positiveInteger(process.env.PATHASETU_RATE_WINDOW_MS, 60_000);
 const SESSION_RATE_LIMIT = positiveInteger(process.env.PATHASETU_SESSION_RATE_LIMIT, 30);
 const RECHECK_RATE_LIMIT = positiveInteger(process.env.PATHASETU_RECHECK_RATE_LIMIT, 24);
+const FAILED_ATTEMPT_LIMIT = positiveInteger(process.env.PATHASETU_FAILED_ATTEMPT_LIMIT, DEFAULT_FAILED_ATTEMPT_LIMIT);
+// Public/tunnel demo mode is explicit and fail-closed: it needs a strong access code regardless of provider or NODE_ENV.
+const PUBLIC_DEMO = parsePublicDemoFlag(process.env.PATHASETU_PUBLIC_DEMO);
 const rateBuckets = new Map();
 
-function positiveInteger(value, fallback) {
-  const parsed = Number(value);
-  return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : fallback;
-}
-
+// Fixed-window counters, in memory, per route and socket address. `count` is the number of events in the current window.
 function rateLimit(req, route, limit) {
   const now = Date.now();
   const client = req.socket.remoteAddress || 'unknown';
@@ -53,8 +53,23 @@ function enforceRateLimit(req, res, route, limit) {
   send(res, 429, { error: 'rate_limited', retryAfterSeconds: retryAfter }, 'application/json; charset=utf-8', { 'retry-after': String(retryAfter) });
   return true;
 }
+// Access check for protected routes. Missing or wrong codes count against a per-client failure budget (all routes share it).
+// Over budget, the refusal becomes 429 with Retry-After. The window is fixed and expires on its own, and a request with the
+// correct code is never refused by this budget, so a shared public IP cannot lock the right code out. Nothing here logs the code.
+function authorise(req, res) {
+  if (hasValidAccessCode(req)) return true;
+  const retryAfter = rateLimit(req, 'access-failures', FAILED_ATTEMPT_LIMIT);
+  if (retryAfter == null) send(res, 401, { error: 'demo_access_required', accessRequired: true });
+  else send(res, 429, { error: 'too_many_attempts', retryAfterSeconds: retryAfter }, 'application/json; charset=utf-8', { 'retry-after': String(retryAfter) });
+  return false;
+}
 function draftDemoEnabled() { return process.env.NODE_ENV !== 'production' || process.env.PATHASETU_ALLOW_DRAFT_DEMO === 'true'; }
-if ((PROVIDER === 'groq' || (process.env.NODE_ENV === 'production' && process.env.PATHASETU_ALLOW_DRAFT_DEMO === 'true')) && ACCESS_CODE.length < 16) throw new Error('Set PATHASETU_DEMO_ACCESS_CODE to a random value of at least 16 characters for a Groq or production draft-demo endpoint.');
+// A strong code is required for public demo mode, a Groq endpoint, or a production draft demo. The message never contains the code.
+const CODE_REQUIRED = PUBLIC_DEMO || PROVIDER === 'groq' || (process.env.NODE_ENV === 'production' && process.env.PATHASETU_ALLOW_DRAFT_DEMO === 'true');
+if (CODE_REQUIRED) {
+  const assessment = assessAccessCode(ACCESS_CODE);
+  if (!assessment.ok) throw new Error(`Set PATHASETU_DEMO_ACCESS_CODE to a random value of at least 16 characters for a public demo, Groq or production draft-demo endpoint (current value rejected: ${describeAccessCodeProblems(assessment.problems)}). Generate one locally with: ${GENERATE_CODE_HINT}`);
+}
 function hasValidAccessCode(req) {
   if (!ACCESS_CODE) return true;
   const provided = String(req.headers['x-pathasetu-demo-code'] || '');
@@ -78,17 +93,7 @@ function send(res, status, body, type = 'application/json; charset=utf-8', heade
 // Browser Origin must match the Host the server saw. A tunnel or reverse proxy that rewrites Host (for example to
 // 127.0.0.1:4173) would then reject every POST, so exact extra origins can be listed in PATHASETU_ALLOWED_ORIGINS
 // (comma-separated, https only, or http for localhost). No wildcards, no paths. Preserving the Host header remains the first choice.
-function parseAllowedOrigins(value) {
-  const origins = new Set();
-  for (const raw of String(value || '').split(',').map((part) => part.trim()).filter(Boolean)) {
-    let url;
-    try { url = new URL(raw); } catch { throw new Error(`PATHASETU_ALLOWED_ORIGINS has an invalid entry: ${raw}`); }
-    const local = url.hostname === 'localhost' || url.hostname === '127.0.0.1' || url.hostname === '[::1]';
-    if (url.origin !== raw || !(url.protocol === 'https:' || (url.protocol === 'http:' && local))) throw new Error(`PATHASETU_ALLOWED_ORIGINS entries must be exact origins such as https://demo.example.com (https, or http for localhost; no path, no wildcard): ${raw}`);
-    origins.add(url.origin);
-  }
-  return origins;
-}
+// Parsing and validation live in ./access.js so `npm run preflight` applies the identical rules.
 const ALLOWED_ORIGINS = parseAllowedOrigins(process.env.PATHASETU_ALLOWED_ORIGINS);
 
 function originAllowed(req) {
@@ -134,24 +139,26 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);
   if (url.pathname.startsWith('/api/')) {
     if (!originAllowed(req)) return send(res, 403, { error: 'origin_not_allowed' });
-    if (req.method === 'GET' && url.pathname === '/api/health') return send(res, 200, { ok: true, provider: PROVIDER, model: ACTIVE_MODEL, accessRequired: Boolean(ACCESS_CODE), time: new Date().toISOString() });
+    if (req.method === 'GET' && url.pathname === '/api/health') return send(res, 200, { ok: true, provider: PROVIDER, model: ACTIVE_MODEL, accessRequired: Boolean(ACCESS_CODE), publicDemo: PUBLIC_DEMO, time: new Date().toISOString() });
     if (req.method === 'GET' && url.pathname === '/api/session') {
+      if (!authorise(req, res)) return;
       if (enforceRateLimit(req, res, 'session', SESSION_RATE_LIMIT)) return;
-      const authorized = hasValidAccessCode(req);
-      return send(res, authorized ? 200 : 401, { ok: authorized, accessRequired: Boolean(ACCESS_CODE) });
+      return send(res, 200, { ok: true, accessRequired: Boolean(ACCESS_CODE) });
     }
     if (req.method === 'GET' && url.pathname === '/api/pack') {
-      // Draft content gets the same demo authorisation as the model-backed route. A published-only pack stays open.
+      // Draft content gets the same demo authorisation as the model-backed route; public demo mode protects the pack always.
+      // A published-only pack outside public demo mode stays open.
       const exposesDrafts = draftDemoEnabled() && PACK.items.some((candidate) => candidate.status !== 'PUBLISHED');
-      if (exposesDrafts && ACCESS_CODE && enforceRateLimit(req, res, 'pack', SESSION_RATE_LIMIT)) return;
-      if (exposesDrafts && !hasValidAccessCode(req)) return send(res, 401, { error: 'demo_access_required', accessRequired: true });
+      const protectedPack = Boolean(ACCESS_CODE) && (PUBLIC_DEMO || exposesDrafts);
+      if (protectedPack && !authorise(req, res)) return;
+      if (protectedPack && enforceRateLimit(req, res, 'pack', SESSION_RATE_LIMIT)) return;
       const allowDraftDemo = draftDemoEnabled();
       const items = allowDraftDemo ? PACK.items : selectPublishedItems(PACK);
       return send(res, 200, { packId: PACK.packId, subject: PACK.subject, topic: PACK.topic, classLevel: PACK.classLevel, medium: PACK.medium, languageBridge: PACK.languageBridge, demoDraftMode: allowDraftDemo && items.some((item) => item.status !== 'PUBLISHED'), items });
     }
     if (req.method === 'POST' && url.pathname === '/api/recheck') {
+      if (!authorise(req, res)) return;
       if (enforceRateLimit(req, res, 'recheck', RECHECK_RATE_LIMIT)) return;
-      if (!hasValidAccessCode(req)) return send(res, 401, { error: 'demo_access_required' });
       try {
         const body = await readJson(req);
         if (!body || typeof body.itemId !== 'string' || typeof body.optionId !== 'string' || typeof body.explanation !== 'string') return send(res, 400, { error: 'invalid_request' });
@@ -190,6 +197,6 @@ const server = http.createServer(async (req, res) => {
 server.requestTimeout = 10_000;
 server.headersTimeout = 12_000;
 server.keepAliveTimeout = 5_000;
-server.listen(PORT, HOST, () => console.log(`Pathasetu listening on http://${HOST}:${PORT} provider=${PROVIDER}${ACTIVE_MODEL ? ` model=${ACTIVE_MODEL}` : ''} node=${process.version}`));
+server.listen(PORT, HOST, () => console.log(`Pathasetu listening on http://${HOST}:${PORT} provider=${PROVIDER} publicDemo=${PUBLIC_DEMO}${ACTIVE_MODEL ? ` model=${ACTIVE_MODEL}` : ''} node=${process.version}`));
 
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => server.close(() => process.exit(0)));

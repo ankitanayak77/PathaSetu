@@ -294,7 +294,7 @@ await scenario('K', 'Bridge Practice works offline, by keyboard, and is traced',
 }));
 
 await scenario('M', 'protected draft demo: the code gates content, the UI still works once authorised', async () => {
-  const CODE = 'browser-test-access-code-0123456789';
+  const CODE = 'browser-test-access-code-7Kq2Vx9mT4';
   await withEnv(async ({ chrome, base }) => {
     const page = await chrome.newPage(`${base}/`);
     const OVERLAY = `(() => ({ overlayHidden: document.querySelector('#access-overlay').classList.contains('hidden'), error: document.querySelector('#access-error')?.classList.contains('hidden') ? '' : document.querySelector('#access-error')?.innerText, body: document.body.innerText, question: document.querySelector('.question-id')?.textContent || '' }))()`;
@@ -319,6 +319,43 @@ await scenario('M', 'protected draft demo: the code gates content, the UI still 
     check('M7', 'the code lives only in session storage: not in IndexedDB and not in localStorage', store.inDb === false && store.inLocal === false && store.inSession === true, JSON.stringify(store));
     allErrors.push(...page.errors);
   }, { serverEnv: { NODE_ENV: 'production', PATHASETU_ALLOW_DRAFT_DEMO: 'true', PATHASETU_DEMO_ACCESS_CODE: CODE } });
+});
+
+await scenario('T', 'throttled access: a wait message, the right code still works, and a 429 never discards a saved pack or the code', async () => {
+  const CODE = 'throttle-test-code-Zq7Lm3Vx9Rt2';
+  await withEnv(async ({ chrome, base }) => {
+    const page = await chrome.newPage(`${base}/`);
+    const OVERLAY = `(() => ({ overlayHidden: document.querySelector('#access-overlay').classList.contains('hidden'), error: document.querySelector('#access-error')?.classList.contains('hidden') ? '' : document.querySelector('#access-error')?.innerText, question: document.querySelector('.question-id')?.textContent || '' }))()`;
+    await page.waitFor(OVERLAY, (v) => v.overlayHidden === false, 12000, 'access overlay');
+    const submitCode = (code) => page.evaluate(`(() => { document.querySelector('#access-code').value = ${JSON.stringify(code)}; document.querySelector('#access-form').requestSubmit(); })()`);
+    let message = '';
+    for (let i = 0; i < 8 && !/too many/i.test(message); i++) {
+      await submitCode(`wrong-guess-${i}-Qw8Er5Ty2Ui`);
+      await sleep(450);
+      message = (await page.evaluate(OVERLAY)).error ?? '';
+    }
+    check('T1', 'repeated wrong codes end in a clear "too many attempts, wait" message, not a generic refusal', /too many/i.test(message) && /wait/i.test(message), message);
+    await submitCode(CODE);
+    const ok = await page.waitFor(OVERLAY, (v) => v.overlayHidden === true && /EL01/.test(v.question), 12000, 'right code while throttled');
+    check('T2', 'the right code still unlocks the demo while wrong guesses are being throttled', /EL01/.test(ok.question), ok.question);
+    await sleep(600); // let the first save reach IndexedDB
+    page.mode = 'throttle';
+    page.cdp.on('Fetch.requestPaused', (p) => {
+      if (page.mode === 'pass') return page.cdp.call('Fetch.continueRequest', { requestId: p.requestId }).catch(() => {});
+      return page.cdp.call('Fetch.fulfillRequest', { requestId: p.requestId, responseCode: 429, responseHeaders: [{ name: 'content-type', value: 'application/json' }, { name: 'retry-after', value: '30' }], body: Buffer.from('{"error":"rate_limited","retryAfterSeconds":30}').toString('base64') }).catch(() => {});
+    });
+    await page.cdp.call('Fetch.enable', { patterns: [{ urlPattern: '*/api/session*' }, { urlPattern: '*/api/pack*' }] });
+    await page.reload();
+    const kept = await page.waitFor(OVERLAY, (v) => /EL01/.test(v.question), 12000, 'saved pack while the server answers 429');
+    await sleep(2800); // at least one reachability probe has run against the throttled /api/session
+    const after = await page.evaluate(`(() => ({ overlayHidden: document.querySelector('#access-overlay').classList.contains('hidden'), hasCode: sessionStorage.getItem('pathasetu_demo_code') === ${JSON.stringify(CODE)}, question: document.querySelector('.question-id')?.textContent || '' }))()`);
+    check('T3', 'a 429 from /api/session or /api/pack keeps the saved pack, the session code and the working screen', kept.overlayHidden === true && after.overlayHidden === true && after.hasCode && /EL01/.test(after.question), JSON.stringify(after));
+    page.mode = 'pass';
+    await page.reload();
+    const back = await page.waitFor(OVERLAY, (v) => v.overlayHidden === true && /EL01/.test(v.question), 12000, 'recovery without re-entering the code');
+    check('T4', 'once the throttle lifts, the same tab continues without asking for the code again', back.overlayHidden === true, back.question);
+    allErrors.push(...page.errors);
+  }, { serverEnv: { PATHASETU_PUBLIC_DEMO: 'true', PATHASETU_DEMO_ACCESS_CODE: CODE, PATHASETU_FAILED_ATTEMPT_LIMIT: '5' } });
 });
 
 // Bounded retries. A test-only global makes the delays short; the real defaults are unit-tested in tests/retry.test.js.
@@ -492,7 +529,7 @@ await scenario('P2', 'persistent-storage reporting (stubbed browser responses)',
 });
 
 await scenario('S', 'the trace export hides typed text and secrets', async () => {
-  const CODE = 'export-test-access-code-0123456789';
+  const CODE = 'export-test-access-code-8Hd3Wz6nR1';
   await withEnv(async ({ chrome, base }) => {
     const page = await pageWithScript(chrome, "(() => { const orig = URL.createObjectURL.bind(URL); URL.createObjectURL = (blob) => { blob.text().then((t) => { window.__exportText = t; }); return orig(blob); }; })();");
     await page.goto(`${base}/`);

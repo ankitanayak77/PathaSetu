@@ -1,0 +1,7 @@
+npm-ci: exit=0 started=2026-10-13T05:30:18+00:00 duration_ms=530 cmd="npm ci"
+npm-test: exit=0 started=2026-10-13T05:30:18+00:00 duration_ms=8848 cmd="npm test"
+npm-check: exit=0 started=2026-10-13T05:30:27+00:00 duration_ms=771 cmd="npm run check"
+npm-check-content: exit=0 started=2026-10-13T05:30:28+00:00 duration_ms=188 cmd="npm run check:content"
+npm-capture: exit=0 started=2026-10-13T05:30:28+00:00 duration_ms=4543 cmd="npm run capture"
+npm-e2e: exit=0 started=2026-10-13T05:30:32+00:00 duration_ms=93664 cmd="npm run e2e"
+npm-a11y: exit=0 started=2026-10-13T05:32:06+00:00 duration_ms=54176 cmd="env A11Y_OUT=/home/claude/pw/it4/Pathasetu_MVP/evidence/iteration4/baseline/accessibility npm run a11y"

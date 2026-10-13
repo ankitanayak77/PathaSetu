@@ -485,21 +485,27 @@ async function load() {
   const saved = await storage.load().catch(() => null);
   let latestPack = null;
   let packRefused = false;
+  let packThrottled = false;
   try {
     const code = sessionStorage.getItem('pathasetu_demo_code') || '';
     const response = await fetch('/api/pack', { cache: 'no-store', headers: code ? { 'x-pathasetu-demo-code': code } : {} });
     if (response.ok) latestPack = await response.json();
-    else if (response.status === 401) {
+    else if (response.status === 401 || (response.status === 429 && !code)) {
       // Draft content needs the session code. Keep any pack already saved on this device and ask for the code.
       packRefused = true; ui.accessRequired = true; ui.accessAuthorized = false;
       sessionStorage.removeItem('pathasetu_demo_code');
       $('access-overlay').classList.remove('hidden');
+    } else if (response.status === 429) {
+      // The server is rate limiting this client. That says nothing about the code: keep it, keep any saved pack, and retry later.
+      packThrottled = true;
     }
   } catch { /* offline: use the content pack persisted on first online use */ }
   ui.pack = latestPack?.items ? latestPack : saved?.pack ?? null;
   if (!ui.pack) {
     $('question-card').innerHTML = packRefused
       ? `<div class="loading-state"><div><strong>Enter the session code to load the demo content.</strong><br><span>The Electricity pack is unreviewed draft content and is protected on this server.</span></div></div>`
+      : packThrottled
+      ? `<div class="loading-state"><div><strong>The server is limiting requests right now.</strong><br><span>Wait a minute, then reload. Your session code is kept in this tab.</span></div></div>`
       : `<div class="loading-state"><div><strong>Pathasetu has no local content pack yet.</strong><br><span>Open the app once online so its content can be saved on this device.</span></div></div>`;
     ui.probing = false; ui.loaded = false; renderConnection();
     return;
@@ -583,10 +589,12 @@ async function verifyAccessCode() {
   if (!code) { ui.accessAuthorized = false; $('access-overlay').classList.remove('hidden'); return false; }
   try {
     const response = await fetch('/api/session', { headers: { 'x-pathasetu-demo-code': code }, cache: 'no-store' });
-    ui.accessAuthorized = response.ok;
-    if (!response.ok) sessionStorage.removeItem('pathasetu_demo_code');
-    $('access-overlay').classList.toggle('hidden', response.ok);
-    return response.ok;
+    if (response.ok) { ui.accessAuthorized = true; $('access-overlay').classList.add('hidden'); return true; }
+    if (response.status === 401) {
+      // Only an explicit refusal discards the code. A 429 or a server error says nothing about the code, so keep it and the current state.
+      sessionStorage.removeItem('pathasetu_demo_code'); ui.accessAuthorized = false; $('access-overlay').classList.remove('hidden'); return false;
+    }
+    return ui.accessAuthorized;
   } catch { ui.accessAuthorized = false; $('access-overlay').classList.remove('hidden'); return false; }
 }
 
@@ -595,7 +603,13 @@ $('access-form').addEventListener('submit', async (event) => {
   const code = $('access-code').value;
   try {
     const response = await fetch('/api/session', { method: 'GET', cache: 'no-store', headers: { 'x-pathasetu-demo-code': code } });
-    if (!response.ok) { $('access-error').textContent = 'That session code was not accepted.'; $('access-error').classList.remove('hidden'); return; }
+    if (!response.ok) {
+      const wait = Number(response.headers.get('retry-after'));
+      $('access-error').textContent = response.status === 429
+        ? `Too many attempts from this connection. Wait ${Number.isFinite(wait) && wait > 0 ? `about ${wait} second${wait === 1 ? '' : 's'}` : 'a minute'}, then try again. The correct code is still accepted.`
+        : response.status === 401 ? 'That session code was not accepted.' : `The server could not check the code right now (HTTP ${response.status}). Try again shortly.`;
+      $('access-error').classList.remove('hidden'); return;
+    }
     sessionStorage.setItem('pathasetu_demo_code', code); ui.accessAuthorized = true; $('access-error').classList.add('hidden'); $('access-overlay').classList.add('hidden');
     notice('success', 'Demo unlocked', 'The session code was accepted. The model API key remains server-side.');
     if (!ui.loaded) await load();

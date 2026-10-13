@@ -1,0 +1,14 @@
+date: 2026-10-13T05:30:17+00:00
+archive: Pathasetu_MVP_iteration3_2026-10-13.zip sha256 e3abdd995cf95e208e128be33c941d5c807ba492b21667a18369de981a2210ed
+expected:                                          e3abdd995cf95e208e128be33c941d5c807ba492b21667a18369de981a2210ed
+HEAD: e2d91cba2a0130b70e6207b1532c5f901037503d
+commits: 13
+git status --short entries: 1 (only the new evidence/iteration4 directory this script had just created; the extracted tree was identical to the archive, see diff note in README-baseline.txt)
+node v22.22.0; npm 10.9.4; os: Linux 6.18.44-fc-v114
+browser: Chromium 141.0.7390.37  (CHROME_PATH=/tmp/chromium)
+GROQ_API_KEY: not set
+PATHASETU_MODEL_PROVIDER: not set
+GROQ_MODEL: not set
+PATHASETU_DEMO_ACCESS_CODE: not set
+PATHASETU_PUBLIC_DEMO: not set
+PATHASETU_ALLOWED_ORIGINS: not set

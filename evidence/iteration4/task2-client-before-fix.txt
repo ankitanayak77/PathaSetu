@@ -1,0 +1,11 @@
+
+== T: throttled access: a wait message, the right code still works, and a 429 never discards a saved pack or the code
+FAIL  T1  repeated wrong codes end in a clear "too many attempts, wait" message, not a generic refusal — That session code was not accepted.
+PASS  T2  the right code still unlocks the demo while wrong guesses are being throttled — QUESTION EL01 · CLOSED CIRCUIT
+FAIL  T3  a 429 from /api/session or /api/pack keeps the saved pack, the session code and the working screen — {"overlayHidden":false,"hasCode":false,"question":"QUESTION EL01 · CLOSED CIRCUIT"}
+FAIL  T.run  throttled access: a wait message, the right code still works, and a 429 never discards a saved pack or the code: scenario ran to completion — wait_timeout:recovery without re-entering the code:last={"overlayHidden":false,"error":"","question":"QUESTION EL01 · CLOSED CIRCUIT"}
+PASS  Z1  no uncaught exceptions or console errors across the verified journeys — 0 errors
+
+Browser regression: 2 passed, 3 failed; /home/claude/pw/it4/Pathasetu_MVP/evidence/browser-regression-latest.json
+exit=1
+2026-10-13T05:40:12Z

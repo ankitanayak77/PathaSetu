@@ -42,7 +42,7 @@ test('all authored executable assets are local rather than third-party scripts',
 });
 
 test('service worker shell cache version is bumped for the revised feedback-first flow and Bridge Practice (v5)', () => {
-  assert.match(sw, /pathasetu-shell-v6/);
+  assert.match(sw, /pathasetu-shell-v7/);
   assert.doesNotMatch(sw, /pathasetu-shell-v4/);
   assert.match(app, /Review the feedback and remediation below/);
   assert.match(app, /Continue to \$\{next\.id\}/);
