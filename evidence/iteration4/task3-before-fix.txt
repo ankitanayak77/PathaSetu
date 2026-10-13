@@ -1,0 +1,620 @@
+TAP version 13
+# Subtest: a safe local mock configuration passes, states that content is unreviewed, and makes no live provider request
+not ok 1 - a safe local mock configuration passes, states that content is unreviewed, and makes no live provider request
+  ---
+  duration_ms: 44.895367
+  type: 'test'
+  location: '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:27:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+    
+    Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+    
+    Node.js v22.22.0
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    Function._load (node:internal/modules/cjs/loader:1192:37)
+    TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    node:internal/main/run_main_module:36:49 {
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:29:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: public demo mode without a code fails, names the variable, and prints no secret
+not ok 2 - public demo mode without a code fails, names the variable, and prints no secret
+  ---
+  duration_ms: 36.206642
+  type: 'test'
+  location: '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:39:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /PREFLIGHT: FAILED/. Input:
+    
+    'node:internal/modules/cjs/loader:1386\n' +
+      '  throw err;\n' +
+      '  ^\n' +
+      '\n' +
+      "Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'\n" +
+      '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+      '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+      '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+      '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+      '    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n' +
+      '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+      '    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n' +
+      '    at node:internal/main/run_main_module:36:49 {\n' +
+      "  code: 'MODULE_NOT_FOUND',\n" +
+      '  requireStack: []\n' +
+      '}\n' +
+      '\n' +
+      'Node.js v22.22.0\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+    
+    Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+    
+    Node.js v22.22.0
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:41:38)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a weak code, whitespace or ambiguous public-demo value fails without echoing the value
+not ok 3 - a weak code, whitespace or ambiguous public-demo value fails without echoing the value
+  ---
+  duration_ms: 190.371847
+  type: 'test'
+  location: '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:44:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /PATHASETU_PUBLIC_DEMO must be true or false/. Input:
+    
+    'node:internal/modules/cjs/loader:1386\n' +
+      '  throw err;\n' +
+      '  ^\n' +
+      '\n' +
+      "Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'\n" +
+      '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+      '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+      '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+      '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+      '    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n' +
+      '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+      '    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n' +
+      '    at node:internal/main/run_main_module:36:49 {\n' +
+      "  code: 'MODULE_NOT_FOUND',\n" +
+      '  requireStack: []\n' +
+      '}\n' +
+      '\n' +
+      'Node.js v22.22.0\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+    
+    Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+    
+    Node.js v22.22.0
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:51:42)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a public demo with a strong code and the exact HTTPS tunnel origin passes, checks the Host-rewriting route, and hides the code
+not ok 4 - a public demo with a strong code and the exact HTTPS tunnel origin passes, checks the Host-rewriting route, and hides the code
+  ---
+  duration_ms: 35.005111
+  type: 'test'
+  location: '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:55:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+    
+    Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+    
+    Node.js v22.22.0
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    Function._load (node:internal/modules/cjs/loader:1192:37)
+    TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    node:internal/main/run_main_module:36:49 {
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:57:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: --expect-origin that is missing from PATHASETU_ALLOWED_ORIGINS fails, as does an invalid expectation
+ok 5 - --expect-origin that is missing from PATHASETU_ALLOWED_ORIGINS fails, as does an invalid expectation
+  ---
+  duration_ms: 110.590145
+  type: 'test'
+  ...
+# Subtest: wildcard, path and credential origins fail without echoing credentials
+not ok 6 - wildcard, path and credential origins fail without echoing credentials
+  ---
+  duration_ms: 34.008604
+  type: 'test'
+  location: '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:71:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /PATHASETU_ALLOWED_ORIGINS/. Input:
+    
+    'node:internal/modules/cjs/loader:1386\n' +
+      '  throw err;\n' +
+      '  ^\n' +
+      '\n' +
+      "Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'\n" +
+      '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+      '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+      '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+      '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+      '    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n' +
+      '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+      '    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n' +
+      '    at node:internal/main/run_main_module:36:49 {\n' +
+      "  code: 'MODULE_NOT_FOUND',\n" +
+      '  requireStack: []\n' +
+      '}\n' +
+      '\n' +
+      'Node.js v22.22.0\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+    
+    Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+    
+    Node.js v22.22.0
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:74:43)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a non-local tunnel origin without public demo mode fails: the tunnel would expose an open development server
+not ok 7 - a non-local tunnel origin without public demo mode fails: the tunnel would expose an open development server
+  ---
+  duration_ms: 35.199274
+  type: 'test'
+  location: '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:78:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /PATHASETU_PUBLIC_DEMO/. Input:
+    
+    'node:internal/modules/cjs/loader:1386\n' +
+      '  throw err;\n' +
+      '  ^\n' +
+      '\n' +
+      "Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'\n" +
+      '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+      '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+      '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+      '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+      '    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n' +
+      '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+      '    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n' +
+      '    at node:internal/main/run_main_module:36:49 {\n' +
+      "  code: 'MODULE_NOT_FOUND',\n" +
+      '  requireStack: []\n' +
+      '}\n' +
+      '\n' +
+      'Node.js v22.22.0\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+    
+    Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+    
+    Node.js v22.22.0
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:80:38)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: binding to all interfaces without public demo mode fails; with public demo mode it is only a warning
+not ok 8 - binding to all interfaces without public demo mode fails; with public demo mode it is only a warning
+  ---
+  duration_ms: 71.241693
+  type: 'test'
+  location: '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:83:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+    
+    Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+    
+    Node.js v22.22.0
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    Function._load (node:internal/modules/cjs/loader:1192:37)
+    TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    node:internal/main/run_main_module:36:49 {
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:86:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: NODE_ENV=production without the draft flag fails: with nothing published the learner screen would be empty
+not ok 9 - NODE_ENV=production without the draft flag fails: with nothing published the learner screen would be empty
+  ---
+  duration_ms: 34.464352
+  type: 'test'
+  location: '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:89:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /PATHASETU_ALLOW_DRAFT_DEMO/. Input:
+    
+    'node:internal/modules/cjs/loader:1386\n' +
+      '  throw err;\n' +
+      '  ^\n' +
+      '\n' +
+      "Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'\n" +
+      '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+      '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+      '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+      '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+      '    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n' +
+      '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+      '    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n' +
+      '    at node:internal/main/run_main_module:36:49 {\n' +
+      "  code: 'MODULE_NOT_FOUND',\n" +
+      '  requireStack: []\n' +
+      '}\n' +
+      '\n' +
+      'Node.js v22.22.0\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+    
+    Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+    
+    Node.js v22.22.0
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:91:38)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: groq: a missing key, a missing code or a missing data-controls acknowledgement each fail; a complete configuration passes without any key output or provider call
+not ok 10 - groq: a missing key, a missing code or a missing data-controls acknowledgement each fail; a complete configuration passes without any key output or provider call
+  ---
+  duration_ms: 34.126186
+  type: 'test'
+  location: '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:94:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /GROQ_API_KEY/. Input:
+    
+    'node:internal/modules/cjs/loader:1386\n' +
+      '  throw err;\n' +
+      '  ^\n' +
+      '\n' +
+      "Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'\n" +
+      '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+      '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+      '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+      '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+      '    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n' +
+      '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+      '    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n' +
+      '    at node:internal/main/run_main_module:36:49 {\n' +
+      "  code: 'MODULE_NOT_FOUND',\n" +
+      '  requireStack: []\n' +
+      '}\n' +
+      '\n' +
+      'Node.js v22.22.0\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+    
+    Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+    
+    Node.js v22.22.0
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:96:111)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: an unknown provider fails
+not ok 11 - an unknown provider fails
+  ---
+  duration_ms: 34.964786
+  type: 'test'
+  location: '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:106:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /PATHASETU_MODEL_PROVIDER/. Input:
+    
+    'node:internal/modules/cjs/loader:1386\n' +
+      '  throw err;\n' +
+      '  ^\n' +
+      '\n' +
+      "Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'\n" +
+      '    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n' +
+      '    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n' +
+      '    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n' +
+      '    at Function._load (node:internal/modules/cjs/loader:1192:37)\n' +
+      '    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n' +
+      '    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)\n' +
+      '    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n' +
+      '    at node:internal/main/run_main_module:36:49 {\n' +
+      "  code: 'MODULE_NOT_FOUND',\n" +
+      '  requireStack: []\n' +
+      '}\n' +
+      '\n' +
+      'Node.js v22.22.0\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+    
+    Error: Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+    
+    Node.js v22.22.0
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:108:33)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: promotion check: a served item whose status differs from the pack file is flagged
+not ok 12 - promotion check: a served item whose status differs from the pack file is flagged
+  ---
+  duration_ms: 1.137958
+  type: 'test'
+  location: '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:111:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/lib/preflight.mjs' imported from /tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:274:11)
+    moduleResolve (node:internal/modules/esm/resolve:859:10)
+    defaultResolve (node:internal/modules/esm/resolve:983:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: the preflight source never names a provider endpoint and never imports the provider adapter
+not ok 13 - the preflight source never names a provider endpoint and never imports the provider adapter
+  ---
+  duration_ms: 0.278231
+  type: 'test'
+  location: '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:119:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/scripts/preflight.mjs'"
+  code: 'ENOENT'
+  stack: |-
+    Object.readFileSync (node:fs:440:20)
+    file:///tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:120:87
+    Array.map (<anonymous>)
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-claude/7415de2b-b073-5c25-9318-9c96ce7c7642/scratchpad/prefail/tests/preflight.test.js:120:73)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 1
+# fail 12
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 748.940128
+exit=1  (run in a scratch copy with scripts/preflight.mjs and scripts/lib/preflight.mjs removed, to reproduce the failing-first state)
+2026-10-13T05:44:28Z

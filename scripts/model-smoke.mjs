@@ -11,6 +11,7 @@ const provider = process.env.PATHASETU_MODEL_PROVIDER || 'mock';
 if (provider !== 'groq') { console.error('BLOCKED: set PATHASETU_MODEL_PROVIDER=groq and GROQ_API_KEY in your local environment. Never put a key in this script or chat.'); process.exit(2); }
 if (!process.env.GROQ_API_KEY) { console.error('BLOCKED: GROQ_API_KEY is not set in this local environment.'); process.exit(2); }
 if (!process.env.PATHASETU_DEMO_ACCESS_CODE || process.env.PATHASETU_DEMO_ACCESS_CODE.length < 16) { console.error('BLOCKED: set a random PATHASETU_DEMO_ACCESS_CODE of at least 16 characters; all model requests are access-protected.'); process.exit(2); }
+if (process.env.PATHASETU_PROVIDER_DATA_CONTROLS_ACK !== 'true') { console.error('BLOCKED: set PATHASETU_PROVIDER_DATA_CONTROLS_ACK=true only after you have reviewed the provider data controls. The smoke test sends synthetic text only.'); process.exit(2); }
 let server;
 let port;
 const cases = [

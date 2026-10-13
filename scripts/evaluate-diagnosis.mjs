@@ -58,6 +58,7 @@ if (provider === 'mock') {
 if (provider !== 'groq') { console.error(`Unknown provider "${provider}". Use mock or groq.`); process.exit(1); }
 const missing = ['GROQ_API_KEY', 'PATHASETU_DEMO_ACCESS_CODE'].filter((name) => !process.env[name]);
 if (process.env.PATHASETU_MODEL_PROVIDER !== 'groq') missing.push('PATHASETU_MODEL_PROVIDER=groq');
+if (process.env.PATHASETU_PROVIDER_DATA_CONTROLS_ACK !== 'true') missing.push('PATHASETU_PROVIDER_DATA_CONTROLS_ACK=true');
 if (missing.length) {
   const note = `BLOCKED: local credentials or settings not configured (${missing.join(', ')}). No live evaluation was run. Values are never requested in chat.`;
   console.error(note);
