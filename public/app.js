@@ -1,4 +1,5 @@
-import { initialState, submitAnswer, recheckQueued, appendTrace, recordRecheckDeferred, reconcileState } from '/core/agent.js';
+import { initialState, submitAnswer, recheckQueued, appendTrace, recordRecheckDeferred, reconcileState, manualRetryQueue } from '/core/agent.js';
+import { RETRY_POLICY, normalisePolicy, isDue, nextDueAtMs, queueStatus } from '/core/retry.js';
 import { buildBridgeExercise, gradeBridgeAnswer, recordBridgeAttempt, recordBridgeReveal } from '/core/bridge.js';
 import { createIndexedDbStorage } from '/core/storage.js';
 
@@ -6,6 +7,8 @@ const $ = (id) => document.getElementById(id);
 const storage = createIndexedDbStorage();
 const ui = { reachable: false, probing: true, provider: 'mock', model: null, accessRequired: false, accessAuthorized: true, writerMode: 'starting', writable: true, releaseWriterLock: null, notice: null, lastResult: null, probeDelay: 2000, probeTimer: null, draftTimer: null, draining: false, traceOpen: false, pack: null, state: null, drafts: {}, loaded: false, submitting: false, bridge: null };
 const RECHECK_TIMEOUT_MS = 8000;
+// Bounded automatic retries (see src/core/retry.js). The override exists only so browser tests can use short delays.
+function retryPolicy() { return normalisePolicy({ ...RETRY_POLICY, ...(globalThis.__PATHASETU_TEST_RETRY_POLICY__ ?? {}) }); }
 
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const currentItem = () => ui.pack?.items?.find((item) => item.id === ui.state?.learner?.currentItemId) ?? null;
@@ -208,7 +211,47 @@ function renderProgress() {
   $('storage-status').classList.toggle('warning', !storage.persistent);
   $('storage-status').textContent = storage.persistent ? 'Saved in this browser’s IndexedDB on this device.' : 'Memory-only fallback. Do not close or reload this tab; progress may be lost.';
   $('progress-bar').style.width = `${Math.min(100, Math.max(0, ((10 - sessions) / 10) * 100))}%`;
+  renderQueueStatus();
 }
+
+// Persistent, understandable retry status. Only rewritten when its content changes, so keyboard focus on the button is kept.
+let lastQueueStatusHtml = null;
+function renderQueueStatus() {
+  const root = $('queue-status');
+  const policy = retryPolicy();
+  const status = ui.state ? queueStatus(ui.state, Date.now(), policy) : { canRetry: false };
+  let html = '';
+  if (status.canRetry) {
+    const disabled = ui.writable ? '' : 'disabled';
+    const seconds = status.nextAttemptInMs === null ? null : Math.max(1, Math.ceil(status.nextAttemptInMs / 1000));
+    html = status.paused
+      ? `<strong>Re-check paused · needs attention</strong>Pathasetu stopped retrying automatically after ${status.maxAutomaticAttempts} failed attempts. Your answer, draft and progress are saved on this device and unchanged. <button type="button" class="text-button" id="retry-now-button" ${disabled}>Retry now</button>`
+      : `<strong>Re-check waiting · attempt ${status.worstCycleAttempts} of ${status.maxAutomaticAttempts} failed</strong>Your answer is saved. ${seconds === null ? 'Retrying shortly.' : `Next automatic try in about ${seconds} s.`} <button type="button" class="text-button" id="retry-now-button" ${disabled}>Retry now</button>`;
+  }
+  if (html === lastQueueStatusHtml) return;
+  lastQueueStatusHtml = html;
+  root.classList.toggle('hidden', !html);
+  root.innerHTML = html;
+}
+
+function scheduleRetryTimer() {
+  if (ui.retryTimer) { clearTimeout(ui.retryTimer); ui.retryTimer = null; }
+  if (!ui.writable || !ui.state) return;
+  const due = nextDueAtMs(ui.state, Date.now());
+  if (due === null) return;
+  ui.retryTimer = setTimeout(() => { ui.retryTimer = null; void drainQueue(); }, Math.max(50, due - Date.now()) + 25);
+}
+
+$('queue-status').addEventListener('click', async (event) => {
+  if (!event.target.closest('#retry-now-button') || !ui.writable || !ui.state || ui.draining) return;
+  manualRetryQueue({ state: ui.state });
+  await saveRecord();
+  renderTrace(); renderProgress();
+  ui.reachable = await checkHealthOnly();
+  renderConnection();
+  if (!ui.reachable) { notice('warning', 'Server still unreachable', 'Your answer stays saved. Pathasetu will try again when the server can be reached.'); return; }
+  await drainQueue();
+});
 
 function renderTrace() {
   const entries = [...(ui.state?.trace ?? [])].reverse();
@@ -319,12 +362,16 @@ async function drainQueue() {
   if (!ui.writable) return; // only the writable tab may process queued work
   if (ui.draining || !ui.reachable || !ui.state?.queue?.length) return;
   if (ui.accessRequired && !ui.accessAuthorized) { $('access-overlay').classList.remove('hidden'); return; }
+  const policy = retryPolicy();
+  const dueNow = ui.state.queue.filter((entry) => isDue(entry, Date.now()));
+  if (!dueNow.length) { scheduleRetryTimer(); renderQueueStatus(); return; } // everything is waiting for its backoff or paused
+  const pausedBefore = new Set(ui.state.queue.filter((entry) => entry.needsAttention).map((entry) => entry.id));
   ui.draining = true;
   let processed = 0;
   let deferredStateChanged = false;
   let firstFailure = null;
   try {
-    for (const entry of [...ui.state.queue]) {
+    for (const entry of dueNow) {
       if (!ui.reachable) break;
       const answer = ui.state.answers.find((candidate) => candidate.id === entry.answerId);
       const item = ui.pack.items.find((candidate) => candidate.id === entry.itemId);
@@ -348,7 +395,7 @@ async function drainQueue() {
           throw fetchError?.name === 'AbortError' ? new Error('recheck_timeout') : fetchError;
         } finally { clearTimeout(timer); }
         if (!['mock', 'groq'].includes(data.provider)) throw new Error('unexpected_provider');
-        const result = recheckQueued({ state: ui.state, pack: ui.pack, queueId: entry.id, online: true, diagnosisOverride: data.diagnosis, trusted: false, provider: data.provider });
+        const result = recheckQueued({ state: ui.state, pack: ui.pack, queueId: entry.id, online: true, diagnosisOverride: data.diagnosis, trusted: false, provider: data.provider, now: new Date().toISOString(), policy });
         if (!result.drained) {
           deferredStateChanged = true; // recheckQueued already records rejection and increments attempts.
           throw new Error(`recheck_rejected:${result.reason}`);
@@ -357,7 +404,7 @@ async function drainQueue() {
       } catch (error) {
         firstFailure ??= error?.message ?? 'error';
         if (!String(error?.message ?? '').startsWith('recheck_rejected:')) {
-          recordRecheckDeferred({ state: ui.state, queueId: entry.id, reason: error?.message ?? 'error' });
+          recordRecheckDeferred({ state: ui.state, queueId: entry.id, reason: error?.message ?? 'error', now: new Date().toISOString(), policy });
           deferredStateChanged = true;
         }
         ui.reachable = await checkHealthOnly();
@@ -381,7 +428,11 @@ async function drainQueue() {
         notice('warning', 'Re-check deferred', 'The queued answer is still saved. Pathasetu recorded the failed attempt and will retry after the next reachability check.');
       }
     }
-  } finally { ui.draining = false; }
+    const newlyPaused = ui.state.queue.filter((entry) => entry.needsAttention && !pausedBefore.has(entry.id));
+    if (newlyPaused.length) {
+      notice('warning', 'Re-check paused', `Pathasetu stopped retrying automatically after ${policy.maxAutomaticAttempts} failed attempts. Your answer is still saved. Use “Retry now” when the server is back.`);
+    }
+  } finally { ui.draining = false; scheduleRetryTimer(); renderQueueStatus(); }
 }
 
 async function checkHealthOnly() {
@@ -423,6 +474,7 @@ async function load() {
   }
   ui.loaded = true;
   await saveRecord();
+  scheduleRetryTimer();
   renderAll();
   void refreshHealth();
 }
@@ -449,7 +501,7 @@ $('apply-plan-button').addEventListener('click', async () => {
 window.addEventListener('online', () => { ui.probeDelay = 2000; void refreshHealth(); });
 window.addEventListener('offline', () => { ui.reachable = false; ui.probing = false; renderConnection(); notice('warning', 'Connection changed', 'Pathasetu will keep local progress and retry reachability.'); });
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') void refreshHealth(); });
-window.addEventListener('pagehide', () => { if (ui.probeTimer) clearTimeout(ui.probeTimer); ui.releaseWriterLock?.(); void saveRecord(); });
+window.addEventListener('pagehide', () => { if (ui.probeTimer) clearTimeout(ui.probeTimer); if (ui.retryTimer) clearTimeout(ui.retryTimer); ui.releaseWriterLock?.(); void saveRecord(); });
 
 if ('serviceWorker' in navigator) {
   let hadController = Boolean(navigator.serviceWorker.controller);

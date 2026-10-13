@@ -1,3 +1,4 @@
+import { RETRY_POLICY, scheduleAfterFailure, cycleAttemptsOf } from './retry.js';
 import { proposeDiagnosis } from './mockModel.js';
 import { validateDiagnosis } from './validator.js';
 
@@ -118,15 +119,48 @@ export function submitAnswer({ state, pack, itemId, optionId, explanation, onlin
 }
 
 
-export function recordRecheckDeferred({ state, queueId, reason = 'provider_unavailable', now = new Date().toISOString() }) {
-  const entry = state.queue.find((candidate) => candidate.id === queueId);
-  if (!entry) return { recorded: false, reason: 'queue_item_not_found' };
+// One failed attempt: count it, schedule the next automatic attempt (bounded backoff) or pause the entry. The answer and the
+// queue entry are never deleted here; a paused entry waits for a deliberate manual retry.
+function registerFailure({ state, entry, type, reason, now, policy, itemId }) {
+  // Schedule first: entries saved by earlier versions have no cycleAttempts and fall back to their old attempts count.
+  const schedule = scheduleAfterFailure(entry, now, policy);
   entry.attempts = (Number.isInteger(entry.attempts) && entry.attempts >= 0 ? entry.attempts : 0) + 1;
   entry.lastAttemptAt = now;
   entry.lastFailure = String(reason).slice(0, 120);
   state.lastUpdated = now;
-  appendFailureTrace(state, { type: 'recheck_deferred', itemId: entry.itemId, queueId, attempts: entry.attempts, reason: 'provider_unavailable_or_invalid', details: entry.lastFailure });
-  return { recorded: true, entry };
+  appendFailureTrace(state, { type, itemId, queueId: entry.id, attempts: entry.attempts, reason: type === 'recheck_rejected' ? entry.lastFailure : 'provider_unavailable_or_invalid', details: entry.lastFailure, nextAttemptAt: schedule.nextAttemptAt });
+  if (schedule.newlyPaused) {
+    appendTrace(state, { type: 'recheck_paused', itemId, queueId: entry.id, attempts: entry.attempts, reason: 'Maximum automatic attempts reached. The answer and queue entry are kept; a manual retry is available.' });
+  }
+  return schedule;
+}
+
+export function recordRecheckDeferred({ state, queueId, reason = 'provider_unavailable', now = new Date().toISOString(), policy = RETRY_POLICY }) {
+  const entry = state.queue.find((candidate) => candidate.id === queueId);
+  if (!entry) return { recorded: false, reason: 'queue_item_not_found' };
+  const schedule = registerFailure({ state, entry, type: 'recheck_deferred', reason, now, policy, itemId: entry.itemId });
+  return { recorded: true, entry, paused: schedule.paused };
+}
+
+// A deliberate retry resets only the retry state of the chosen entries (or all entries that have failed). It never touches
+// answers, drafts, sessions, the current question or the queue length.
+export function manualRetryQueue({ state, queueId = null, now = new Date().toISOString() }) {
+  let reset = 0;
+  for (const entry of state.queue) {
+    if (queueId && entry.id !== queueId) continue;
+    if (!entry.needsAttention && cycleAttemptsOf(entry) === 0 && !entry.nextAttemptAt) continue;
+    entry.cycleAttempts = 0;
+    entry.needsAttention = false;
+    entry.nextAttemptAt = null;
+    delete entry.pausedAt;
+    entry.manualRetries = (Number.isInteger(entry.manualRetries) ? entry.manualRetries : 0) + 1;
+    reset += 1;
+  }
+  if (reset) {
+    state.lastUpdated = now;
+    appendTrace(state, { type: 'recheck_manual_retry', queueId: queueId ?? 'all', entries: reset, reason: 'The learner chose to retry now. Retry state was reset; the answers and the queue were not changed.' });
+  }
+  return { reset };
 }
 
 function applyDiagnosisToState(state, diagnosis, item) {
@@ -134,7 +168,7 @@ function applyDiagnosisToState(state, diagnosis, item) {
   state.learner.confirmedMisconceptions[diagnosis.misconceptionId] = (state.learner.confirmedMisconceptions[diagnosis.misconceptionId] ?? 0) + 1;
 }
 
-export function recheckQueued({ state, pack, queueId, online = true, diagnosisOverride = null, trusted = false, provider = 'mock' }) {
+export function recheckQueued({ state, pack, queueId, online = true, diagnosisOverride = null, trusted = false, provider = 'mock', now = new Date().toISOString(), policy = RETRY_POLICY }) {
   if (!online) return { state, drained: false, reason: 'offline' };
   const queueItem = state.queue.find((entry) => entry.id === queueId);
   if (!queueItem) return { state, drained: false, reason: 'queue_item_not_found' };
@@ -148,11 +182,7 @@ export function recheckQueued({ state, pack, queueId, online = true, diagnosisOv
   const proposal = diagnosisOverride ?? proposeDiagnosis({ item, optionId: answer.optionId, explanation: answer.explanation });
   const checked = validateDiagnosis(proposal, item);
   if (!checked.ok) {
-    queueItem.attempts = (Number.isInteger(queueItem.attempts) && queueItem.attempts >= 0 ? queueItem.attempts : 0) + 1;
-    queueItem.lastAttemptAt = new Date().toISOString();
-    queueItem.lastFailure = checked.reason;
-    state.lastUpdated = queueItem.lastAttemptAt;
-    appendFailureTrace(state, { type: 'recheck_rejected', itemId: item.id, reason: checked.reason, queueId, attempts: queueItem.attempts });
+    registerFailure({ state, entry: queueItem, type: 'recheck_rejected', reason: checked.reason, now, policy, itemId: item.id });
     return { state, drained: false, reason: checked.reason };
   }
   const prior = answer.diagnosis;

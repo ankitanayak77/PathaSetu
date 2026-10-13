@@ -41,9 +41,9 @@ test('all authored executable assets are local rather than third-party scripts',
   assert.match(css, /@media\(max-width:700px\)/);
 });
 
-test('service worker shell cache version is bumped for the revised feedback-first flow and Bridge Practice (v3)', () => {
-  assert.match(sw, /pathasetu-shell-v3/);
-  assert.doesNotMatch(sw, /pathasetu-shell-v2/);
+test('service worker shell cache version is bumped for the revised feedback-first flow and Bridge Practice (v4)', () => {
+  assert.match(sw, /pathasetu-shell-v4/);
+  assert.doesNotMatch(sw, /pathasetu-shell-v3/);
   assert.match(app, /Review the feedback and remediation below/);
   assert.match(app, /Continue to \$\{next\.id\}/);
 });
@@ -105,4 +105,22 @@ test('Bridge Practice is wired in, local-only and draft-labelled', () => {
 test('only the first install is allowed to claim the page silently; a later controller change announces an update', () => {
   assert.match(app, /let hadController = Boolean\(navigator\.serviceWorker\.controller\)/);
   assert.match(app, /if \(!hadController\) \{ hadController = true; return; \}/);
+});
+
+test('bounded retries are wired into the browser: gating, timer, persistent status and a deliberate Retry now action', () => {
+  assert.match(app, /from '\/core\/retry\.js'/);
+  assert.match(app, /isDue\(entry, Date\.now\(\)\)/);
+  assert.match(app, /scheduleRetryTimer\(\)/);
+  assert.match(app, /id="retry-now-button"/);
+  assert.match(html, /id="queue-status"[^>]*role="status"[^>]*aria-live="polite"/);
+  assert.match(app, /manualRetryQueue\(\{ state: ui\.state \}\)/);
+  assert.match(app, /if \(!event\.target\.closest\('#retry-now-button'\) \|\| !ui\.writable/);
+  assert.match(sw, /'\/core\/retry\.js'/);
+});
+
+test('the retry-delay override is test-only plumbing and the shipped defaults are the conservative ones', () => {
+  assert.match(app, /__PATHASETU_TEST_RETRY_POLICY__/);
+  const retry = read('src/core/retry.js');
+  assert.match(retry, /maxAutomaticAttempts: 5, baseDelayMs: 5000, factor: 2, maxDelayMs: 60000/);
+  assert.doesNotMatch(retry, /setTimeout|setInterval|Date\.now\(\)|fetch\(/, 'the policy module stays pure');
 });

@@ -50,11 +50,14 @@ test('50 repeated provider failures count 50 attempts but occupy one trace line'
   const traceBefore = state.trace.length;
   for (let i = 0; i < 50; i++) recordRecheckDeferred({ state, queueId, reason: 'recheck_http_500', now: NOW });
   assert.equal(state.queue[0].attempts, 50);
-  assert.equal(state.trace.length, traceBefore + 1);
-  const line = state.trace.at(-1);
-  assert.equal(line.type, 'recheck_deferred');
-  assert.equal(line.attempts, 50);
-  assert.equal(line.repeats, 50);
+  // Five failures coalesce into one line, the pause is its own distinct event, and later failures coalesce into one more line.
+  assert.deepEqual(state.trace.slice(traceBefore).map((event) => event.type), ['recheck_deferred', 'recheck_paused', 'recheck_deferred']);
+  const first = state.trace[traceBefore];
+  assert.equal(first.attempts, 5);
+  assert.equal(first.repeats, 5);
+  const last = state.trace.at(-1);
+  assert.equal(last.attempts, 50);
+  assert.equal(last.repeats, 45);
 });
 
 test('a different event in between starts a new failure line instead of rewriting history', () => {
@@ -76,6 +79,8 @@ test('repeated invalid diagnoses for one queue entry are coalesced and keep the 
   assert.equal(state.queue.length, 1);
   assert.equal(state.queue[0].attempts, 5);
   assert.equal(state.trace.filter((event) => event.type === 'recheck_rejected').length, 1);
+  assert.equal(state.trace.filter((event) => event.type === 'recheck_paused').length, 1);
+  assert.equal(state.queue[0].needsAttention, true);
   const good = recheckQueued({ state, pack, queueId, online: true });
   assert.equal(good.drained, true);
   assert.equal(state.queue.length, 0);

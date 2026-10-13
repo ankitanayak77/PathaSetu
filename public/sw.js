@@ -1,5 +1,5 @@
-const CACHE_NAME = 'pathasetu-shell-v3';
-const SHELL = ['/', '/index.html', '/styles.css', '/app.js', '/manifest.webmanifest', '/favicon.svg', '/core/agent.js', '/core/mockModel.js', '/core/validator.js', '/core/storage.js', '/core/bridge.js'];
+const CACHE_NAME = 'pathasetu-shell-v4';
+const SHELL = ['/', '/index.html', '/styles.css', '/app.js', '/manifest.webmanifest', '/favicon.svg', '/core/agent.js', '/core/mockModel.js', '/core/validator.js', '/core/storage.js', '/core/bridge.js', '/core/retry.js'];
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));
 });

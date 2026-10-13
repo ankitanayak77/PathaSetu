@@ -321,6 +321,74 @@ await scenario('M', 'protected draft demo: the code gates content, the UI still 
   }, { serverEnv: { NODE_ENV: 'production', PATHASETU_ALLOW_DRAFT_DEMO: 'true', PATHASETU_DEMO_ACCESS_CODE: CODE } });
 });
 
+// Bounded retries. A test-only global makes the delays short; the real defaults are unit-tested in tests/retry.test.js.
+async function retryPage(chrome, base, policy) {
+  const page = await chrome.newPage();
+  page.mode = 'http500';
+  await page.cdp.call('Page.addScriptToEvaluateOnNewDocument', { source: `globalThis.__PATHASETU_TEST_RETRY_POLICY__ = ${JSON.stringify(policy)};` });
+  page.cdp.on('Fetch.requestPaused', (p) => {
+    if (page.mode === 'pass') return page.cdp.call('Fetch.continueRequest', { requestId: p.requestId }).catch(() => {});
+    return page.cdp.call('Fetch.fulfillRequest', { requestId: p.requestId, responseCode: 500, responseHeaders: [{ name: 'content-type', value: 'application/json' }], body: Buffer.from('{"error":"provider_request_failed"}').toString('base64') }).catch(() => {});
+  });
+  await page.cdp.call('Fetch.enable', { patterns: [{ urlPattern: '*/api/recheck*' }] });
+  await page.goto(`${base}/`);
+  await ready(page); await controlled(page);
+  page.posts = () => page.requests.filter((r) => r.url.includes('/api/recheck') && r.method === 'POST').length;
+  return page;
+}
+const QS = `(() => ({ text: document.querySelector('#queue-status')?.innerText || '', hidden: document.querySelector('#queue-status')?.classList.contains('hidden'), retryDisabled: document.querySelector('#retry-now-button')?.disabled ?? null, hasRetry: Boolean(document.querySelector('#retry-now-button')) }))()`;
+
+await scenario('N', 'bounded retries: pause, persistence, manual retry, recovery without duplicates', async () => withEnv(async ({ chrome, base }) => {
+  const page = await retryPage(chrome, base, { maxAutomaticAttempts: 3, baseDelayMs: 300, factor: 2, maxDelayMs: 800 });
+  await page.evaluate(submitExpr('A', 'The current keeps building up in the wire.'));
+  const paused = await page.waitFor(QS, (v) => /paused/i.test(v.text), 15000, 'paused status');
+  check('N1', 'automatic attempts stop at the configured maximum and a persistent paused status with Retry now appears', page.posts() === 3 && paused.hasRetry && paused.retryDisabled === false, `re-check POSTs=${page.posts()}; status="${paused.text.replace(/\s+/g, ' ').slice(0, 100)}"`);
+  await page.evaluate("window.dispatchEvent(new Event('online')); document.dispatchEvent(new Event('visibilitychange'));");
+  await sleep(4000);
+  check('N2', 'reachability events and time passing cause no further automatic attempts', page.posts() === 3, `re-check POSTs after 4 s=${page.posts()}`);
+  const rec = await page.evaluate(READ_DB);
+  const entry = rec?.state?.queue?.[0];
+  check('N3', 'the answer and the queue entry are still saved, flagged as needing attention, and no extra session was used', rec?.state?.queue?.length === 1 && rec?.state?.answers?.length === 1 && entry?.needsAttention === true && entry?.attempts === 3 && /9 learning/.test((await page.evaluate(UI)).sessions), `queue=${rec?.state?.queue?.length}; answers=${rec?.state?.answers?.length}; needsAttention=${entry?.needsAttention}; attempts=${entry?.attempts}`);
+  await page.reload();
+  await ready(page); await sleep(2500);
+  const afterReload = await page.evaluate(QS);
+  check('N4', 'after a reload the paused state is still shown and nothing is retried automatically', /paused/i.test(afterReload.text) && page.posts() === 3, `re-check POSTs=${page.posts()}`);
+  const tabB = await chrome.newPage(`${base}/`);
+  tabB.requests.length = 0;
+  await tabB.waitFor(UI, (v) => /EL0\d/.test(v.question) && v.allDisabled === true, 12000, 'tab B read-only');
+  await sleep(2500);
+  const b = await tabB.evaluate(QS);
+  check('N5', 'a read-only tab shows the status with Retry now disabled and sends no re-check', /paused/i.test(b.text) && b.retryDisabled === true && tabB.requests.filter((r) => r.url.includes('/api/recheck')).length === 0, `retryDisabled=${b.retryDisabled}`);
+  await tabB.close();
+  // the learner moves on and starts a draft while the re-check is paused
+  await page.evaluate("document.querySelector('#apply-plan-button')?.click()");
+  await page.waitFor(UI, (v) => /EL02/.test(v.question), 6000, 'EL02');
+  const draft = 'Draft on EL02 typed while the re-check was paused.';
+  await page.evaluate(draftExpr('B', draft, 6)); await sleep(500);
+  page.mode = 'pass';
+  await page.evaluate("document.querySelector('#retry-now-button').click()");
+  const done = await page.waitFor(UI, (v) => v.queue === '0', 15000, 'recovered after a manual retry');
+  const finalRec = await page.evaluate(READ_DB);
+  check('N6', 'a manual retry recovers the queue with exactly one answer, no extra session, and one more request', finalRec?.state?.answers?.length === 1 && /9 learning/.test(done.sessions) && page.posts() === 4, `answers=${finalRec?.state?.answers?.length}; sessions="${done.sessions}"; re-check POSTs=${page.posts()}`);
+  check('N7', 'the active question, the draft, the option and the caret are untouched by the retry', /EL02/.test(done.question) && done.text === draft && done.option === 'B' && done.focus === 'explanation-input' && done.caret === 6, `question=${done.question}; option=${done.option}; caret=${done.caret}`);
+  const status = await page.evaluate(QS);
+  check('N8', 'the status disappears after recovery and the trace explains the pause and the manual retry', status.hidden === true && finalRec.state.trace.some((t) => t.type === 'recheck_paused') && finalRec.state.trace.some((t) => t.type === 'recheck_manual_retry'), finalRec.state.trace.slice(-4).map((t) => t.type).join(','));
+  allErrors.push(...page.errors);
+}));
+
+await scenario('N2', 'bounded retries: the waiting state and an early manual retry', async () => withEnv(async ({ chrome, base }) => {
+  const page = await retryPage(chrome, base, { maxAutomaticAttempts: 4, baseDelayMs: 4000, factor: 2, maxDelayMs: 8000 });
+  await page.evaluate(submitExpr('A', 'The current keeps building up in the wire.'));
+  const waiting = await page.waitFor(QS, (v) => /waiting/i.test(v.text), 10000, 'waiting status');
+  check('N9', 'after the first failure the status says waiting, shows the attempt count and the next try', /attempt 1 of 4/.test(waiting.text) && /Next automatic try in about/.test(waiting.text) && waiting.hasRetry, waiting.text.replace(/\s+/g, ' ').slice(0, 120));
+  check('N10', 'no second automatic attempt happens before the backoff has elapsed', page.posts() === 1, `re-check POSTs=${page.posts()}`);
+  page.mode = 'pass';
+  await page.evaluate("document.querySelector('#retry-now-button').click()");
+  const done = await page.waitFor(UI, (v) => v.queue === '0', 8000, 'early manual retry');
+  check('N11', 'Retry now during the wait recovers immediately, once', done.queue === '0' && done.answers === '1' && page.posts() === 2, `answers=${done.answers}; re-check POSTs=${page.posts()}`);
+  allErrors.push(...page.errors);
+}));
+
 await scenario('G2', 'no Web Locks: a visible warning', async () => withEnv(async ({ chrome, base }) => {
   const page = await chrome.newPage();
   await page.cdp.call('Page.addScriptToEvaluateOnNewDocument', { source: "Object.defineProperty(Navigator.prototype, 'locks', { get() { return undefined; }, configurable: true });" });
