@@ -2,7 +2,7 @@
 
 Written 13 October 2026 for every registered team member. You should be able to explain Pathasetu to a parent, a teacher and a CTO after reading this, without reading code. Every statement about the software points to a file you can open. Every statement about the event points to an official page. Nothing here is marketing: where the code or the evidence does not support an answer, this guide says **not implemented**, **not tested**, **not reviewed** or **unknown**.
 
-Companion files: `SYSTEM_ARCHITECTURE.md` (the picture), `NAVIGATION_AND_WORKFLOW.md` (every screen and journey), `JURY_QA_BANK.md` (126 questions with answers), `PITCH_SCRIPTS.md` (what to say), `CLAIM_EVIDENCE_MATRIX.csv` (what we may say, and what we must not).
+Companion files: `SYSTEM_ARCHITECTURE.md` (the picture), `NAVIGATION_AND_WORKFLOW.md` (every screen and journey), `JURY_QA_BANK.md` (176 questions with answers), `PITCH_SCRIPTS.md` (what to say), `CLAIM_EVIDENCE_MATRIX.csv` (what we may say, and what we must not). Added in Iteration 7: `DECISION_REGISTER.md` (every significant decision and its status), `DECISION_LOG.csv` (one row per decision), `BOARD_CLASS_BOOK_COMPARISON.md` and `BOOK_CROSSWALK.csv` (board, class, book and the eight-item crosswalk), `AUTHENTICATION_AND_TRUST_LEVELS.md` (access levels A0–A6) and `DECISION_AUDIT_REPORT.md` (what the audit found).
 
 ## 0. How to read the status words
 
@@ -49,7 +49,7 @@ This is a **scoping decision by the team**, not a research finding. We have no i
 | | Pathasetu today |
 |---|---|
 | Grade | Class 10 |
-| Board and medium | BSE Odisha, Odia-medium (design target; content **not reviewed** against the syllabus) |
+| Board and medium | BSE Odisha, Class X, General Science (Physical Science), Odia-medium, syllabus session 2026-27 (the official syllabus names the board, class, subject and session). The team calls this the "HSC" course; the syllabus PDF does not use that word, so the label is the team's until a teacher confirms it. Content **not reviewed** against the syllabus or any book |
 | Subject and topic | Science, **Electricity** only — 8 questions in `content/electricity-pack.json` |
 | Language assumption | Learner reads Odia and meets English terms. The screen shows English first with an Odia draft beside it. |
 | Goal | Board-exam preparation |
@@ -67,6 +67,14 @@ This is a **scoping decision by the team**, not a research finding. We have no i
 - The signal is weak, not absent: the first load needs the server once, after which the service worker keeps the shell.
 - Electricity is a good first chapter. That is a team choice with no evidence behind it yet.
 - No learner, parent or teacher has been interviewed or observed.
+
+#### Board, class and book: what is verified and what is not (Iteration 7)
+
+- **Verified from an official source (opened 13 Oct 2026):** the BSE Odisha Class X syllabus for session 2026-27 lists General Science with two prescribed books, Physical Science and Life Science, and Electricity (ବିଦ୍ୟୁତ୍) as one Physical Science entry <https://bseodisha.nic.in/wp-content/uploads/2026/05/Subject_wise_syllabus_class_X_26_27.pdf>.
+- **Not verified:** the words "HSC" and "Madhyama" do not appear in that file, so we cannot prove an HSC-versus-Madhyama distinction; we do not make one. The book's publisher, edition, print year, chapter numbers and page numbers are **unknown**. The syllabus lists Electricity with no sub-topics, so which official outcome each of the eight questions serves is also unknown.
+- **Other boards** (CBSE, CISCE/ICSE, NIOS, WBBSE and other state boards) are deferred or not evaluated. Class X on another board is a different syllabus. See `BOARD_CLASS_BOOK_COMPARISON.md`.
+- **Say:** "Our topic is mapped at a high level to the BSE Odisha Class X General Science (Electricity) syllabus for 2026-27. Item-to-edition and page validation is pending a teacher." **Do not say** the questions are curriculum-aligned, syllabus-approved or teacher-approved, or "HSC, not Madhyama".
+- **Content rights:** the questions are original draft text written for this MVP with AI help. No textbook page, diagram or scan is in the pack or the ZIP. A teacher fills `docs/BOOK_CROSSWALK.csv` (reviewer fields are blank on purpose).
 
 ### 1.4 "Geography" does not mean the subject
 
@@ -204,7 +212,7 @@ Plain-language definitions on first use: a **server** is a program that waits fo
 | HTML, CSS, vanilla JavaScript (ES modules), no framework | `public/index.html`, `public/styles.css`, `public/app.js` | The phone-first screen and all its behaviour | clicks and typing → updated page | implemented; browser-tested; a11y-audit (automated) |
 | Node.js built-in `http` module (no Express) | `src/server/server.js` | Serves the files and four API routes | requests → files or JSON | implemented; unit-tested (`tests/server.test.js` and others) |
 | API routes: `GET /api/health`, `GET /api/session`, `GET /api/pack`, `POST /api/recheck` | `src/server/server.js` | Health probe; check access code; send the question pack; second-check an answer | see `SYSTEM_ARCHITECTURE.md` | unit-tested; browser-tested |
-| Service worker + Cache Storage | `public/sw.js` (cache `pathasetu-shell-v8`) | Keeps the app shell and the browser-safe `/core/*.js` modules for offline reload. Never caches `/api/*`. | requests → cached or live files | browser-tested (E1, H1, I1, I2) |
+| Service worker + Cache Storage | `public/sw.js` (current cache `pathasetu-shell-v12`) | Keeps the app shell and the browser-safe `/core/*.js` modules for offline reload. Never caches `/api/*`. The current UI retains its service worker across renders. | requests → cached or live files | earlier tests are historical; v12 has not been browser-tested in this review |
 | IndexedDB (database `pathasetu-local-v1`, store `records`) | `src/core/storage.js` | Holds one record under key `session` (state, answers, queue, trace, drafts, the saved content pack) and, if needed, `session-unreadable-backup` | record ↔ browser database; memory fallback if blocked | unit-tested; browser-tested (L, P, R) |
 | `sessionStorage` | `public/app.js` | Holds the demo access code for the open tab only (`pathasetu_demo_code`) | typed code → header | browser-tested (M7) |
 | Content pack (JSON) | `content/electricity-pack.json`, validated by `src/core/content.js` | 8 Electricity questions, option→misconception links, remediation, Odia drafts, bridge fields | file → items | unit-tested; consistency-checked (`npm run check:content`); content-reviewed: **no** |
@@ -220,12 +228,19 @@ Plain-language definitions on first use: a **server** is a program that waits fo
 | Groq adapter (optional) | `src/server/groqModel.js` | Sends one chat-completion request to `https://api.groq.com/openai/v1/chat/completions` (default model `openai/gpt-oss-20b`, `store:false`, 5.2 s timeout) | item, option, text → proposal | unit-tested with a fake server only; **live-API-tested: no** |
 | Access control | `src/server/access.js`, `server.js` | Demo code check, failed-attempt window, rate limits, exact origin list | headers → allow, 401, 403, 429 | unit-tested; browser-tested |
 | Preflight | `scripts/preflight.mjs`, `scripts/lib/preflight.mjs` | Pre-demo safety check; mock-only loopback harness | env → PASS/FAIL | unit-tested |
-| Tests | `tests/*.test.js` (Node's built-in `node:test`) | 207 unit and static tests in the Iteration 6 final run (198 in Iteration 5, 182 at the Iteration 4 baseline) | — | measured result (below) |
+| Tests | `tests/*.test.js` (Node's built-in `node:test`) | 252 unit and static tests in the Iteration 8 final run (217 in Iteration 7, 207 in Iteration 6, 198 in Iteration 5, 182 at the Iteration 4 baseline) | — | measured result (below) |
 | Browser tests | `scripts/browser-regression.mjs`, `capture*.mjs`, `accessibility-audit.mjs`, `scripts/lib/devtools.mjs` | Drive headless Chromium over the Chrome DevTools Protocol, no library | — | measured result (below) |
 
 **Technologies we verified are not used:** React, Next.js, Express, LangChain, CrewAI, AutoGen, LlamaIndex, Smolagents, RAG (retrieval-augmented generation), embeddings, a vector database, an on-device or local language model, speech recognition or speech synthesis, a native Android or iOS app, and multi-agent orchestration. The check was a search of `package.json`, `package-lock.json`, `src/`, `public/` and `scripts/` on 13 Oct 2026; none of these names is imported or called. We did not infer anything from the event's examples.
 
-**Measured results** (headless Chromium 141, Node 22.22.0, Linux sandbox, 13 Oct 2026, current final run in `evidence/iteration6/final/`): `npm test` 207 unit tests passed (the Iteration 5 final run had 198 and the Iteration 4 baseline 182); `npm run capture` 19 capture checks; `npm run e2e` 100 browser checks (the Iteration 5 run had 95; scenario Q adds five); `npm run a11y` 462 accessibility checks, 0 failed; `npm run check`, `check:content` and `preflight` exit 0. These are one machine's results, reproduced from the received Iteration 5 package in the baseline run (`evidence/iteration6/baseline/`). A separate audit environment and the team's managed machine reported browser navigation **BLOCKED** (`ERR_BLOCKED_BY_ADMINISTRATOR`) while its unit tests, `check`, `check:content` and `preflight` passed; those browser results are a different environment's and are not a pass here or there. No phone has run any of this.
+
+**Current Iteration 16 step 1 results:** 451 unit tests and 112 browser checks pass (records in `evidence/iteration16/final/`). **Earlier Iteration 15 results** (14 October 2026, Node 22.22.0, headless Chromium 141, Linux sandbox; records in `evidence/iteration15/final/`): 440/440 unit tests passed. `npm run check`, `npm run check:content`, `npm run preflight`, `npm run evaluate` (deterministic, no network), `npm run doctor` and the complete `npm run mutation` exited 0. Capture passed 19 checks, E2E passed 106 browser checks and accessibility ran 462 checks with 0 failed. The mutation check runs 46 deliberate faults against the queue, retry, validator and recovery code and all 46 are caught; this iteration made that run faster and stricter (only tests that really ran count) without removing any fault. These are synthetic engineering tests: they do not show that learners learn, that a model is accurate, or that the app works on a phone, and no real model was run (the model chain was exercised only against fake servers; see `docs/MODEL_PROVIDERS.md`). In the earlier Iteration 11 and Iteration 9 environments the browser commands were BLOCKED by `ERR_BLOCKED_BY_ADMINISTRATOR` (exit 2) and the Iteration 11 mutation sweep was INCOMPLETE; those records are historical and were not changed.
+
+**Historical Iteration 10 results** (Node v22.22.0, headless Chromium 141, separate Linux sandbox; records in `evidence/iteration10/final/`): 337/337 unit tests passed; capture 19, E2E 100 and accessibility 462 checks all passed in that environment. It added 56 queue-invariant tests, 120 generated sequences and caught 45/45 deliberate faults in its mutation catalogue. These results remain historical and are not promoted into the current Iteration 11 environment. Synthetic engineering tests do not show that learners learn, that a model is accurate or that the app works on a phone. In the Iteration 9 environment, browser commands were BLOCKED by the same managed policy; that record is also preserved.
+
+**Earlier, historical Iteration 8 results** (headless Chromium 141, Node 22.22.0, Linux sandbox, 13 Oct 2026, preserved in `evidence/iteration8/final/`): `npm test` 252 unit tests passed (the Iteration 7 final run had 217, the Iteration 6 final run had 207, Iteration 5 had 198 and the Iteration 4 baseline 182); `npm run capture` 19 capture checks; `npm run e2e` 100 browser checks (the Iteration 5 run had 95; scenario Q adds five); `npm run a11y` 462 accessibility checks, 0 failed; `npm run check`, `check:content` and `preflight` exit 0. These are historical results from one machine. The Iteration 8 baseline reproduced the 217 unit tests and the non-browser commands on the untouched Iteration 7 tree (`evidence/iteration8/baseline/`).
+
+**Where each result came from (Iteration 7).** The sandbox above ran the browser suites. The team's own Mac log (Node 26.8.2, Iteration 6 package) passed `npm test` (207 tests), `check`, `check:content` and `preflight`, but `capture` made 10 passing API checks and then failed with `ENOENT '/usr/bin/chromium'`, and `e2e` and `a11y` reported BLOCKED, because the scripts look for a Linux browser path unless `CHROME_PATH` points at a real browser. That is a path gap on a Mac, not a product defect, and **no browser check has passed on the Mac**. The team's earlier managed machine reported browser navigation **BLOCKED** (`ERR_BLOCKED_BY_ADMINISTRATOR`). Those are different environments' results and are not promoted to passes anywhere. No phone has run any of this.
 
 ### 3.1 What the automated tests prove, and what they do not
 
@@ -251,6 +266,27 @@ It is not true that everything stays on the phone: local state stays on the devi
 `/api/health` is open on purpose (the offline probe uses it) and reveals the provider label and whether a code is required. `/api/session`, `/api/pack` and `/api/recheck` need the code whenever one is configured, which is always in public-demo mode, with Groq, or for a production draft demo. The Groq key lives only in the server's environment and is never sent to the browser; the demo code is compared in constant time, kept in `sessionStorage` for the open tab, and kept out of IndexedDB, the trace export and logs. Other controls: a failed-attempt window (20 per 60 s per client), an exact-origin allow-list, a 16 KB body limit, a re-check rate limit, and security headers.
 
 **Known limits:** one shared code; in-memory counters that reset on restart and are keyed by socket address, so visitors behind one tunnel connection share a bucket; no accounts and no audit log; the answer key and draft pack reach any authorised browser, so this is practice, not an exam; browser modules are served from `src/core` by a file-name pattern. This is demo-grade protection, not production authentication.
+
+### 3.4 Where every data field goes
+
+"Page memory" is the open tab. "IndexedDB" is the browser's saved copy on the phone, when browser storage works. "Server" is the Pathasetu Node process. "Hosted model" applies **only if** a provider such as Groq is configured, which has never been done live. Our server code writes one start-up log line and keeps only in-memory counters; a tunnel or host in front of it may keep its own logs, which we have not read.
+
+| Field | Page memory | IndexedDB | Sent to the Pathasetu server | Forwarded to a hosted model (only if configured) | In the trace export | Logged by our code |
+|---|---|---|---|---|---|---|
+| Typed explanation (up to 1,000 characters) | yes | yes (draft and saved answer) | yes, on a re-check only | yes | no: replaced by its length | no |
+| Chosen option and item ID | yes | yes | yes, on a re-check | yes | yes | no |
+| Question, options, Odia drafts | yes | yes (saved pack) | served from the server to the browser | yes | item IDs only | no |
+| Correct option (answer key) | yes (it ships to the browser) | yes | served to the browser | yes (`correctOptionId`) | no | no |
+| Learning state: attempts, queue, decision trace | yes | yes | no | no | yes (queue and trace) | no |
+| Access code | yes, for the tab (`sessionStorage`) | no | yes, in the `x-pathasetu-demo-code` header on protected routes | no | no (redacted) | no |
+| Provider API key | no | no | no (lives in the server's environment only) | used by the server to call the provider | no (redacted) | no |
+| Health probe | — | — | a GET with no learner data | no | — | no |
+
+Evidence: `src/server/server.js`, `src/server/groqModel.js`, `src/core/export.js`, `src/core/storage.js`, `tests/iteration5-evidence.test.js`, `tests/storage-resilience.test.js`. Status: implemented; unit-tested (the hosted-model request is checked against a fake fetch only); live provider not tested. Never say "no data leaves the phone".
+
+### 3.5 Access levels in plain words (Iteration 7)
+
+There are seven levels, A0 to A6 (`AUTHENTICATION_AND_TRUST_LEVELS.md`). **Pathasetu is at A1: a private demonstration gate.** One shared code lets invited people in; an origin check stops another website from using a visitor's browser to call the server; throttles slow guessing; HTTPS (supplied by the tunnel or host) hides traffic from people on the Wi-Fi. Keep these apart: *authentication* proves who you are (we have none), *authorisation* decides what that person may do (we have none beyond code or no code), *HTTPS* protects the connection, the *origin check* blocks other websites (it does not stop a command-line client), *rate limiting* slows repeated tries, and the *shared code* admits whoever knows it. If the code leaks, anyone with it can read the draft pack and answer key and call the re-check route until we restart with a new code; there are no stored learner records to expose. Accounts (A3), profiles (A2), roles (A4), school sign-in (A5) and a production service (A6) are **not implemented**. We make no claim of compliance with any data-protection law; that needs a qualified lawyer.
 
 ## 4. What "agentic" means here, precisely
 
@@ -349,9 +385,13 @@ Open `docs/CLAIM_EVIDENCE_MATRIX.csv`. Each row has a claim ID, the claim, the f
 2. The default "AI" is a rule that ignores the meaning of the explanation; no live model request has ever been made.
 3. No phone has run the app; every browser result is headless Chromium on Linux.
 4. Nothing is deployed; no tunnel has been run. The demo needs a persistent Node process and the team's own laptop.
-5. The repository was built on 12–13 Oct 2026 with AI assistance, before the 14–15 Oct event window. Rule 4.1 (<https://www.nirmit.space/rules>) says all code must be built during competition hours. The team reports that the organisers allowed early work and API use; that is **team-reported**, and no saved organiser message is in the repository materials. Keep the commit dates visible, say this plainly, and add the saved message to the repository if one exists (`docs/BUILD_STATUS.md`, Provenance).
+5. Iterations 1–10 contain AI-assisted pre-event work from 12–13 October; Iteration 11 changes were made on 14 October during the Day-1 schedule shown in the supplied handout. Rule 4.1 (<https://www.nirmit.space/rules>) says all code must be built during competition hours. The team reports a verbal clarification allowing early work and API use; that is **team-reported**, no dated written organizer reply is saved, and the status remains `UNCONFIRMED`. The Iteration 11 archive has no `.git` history, so it cannot establish a complete commit timeline. Keep this chronology visible; no later change retroactively authorizes earlier work.
 6. One shared demo code, in-memory limits that reset on restart: demo-grade protection, not production authentication.
 7. Class 10 Electricity only; one language pair (Odia/English); no Kui, no voice.
+8. The book edition, chapter and page for each question are **unknown**, and the syllabus lists Electricity without sub-topics, so the questions are mapped to the topic only at a high level. The pathway label "HSC" is the team's; the official syllabus does not use it (`BOARD_CLASS_BOOK_COMPARISON.md`).
+9. Other boards (CBSE, ICSE, NIOS, WBBSE) are deferred or not evaluated; the app does not switch board or class.
+10. The access code is not authentication. There are no accounts, profiles or roles; siblings on one browser share one record.
+11. Browser tests have never passed on the team's Mac, because the scripts look for `/usr/bin/chromium`; the sandbox results are a different environment's.
 
 ## 7. The event and how Pathasetu maps to it (official rule/brief, with ambiguities named)
 
@@ -366,4 +406,4 @@ Pathasetu's mapping (implemented/status, not scores): agentic architecture → s
 
 ## 8. Self-audit of this guide (13 Oct 2026)
 
-See `evidence/iteration5/final/GUIDE_SELF_AUDIT.md`. In short: every code statement above was checked against the file named; numbers come from `evidence/iteration5/`; the open items are the questions in `JURY_QA_BANK.md` whose answer is UNKNOWN, NOT TESTED, NOT REVIEWED or NOT IMPLEMENTED.
+See `evidence/iteration5/final/GUIDE_SELF_AUDIT.md` (Iteration 5) and `docs/DECISION_AUDIT_REPORT.md` (Iteration 7: what changed, every unknown, the inconsistent claims found and the sources checked). In short: every code statement above was checked against the file named; numbers come from `evidence/iteration5/`; the open items are the questions in `JURY_QA_BANK.md` whose answer is UNKNOWN, NOT TESTED, NOT REVIEWED or NOT IMPLEMENTED.

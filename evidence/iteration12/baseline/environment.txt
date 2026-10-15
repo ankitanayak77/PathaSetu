@@ -1,0 +1,15 @@
+date: 2026-10-14T05:48:42+00:00
+git: none (archive has no .git)
+node v22.22.0; npm 10.9.4; os: Linux 6.18.44-fc-v114
+CHROME_PATH=<unset>
+GROQ_API_KEY: NOT SET
+PATHASETU_MODEL_PROVIDER: set (value not recorded)
+GROQ_MODEL: NOT SET
+PATHASETU_DEMO_ACCESS_CODE: NOT SET
+PATHASETU_PUBLIC_DEMO: NOT SET
+PATHASETU_ALLOWED_ORIGINS: NOT SET
+PATHASETU_PROVIDER_DATA_CONTROLS_ACK: NOT SET
+base archive: Pathasetu_MVP_iteration11_2026-10-14.zip sha256=9e6b0b94b1cf33e868b738bfc9474103dac13121858a6e933f1230f1cf0bb2f4 (matches SHA256SUMS_Iteration11.txt)
+supplied patch Iteration10_to_Iteration11.patch sha256=b068b1e4113e2074fe9da0e1fae95b0398b06c4b78a479263f999747587c8f17 (matches)
+supplied README-final-iteration11.txt sha256=d05741ff005b06d5d096bfcaf41c607e4349ef1a19f4e72b7ea56b09d9c69b84 (matches)
+supplied Iteration 12 prompt: first 55 lines hash to 41df6f29... (matches SHA256SUMS_Iteration11.txt); the user appended three further instruction lines

@@ -57,7 +57,7 @@
         <section class="side-card progress-card">
           <div class="card-heading"><span class="progress-icon" aria-hidden="true">◎</span><div><span class="section-kicker">YOUR PROGRESS</span><h3>Learning state</h3></div></div>
           <div class="metric-grid"><div class="metric"><strong id="answers-count">0</strong><span>answers saved</span></div><div class="metric"><strong id="queue-count">0</strong><span>pending re-checks</span></div></div>
-          <div class="progress-rule"><span id="sessions-label">10 learning sessions left</span><div class="progress-track"><span id="progress-bar" style="width:0%"></span></div></div><p id="storage-status" class="storage-status" role="status">Checking local storage…</p>
+          <div class="progress-rule"><span id="sessions-label">10 learning sessions left</span><div class="progress-track"><span id="progress-bar"></span></div></div><p id="storage-status" class="storage-status" role="status">Checking local storage…</p>
           <p id="persistence-status" class="storage-status" role="status"></p>
           <div id="queue-status" class="queue-status hidden" role="status" aria-live="polite"></div>
         </section>
@@ -67,8 +67,9 @@
       <button id="trace-toggle" class="trace-toggle" type="button" aria-expanded="false" aria-controls="trace-panel"><span class="trace-toggle-left"><span class="trace-icon" aria-hidden="true">⌘</span><span><strong>Agent decision trace</strong><small>See what Pathasetu did and why</small></span></span><span id="trace-chevron" class="chevron" aria-hidden="true">⌄</span></button>
       <div id="trace-panel" class="trace-panel hidden"><div id="trace-list" class="trace-list"></div><button id="download-trace" class="secondary-button" type="button">Download trace JSON</button></div>
     </section>
-    <footer class="footer"><span>Pathasetu <span class="footer-dot" aria-hidden="true">•</span> Built for learning that can continue offline.</span><span id="provider-label">MOCK PROVIDER · DEMO RULES · NO LIVE AI</span></footer>
+    <footer class="footer"><span>Pathasetu <span class="footer-dot" aria-hidden="true">•</span> Built for learning that can continue offline.</span><span id="provider-label">MOCK PROVIDER · DEMO RULES · NO LIVE AI</span><button id="reset-demo" class="text-button" type="button">Reset demo</button></footer>
   </main>
+  <div id="continue-bar" class="continue-bar hidden"><button id="continue-bar-button" class="primary-button" type="button">Continue →</button></div>
   <div id="access-overlay" class="access-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="access-title"><form id="access-form" class="access-dialog"><div class="section-kicker">PRIVATE DEMO</div><h2 id="access-title">Unlock Pathasetu</h2><p>This demo endpoint is access-protected. Enter the session code provided by the team. It is not the model API key.</p><label for="access-code">Session access code</label><input id="access-code" type="password" autocomplete="current-password" required maxlength="160"><p id="access-error" class="access-error hidden" role="alert"></p><button class="primary-button" type="submit">Unlock demo <span aria-hidden="true">→</span></button></form></div>
   <script type="module" src="/app.js"></script>
 </body>

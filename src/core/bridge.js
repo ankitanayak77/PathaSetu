@@ -87,8 +87,9 @@ export function gradeBridgeAnswer(exercise, optionId) {
 export function recordBridgeAttempt(state, exercise, optionId) {
   const graded = gradeBridgeAnswer(exercise, optionId);
   if (!graded.ok) return graded;
-  state.learner.bridgeAttempts ??= {};
-  state.learner.bridgeAttempts[exercise.itemId] = (state.learner.bridgeAttempts[exercise.itemId] ?? 0) + 1;
+  if (!state.learner.bridgeAttempts || typeof state.learner.bridgeAttempts !== 'object' || Array.isArray(state.learner.bridgeAttempts)) state.learner.bridgeAttempts = {};
+  const priorAttempts = state.learner.bridgeAttempts[exercise.itemId];
+  state.learner.bridgeAttempts[exercise.itemId] = Number.isInteger(priorAttempts) && priorAttempts >= 0 ? priorAttempts + 1 : 1;
   appendTrace(state, {
     type: 'bridge_practice_attempt', itemId: exercise.itemId, attempt: exercise.attempt,
     selectedSourceItemId: graded.chosen.sourceItemId, correctSourceItemId: graded.correctOption.sourceItemId,

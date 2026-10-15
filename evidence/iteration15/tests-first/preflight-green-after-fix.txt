@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: a local Ollama-only chain passes, names the chain and model, and needs no hosted-data acknowledgement
+ok 1 - a local Ollama-only chain passes, names the chain and model, and needs no hosted-data acknowledgement
+  ---
+  duration_ms: 510.746912
+  type: 'test'
+  ...
+# Subtest: a hosted provider in the chain needs the data-controls acknowledgement and a strong access code, and never prints its key
+ok 2 - a hosted provider in the chain needs the data-controls acknowledgement and a strong access code, and never prints its key
+  ---
+  duration_ms: 881.512717
+  type: 'test'
+  ...
+# Subtest: a bad chain, bad model setting or bad retry setting fails with the variable name
+ok 3 - a bad chain, bad model setting or bad retry setting fails with the variable name
+  ---
+  duration_ms: 756.598959
+  type: 'test'
+  ...
+# Subtest: the retry policy and time budgets in force are reported
+ok 4 - the retry policy and time budgets in force are reported
+  ---
+  duration_ms: 502.177321
+  type: 'test'
+  ...
+# Subtest: preflight reads the pure environment parser only: it cannot import or construct a provider client
+ok 5 - preflight reads the pure environment parser only: it cannot import or construct a provider client
+  ---
+  duration_ms: 2.099538
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2744.263599

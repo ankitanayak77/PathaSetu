@@ -1,0 +1,17 @@
+
+> pathasetu-mvp@0.1.0 capture
+> node scripts/capture.mjs
+
+PASS server starts — Pathasetu listening on http://127.0.0.1:41043 provider=mock publicDemo=false node=v22.16.0
+PASS homepage returns HTML — HTTP 200
+PASS health endpoint reports mock provider — provider=mock
+PASS draft pack clearly identifies draft status — items=8; bilingual drafts present; all unreviewed
+PASS recheck returns a bounded mock proposal — HTTP 200
+PASS invalid option is rejected — HTTP 400
+PASS oversized API request is rejected — HTTP 413
+PASS cross-origin API request is rejected — HTTP 403
+PASS browser-safe core module is served — HTTP 200
+PASS service worker avoids caching API routes — HTTP 200
+BLOCKED Chromium E2E journey — The managed Chromium policy blocked localhost navigation (ERR_BLOCKED_BY_ADMINISTRATOR). Run npm run capture on a machine/browser that permits local development URLs.
+
+Capture result: 10 passed, 0 failed, 1 blocked; /mnt/data/pathasetu_iter11_work/evidence/capture-latest.json

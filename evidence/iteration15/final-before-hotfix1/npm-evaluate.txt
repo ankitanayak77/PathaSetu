@@ -1,0 +1,6 @@
+
+> pathasetu-mvp@0.1.0 evaluate
+> node scripts/evaluate-diagnosis.mjs --out evidence/iteration15/final/evaluation
+
+BASELINE (deterministic option-linked rule, no network): valid 47/47 · agreement 34/47 · false-positive misconceptions on correct reasoning 0/8 · proper abstention 2/12
+written: evidence/iteration15/final/evaluation/evaluation-baseline-2026-10-14T10-16-08.json and .md

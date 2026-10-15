@@ -1,0 +1,68 @@
+{
+  "startedAt": "2026-10-13T20:45:15.053Z",
+  "baseUrl": "http://127.0.0.1:43983",
+  "checks": [
+    {
+      "name": "server starts",
+      "passed": true,
+      "detail": "Pathasetu listening on http://127.0.0.1:43983 provider=mock publicDemo=false node=v22.16.0"
+    },
+    {
+      "name": "homepage returns HTML",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "health endpoint reports mock provider",
+      "passed": true,
+      "detail": "provider=mock"
+    },
+    {
+      "name": "draft pack clearly identifies draft status",
+      "passed": true,
+      "detail": "items=8; bilingual drafts present; all unreviewed"
+    },
+    {
+      "name": "recheck returns a bounded mock proposal",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "invalid option is rejected",
+      "passed": true,
+      "detail": "HTTP 400"
+    },
+    {
+      "name": "oversized API request is rejected",
+      "passed": true,
+      "detail": "HTTP 413"
+    },
+    {
+      "name": "cross-origin API request is rejected",
+      "passed": true,
+      "detail": "HTTP 403"
+    },
+    {
+      "name": "browser-safe core module is served",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "service worker avoids caching API routes",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Chromium E2E journey",
+      "passed": null,
+      "status": "BLOCKED",
+      "detail": "The managed Chromium policy blocked localhost navigation (ERR_BLOCKED_BY_ADMINISTRATOR). Run npm run capture on a machine/browser that permits local development URLs."
+    }
+  ],
+  "limitation": "Headless Chromium E2E is not a substitute for physical Samsung/iPhone testing or educational validation.",
+  "browserE2E": "BLOCKED_BY_BROWSER_POLICY",
+  "completedAt": "2026-10-13T20:45:15.679Z",
+  "passCount": 10,
+  "failCount": 0,
+  "blockedCount": 1
+}

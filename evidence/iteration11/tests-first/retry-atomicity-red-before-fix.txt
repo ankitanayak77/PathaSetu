@@ -1,0 +1,152 @@
+TAP version 13
+# Subtest: scheduleAfterFailure rejects malformed timestamps before mutating any retry field
+not ok 1 - scheduleAfterFailure rejects malformed timestamps before mutating any retry field
+  ---
+  duration_ms: 7.389142
+  type: 'test'
+  location: '/mnt/data/i11_red_copy/tests/iteration11-retry-atomicity.test.js:21:1'
+  failureType: 'testCodeFailure'
+  error: 'input=undefined'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Invalid time value'
+  name: 'RangeError'
+  stack: |-
+    Date.toISOString (<anonymous>)
+    scheduleAfterFailure (file:///mnt/data/i11_red_copy/src/core/retry.js:44:95)
+    file:///mnt/data/i11_red_copy/tests/iteration11-retry-atomicity.test.js:25:25
+    getActual (node:assert:531:5)
+    Function.throws (node:assert:677:24)
+    TestContext.<anonymous> (file:///mnt/data/i11_red_copy/tests/iteration11-retry-atomicity.test.js:25:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///mnt/data/i11_red_copy/tests/iteration11-retry-atomicity.test.js:25:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: recordRecheckDeferred is atomic when the injected clock is invalid
+not ok 2 - recordRecheckDeferred is atomic when the injected clock is invalid
+  ---
+  duration_ms: 21.545148
+  type: 'test'
+  location: '/mnt/data/i11_red_copy/tests/iteration11-retry-atomicity.test.js:30:1'
+  failureType: 'testCodeFailure'
+  error: 'input=null'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Invalid time value'
+  name: 'RangeError'
+  stack: |-
+    Date.toISOString (<anonymous>)
+    scheduleAfterFailure (file:///mnt/data/i11_red_copy/src/core/retry.js:44:95)
+    registerFailure (file:///mnt/data/i11_red_copy/src/core/agent.js:137:20)
+    recordRecheckDeferred (file:///mnt/data/i11_red_copy/src/core/agent.js:152:20)
+    file:///mnt/data/i11_red_copy/tests/iteration11-retry-atomicity.test.js:36:25
+    getActual (node:assert:531:5)
+    Function.throws (node:assert:677:24)
+    TestContext.<anonymous> (file:///mnt/data/i11_red_copy/tests/iteration11-retry-atomicity.test.js:36:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///mnt/data/i11_red_copy/tests/iteration11-retry-atomicity.test.js:36:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: invalid timestamps are rejected before pausing an entry at the automatic retry limit
+not ok 3 - invalid timestamps are rejected before pausing an entry at the automatic retry limit
+  ---
+  duration_ms: 1.804448
+  type: 'test'
+  location: '/mnt/data/i11_red_copy/tests/iteration11-retry-atomicity.test.js:41:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///mnt/data/i11_red_copy/tests/iteration11-retry-atomicity.test.js:46:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a provider diagnosis rejected by the validator leaves the queue state unchanged when its clock is invalid
+not ok 4 - a provider diagnosis rejected by the validator leaves the queue state unchanged when its clock is invalid
+  ---
+  duration_ms: 3.130151
+  type: 'test'
+  location: '/mnt/data/i11_red_copy/tests/iteration11-retry-atomicity.test.js:50:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /invalid_retry_timestamp|valid ISO timestamp|timestamp/i. Input:
+
+    'RangeError: Invalid time value'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Invalid time value'
+  name: 'RangeError'
+  stack: |-
+    Date.toISOString (<anonymous>)
+    scheduleAfterFailure (file:///mnt/data/i11_red_copy/src/core/retry.js:44:95)
+    registerFailure (file:///mnt/data/i11_red_copy/src/core/agent.js:137:20)
+    recheckQueued (file:///mnt/data/i11_red_copy/src/core/agent.js:201:5)
+    file:///mnt/data/i11_red_copy/tests/iteration11-retry-atomicity.test.js:55:23
+    getActual (node:assert:531:5)
+    Function.throws (node:assert:677:24)
+    TestContext.<anonymous> (file:///mnt/data/i11_red_copy/tests/iteration11-retry-atomicity.test.js:55:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///mnt/data/i11_red_copy/tests/iteration11-retry-atomicity.test.js:55:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a valid ISO timestamp retains the existing bounded retry behaviour
+ok 5 - a valid ISO timestamp retains the existing bounded retry behaviour
+  ---
+  duration_ms: 3.391725
+  type: 'test'
+  ...
+# Subtest: the shipped eight-question pack refuses a duplicate answer before the learner continues
+ok 6 - the shipped eight-question pack refuses a duplicate answer before the learner continues
+  ---
+  duration_ms: 9.332171
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 2
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 373.943263
+
+targeted red-before-fix exit=1

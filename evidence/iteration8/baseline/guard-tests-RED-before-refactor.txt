@@ -1,0 +1,4 @@
+not ok 138 - the Mac log, the build sandbox and the received package are recorded as separate environments, and no document says a browser check passed on the Mac
+  error: 'the documents explain the Mac failure by this default; update them if it changes'
+not ok 139 - Iteration 7 changed documents, tests and evidence only: every runtime file still has its Iteration 6 hash, and all eight items are still unreviewed drafts
+  error: |-

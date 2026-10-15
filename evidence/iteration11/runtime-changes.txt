@@ -1,0 +1,5 @@
+# Iteration 11 declared runtime/tooling changes (append-only chain from Iteration 10)
+# KIND<TAB>FILE<TAB>REASON
+MODIFIED	src/core/retry.js	Validate canonical UTC ISO timestamp before any retry-field mutation; invalid values fail atomically with invalid_retry_timestamp.
+MODIFIED	scripts/lib/mutants.mjs	Add G1 malformed-clock fault and adapt A6 expression to the validated timestamp implementation.
+MODIFIED	scripts/mutation-check.mjs	Include Iteration 11 atomicity tests in the default mutation suite and label the run as the current iteration.

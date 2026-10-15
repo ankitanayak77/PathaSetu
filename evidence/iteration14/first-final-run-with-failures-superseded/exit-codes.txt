@@ -1,0 +1,13 @@
+npm-ci: exit=0 started=2026-10-14T09:01:11+00:00 duration_ms=337 cmd="npm ci"
+npm-test: exit=0 started=2026-10-14T09:01:12+00:00 duration_ms=41849 cmd="npm test"
+npm-check: exit=0 started=2026-10-14T09:01:54+00:00 duration_ms=1016 cmd="npm run check"
+npm-check-content: exit=0 started=2026-10-14T09:01:55+00:00 duration_ms=197 cmd="npm run check:content"
+npm-preflight: exit=0 started=2026-10-14T09:01:55+00:00 duration_ms=606 cmd="npm run preflight"
+npm-doctor: exit=0 started=2026-10-14T09:01:56+00:00 duration_ms=1888 cmd="npm run doctor"
+npm-evaluate: exit=0 started=2026-10-14T09:01:57+00:00 duration_ms=183 cmd="npm run evaluate -- --out evidence/iteration14/final/evaluation"
+npm-mutation: exit=1 started=2026-10-14T09:01:58+00:00 duration_ms=11176 cmd="npm run mutation -- --out evidence/iteration14/mutation"
+npm-e2e-invalid-chrome-path: exit=2 started=2026-10-14T09:02:09+00:00 duration_ms=207 cmd="env CHROME_PATH=/nonexistent/pathasetu-browser npm run e2e"
+npm-capture: exit=1 started=2026-10-14T09:02:09+00:00 duration_ms=3925 cmd="npm run capture"
+npm-e2e: exit=0 started=2026-10-14T09:02:13+00:00 duration_ms=102125 cmd="npm run e2e"
+npm-a11y: exit=0 started=2026-10-14T09:03:55+00:00 duration_ms=53550 cmd="env A11Y_OUT=/home/claude/pw/it14/work/evidence/iteration14/final/accessibility npm run a11y"
+DONE

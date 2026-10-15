@@ -46,7 +46,19 @@ CHROME_PATH=/path/to/chrome npm run a11y      # automated accessibility and mobi
 npm run evaluate                              # deterministic baseline on 47 synthetic English cases
 ```
 
-`CHROME_PATH` must point at a Chrome or Chromium binary on the machine running the browser tests. If your machine blocks local navigation, record the exact error and mark the browser checks BLOCKED rather than passed. Browser results do not replace the physical-phone protocol in `PHONE_TEST_PLAN.md`. `npm run evaluate -- --provider groq` and `npm run smoke` exit with code 2 (BLOCKED) unless Groq credentials are already in your local environment; nothing is requested or printed.
+**Finding a browser (macOS, Linux, Windows).** The browser scripts use one shared finder (`scripts/lib/browser-path.mjs`). It tries `CHROME_PATH` first, then the standard install locations for your system, and it never installs or downloads anything. A Mac has no `/usr/bin/chromium`. On macOS check what exists and is allowed, then set the exact path:
+
+```bash
+for p in "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" "/Applications/Chromium.app/Contents/MacOS/Chromium" "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge"; do  # prints only the ones that exist
+  [ -x "$p" ] && printf 'Available browser: %s\n' "$p"
+done
+export CHROME_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"   # only if that file exists and your policy allows it
+"$CHROME_PATH" --version
+```
+
+A wrong `CHROME_PATH` is reported as BLOCKED (it is not replaced by another browser). If no allowed browser exists, or the machine's policy blocks local pages, the browser checks stay BLOCKED: record that and the exact message; do not install a browser or bypass the policy without the team's permission. `capture`, `e2e` and `a11y` write the executable, how it was chosen and its version into their evidence files.
+
+`CHROME_PATH` must point at a Chrome, Chromium or Edge binary on the machine running the browser tests. If your machine blocks local navigation, record the exact error and mark the browser checks BLOCKED rather than passed. Browser results do not replace the physical-phone protocol in `PHONE_TEST_PLAN.md`. `npm run evaluate -- --provider groq` and `npm run smoke` exit with code 2 (BLOCKED) unless Groq credentials are already in your local environment; nothing is requested or printed.
 
 ## Showing the retry behaviour
 

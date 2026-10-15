@@ -1,0 +1,7 @@
+npm-ci exit=0 cmd=npm ci
+npm-test exit=0 cmd=npm test
+npm-check exit=0 cmd=npm run check
+npm-check-content exit=0 cmd=npm run check:content
+npm-preflight exit=0 cmd=npm run preflight
+npm-doctor exit=0 cmd=npm run doctor
+npm-evaluate exit=0 cmd=npm run evaluate -- --out evidence/iteration11/baseline/evaluation

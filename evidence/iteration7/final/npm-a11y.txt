@@ -1,0 +1,5 @@
+
+> pathasetu-mvp@0.1.0 a11y
+> node scripts/accessibility-audit.mjs
+
+a11y audit: 33 states, 462 checks, 0 failed -> evidence/iteration7/final/accessibility

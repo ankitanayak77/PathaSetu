@@ -1,0 +1,13 @@
+npm-ci: exit=0 cmd="npm ci"
+npm-test: exit=0 cmd="npm test" (347 tests, 347 pass, 0 fail, 0 skipped; latest recorded full run)
+npm-check: exit=0 cmd="npm run check"
+npm-check-content: exit=0 cmd="npm run check:content" (8 items, all UNREVIEWED_DRAFT, 0 consistency problems)
+npm-preflight: exit=0 cmd="npm run preflight" (15 pass, 0 warn, 0 fail; mock-only)
+npm-doctor: exit=0 cmd="npm run doctor" (all 6 diagnostics pass; browser path discovery only)
+npm-evaluate: exit=0 cmd="npm run evaluate -- --out evidence/iteration11/final/evaluation" (47 synthetic cases, deterministic baseline)
+npm-capture: exit=2 cmd="npm run capture" (10 HTTP/API checks pass; browser journey BLOCKED: ERR_BLOCKED_BY_ADMINISTRATOR)
+npm-e2e: exit=2 cmd="npm run e2e" (BLOCKED: ERR_BLOCKED_BY_ADMINISTRATOR; 0 browser journeys completed)
+npm-a11y: exit=2 cmd="A11Y_OUT=evidence/iteration11/final/accessibility npm run a11y" (BLOCKED: ERR_BLOCKED_BY_ADMINISTRATOR; 0 states and 0 checks completed)
+npm-mutation-G1: exit=0 cmd="npm run mutation -- --out evidence/iteration11/mutation-G1 --only G1 --tests tests/iteration11-retry-atomicity.test.js" (1 mutant killed, 0 survived, 0 errors; the unmutated selected suite passes 6/6)
+npm-mutation-full: INCOMPLETE; `npm run mutation -- --out evidence/iteration11/mutation` exceeded the execution time limit after partial output through C7. The run produced no final summary. It must not be treated as a mutation score.
+npm-test-after-evidence: exit=0 cmd="npm test" (347 pass, 0 fail, 0 skipped; rerun after evidence whitespace normalization)

@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: following the recommendation online visits each of the eight questions once, in order, when every answer is correct
+ok 1 - following the recommendation online visits each of the eight questions once, in order, when every answer is correct
+  ---
+  duration_ms: 10.844583
+  type: 'test'
+  ...
+# Subtest: a wrong first answer still gets its companion question, then the plan moves forward instead of bouncing back
+ok 2 - a wrong first answer still gets its companion question, then the plan moves forward instead of bouncing back
+  ---
+  duration_ms: 0.767693
+  type: 'test'
+  ...
+# Subtest: the re-check recommendation never goes back to a question the learner has already answered while unanswered ones exist
+ok 3 - the re-check recommendation never goes back to a question the learner has already answered while unanswered ones exist
+  ---
+  duration_ms: 0.497427
+  type: 'test'
+  ...
+# Subtest: the concept bonus still prefers an unanswered question of the focused concept (existing behaviour kept)
+ok 4 - the concept bonus still prefers an unanswered question of the focused concept (existing behaviour kept)
+  ---
+  duration_ms: 0.133369
+  type: 'test'
+  ...
+# Subtest: when every question has been answered a recommendation still exists and is not the question just answered
+ok 5 - when every question has been answered a recommendation still exists and is not the question just answered
+  ---
+  duration_ms: 1.378783
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 104.389769

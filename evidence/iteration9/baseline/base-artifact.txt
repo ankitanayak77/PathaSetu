@@ -1,0 +1,7 @@
+Iteration 9 base artifact record
+Date: 2026-10-14 IST
+Base archive: Pathasetu_MVP_iteration8_2026-10-13.zip
+SHA-256: 00d9b621265dab908321d217bddeb7ea978b810c81d304b7f7651885597bb07c
+The supplied ZIP does not contain .git metadata. Iteration 8 HEAD/commit count are inherited from its own records and were not independently verified as an actual Git repository. No commit was created for Iteration 9.
+Untouched Iteration 8 extracted baseline (scratch copy), Node v22.16.0 / Linux environment: npm ci exit 0; npm test 252/252; npm run check exit 0; npm run check:content exit 0, 8 items all UNREVIEWED_DRAFT and 0 problems; npm run preflight exit 0, 15 pass; npm run evaluate exit 0, deterministic baseline valid 47/47, agreement 34/47, false positives on correct reasoning 0/8, proper abstention 2/12. This is not model-quality evidence.
+No live provider call, deployment, phone test or content review.

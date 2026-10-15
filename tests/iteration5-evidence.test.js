@@ -8,6 +8,7 @@ import { spawn } from 'node:child_process';
 import { setTimeout as sleep } from 'node:timers/promises';
 import { createGroqModel } from '../src/server/groqModel.js';
 import { loadPack } from '../src/core/content.js';
+import { cleanEnv } from './helpers/cleanEnv.js';
 
 async function freePort() {
   return await new Promise((resolve, reject) => {
@@ -26,7 +27,7 @@ function rawGet(port, rawPath) {
 }
 async function withServer(fn) {
   const port = await freePort();
-  const child = spawn(process.execPath, ['src/server/server.js'], { cwd: new URL('..', import.meta.url), env: { ...process.env, PORT: String(port), HOST: '127.0.0.1', NODE_ENV: '', PATHASETU_MODEL_PROVIDER: 'mock', GROQ_API_KEY: '', PATHASETU_DEMO_ACCESS_CODE: '', PATHASETU_PUBLIC_DEMO: '', PATHASETU_ALLOWED_ORIGINS: '' }, stdio: 'ignore' });
+  const child = spawn(process.execPath, ['src/server/server.js'], { cwd: new URL('..', import.meta.url), env: cleanEnv({ PORT: String(port), HOST: '127.0.0.1', NODE_ENV: '', PATHASETU_MODEL_PROVIDER: 'mock', PATHASETU_MODEL_PROVIDERS: '', GROQ_API_KEY: '', PATHASETU_DEMO_ACCESS_CODE: '', PATHASETU_PUBLIC_DEMO: '', PATHASETU_ALLOWED_ORIGINS: '' }), stdio: 'ignore' });
   try {
     for (let i = 0; i < 40; i++) { if (child.exitCode !== null) throw new Error('server exited'); try { await rawGet(port, '/api/health'); break; } catch { await sleep(100); } }
     return await fn(port);

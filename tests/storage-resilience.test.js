@@ -7,6 +7,7 @@ import { buildTraceExport, redactSecrets } from '../src/core/export.js';
 import { PERSISTENCE, checkPersistence, createPersistenceRequester, describePersistence } from '../src/core/persistence.js';
 import { initialState, submitAnswer, recheckQueued, reconcileState } from '../src/core/agent.js';
 import { loadPack } from '../src/core/content.js';
+import { buildBridgeExercise, recordBridgeAttempt } from '../src/core/bridge.js';
 
 const pack = loadPack();
 const NOW = '2026-10-12T20:00:00.000Z';
@@ -236,4 +237,25 @@ test('persistence wording never promises retention', () => {
   assert.match(describePersistence(PERSISTENCE.GRANTED).text, /does not guarantee/);
   assert.match(describePersistence(PERSISTENCE.DENIED).text, /may clear/);
   assert.match(describePersistence(PERSISTENCE.NOT_REQUESTED).text, /never guaranteed/);
+});
+
+test('recovery resets a malformed bridge-attempt counter map instead of preserving a crash trigger', () => {
+  const state = answered();
+  const { state: repaired, repairs } = repairSavedRecord({ state: { ...state, learner: { ...state.learner, bridgeAttempts: 7 } } }, pack);
+  assert.deepEqual(repaired.learner.bridgeAttempts, {});
+  assert.ok(repairs.includes('bridge_attempts_reset'));
+});
+
+test('bridge attempt recording recovers from a malformed counter map without throwing', () => {
+  const state = initialState(pack);
+  state.learner.bridgeAttempts = 7;
+  const exercise = buildBridgeExercise({ pack, itemId: 'EL01' });
+  assert.doesNotThrow(() => recordBridgeAttempt(state, exercise, exercise.correctOptionId));
+  assert.equal(state.learner.bridgeAttempts.EL01, 1);
+});
+
+test('reconcileState safely declines malformed content-pack item collections', () => {
+  const state = answered();
+  assert.doesNotThrow(() => assert.equal(reconcileState(state, { items: null }), false));
+  assert.doesNotThrow(() => assert.equal(reconcileState(state, {}), false));
 });

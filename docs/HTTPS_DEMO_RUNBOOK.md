@@ -157,7 +157,7 @@ Do not run Groq behind the tunnel for the phone tests; the offline and reconnect
 | Page loads, re-check fails with 403 | Host-rewriting tunnel; list the exact origin (section 4). |
 | Unlock dialog says "Too many attempts" | the failure budget is used up for this client; wait the stated seconds, or enter the correct code, which is still accepted. |
 | Learner screen empty in production | `PATHASETU_ALLOW_DRAFT_DEMO=true` is missing (no item is reviewed and published). |
-| Phone keeps showing an old screen after an update | the app shell is cached by the service worker (cache `pathasetu-shell-v8`); close all tabs of the app, reload twice, or clear site data. |
+| Phone keeps showing an old screen after an update | the app shell is cached by the service worker (current cache `pathasetu-shell-v12`); close all tabs of the app and reload. If the issue persists, record browser/device details before clearing site data. |
 | Mixed-content or "not secure" warning | the phone is not on the HTTPS address. |
 
 ## 12. What passing this runbook does and does not establish

@@ -1,0 +1,143 @@
+TAP version 13
+# node:internal/modules/esm/resolve:274
+#     throw new ERR_MODULE_NOT_FOUND(
+#           ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/claude/pw/it15/work/src/server/modelConfig.js' imported from /home/claude/pw/it15/work/tests/iteration15-model-config.test.js
+#     at finalizeResolution (node:internal/modules/esm/resolve:274:11)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:10)
+#     at defaultResolve (node:internal/modules/esm/resolve:983:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+#   code: 'ERR_MODULE_NOT_FOUND',
+#   url: 'file:///home/claude/pw/it15/work/src/server/modelConfig.js'
+# }
+# Node.js v22.22.0
+# Subtest: tests/iteration15-model-config.test.js
+not ok 1 - tests/iteration15-model-config.test.js
+  ---
+  duration_ms: 65.846705
+  type: 'test'
+  location: '/home/claude/pw/it15/work/tests/iteration15-model-config.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: a valid model plan becomes the recommendation and is labelled as model-chosen with its provider, model and reason
+not ok 2 - a valid model plan becomes the recommendation and is labelled as model-chosen with its provider, model and reason
+  ---
+  duration_ms: 10.526775
+  type: 'test'
+  location: '/home/claude/pw/it15/work/tests/iteration15-planner-model.test.js:18:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'EL02' !== 'EL06'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'EL06'
+  actual: 'EL02'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it15/work/tests/iteration15-planner-model.test.js:22:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: an invalid, unknown, repeated or missing model plan falls back to the labelled deterministic planner, never to a silent choice
+not ok 3 - an invalid, unknown, repeated or missing model plan falls back to the labelled deterministic planner, never to a silent choice
+  ---
+  duration_ms: 0.446019
+  type: 'test'
+  location: '/home/claude/pw/it15/work/tests/iteration15-planner-model.test.js:27:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'source')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it15/work/tests/iteration15-planner-model.test.js:32:41)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: the offline/local path (no provider answer) records the deterministic local source
+not ok 4 - the offline/local path (no provider answer) records the deterministic local source
+  ---
+  duration_ms: 0.342397
+  type: 'test'
+  location: '/home/claude/pw/it15/work/tests/iteration15-planner-model.test.js:38:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'source')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it15/work/tests/iteration15-planner-model.test.js:41:39)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: submitAnswer records which planner produced the first recommendation
+not ok 5 - submitAnswer records which planner produced the first recommendation
+  ---
+  duration_ms: 0.304854
+  type: 'test'
+  location: '/home/claude/pw/it15/work/tests/iteration15-planner-model.test.js:44:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'source')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it15/work/tests/iteration15-planner-model.test.js:46:39)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a long rationale is clipped, markup is kept as plain text, and a non-string provider or model is dropped
+not ok 6 - a long rationale is clipped, markup is kept as plain text, and a non-string provider or model is dropped
+  ---
+  duration_ms: 0.32137
+  type: 'test'
+  location: '/home/claude/pw/it15/work/tests/iteration15-planner-model.test.js:50:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'source')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it15/work/tests/iteration15-planner-model.test.js:53:39)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a model plan never changes the current question and never touches confirmed mastery
+ok 7 - a model plan never changes the current question and never touches confirmed mastery
+  ---
+  duration_ms: 0.26117
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 1
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 165.874246

@@ -1,0 +1,11 @@
+npm-ci=0
+npm-test=0
+check=0
+check-content=0
+preflight=0
+doctor=0
+evaluate=0
+e2e=2
+a11y=2
+mutation-a8-probe=0
+mutation-retry=0

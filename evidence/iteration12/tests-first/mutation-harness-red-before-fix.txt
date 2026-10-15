@@ -1,0 +1,228 @@
+TAP version 13
+# Subtest: an unknown mutant id is an error, not an empty successful run
+not ok 1 - an unknown mutant id is an error, not an empty successful run
+  ---
+  duration_ms: 124.528351
+  type: 'test'
+  location: '/home/claude/pw/it12/work/tests/mutation-harness-cli.test.js:17:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /unknown mutant id: ZZ9/. Input:
+    
+    'The unmutated copy must pass before mutants mean anything.\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    The unmutated copy must pass before mutants mean anything.
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it12/work/tests/mutation-harness-cli.test.js:22:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: --dry-run prints the plan without running anything, and the default output folder is the current iteration, never an earlier one
+not ok 2 - --dry-run prints the plan without running anything, and the default output folder is the current iteration, never an earlier one
+  ---
+  duration_ms: 119.738548
+  type: 'test'
+  location: '/home/claude/pw/it12/work/tests/mutation-harness-cli.test.js:27:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The unmutated copy must pass before mutants mean anything.
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it12/work/tests/mutation-harness-cli.test.js:29:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: --list shows the test groups chosen for each mutant
+not ok 3 - --list shows the test groups chosen for each mutant
+  ---
+  duration_ms: 68.028403
+  type: 'test'
+  location: '/home/claude/pw/it12/work/tests/mutation-harness-cli.test.js:41:1'
+  failureType: 'testCodeFailure'
+  error: 'id, family, plan groups, description'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it12/work/tests/mutation-harness-cli.test.js:45:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a partial run records, for every mutant, its plan, the tests executed before and after, the outcome and the time, and says it is partial
+not ok 4 - a partial run records, for every mutant, its plan, the tests executed before and after, the outcome and the time, and says it is partial
+  ---
+  duration_ms: 111.849887
+  type: 'test'
+  location: '/home/claude/pw/it12/work/tests/mutation-harness-cli.test.js:48:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    baseline (unmutated copy): exit=0 tests=NaN pass=NaN fail=NaN
+    
+    mutants: 0; killed 0; survived 0; errors 0
+    family a: 0/0 killed; family b: 0/0 killed; family c: 0/0 killed
+    written: ../../../../../tmp/pathasetu-mutcli-S1aNVE/mutation-results.json and .md
+    The unmutated copy must pass before mutants mean anything.
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it12/work/tests/mutation-harness-cli.test.js:52:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a run that exhausts its time budget is INCOMPLETE: unrun mutants are NOT_RUN, no score is claimed and the exit code is 3
+not ok 5 - a run that exhausts its time budget is INCOMPLETE: unrun mutants are NOT_RUN, no score is claimed and the exit code is 3
+  ---
+  duration_ms: 112.510638
+  type: 'test'
+  location: '/home/claude/pw/it12/work/tests/mutation-harness-cli.test.js:76:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    baseline (unmutated copy): exit=0 tests=NaN pass=NaN fail=NaN
+    
+    mutants: 0; killed 0; survived 0; errors 0
+    family a: 0/0 killed; family b: 0/0 killed; family c: 0/0 killed
+    written: ../../../../../tmp/pathasetu-mutcli-PDlljU/mutation-results.json and .md
+    The unmutated copy must pass before mutants mean anything.
+    
+    
+    1 !== 3
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it12/work/tests/mutation-harness-cli.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: full-suite mode runs every mutant against all invariant tests and records that mode
+not ok 6 - full-suite mode runs every mutant against all invariant tests and records that mode
+  ---
+  duration_ms: 112.45884
+  type: 'test'
+  location: '/home/claude/pw/it12/work/tests/mutation-harness-cli.test.js:91:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    baseline (unmutated copy): exit=0 tests=NaN pass=NaN fail=NaN
+    
+    mutants: 0; killed 0; survived 0; errors 0
+    family a: 0/0 killed; family b: 0/0 killed; family c: 0/0 killed
+    written: ../../../../../tmp/pathasetu-mutcli-o8V5hf/mutation-results.json and .md
+    The unmutated copy must pass before mutants mean anything.
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it12/work/tests/mutation-harness-cli.test.js:95:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: the script does not use the default (spec/TAP-dependent) reporter and states the reporter it forces
+not ok 7 - the script does not use the default (spec/TAP-dependent) reporter and states the reporter it forces
+  ---
+  duration_ms: 0.259268
+  type: 'test'
+  location: '/home/claude/pw/it12/work/tests/mutation-harness-cli.test.js:102:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/home/claude/pw/it12/work/scripts/lib/mutation-plan.mjs'"
+  code: 'ENOENT'
+  stack: |-
+    Object.readFileSync (node:fs:440:20)
+    TestContext.<anonymous> (file:///home/claude/pw/it12/work/tests/mutation-harness-cli.test.js:103:18)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# node:internal/modules/esm/resolve:274
+#     throw new ERR_MODULE_NOT_FOUND(
+#           ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/claude/pw/it12/work/scripts/lib/mutation-plan.mjs' imported from /home/claude/pw/it12/work/tests/mutation-plan.test.js
+#     at finalizeResolution (node:internal/modules/esm/resolve:274:11)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:10)
+#     at defaultResolve (node:internal/modules/esm/resolve:983:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+#   code: 'ERR_MODULE_NOT_FOUND',
+#   url: 'file:///home/claude/pw/it12/work/scripts/lib/mutation-plan.mjs'
+# }
+# Node.js v22.22.0
+# Subtest: tests/mutation-plan.test.js
+not ok 2 - tests/mutation-plan.test.js
+  ---
+  duration_ms: 66.195223
+  type: 'test'
+  location: '/home/claude/pw/it12/work/tests/mutation-plan.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 0
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 834.025094
+targeted red-before-fix exit=1

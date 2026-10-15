@@ -1,0 +1,347 @@
+TAP version 13
+# Subtest: identity: ids of answers and queue entries are unique across many submissions, and every entry points at exactly one answer
+ok 1 - identity: ids of answers and queue entries are unique across many submissions, and every entry points at exactly one answer
+  ---
+  duration_ms: 11.910796
+  type: 'test'
+  ...
+# Subtest: identity (fault injection): ids stay unique when the clock and the random suffix repeat, so one re-check cannot swallow another entry
+ok 2 - identity (fault injection): ids stay unique when the clock and the random suffix repeat, so one re-check cannot swallow another entry
+  ---
+  duration_ms: 1.177119
+  type: 'test'
+  ...
+# Subtest: duplicate submit (double tap) is refused before anything changes: no extra answer, queue entry, session or trace line
+ok 3 - duplicate submit (double tap) is refused before anything changes: no extra answer, queue entry, session or trace line
+  ---
+  duration_ms: 2.246975
+  type: 'test'
+  ...
+# Subtest: every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change
+ok 4 - every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change
+  ---
+  duration_ms: 1.038564
+  type: 'test'
+  ...
+# Subtest: capacity boundary: the 100th entry is accepted, the 101st is refused, and a drain frees room again
+ok 5 - capacity boundary: the 100th entry is accepted, the 101st is refused, and a drain frees room again
+  ---
+  duration_ms: 0.800556
+  type: 'test'
+  ...
+# Subtest: a repeated failure report or a repeated manual retry never creates a second entry, answer or session
+ok 6 - a repeated failure report or a repeated manual retry never creates a second entry, answer or session
+  ---
+  duration_ms: 1.022484
+  type: 'test'
+  ...
+# Subtest: fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 7 - fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.808984
+  type: 'test'
+  ...
+# Subtest: fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 8 - fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 1.24548
+  type: 'test'
+  ...
+# Subtest: fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 9 - fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.626607
+  type: 'test'
+  ...
+# Subtest: fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 10 - fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.496415
+  type: 'test'
+  ...
+# Subtest: fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 11 - fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.377207
+  type: 'test'
+  ...
+# Subtest: fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 12 - fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.257389
+  type: 'test'
+  ...
+# Subtest: fault string_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 13 - fault string_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.265096
+  type: 'test'
+  ...
+# Subtest: fault array_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 14 - fault array_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.254407
+  type: 'test'
+  ...
+# Subtest: fault number_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 15 - fault number_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.238004
+  type: 'test'
+  ...
+# Subtest: fault foreign_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 16 - fault foreign_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.254915
+  type: 'test'
+  ...
+# Subtest: fault made_up_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 17 - fault made_up_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.150365
+  type: 'test'
+  ...
+# Subtest: fault wrong_question: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 18 - fault wrong_question: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.173532
+  type: 'test'
+  ...
+# Subtest: fault confidence_nan: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 19 - fault confidence_nan: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.15872
+  type: 'test'
+  ...
+# Subtest: fault confidence_negative: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 20 - fault confidence_negative: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.119858
+  type: 'test'
+  ...
+# Subtest: fault confidence_above_one: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 21 - fault confidence_above_one: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.107561
+  type: 'test'
+  ...
+# Subtest: fault confidence_string: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 22 - fault confidence_string: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.233232
+  type: 'test'
+  ...
+# Subtest: fault low_confidence_misconception: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 23 - fault low_confidence_misconception: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.172699
+  type: 'test'
+  ...
+# Subtest: fault uncertain_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 24 - fault uncertain_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.229775
+  type: 'test'
+  ...
+# Subtest: fault none_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 25 - fault none_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.141718
+  type: 'test'
+  ...
+# Subtest: fault unknown_type: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 26 - fault unknown_type: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.128391
+  type: 'test'
+  ...
+# Subtest: fault rationale_too_long: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 27 - fault rationale_too_long: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.127579
+  type: 'test'
+  ...
+# Subtest: a rejected diagnosis never reaches the stored answer or the confirmed misconceptions, even when the caller marks the result trusted
+ok 28 - a rejected diagnosis never reaches the stored answer or the confirmed misconceptions, even when the caller marks the result trusted
+  ---
+  duration_ms: 0.283057
+  type: 'test'
+  ...
+# Subtest: a missing diagnosis from the provider is a failed attempt, never a silent local substitute
+ok 29 - a missing diagnosis from the provider is a failed attempt, never a silent local substitute
+  ---
+  duration_ms: 0.364794
+  type: 'test'
+  ...
+# Subtest: default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again
+ok 30 - default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again
+  ---
+  duration_ms: 0.466982
+  type: 'test'
+  ...
+# Subtest: custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts
+ok 31 - custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts
+  ---
+  duration_ms: 1.276823
+  type: 'test'
+  ...
+# Subtest: a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention
+ok 32 - a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention
+  ---
+  duration_ms: 0.467623
+  type: 'test'
+  ...
+# Subtest: manual retry changes only the retry fields of the chosen entry and nothing else in the state
+ok 33 - manual retry changes only the retry fields of the chosen entry and nothing else in the state
+  ---
+  duration_ms: 0.600486
+  type: 'test'
+  ...
+# Subtest: repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count
+ok 34 - repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count
+  ---
+  duration_ms: 0.344612
+  type: 'test'
+  ...
+# Subtest: a fresh entry that never failed is not reset by a manual retry
+ok 35 - a fresh entry that never failed is not reset by a manual retry
+  ---
+  duration_ms: 0.207524
+  type: 'test'
+  ...
+# Subtest: after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again
+ok 36 - after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again
+  ---
+  duration_ms: 0.525722
+  type: 'test'
+  ...
+# Subtest: success processes an entry exactly once; a second attempt on the same id does nothing and counts nothing twice
+ok 37 - success processes an entry exactly once; a second attempt on the same id does nothing and counts nothing twice
+  ---
+  duration_ms: 0.337469
+  type: 'test'
+  ...
+# Subtest: background re-check never switches the current question, discards the learner draft or spends a session
+ok 38 - background re-check never switches the current question, discards the learner draft or spends a session
+  ---
+  duration_ms: 0.387675
+  type: 'test'
+  ...
+# Subtest: uncertainty is never turned into a confirmed misconception, by the local rule or by a trusted provider result
+ok 39 - uncertainty is never turned into a confirmed misconception, by the local rule or by a trusted provider result
+  ---
+  duration_ms: 0.386938
+  type: 'test'
+  ...
+# Subtest: JSON save and restore preserves answers, drafts and every queue entry, and the restored entries behave identically
+ok 40 - JSON save and restore preserves answers, drafts and every queue entry, and the restored entries behave identically
+  ---
+  duration_ms: 1.618358
+  type: 'test'
+  ...
+# Subtest: legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success
+ok 41 - legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success
+  ---
+  duration_ms: 0.614176
+  type: 'test'
+  ...
+# Subtest: a legacy entry missing its basic fields is kept, not dropped, and then works
+ok 42 - a legacy entry missing its basic fields is kept, not dropped, and then works
+  ---
+  duration_ms: 0.304008
+  type: 'test'
+  ...
+# Subtest: malformed records of every shape are repaired or replaced without throwing, and the repaired record is a fixed point
+ok 43 - malformed records of every shape are repaired or replaced without throwing, and the repaired record is a fixed point
+  ---
+  duration_ms: 2.057833
+  type: 'test'
+  ...
+# Subtest: repair keeps every usable record around the damage and removes duplicates and junk
+ok 44 - repair keeps every usable record around the damage and removes duplicates and junk
+  ---
+  duration_ms: 0.556235
+  type: 'test'
+  ...
+# Subtest: trace stays within its limit through repair, even when the saved trace is far over it
+ok 45 - trace stays within its limit through repair, even when the saved trace is far over it
+  ---
+  duration_ms: 5.848196
+  type: 'test'
+  ...
+# Subtest: seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries
+ok 46 - seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries
+  ---
+  duration_ms: 79.483914
+  type: 'test'
+  ...
+# Subtest: oversized saved collections are cut to their limits: the newest answers and the oldest queue entries are kept
+ok 47 - oversized saved collections are cut to their limits: the newest answers and the oldest queue entries are kept
+  ---
+  duration_ms: 3.919641
+  type: 'test'
+  ...
+# Subtest: persistence: a saved record comes back as an independent copy with the whole queue and retry state, and repair finds nothing to fix
+ok 48 - persistence: a saved record comes back as an independent copy with the whole queue and retry state, and repair finds nothing to fix
+  ---
+  duration_ms: 0.84169
+  type: 'test'
+  ...
+# Subtest: persistence fault: when a write is rejected, the older durable record is left alone, the newest state stays available in memory with its whole queue, and the reason holds no learner text
+ok 49 - persistence fault: when a write is rejected, the older durable record is left alone, the newest state stays available in memory with its whole queue, and the reason holds no learner text
+  ---
+  duration_ms: 1.279132
+  type: 'test'
+  ...
+# Subtest: adjacent repeats of the same failure for the same entry coalesce; any intervening event keeps them separate and readable
+ok 50 - adjacent repeats of the same failure for the same entry coalesce; any intervening event keeps them separate and readable
+  ---
+  duration_ms: 0.412135
+  type: 'test'
+  ...
+# Subtest: trace is bounded by 200 lines under thousands of failures, keeps the newest events, and pauses are reported once per entry
+ok 51 - trace is bounded by 200 lines under thousands of failures, keeps the newest events, and pauses are reported once per entry
+  ---
+  duration_ms: 20.27368
+  type: 'test'
+  ...
+# Subtest: validator: every own misconception id is accepted and every id that belongs only to a different question is rejected
+ok 52 - validator: every own misconception id is accepted and every id that belongs only to a different question is rejected
+  ---
+  duration_ms: 0.593983
+  type: 'test'
+  ...
+# Subtest: validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty
+ok 53 - validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty
+  ---
+  duration_ms: 7.192902
+  type: 'test'
+  ...
+# Subtest: generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)
+ok 54 - generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)
+  ---
+  duration_ms: 644.649717
+  type: 'test'
+  ...
+# Subtest: a fixed enumerated table of operation sequences, written out by hand, reaches the pause, the manual retry and the recovery
+ok 55 - a fixed enumerated table of operation sequences, written out by hand, reaches the pause, the manual retry and the recovery
+  ---
+  duration_ms: 1.197975
+  type: 'test'
+  ...
+# Subtest: this file uses no timers, network, browser or unseeded randomness
+ok 56 - this file uses no timers, network, browser or unseeded randomness
+  ---
+  duration_ms: 1.031218
+  type: 'test'
+  ...
+1..56
+# tests 56
+# suites 0
+# pass 56
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 960.915981
+exit=0

@@ -29,8 +29,24 @@ export function cycleAttemptsOf(entry) {
   return Number.isInteger(entry?.attempts) && entry.attempts >= 0 ? entry.attempts : 0;
 }
 
+// Validate the injected clock before touching any retry state. Production callers pass
+// Date#toISOString() values; accepting an invalid string here could otherwise increment
+// counters before `toISOString()` throws (or silently save an invalid pause timestamp).
+function parseRetryTimestamp(nowIso) {
+  if (typeof nowIso !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(nowIso)) {
+    throw new RangeError('invalid_retry_timestamp: expected a canonical UTC ISO timestamp');
+  }
+  const milliseconds = Date.parse(nowIso);
+  if (!Number.isFinite(milliseconds) || new Date(milliseconds).toISOString() !== nowIso) {
+    throw new RangeError('invalid_retry_timestamp: expected a valid canonical UTC ISO timestamp');
+  }
+  return milliseconds;
+}
+
 // Called right after a failed attempt. Mutates the entry; returns what happened.
+// The timestamp is validated before the first mutation, so malformed clocks are atomic failures.
 export function scheduleAfterFailure(entry, nowIso, policy = RETRY_POLICY) {
+  const nowMs = parseRetryTimestamp(nowIso);
   const p = normalisePolicy(policy);
   const wasPaused = entry.needsAttention === true;
   entry.cycleAttempts = cycleAttemptsOf(entry) + 1;
@@ -41,7 +57,7 @@ export function scheduleAfterFailure(entry, nowIso, policy = RETRY_POLICY) {
     return { paused: true, newlyPaused: !wasPaused, nextAttemptAt: null };
   }
   entry.needsAttention = false;
-  entry.nextAttemptAt = new Date(Date.parse(nowIso) + backoffDelayMs(entry.cycleAttempts, p)).toISOString();
+  entry.nextAttemptAt = new Date(nowMs + backoffDelayMs(entry.cycleAttempts, p)).toISOString();
   return { paused: false, newlyPaused: false, nextAttemptAt: entry.nextAttemptAt };
 }
 

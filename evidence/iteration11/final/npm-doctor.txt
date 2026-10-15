@@ -1,0 +1,14 @@
+
+> pathasetu-mvp@0.1.0 doctor
+> node scripts/doctor.mjs
+
+PATHASETU DOCTOR — local diagnostics only
+PASS    D01 Node.js runtime: Node 22.16.0; this project requires Node >= 20.
+PASS    D02 Required project files: All 12 required project files are present.
+PASS    D03 JavaScript syntax checks: The command exited successfully.
+PASS    D04 Curriculum pack consistency: The pack, worksheet and evaluation files are consistent; this does not mean the content has been reviewed.
+PASS    D05 Local demo preflight: The local mock-only preflight passed; it does not call a hosted model or validate a phone/tunnel.
+PASS    D06 Browser executable discovery: Found an executable at /usr/bin/chromium (standard location). Discovery checks file availability only; it does not run capture, E2E or accessibility tests.
+
+DOCTOR: PASS
+Local checks and browser discovery passed; this is not a phone, live-provider, content-review or deployment sign-off.

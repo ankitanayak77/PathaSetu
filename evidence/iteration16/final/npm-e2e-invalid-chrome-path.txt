@@ -1,0 +1,5 @@
+
+> pathasetu-mvp@0.1.0 e2e
+> node scripts/browser-regression.mjs
+
+BLOCKED: CHROME_PATH is set to "/nonexistent/pathasetu-browser" but that is not an existing, executable file. No other browser was tried, on purpose. Fix or unset CHROME_PATH.

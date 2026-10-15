@@ -38,8 +38,18 @@ export function repairSavedRecord(saved, pack) {
     if (Array.isArray(learnerIn.seenItemIds) && seen.length !== learnerIn.seenItemIds.length) note(counts, 'seen_removed', learnerIn.seenItemIds.length - seen.length);
     const current = learnerIn.currentItemId === null || isId(learnerIn.currentItemId) ? learnerIn.currentItemId : (note(counts, 'current_reset'), base.learner.currentItemId);
     const next = learnerIn.nextRecommendedItemId === null || learnerIn.nextRecommendedItemId === undefined || isId(learnerIn.nextRecommendedItemId) ? (learnerIn.nextRecommendedItemId ?? null) : (note(counts, 'next_reset'), null);
+    let bridgeAttempts;
+    if (learnerIn.bridgeAttempts !== undefined) {
+      bridgeAttempts = {};
+      if (isObject(learnerIn.bridgeAttempts)) {
+        for (const [itemId, attempts] of Object.entries(learnerIn.bridgeAttempts)) {
+          if (isId(itemId) && isCount(attempts)) bridgeAttempts[itemId] = attempts;
+          else note(counts, 'bridge_attempts_removed');
+        }
+      } else note(counts, 'bridge_attempts_reset');
+    }
 
-    const answersIn = Array.isArray(raw.answers) ? raw.answers : (raw.answers !== undefined && note(counts, 'answers_reset'), []);
+    const answersIn = Array.isArray(raw.answers) ? raw.answers : (note(counts, 'answers_reset'), []);
     let answers = [];
     for (const answer of answersIn) {
       const ok = isObject(answer) && isId(answer.id) && isId(answer.itemId) && isId(answer.optionId, 20) && typeof answer.mode === 'string'
@@ -50,7 +60,7 @@ export function repairSavedRecord(saved, pack) {
     answers = dedupe(answers, 'answers', counts);
     if (answers.length > LIMITS.answers) { note(counts, 'answers_trimmed', answers.length - LIMITS.answers); answers = answers.slice(-LIMITS.answers); }
 
-    const queueIn = Array.isArray(raw.queue) ? raw.queue : (raw.queue !== undefined && note(counts, 'queue_reset'), []);
+    const queueIn = Array.isArray(raw.queue) ? raw.queue : (note(counts, 'queue_reset'), []);
     let queue = [];
     for (const entry of queueIn) {
       if (!(isObject(entry) && isId(entry.id) && isId(entry.answerId) && isId(entry.itemId))) { note(counts, 'queue_removed'); continue; }
@@ -63,7 +73,7 @@ export function repairSavedRecord(saved, pack) {
     queue = dedupe(queue, 'queue', counts);
     if (queue.length > LIMITS.queue) { note(counts, 'queue_trimmed', queue.length - LIMITS.queue); queue = queue.slice(0, LIMITS.queue); }
 
-    const traceIn = Array.isArray(raw.trace) ? raw.trace : (raw.trace !== undefined && note(counts, 'trace_reset'), []);
+    const traceIn = Array.isArray(raw.trace) ? raw.trace : (note(counts, 'trace_reset'), []);
     let trace = traceIn.filter((event) => isObject(event) && typeof event.type === 'string' && event.type.length <= 60);
     if (trace.length !== traceIn.length) note(counts, 'trace_removed', traceIn.length - trace.length);
     if (trace.length > LIMITS.trace) { note(counts, 'trace_trimmed', trace.length - LIMITS.trace); trace = trace.slice(-LIMITS.trace); }
@@ -77,7 +87,7 @@ export function repairSavedRecord(saved, pack) {
 
     const repairKeys = Object.keys(counts);
     if (!repairKeys.length) return { state: structuredClone(raw), drafts: structuredClone(draftsIn), repairs: [], discarded: false };
-    const state = { ...raw, schemaVersion: 1, learner: { ...learnerIn, sessionsRemaining: sessions, confirmedMisconceptions: confirmed, seenItemIds: seen, currentItemId: current, nextRecommendedItemId: next }, answers, queue, trace, lastUpdated: validIso(raw.lastUpdated) ?? base.lastUpdated };
+    const state = { ...raw, schemaVersion: 1, learner: { ...learnerIn, sessionsRemaining: sessions, confirmedMisconceptions: confirmed, seenItemIds: seen, currentItemId: current, nextRecommendedItemId: next, ...(bridgeAttempts !== undefined ? { bridgeAttempts } : {}) }, answers, queue, trace, lastUpdated: validIso(raw.lastUpdated) ?? base.lastUpdated };
     appendTrace(state, { type: 'saved_state_repaired', repairs: counts, reason: 'Some saved entries could not be used and were removed; valid answers, queue entries and progress were kept.' });
     return { state, drafts, repairs: repairKeys, discarded: false };
   } catch {

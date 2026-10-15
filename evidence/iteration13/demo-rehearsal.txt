@@ -1,0 +1,9 @@
+Pathasetu Iteration 13 — demo rehearsal record
+Date: 14 October 2026 (IST)
+Environment: Linux sandbox, Node v22.16.0, npm 10.9.2, /usr/bin/chromium (browser executable discovered).
+
+Outcome: BLOCKED for timed browser rehearsal. The managed browser policy blocked localhost navigation with ERR_BLOCKED_BY_ADMINISTRATOR. No 3-minute end-to-end timings or on-screen badge observations were recorded. Do not carry Iteration 12's headless Chromium results forward as an Iteration 13 pass.
+
+Separate local API capture: 10 checks passed and 1 Chromium journey was blocked. The API checks confirm local routes/configuration only; they are not a browser journey or phone test. Capture's latest-file artefacts were restored byte-for-byte from the pre-run backups after the browser commands.
+
+Demo claims remain: provider=mock; all eight items and Odia strings UNREVIEWED_DRAFT; no live model call; physical phones NOT TESTED. Rehearse only on a machine where the local browser journey is permitted, then record actual elapsed time and badges from the screen.

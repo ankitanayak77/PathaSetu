@@ -116,7 +116,9 @@ test('the guide and bank state the facts the code supports: mock default, Groq n
   assert.equal(phones.records.length, 161);
   assert.ok(phones.records.every((r) => r.result === 'NOT TESTED' && !r.tester && !r.date_ist), 'the documents say no phone has been tested');
   const source = read('src/server/server.js');
-  assert.match(source, /PATHASETU_MODEL_PROVIDER \|\| 'mock'/);
+  // Iteration 15: the single-provider switch moved into src/server/modelConfig.js together with PATHASETU_MODEL_PROVIDERS.
+  assert.match(read('src/server/modelEnv.js'), /PATHASETU_MODEL_PROVIDER \|\| 'mock'/);
+  assert.match(source, /parseModelConfig\(process\.env\)/);
 });
 
 test('prohibited claims appear only where they are being warned against', () => {

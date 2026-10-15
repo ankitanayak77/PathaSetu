@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-10-13T20:45:20.953Z",
+  "checks": [],
+  "scenarios": [],
+  "limitation": "Headless Chromium on one machine. Not a physical-phone test, not Samsung Internet, not iPhone Safari, not educational validation.",
+  "blocked": true,
+  "browser": {
+    "status": "BLOCKED",
+    "executable": null,
+    "selectedBy": "invalid_chrome_path",
+    "version": null,
+    "tried": [
+      "/nonexistent/pathasetu-browser"
+    ]
+  }
+}

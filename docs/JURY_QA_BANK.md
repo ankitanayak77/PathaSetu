@@ -1,6 +1,6 @@
 # Pathasetu — jury and CTO question bank
 
-Written 13 October 2026. 126 anticipated questions in the order the team listed them, then further questions the repository and the official rules exposed (Q127 onward). Each answer has four parts:
+Written 13 October 2026. 126 anticipated questions in the order the team listed them, then further questions the repository and the official rules exposed (Q127 onward), then the Iteration 7 decision-audit additions on board, class, book, content rights, trust levels, environments and event claims (Q152 onward). 176 questions in all. Each answer has four parts:
 
 - **Say (10–20 s):** what to say aloud, in everyday words.
 - **Technical:** the deeper answer a CTO can check against the code.
@@ -9,7 +9,7 @@ Written 13 October 2026. 126 anticipated questions in the order the team listed 
 
 Short spoken answers should be learned. The technical lines should be understood, not memorised. If you do not know, say "that is not tested yet" — every `NOT TESTED` below is true on 13 Oct 2026.
 
-Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_Statement_BW.pdf>, event page <https://www.nirmit.space/events/nextech>, rules <https://www.nirmit.space/rules>. Test numbers (Iteration 6 final): 207 unit tests, 19 capture checks, 100 browser checks and 462 accessibility checks, run on 13 Oct 2026 in a Linux sandbox with headless Chromium 141 and Node 22.22.0 (`evidence/iteration6/final/`). Earlier figures are history: Iteration 5 final had 198 unit tests and 95 browser checks, and the Iteration 4 baseline had 182 unit tests (`evidence/iteration5/`). None of this ran on a phone, and browser navigation was blocked on the team's managed machine and in a second audit environment, so those browser results are not reproduced there.
+Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_Statement_BW.pdf>, event page <https://www.nirmit.space/events/nextech>, rules <https://www.nirmit.space/rules>. Test numbers (Iteration 7 final): 217 unit tests, 19 capture checks, 100 browser checks and 462 accessibility checks, run on 13 Oct 2026 in a Linux sandbox with headless Chromium 141 and Node 22.22.0 (`evidence/iteration7/final/`). Earlier figures are history: Iteration 6 final had 207 unit tests, Iteration 5 final had 198 unit tests and 95 browser checks, and the Iteration 4 baseline had 182 unit tests (`evidence/iteration6/`, `evidence/iteration5/`). None of this ran on a phone. The team's own Mac log (Node 26.8.2, Iteration 6 package) shows 207 unit tests, `check`, `check:content` and `preflight` passing but the browser steps failing or BLOCKED because `/usr/bin/chromium` does not exist on a Mac (Q168); browser navigation was also blocked on the team's earlier managed machine and in a second audit environment. Those browser results are not reproduced there, and the sandbox's browser results are never presented as a Mac result.
 
 ## Problem and user
 
@@ -102,7 +102,7 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 ### Q15. What benefit is implemented, what is expected, and what is measured?
 **Say:** Implemented: saved answers, queue, diagnosis labels, bridge practice, trace. Expected: faster misconception repair. Measured: only software tests — nothing about learners.
 **Technical:** See the table in guide section 5.
-**Evidence:** implemented/unit/browser as in the claim matrix; measured result: 207 unit tests etc.; learning gain: **none measured**.
+**Evidence:** Earlier, the Iteration 8 historical run had 252 unit tests; the current Iteration 9 run has 259 unit tests. Automated test counts are not evidence of learning gain; learning gain: **none measured**.
 **Avoid / status:** Never "increases scores". Safer: "we have not measured learning outcomes".
 
 ### Q16. How can it help a learner who gets a question wrong?
@@ -303,7 +303,7 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 
 ### Q48. What is a service worker and what files does it cache?
 **Say:** A small script that sits between the page and the network so the page can open without a connection. It keeps the app's own files; it never keeps any answers from the server.
-**Technical:** `public/sw.js`, cache name `pathasetu-shell-v8`. Pre-cached: `/`, `/index.html`, `/styles.css`, `/app.js`, `/manifest.webmanifest`, `/favicon.svg` and the core modules `agent`, `mockModel`, `validator`, `storage`, `bridge`, `retry`, `recovery`, `export`, `persistence`. It ignores `/api/*` and non-GET requests; navigations fall back to cached `/index.html`.
+**Technical:** `public/sw.js`, current cache name `pathasetu-shell-v12`. Pre-cached paths are listed in that file. It ignores `/api/*` and non-GET requests; navigations fall back to cached `/index.html`. Earlier browser evidence is historical; v12 was not run in a browser during this review.
 **Evidence:** `public/sw.js`; `tests/uiStatic.test.js` (fails if a module imported by the browser is missing from the list); e2e E1, H1, I1, I2.
 **Avoid / status:** Verified in headless Chromium only. iPhone Safari and Samsung Internet behaviour: **NOT TESTED**.
 
@@ -413,7 +413,7 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 
 ### Q66. What happens when the service worker detects an update?
 **Say:** The page shows "App update ready — reload once to apply it". Your saved progress stays.
-**Technical:** `registration.update()` on load and when the tab becomes visible; a `controllerchange` after the first install is treated as an update (the very first install is ignored). The new worker uses cache `pathasetu-shell-v8`; older `pathasetu-shell-*` caches are deleted on activate.
+**Technical:** `registration.update()` on load and when the tab becomes visible; a `controllerchange` after the first install is treated as an update (the very first install is ignored). The worker currently uses cache `pathasetu-shell-v12`; older `pathasetu-shell-*` caches are deleted on activate. This current cache update has not been browser-tested in this review.
 **Evidence:** `public/app.js`, `public/sw.js`; e2e A4, I1, I2.
 **Avoid / status:** Needs a second deployed build to test on a phone (phone step 16: **NOT TESTED**).
 
@@ -507,7 +507,7 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 
 ### Q81. What has passed in headless Chromium and what has run on a physical device?
 **Say:** All of the automated tests passed in headless Chromium on Linux. Nothing has run on a physical phone.
-**Technical:** 207 unit/static tests; 19 capture checks; 100 browser regression checks; 462 accessibility checks, all on 13 Oct 2026 (Node 22.22.0, Chromium 141.0.7390.37; Iteration 5 had 198 and 95). Separately the team reported that on its managed machine the capture browser journey and e2e were blocked by browser policy (`ERR_BLOCKED_BY_ADMINISTRATOR`), and a second audit environment saw the same; that is recorded as BLOCKED, not as a pass.
+**Technical:** Earlier, Iteration 8 historical evidence: 252 unit/static tests; 19 capture checks; 100 browser regression checks; 462 accessibility checks, on 13 Oct 2026 (Node 22.22.0, Chromium 141.0.7390.37; earlier figures are history: Iteration 7 had 217 unit tests, Iteration 6 had 207 and Iteration 5 had 198 and 95). Separately the team reported that on its managed machine the capture browser journey and e2e were blocked by browser policy (`ERR_BLOCKED_BY_ADMINISTRATOR`), and a second audit environment saw the same; that is recorded as BLOCKED, not as a pass.
 **Evidence:** `evidence/iteration5/baseline/`; `docs/PHONE_TEST_RESULTS_TEMPLATE.csv` (161 rows, all `NOT TESTED`).
 **Avoid / status:** Do not say "tested on mobile". Say "tested in headless Chromium with mobile-sized viewports".
 
@@ -618,22 +618,22 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 ## Testing and evaluation
 
 ### Q99. How many unit, browser, capture, accessibility and preflight checks passed in the exact current tree?
-**Say:** 207 unit tests, 100 browser checks, 19 capture checks, 462 accessibility checks, and preflight passes — all in a Linux sandbox, none on a phone. Older figures (182 at the Iteration 4 baseline, 198 at Iteration 5) are history.
-**Technical:** Iteration 6 final (`evidence/iteration6/final/`): `npm test` 207/207; `npm run capture` 19 passed, 0 failed, 0 blocked; `npm run e2e` 100 passed, 0 failed; `npm run a11y` 33 state/viewport combinations, 462 checks, 0 failed; `check`, `check:content`, `preflight` exit 0. Iteration 6 baseline on the untouched Iteration 5 tree reproduced 198 unit tests, 95 browser checks and the rest (`evidence/iteration6/baseline/`). Iteration 4 baseline: 182 unit tests.
+**Say:** 451/451 unit tests pass in the current tree. In this sandbox the capture run passed 19 checks, the browser regression passed 112 checks and the accessibility audit ran 462 checks with 0 failures (Node 22.22.0, Chromium 141). The 46-fault mutation check also finished, with every fault caught. Earlier, the Iteration 11 and Iteration 9 environments blocked navigation (`ERR_BLOCKED_BY_ADMINISTRATOR`), so those commands were BLOCKED there, and the Iteration 11 mutation sweep was incomplete; those are separate records. Current evidence: `evidence/iteration15/final/`. No phone test and no real model call: the model chain was tested against fake servers only.
+**Technical:** Iteration 12 changed only mutation tooling: per-fault test plans, a TAP-only reporter, a time budget with an INCOMPLETE state and an overwrite guard; the completed run is in `evidence/iteration12/mutation/` and the all-tests cross-check in `evidence/iteration12/mutation-full-suite/`. Earlier, Iteration 11 added six atomicity tests for invalid retry timestamps, with the failing pre-fix output and green post-fix output in `evidence/iteration11/tests-first/`; G1 is killed in `evidence/iteration11/mutation-G1/`. Iteration 10 added 56 queue-invariant tests and a 45-fault mutation check (`evidence/iteration10/mutation/`), synthetic engineering tests only. Earlier, Iteration 8 final (`evidence/iteration8/final/`): `npm test` 252/252; `npm run capture` 19 passed, 0 failed, 0 blocked; `npm run e2e` 100 passed, 0 failed; `npm run a11y` 33 state/viewport combinations, 462 checks, 0 failed; `check`, `check:content`, `preflight` exit 0. Iteration 8 baseline on the untouched Iteration 7 tree reproduced the 217 unit tests of Iteration 7 and the non-browser commands (`evidence/iteration8/baseline/`); Iteration 7 baseline on the untouched Iteration 6 tree reproduced 207 unit tests, 100 browser checks and the rest (`evidence/iteration7/baseline/`); Iteration 6 baseline on the untouched Iteration 5 tree reproduced 198 unit tests and 95 browser checks (`evidence/iteration6/baseline/`). Iteration 4 baseline: 182 unit tests.
 **Evidence:** `evidence/iteration5/baseline/exit-codes.txt` and the `npm-*.txt` files.
 **Avoid / status:** Always quote the environment with the number (Q100).
 
 ### Q100. Which numbers came from which environment?
-**Say:** All numbers above came from our Linux build sandbox with headless Chromium. On the team's managed machine, the unit tests, syntax and content checks passed and the browser tests were blocked by a browser policy.
-**Technical:** Sandbox: Node v22.22.0, npm 10.9.4, Chromium 141.0.7390.37. Team machine (Iteration 3 archive and an Iteration 4 verification): `npm test` passed, browser navigation blocked by `ERR_BLOCKED_BY_ADMINISTRATOR`; capture produced 10 passing HTTP/API checks and one blocked browser journey. Phone: none.
-**Evidence:** `evidence/iteration5/baseline/environment.txt`; `docs/BUILD_STATUS.md` header. The managed-machine result is **team-reported**.
+**Say:** The 100-browser-check and 462-accessibility-check results were produced in this build sandbox for Iteration 8 and again for Iteration 10, where local navigation was permitted. In the Iteration 9 environment, localhost navigation was BLOCKED by `ERR_BLOCKED_BY_ADMINISTRATOR`, so E2E and accessibility did not complete there; that record is kept as it was. The team's Mac has not been retested on Iteration 9; the older Mac log had no browser binary.
+**Technical:** Sandbox: Node v22.22.0, npm 10.9.4, Chromium 141.0.7390.37. Team machine (Iteration 3 archive and an Iteration 4 verification): `npm test` passed, browser navigation blocked by `ERR_BLOCKED_BY_ADMINISTRATOR`; capture produced 10 passing HTTP/API checks and one blocked browser journey. Team Mac (Iteration 7 log, Node 26.8.2, Iteration 6 package): 207 unit tests pass, `check`, `check:content` and `preflight` pass, capture 10 passed and 1 failed (`ENOENT '/usr/bin/chromium'`), e2e and a11y BLOCKED. Phone: none.
+**Evidence:** `evidence/iteration7/baseline/README-baseline.txt`; `evidence/iteration5/baseline/environment.txt`; `docs/BUILD_STATUS.md` header. The managed-machine result is **team-reported**.
 **Avoid / status:** Never merge the two sets of results.
 
 ### Q101. What does a unit test prove and what does it not prove?
 **Say:** It proves a piece of code does what we wrote it to do in a controlled case. It does not prove the app is useful or works on a phone.
 **Technical:** Unit tests here call functions with fixed inputs (for example `validateDiagnosis` with an unlisted ID) and also run the real server on a loopback port. They do not exercise a browser, a real network, a provider or a learner.
-**Evidence:** `tests/*.test.js` (207 in the Iteration 6 final run).
-**Avoid / status:** Do not use "207 tests passed" as evidence of quality of education or Odia.
+**Evidence:** `tests/*.test.js` (258 in Iteration 9; Iteration 8 historical run had 252).
+**Avoid / status:** Do not use "252 tests passed" as evidence of quality of education or Odia.
 
 ### Q102. What does a headless browser test prove and what does it not prove?
 **Say:** That the page behaves as scripted in a real browser engine, including going offline. It is not a phone and not a person.
@@ -743,7 +743,7 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 
 ### Q119. What is the strongest technically evidenced feature?
 **Say:** The loop that keeps working through failure: answers are saved, queued, retried with a limit, recovered after a restart or corrupt state, and every step is traced.
-**Technical:** 207 unit tests and 100 browser checks cover duplicate submits, two tabs, offline reload, cold-start recovery, provider failures and timeouts, paused retries, storage failure and corrupt state (headless Chromium).
+**Technical:** Earlier, Iteration 8 historical evidence: 252 unit tests and 100 browser checks covered duplicate submits, two tabs, offline reload, cold-start recovery, provider failures and timeouts, paused retries, storage failure and corrupt state (headless Chromium). Iteration 9 added a local doctor command; it did not alter the app runtime.
 **Evidence:** `tests/retry.test.js`, `storage-resilience.test.js`; e2e C–R. browser-tested, **not phone-tested**.
 **Avoid / status:** "Evidenced in headless tests" is the honest phrase.
 
@@ -941,3 +941,197 @@ Official sources: problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_
 **Evidence:** `public/app.js` (`explanationPlaceholder`, `renderConnection`); `scripts/browser-regression.mjs` scenario Q; `tests/iteration6-claims.test.js`; headless Chromium with a stub, **no live model call**.
 **Avoid / status:** The stub proves the labels, not model behaviour. Do not say the app is "LLM-powered": no live request has been made (live Groq is BLOCKED, credentials not configured).
 
+
+## Iteration 7 additions — board, class, book, content rights, trust levels, environments and event claims
+
+Added 13 October 2026 from the decision audit. Decision IDs (`D0xx`) refer to `docs/DECISION_LOG.csv`; the full register is `docs/DECISION_REGISTER.md`. Every answer here keeps three things apart: what an official page says, what our code and tests show, and what the team chose or assumes.
+
+### Q152. Why BSE Odisha, and not Madhyama, CBSE, ICSE, NIOS or WBBSE?
+**Say (10–20 s):** We picked the board our imagined learner would most likely follow: Odisha, with Odia-medium books. We did not choose it because its digital sources are tidier. Other boards have different books and syllabuses, so each would need its own checked question set.
+**Technical:** The 2026-27 BSE Odisha Class X syllabus lists Physical Science and, under it, Electricity. CBSE, NIOS, CISCE and WBBSE are not rejected on merit; they are deferred or not evaluated, because mapping and reviewing items is per board (D010–D016). The engine's schema is generic, but only one pack exists, and a generic schema is not cross-board validation.
+**Evidence:** `docs/BOARD_CLASS_BOOK_COMPARISON.md` sections 2 and 5; BSE syllabus <https://bseodisha.nic.in/wp-content/uploads/2026/05/Subject_wise_syllabus_class_X_26_27.pdf>. SOURCE: verified for BSE Odisha; CBSE and NIOS pages opened but not mapped; CISCE and WBBSE not evaluated.
+**Avoid / status:** Do not say the other boards were "assessed and found worse". Say they were not mapped. Do not claim a board picker or portability.
+
+### Q153. Is it "HSC" or "Madhyama", and can you prove which from the syllabus?
+**Say:** Our team calls the target the BSE Odisha Class X HSC course. The official syllabus PDF we opened does not use either word, so we cannot prove the label from it. What we can prove is Class X, General Science, session 2026-27.
+**Technical:** The PDF heading is "Syllabus for the session, 2026-27" and the entry is "Class-X Subject – General Science". The words HSC and Madhyama do not appear as headings; the Odia word for "secondary" appears in Mathematics headings. Whether Madhyama is a different pathway, another name for the same examination, or something else is UNKNOWN to us (D010, D011).
+**Evidence:** `docs/BOARD_CLASS_BOOK_COMPARISON.md` sections 3 and 4. UNKNOWN (pathway label); VERIFIED FROM SOURCE (board, class, subject, session).
+**Avoid / status:** Never say "HSC, not Madhyama" as if verified. A teacher should confirm the label printed on the learner's own documents.
+
+### Q154. Why Class X rather than Class IX or Classes XI and XII?
+**Say:** It is a scoping choice. Class X is the board-exam year, and the brief lets teams choose their own learner. We did not find, and do not claim, research showing it is the most important class.
+**Technical:** The brief's illustrative learner is in Class IX; we chose Class X and recorded that difference (D017, D018). Classes XI and XII are subject-separated physics with different mathematics (rejected for the MVP, D019). Moving to another class means a new persona, syllabus map, book map and content review, and Class X on two boards is not the same syllabus.
+**Evidence:** `docs/BOARD_CLASS_BOOK_COMPARISON.md` section 6; problem PDF <https://www.nirmit.space/docs/Nextech2.0_Problem_Statement_BW.pdf>. DECIDED FOR MVP; need NOT TESTED.
+**Avoid / status:** Do not say Class IX was "too easy" or Class X was "the right level"; no source was read on that.
+
+### Q155. Which exact book and edition do the questions follow, and which chapter and pages?
+**Say:** We do not know yet, and we say so. The syllabus names the book only as Physical Science. The publisher, edition, chapter and page for each question have to be filled in by a teacher holding the learner's actual book.
+**Technical:** The syllabus gives no publisher, edition or year for the General Science books. A state website listing of chapter files would not prove which printed edition a learner uses, and that listing could not be opened by our tool. The reviewer worksheet `docs/BOOK_CROSSWALK.csv` has the columns, with every book field UNKNOWN and every reviewer field blank (D024).
+**Evidence:** `docs/BOOK_CROSSWALK.csv`; `tests/iteration7-decisions.test.js`. UNKNOWN; NOT REVIEWED.
+**Avoid / status:** Never quote a chapter or page from memory. Do not say "it follows the Odisha textbook" without the qualifier that edition and pages are unverified.
+
+### Q156. Which official learning outcomes do the eight questions map to?
+**Say:** We can only say they sit under the topic "Electricity". The official syllabus we read does not break Electricity into outcomes, so we cannot honestly map each question to one.
+**Technical:** The syllabus lists Electricity as one entry with no sub-topics, and the magnetic effect of current as a separate entry. Ohm's law and series and parallel resistance questions (EL05–EL08) therefore sit under Electricity only by our inference (D025). The four concepts are closed circuit, energy transfer, Ohm's law and resistance combinations.
+**Evidence:** `docs/BOARD_CLASS_BOOK_COMPARISON.md` sections 3 and 9; `content/electricity-pack.json`. UNKNOWN; NOT REVIEWED.
+**Avoid / status:** Do not say each question "meets a learning outcome". Say "mapped at a high level to the topic; item-level mapping is pending a teacher".
+
+### Q157. Why isn't the pack called curriculum-aligned or teacher-approved?
+**Say:** Because nobody qualified has checked it against the book. All eight questions and all the Odia are drafts. Passing our software tests only shows the files are consistent, not that they are correct or suitable.
+**Technical:** Every item is `UNREVIEWED_DRAFT`, with no reviewer name or date, and code never promotes a status. `npm run check:content` verifies pack, worksheet and evaluation files agree; it is not a review (D026, D140).
+**Evidence:** `content/electricity-pack.json`; `scripts/lib/content-consistency.mjs`; `docs/REVIEWER_GUIDE.md`. NOT REVIEWED.
+**Avoid / status:** Wording to use: "mapped at a high level to the Class X General Science (Electricity) syllabus; item validation is pending". Not "syllabus-approved".
+
+### Q158. Are the questions original or copied, and can we redistribute textbook pages?
+**Say:** The questions and explanations are original drafts written for this project with AI help; we did not paste textbook text or diagrams. We do not redistribute textbook pages, because a website letting you download a book is not a licence to republish it.
+**Technical:** The pack and ZIP contain no textbook pages, scans, diagrams or answer keys. Similarity to printed exercises has not been checked by a person. The approach is: original text; record title, edition, chapter and page for review; link to the official source; check each resource's own licence (D027, D028). We did not read the Odisha books' licence terms.
+**Evidence:** `docs/BOARD_CLASS_BOOK_COMPARISON.md` sections 9.2 and 10; `content/electricity-pack.json`. TEAM CHOSE (policy); licence terms UNKNOWN.
+**Avoid / status:** Do not say "no copyright issues". Say "original draft text; rights for any book use have not been checked".
+
+### Q159. What is supported now, and what is future work: boards, classes, books, languages?
+**Say:** Today: one board, one class, one chapter, eight questions, Odia with English terms, text only. Everything else is future work and would need its own mapped, reviewed content.
+**Technical:** Supported (implemented): BSE Odisha Class X Electricity pack; Odia-draft plus English terms; no other language. Not implemented: board or class switching, extra subjects, Kui, Roman Odia, voice, textbook ingestion, accounts (D197, D033, D034). A new board, class or book needs a syllabus map, a book crosswalk, a reviewer and an evaluation set.
+**Evidence:** `docs/BOARD_CLASS_BOOK_COMPARISON.md`; `docs/NAVIGATION_AND_WORKFLOW.md` (NOT IMPLEMENTED list). implemented (one pack); NOT IMPLEMENTED (the rest).
+**Avoid / status:** Do not imply "works for any board" or "any class".
+
+### Q160. Does Pathasetu identify a real student? How is authentication different from the shared access code?
+**Say:** No. There are no accounts. The shared demo code only lets invited people in; it cannot tell one person from another. Authentication means proving who you are, and we do not do that.
+**Technical:** The code is one secret in a request header, compared in constant time; it gates three API routes. There is no user identity, role, session or audit log. This is level A1 of seven (A0–A6) in our trust model; accounts are A3 and are not built (D090, D097).
+**Evidence:** `docs/AUTHENTICATION_AND_TRUST_LEVELS.md` sections 1 and 2; `src/server/server.js`; `tests/public-demo.test.js`. implemented; unit-tested; browser-tested (headless).
+**Avoid / status:** Never say "secure login", "authenticated users" or "production secure".
+
+### Q161. What happens if the demo access code leaks?
+**Say:** Whoever has it can use the demo until we restart with a new code. They could read the draft questions and the answer key and, if a hosted model were switched on, use up its quota. There are no stored learner records to steal.
+**Technical:** The code gates `/api/session`, `/api/pack` and `/api/recheck`; failed guesses are throttled at 20 per 60 seconds per address, and re-checks at 24 per minute. Counters are in memory and keyed by socket address, so many addresses can sidestep them. Rotation is a restart with a new random code of at least 16 characters. A real tunnel run is NOT TESTED (D090, D093, D111).
+**Evidence:** `src/server/access.js`; `src/server/server.js`; `docs/AUTHENTICATION_AND_TRUST_LEVELS.md` section 2. unit-tested; browser-tested (headless); real tunnel not tested.
+**Avoid / status:** Do not promise the throttle stops a determined attacker; do not claim revocation of a single user is possible.
+
+### Q162. What do HTTPS and the origin check do, and what do they not do?
+**Say:** HTTPS hides what is sent from people on the Wi-Fi, and iPhone Safari needs it for offline features. The origin check stops another website from secretly using a visitor's browser to call our server. Neither tells us who the visitor is.
+**Technical:** HTTPS comes from the tunnel or host in front of our plain-HTTP Node server; the app cannot confirm it is present. The origin check applies when a request carries an `Origin` header: only the same host or an exact allow-listed https origin passes, otherwise 403. A command-line client sends no `Origin` and passes this check; the access code is what stops it (D092).
+**Evidence:** `src/server/server.js` (`originAllowed`); `tests/proxy-origin.test.js`; `docs/HTTPS_DEMO_RUNBOOK.md`. unit-tested; real HTTPS not tested.
+**Avoid / status:** Do not say the origin check is a login or that HTTPS makes the data safe on the server.
+
+### Q163. Can siblings share one phone safely? What is isolated, and what roles exist?
+**Say:** Not safely. The app keeps one saved record for the browser, so two children would see and overwrite each other's progress. There are no separate profiles, accounts or teacher roles.
+**Technical:** There is a single IndexedDB record under key `session`. Anonymous local profiles are level A2 and are not built; accounts A3; roles A4 (D096–D098). A separate browser profile normally has separate storage, but that is browser behaviour we have not tested and is not a feature. See also Q128.
+**Evidence:** `src/core/storage.js`; `docs/AUTHENTICATION_AND_TRUST_LEVELS.md` A2–A4; `docs/CLAIM_EVIDENCE_MATRIX.csv` (C43). NOT IMPLEMENTED.
+**Avoid / status:** Do not say it "supports a family phone" or "learner profiles". It targets a shared-phone setting but does not separate learners.
+
+### Q164. Where does every piece of data go: memory, IndexedDB, server, model provider, export and logs?
+**Say:** What she types is kept on the phone when storage works. When a re-check runs, her answer and typed words go to our server. Only if a hosted model is switched on does our server pass them on. The default demo uses a rule, not a model.
+**Technical:** See `docs/PROJECT_GUIDE_PLAIN_LANGUAGE.md` section 3.4 for the field-by-field table: typed text and chosen option live in page memory and IndexedDB; the re-check request carries item, option and up to 1,000 characters; the server writes one start-up log line and keeps only in-memory counters; the Groq request would add question, options, answer key and Odia drafts with `store:false`; the trace export replaces typed text with its length; the access code lives in `sessionStorage` for the tab (D070, D071, D095).
+**Evidence:** `src/server/server.js`; `src/server/groqModel.js`; `src/core/export.js`; `tests/iteration5-evidence.test.js`. implemented; unit-tested (fake fetch only); live provider not tested.
+**Avoid / status:** Never say "no data leaves the phone". A tunnel or host may keep its own logs, which we have not read.
+
+### Q165. Does any AI model really run? Is the default an LLM? Why call this agentic?
+**Say:** In the default demo, no. A fixed rule picks the likely misunderstanding from the option chosen. We call the workflow agentic because the software observes, decides, acts and re-plans around a goal, within limits. A language model is optional and has never been run live.
+**Technical:** The default provider is `mockModel.js`, an option-linked rule that ignores the free text. The Groq adapter exists and is tested only against a fake server; live smoke is BLOCKED because credentials were never set. The controller, validator and planner are deterministic code (D040, D060, D061). See Q32, Q40.
+**Evidence:** `src/core/mockModel.js`; `src/server/groqModel.js`; `evidence/iteration7/baseline/environment.txt`. implemented; unit-tested; live-API-tested: no.
+**Avoid / status:** Do not say "AI-powered" or "LLM-powered". The footer reads MOCK PROVIDER · DEMO RULES · NO LIVE AI for a reason.
+
+### Q166. What happens when the network, browser, storage, model or tunnel fails?
+**Say:** Her answer is saved on the phone and waits. We retry a few times, then pause and offer a Retry button. If storage fails, the screen says progress is not being saved. If the model fails, the rule still works. If the tunnel fails, we demo on the laptop.
+**Technical:** Offline: queue once, re-check on reconnect, five attempts then paused (D043, D081). Corrupt state: repair and keep the unreadable copy (D083). Storage blocked: memory fallback and a persistent warning (D082). Model failure or invalid output: rejected by the validator, the state is unchanged (D041). Tunnel or code failure: 401, 403 or 429 notices and the local demo path (D111).
+**Evidence:** `src/core/retry.js`; `src/core/recovery.js`; `docs/DEMO_RUNBOOK.md`; `scripts/browser-regression.mjs`. unit-tested; browser-tested (headless); phone not tested.
+**Avoid / status:** Do not promise behaviour on a real phone, a flaky mobile network or a real tunnel; none has been tested.
+
+### Q167. Why is there no multi-agent design, LangChain, voice, RAG, teacher dashboard, analytics, GPS or full textbook ingestion?
+**Say:** Each would add risk or cost without helping the one thing we wanted to show: a small, checkable learning loop that works when the signal drops. We kept the list short on purpose and can say what each would need.
+**Technical:** Multi-agent: more coordination and failure surface for one learner loop (D044). Frameworks: a small explicit controller needs none (D055). Voice: accuracy and permissions unvalidated (D034). RAG and textbook ingestion: copyright, retrieval accuracy and offline size (D190). Dashboard, parent portal, analytics: need accounts and roles (D191–D193). GPS: not needed for the access-context reading of Geography (D194).
+**Evidence:** `docs/DECISION_REGISTER.md` section 7; `docs/DECISION_LOG.csv`. DECIDED FOR MVP; REJECTED FOR MVP or DEFERRED per row.
+**Avoid / status:** Do not call them "coming soon". Say what each would need before it could be built.
+
+### Q168. Which tests ran in which environment, and why did the Mac lack /usr/bin/chromium?
+**Say:** The browser results depend on the environment. Iteration 12 in the current sandbox passed unit, local API and headless browser checks; the Iteration 11 and Iteration 9 environments blocked navigation by policy. The Mac has not been retested on this iteration.
+**Technical:** Current Iteration 16 step 1 (Node 22.22.0, Chromium 141): 451 unit tests pass, capture 19 passed, E2E 112 passed and accessibility 462 checks, 0 failed. Earlier, Iteration 14 had 382 unit tests and E2E 100; Iteration 11 (Node 22.16.0, Chromium 144): 347 unit tests pass, capture reported 10 HTTP/API checks pass and the Chromium journey BLOCKED, E2E BLOCKED and accessibility completed 0 checks because of `ERR_BLOCKED_BY_ADMINISTRATOR`; Iteration 9 was blocked the same way. Historical Iteration 10 (Node 22.22.0, Chromium 141): E2E 100 and accessibility 462 passed there. The older team Mac log (Node 26.8.2) recorded 207 tests on the Iteration 6 package and browser/tool limitations; no browser pass is claimed on that Mac. The shared resolver respects `CHROME_PATH`, then standard installed locations, and does not bypass policy (D057, D122).
+**Evidence:** `evidence/iteration7/baseline/README-baseline.txt`; `docs/DECISION_REGISTER.md` section 2; `docs/BUILD_STATUS.md`. measured result (sandbox); the Mac log is team-reported.
+**Avoid / status:** Never say the browser tests passed on the Mac. Never mix the sandbox's browser results into the Mac's.
+
+### Q169. What can the team do about browser checks on the Mac without bypassing security policy?
+**Say:** First check whether Google Chrome is already installed at its usual place. If it is, point our scripts at it for that one terminal session. If it is not, or the machine blocks it, we report the browser steps as blocked. We never work around administrator settings.
+**Technical:** On macOS the usual executable is `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`. Confirm it exists with `ls`, and only then `export CHROME_PATH=` to it. A managed machine may still block local navigation, as the team's earlier environment did (`ERR_BLOCKED_BY_ADMINISTRATOR`); that stays BLOCKED (D057, D122).
+**Evidence:** `scripts/lib/devtools.mjs` (reads `CHROME_PATH`); `evidence/iteration7/baseline/README-baseline.txt`. implemented; the Mac result NOT TESTED.
+**Avoid / status:** Do not suggest installing software or changing policy to make tests pass. The mock demo needs no browser tooling to run.
+
+### Q170. Is it accessible to screen readers and to visually impaired learners?
+**Say:** We have automated checks that pass for labels, touch size, contrast, focus and zoom. We have not tested with a screen reader like TalkBack or VoiceOver, so we cannot claim screen-reader support.
+**Technical:** The audit covers 33 state and viewport combinations and 462 checks in headless Chromium: accessible names, 44 px targets, visible focus, AA contrast, 12 px minimum text, language tags, landmarks, reflow. It cannot judge Odia readability, spoken output order or real-phone behaviour (D130).
+**Evidence:** `scripts/accessibility-audit.mjs`; `evidence/iteration7/baseline/accessibility/a11y-report.md`; `docs/CLAIM_EVIDENCE_MATRIX.csv` (C37). measured result (automated); screen reader NOT TESTED.
+**Avoid / status:** Do not say "accessible to blind users" or "WCAG compliant".
+
+### Q171. What is the measured benefit, what is only expected, and how would learning be evaluated?
+**Say:** Measured: the software works as designed in our tests. Expected: that naming the exact misunderstanding helps a learner. Not measured: any learning gain, because no learner has used it. A fair test would need reviewed content and an approved study.
+**Technical:** Measured results are test counts and the 34 of 47 internal agreement for the rule, which are not accuracy. A future study would need teacher-reviewed items, a pre/post test, a comparison group, thresholds set beforehand, and consent for minors (D153). See Q19, Q109, Q110.
+**Evidence:** `docs/PROJECT_GUIDE_PLAIN_LANGUAGE.md` sections 2.8, 2.9 and 5; `docs/CLAIM_EVIDENCE_MATRIX.csv` (C40). measured result (tests); expected benefit; learning outcome NOT TESTED.
+**Avoid / status:** Do not say "improves marks" or "proven". Do not present 72% as accuracy.
+
+### Q172. What is the source and status of what we say about the event rules, API use, schedule, shortlist and prior permission?
+**Say:** The public event and rules pages are official. Our shortlist, the overnight format, "all APIs allowed" and permission for early work are things the team reports, and we have no saved written message. We say that plainly.
+**Technical:** Official (read 13 October 2026): weights 30/20/20/30; Stage 2 "30% Weightage • 50% Elimination"; "external open-source LLM APIs" permitted; mid-evaluation 04:00–07:00 PM Day 1; Rule 4.1 code must be built during competition hours; Rule 3.3 network use is monitored. The rules page has no API rule. Team-reported and unsaved: shortlist, overnight, all APIs, tunnel and device permission, early-work permission (D003, D063, D180–D182).
+**Evidence:** <https://www.nirmit.space/events/nextech>; <https://www.nirmit.space/rules>; `docs/CLAIM_EVIDENCE_MATRIX.csv` (C03, C05, C46). VERIFIED FROM SOURCE (pages); TEAM-REPORTED (messages).
+**Avoid / status:** Never say "the organisers approved this in writing" unless the actual message is saved in the repository. Confirm the assigned slot in writing.
+
+### Q173. What are the seven trust levels, and which one is Pathasetu?
+**Say:** From A0, a developer's own laptop, up to A6, a real service for children. Pathasetu is A1: a private demo with one shared code. Accounts, profiles, roles and school sign-in are not built.
+**Technical:** A0 local; A1 private demo gate; A2 anonymous local profiles; A3 individual accounts; A4 role-based access; A5 school identity; A6 production or minor-user service. Each tier lists identities, credentials, authorisation, data store, threats, mandatory tests and permitted claims. Authentication, authorisation, HTTPS, origin checks, throttling and code gating are kept separate.
+**Evidence:** `docs/AUTHENTICATION_AND_TRUST_LEVELS.md`; OWASP cheat sheets cited there. implemented (A0, A1); NOT IMPLEMENTED (A2–A6).
+**Avoid / status:** Do not describe A1 as "secure". It is demo-grade.
+
+### Q174. Is there a teacher or reviewer role in the app?
+**Say:** No. Reviewing is done outside the app with a spreadsheet and a guide. The app has no teacher screen, no logins and no permissions.
+**Technical:** `docs/CONTENT_REVIEW_WORKSHEET.csv` and a checker confirm a draft carries no reviewer name; a spreadsheet is a human process, not application authorisation. Real roles are tier A4 and need accounts (A3) and an audit log (D098, D191).
+**Evidence:** `docs/REVIEWER_GUIDE.md`; `scripts/lib/content-consistency.mjs`; `docs/AUTHENTICATION_AND_TRUST_LEVELS.md` A4. NOT IMPLEMENTED.
+**Avoid / status:** Do not say "teacher dashboard" or "role-based access".
+
+### Q175. What is the data-protection position for learners under 18?
+**Say:** For the hackathon we use made-up data only. We make no claim about complying with any data-protection law. Real children's data would need legal advice, parent or guardian consent where required, and a privacy design first.
+**Technical:** The Data Protection Rules 2025 were reported by a law-firm summary as notified on 14 November 2025 with phased commencement and a verifiable-consent duty for children's data; we could not read the official MeitY text, and the exemptions are described ambiguously. Dates and duties need a current review by a qualified lawyer (D073, D074).
+**Evidence:** `docs/AUTHENTICATION_AND_TRUST_LEVELS.md` section 5. NOT EVALUATED (legal).
+**Avoid / status:** Never say "DPDP compliant" or "child-safe". Do not give legal advice.
+
+### Q176. What did the Iteration 7 decision audit change in what we say?
+**Say:** We stopped saying "HSC, not Madhyama" as if proven, because the official syllabus does not use those words. We recorded that the book edition and pages are unknown, kept the Mac and sandbox results apart, and wrote down every decision with its evidence.
+**Technical:** Changes: verified board wording; "Electricity" has no sub-topics in the source; the MeitY page could not be read; the event page's API wording and the team's "all APIs" are kept as a conflict; 101 decisions logged with owner, risk and reopen trigger; documentation-integrity tests added. No runtime file changed.
+**Evidence:** `docs/DECISION_AUDIT_REPORT.md`; `docs/DECISION_LOG.csv`; `tests/iteration7-decisions.test.js`. VERIFIED IN CODE/TEST (documents only).
+**Avoid / status:** Do not say the audit "validated" the curriculum choice. It found no conflict in the sources read; item-level validation is still pending.
+
+
+### Q177. What changed in Iteration 11, and what do those tests prove?
+**Say:** The retry recorder now rejects a malformed time before changing the retry counter or queue entry. Tests that failed against the previous code pass after the fix. This improves one known failure case; it does not prove the whole app is defect-free.
+**Technical:** Six tests cover malformed canonical timestamps, state atomicity through the agent wrapper, the retry-limit edge, validator-rejected diagnoses, the normal five-second first backoff and the shipped eight-question duplicate-submit guard. Red-before-fix had four failures; green-after-fix is 6/6; targeted G1 is killed. The full mutation sweep timed out and remains incomplete.
+**Evidence:** `src/core/retry.js`; `tests/iteration11-retry-atomicity.test.js`; `evidence/iteration11/tests-first/`; `evidence/iteration11/mutation-G1/`. Unit-tested for the enumerated cases only.
+**Avoid / status:** Do not quote the current broad mutation run as complete or say all possible retry bugs have been eliminated.
+
+### Q178. With about 50 teams competing, what makes Pathasetu stand out?
+**Say:** The team estimates around 50 teams, but we have not independently verified that number or inspected their projects. We compete by showing one reliable, traceable learning journey and being precise about what works and what is still a draft.
+**Technical:** The potential distinction is a combined design: a constrained misconception workflow, allow-listed validation, visible next-step rationale, offline queue/re-check, and an explicit everyday-Odia/school-Odia/English content bridge with source and review status. Individual ideas exist in adjacent systems; a twelve-system source-only scan cannot prove uniqueness or rank competitors.
+**Evidence:** `docs/COMPETITIVE_LANDSCAPE.md`; `docs/NEXTECH_24H_DEMO_STRATEGY.md`; `docs/FEATURE_OPPORTUNITY_BACKLOG.md`. Market review is a desk review; the team-count input is team-reported.
+**Avoid / status:** Do not claim “first”, “only”, “unique”, or a likely placing. About 50 is not an independently verified count, and competitor quality is unknown.
+
+### Q179. What exact judging criteria does the supplied NEXTECH handout ask us to demonstrate?
+**Say:** Four core criteria are problem understanding, technicalities, presentation and pitch deck. Bonus criteria are regional-language support, ease of use/accessibility, offline compatibility and a justified agentic framework.
+**Technical:** The demo should show the selected learner problem, the controller’s decision trace and actual tool calls, a coherent live end-to-end path, and network-failure recovery. The handout allows deterministic or autonomous workflows and says the choice should fit the problem; it does not give credit merely for adding a framework name.
+**Evidence:** `docs/NEXTECH_24H_DEMO_STRATEGY.md`; the photographed NEXTECH 2.0 problem statement supplied by the team. Scope is transcribed from the supplied images, not reconciled to a later organizer notice here.
+**Avoid / status:** Do not imply that a static mock screen meets the working-MVP requirement or that any bonus feature is proven just because it is documented.
+
+### Q180. How do we show real tool use rather than a chatbot wrapped around an API?
+**Say:** Show the request and the trace: the app loads its session and content, applies the bounded learning workflow, validates the result, records the reason for its next action and queues a re-check if offline. The default checker is still MOCK, not a live LLM.
+**Technical:** The actual app routes are `GET /api/session`, `GET /api/pack` and `POST /api/recheck`. The deterministic controller and validator decide permitted actions; the planner selects the next step and the trace records events. A real HTTP route call proves a real application tool path, but does not prove a hosted-model call.
+**Evidence:** `src/server/server.js`; `src/core/agent.js`; `src/core/validator.js`; `docs/SYSTEM_ARCHITECTURE.md`; `docs/NEXTECH_24H_DEMO_STRATEGY.md`. Model label MOCK.
+**Avoid / status:** Do not call this autonomous multi-agent orchestration or claim live AI. Do not fabricate network-offline events; rehearse them in the environment you actually demonstrate.
+
+### Q181. What are the final submission and evaluation times in the photographed schedule?
+**Say:** The supplied schedule shows Day 1 mid-evaluation from 3:00 PM onwards. On Day 2 it shows GitHub submission access closing at 8:00 AM, the hackathon concluding at 9:00 AM, and final evaluation running 9:00 AM to 12:30 PM.
+**Technical:** Use the participant handout supplied by the team as the current operational schedule, but listen for changes in the official briefing. Freeze features before the submission cutoff, leave time to run checks and rehearse the known-good build, and do not depend on an upload in the final minute.
+**Evidence:** `docs/NEXTECH_24H_DEMO_STRATEGY.md`; photographed 14–15 October 2026 event schedule supplied by the team.
+**Avoid / status:** This is a transcription of the supplied schedule, not a saved written clarification of Rule 4.1 or permission to use pre-event code.
+
+
+### Is anything hard-coded? Which model does it use, and has it been run?
+
+**Say:** The diagnosis, the next-question choice and the retry numbers are no longer fixed in the code: you set a list of models (Ollama on the laptop, then Gemini, then Groq) and the app asks them in that order. We have not run a real model yet; we tested the plumbing against fake servers, and the default on the demo screen is still the labelled mock. Some things stay fixed on purpose: the list of allowed misconceptions for each question, a minimum confidence of 0.65, a simple rule that gives the first feedback while offline, and a built-in planner that is clearly labelled when a model gives no usable next question.
+
+**Technical:** `PATHASETU_MODEL_PROVIDERS=ollama,gemini,groq` with explicit `OLLAMA_MODEL`, `GEMINI_MODEL`, `GROQ_MODEL` (no defaults). The first answer that passes `validateDiagnosis` wins; if none does the route returns `502 all_providers_failed` with codes only. The planner call is validated (existing id, not the same question, reason up to 300 characters) and stored as `learner.nextPlan` with `source` `model`, `deterministic_fallback` or `deterministic_local`. Retry and timing variables are validated at startup and served by `/api/health`. Hosted providers require a strong demo access code; keys travel only in headers. See `docs/MODEL_PROVIDERS.md`, D224–D232.
+
+**If asked "is the AI accurate in Odia?":** we do not know. No real model has been run, no Odia evaluation exists, and the Odia text in the pack is an unreviewed draft.

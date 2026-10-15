@@ -1,0 +1,11 @@
+npm ci=0
+npm test=0 (376/376)
+npm run check=0
+npm run check:content=0 (8 items, all UNREVIEWED_DRAFT)
+npm run preflight=0 (15 pass, 0 warn, 0 fail)
+npm run doctor=0
+npm run evaluate -- --out evidence/iteration13/final/evaluation=0
+npm run mutation -- --out evidence/iteration13/mutation=0 (46/46 KILLED; exact exit captured in mutation-exact.exit)
+npm run capture=2 (BLOCKED: local API capture 10 pass, Chromium navigation blocked; browser journey 0 completed)
+npm run e2e=2 (BLOCKED: 0 browser checks completed; ERR_BLOCKED_BY_ADMINISTRATOR)
+A11Y_OUT=evidence/iteration13/final/accessibility npm run a11y=2 (BLOCKED: 0 accessibility checks completed; ERR_BLOCKED_BY_ADMINISTRATOR)

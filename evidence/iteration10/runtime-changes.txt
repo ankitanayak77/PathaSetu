@@ -1,0 +1,5 @@
+# Iteration 10 declared runtime/tooling changes. public/, content/ and the service worker are intentionally unchanged.
+MODIFIED	src/core/agent.js	Two defects found by the new invariant tests, fixed minimally: (1) answer and queue ids are now checked against ids already in the state, so a repeated clock-and-random id can no longer give two entries the same id; (2) recheckQueued treats a supplied but missing provider diagnosis (null or undefined) as a rejected result instead of silently using the local rule and draining the entry.
+MODIFIED	package.json	Added the npm run mutation command and syntax checks for the mutation runner and its catalogue.
+ADDED	scripts/mutation-check.mjs	Runs the deliberate-fault catalogue against a temporary copy of src/core and reports KILLED or SURVIVED; never modifies the project tree.
+ADDED	scripts/lib/mutants.mjs	Catalogue of 45 deliberate faults and the exact-once edit helper.

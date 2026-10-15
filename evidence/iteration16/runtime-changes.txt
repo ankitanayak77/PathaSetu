@@ -1,0 +1,12 @@
+# Iteration 16 declared runtime changes (append-only chain from Iteration 15). Accounts, dashboards and the learning-loop fixes, built in tested steps.
+# KIND	FILE	REASON
+MODIFIED	public/app.js	Result card shows the answer key, its Odia and English explanation and a Continue button; a fixed Continue bar; plan sentence names who chose the next question; provenance wording per provider; Reset demo.
+MODIFIED	public/index.html	Continue bar and Reset demo button; the progress bar's inline style (refused by the page's own security policy) moves to the stylesheet.
+MODIFIED	public/styles.css	Styles for the answer-key and explanation blocks, the fixed Continue bar, the Reset demo button and the progress bar's starting width.
+MODIFIED	public/sw.js	Network first for app files with a 3 s cache fallback, so an online device always runs current code; cache name v9 to v10; labels.js in the shell.
+MODIFIED	scripts/browser-regression.mjs	Q3 matches the provider-neutral model wording; new scenario for the result card, Continue bar and answer key.
+ADDED	src/core/labels.js	Shared result wording: which re-checks came from a model (RECHECKED_MOCK is the demo rule) and whether an option matches the draft answer key.
+MODIFIED	src/core/mockModel.js	The short-explanation rationale no longer asks for more reasoning after the form is locked.
+MODIFIED	src/core/validator.js	A MISCONCEPTION or NONE result below 0.65 confidence is now kept as UNCERTAIN instead of rejected (a rejection was retried although a model at temperature 0 repeats itself); every other rejection is unchanged.
+MODIFIED	src/server/server.js	Re-check replies say planAttempted, so the browser labels a planner fallback only when a model plan was really tried.
+ADDED	src/core/profiles.js	Parent/child multi-profile switcher, Class 1-10 curriculum subject bands, Stoplight concept runner, and 4-step Agent orchestration strip.

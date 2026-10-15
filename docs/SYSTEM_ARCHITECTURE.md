@@ -2,6 +2,8 @@
 
 Written 13 October 2026 from the files in this repository, not from intentions. Every box below exists in the code. Nothing is shown as planned, because nothing planned is drawn. It is **not** a claim that the app is phone-tested, content-reviewed, deployed or educationally validated; those statuses are in `PROJECT_GUIDE_PLAIN_LANGUAGE.md` and `CLAIM_EVIDENCE_MATRIX.csv`.
 
+**Superseding workspace note (15 October 2026):** this diagram is the earlier as-built reference. The unsafe unauthenticated Firebase sync and disconnected tutor/textbook routes were removed. The source now includes optional Google guardian sign-in and direct Firestore sync guarded by `firestore.rules`; Firebase configuration is incomplete, Rules are not deployed, and no live Firebase behavior is verified. The local demo still works without Firebase. Current cache version is `pathasetu-shell-v12`. See `docs/FIREBASE_ARCHITECTURE.md` and `docs/FIREBASE_SETUP.md`. The official 2026–27 BSE Odisha syllabus supports Electricity at topic level, not item-level textbook/page alignment.
+
 This is the one component reference. `ARCHITECTURE.md` keeps the list of enforced boundaries and the test layers and points here for the picture, so the two cannot disagree about the diagram.
 
 ## 1. The picture
@@ -25,7 +27,7 @@ flowchart TB
     RC["Repair on load<br/>recovery.js"]
     PS["Persistent-storage request<br/>persistence.js"]
     EX["Trace export JSON<br/>export.js, typed text removed"]
-    SW["Service worker + Cache Storage<br/>sw.js cache pathasetu-shell-v8<br/>app shell and listed core modules,<br/>never /api/*"]
+    SW["Service worker + Cache Storage<br/>sw.js cache pathasetu-shell-v12<br/>app shell and listed core modules,<br/>never /api/*"]
     SS[("sessionStorage<br/>demo access code, this tab only")]
   end
 
@@ -125,7 +127,7 @@ Failure and recovery paths are in the diagram as well as the happy path: *server
 | Persistent-storage request | Ask the browser not to clear data | `src/core/persistence.js` | `navigator.storage` | status text | requester (once per page) | `saveRecord` | Unsupported/denied/error shown without promising retention | `storage-resilience.test.js`; e2e |
 | Bridge Practice | Offline matching exercise | `src/core/bridge.js`; UI in `app.js` | pack, item, attempt count | 3 options, one correct | `learner.bridgeAttempts[itemId]` | `renderBridgePractice` | Disabled with a stated reason if the item has no complete mapping or fewer than 3 distinct mappings exist | `bridge.test.js`; e2e K |
 | Trace export | Evidence download | `src/core/export.js` | state, provider, storage status | JSON (format 2) with typed text removed and secrets redacted | none | Download button | Redaction patterns for API keys, bearer tokens, code header, known secrets | `storage-resilience.test.js`; e2e S |
-| Service worker | Offline shell | `public/sw.js` | requests | cached or live responses | Cache Storage `pathasetu-shell-v8` | the browser | Navigation falls back to the cached `/index.html`; `/api/*` and non-GET are never touched | `uiStatic.test.js`; e2e E1, H1, I1, I2 |
+| Service worker | Offline shell | `public/sw.js` | requests | cached or live responses | Cache Storage `pathasetu-shell-v12` | the browser | Navigation falls back to the cached `/index.html`; `/api/*` and non-GET are never touched | `uiStatic.test.js`; e2e E1, H1, I1, I2 |
 | Server and routes | Serve files, four API routes | `src/server/server.js` | HTTP | files, JSON | in-memory rate counters (per route and socket address, capped at 2048 entries) | the browser | 400/401/403/404/405/413/422/429/502/504 as listed in section 5 | `server.test.js`, `access-policy.test.js`, `public-demo.test.js`, `proxy-origin.test.js`; capture |
 | Access control | Demo gate | `src/server/access.js`, `server.js` | `x-pathasetu-demo-code`, `Origin`, `Host` | allow, 401, 403, 429 | failed-attempt window (default 20 per 60 s per client) | routes | Correct code is never refused by the failed-attempt window; counters reset on restart | `access-policy.test.js`, `public-demo.test.js`, `proxy-origin.test.js`; e2e M, T |
 | Mock provider (server) | Default second opinion | `mockModel.js` | body of `/api/recheck` | diagnosis | none | `getDiagnosis` | — | `server.test.js`; capture |
@@ -170,3 +172,22 @@ Note for technical-debt questions: the static route serves any `.js` file in `sr
 No accounts or login; no server-side learner storage; no on-device or local language model; no speech input or output; no Kui or other language switch (the HTML is `lang="en"` with Odia spans marked `lang="or"`); no teacher or parent view; no multi-agent orchestration or agent framework; no analytics; no push notifications. The live provider path exists in code but has never been exercised against the real service.
 
 Evidence for the layers (headless Chromium, 13 Oct 2026): `evidence/iteration5/baseline/`.
+
+## Iteration 15 addition: the model layer
+
+```text
+Browser (public/app.js)
+  -- POST /api/recheck: itemId, optionId, explanation, id-only history -->
+server.js
+  -> provider chain (modelConfig.js, built from modelEnv.js): Ollama, then Gemini, then Groq (your order)
+  <- first answer that passes the allow-list validator
+  -- diagnosis, plan or null, attempt codes -->
+Browser: recheckQueued accepts planOverride only if valid; otherwise the labelled built-in planner
+```
+
+`src/server/providers.js` holds the three clients and the chain; `modelEnv.js` is the pure environment parser shared with preflight; `modelConfig.js` builds the chain. A failed chain returns `502 all_providers_failed` and the browser keeps the queue entry for bounded retry. The default with no provider variables is the labelled mock. Everything above was exercised only against fake servers (`tests/iteration15-server-chain.test.js`, e2e scenario X); see `docs/MODEL_PROVIDERS.md` for the status table and D224–D232.
+# Current workspace correction — 15 October 2026
+
+The architecture described below documents the earlier Class 10 offline-first diagnostic MVP. The Iteration 16 branch added a separate dashboard and experimental APIs; those additions were not represented in the older diagram. In this workspace review, unauthenticated `/api/sync`, `/api/ai-live`, and `/api/textbook-ingest` routes were removed because identity verification, provider routing, source acquisition, and content provenance were incomplete. The local entry flow opens a synthetic demo profile. Optional Google guardian sign-in and direct Firestore progress sync are now present in source, disabled until web configuration is supplied, and gated by `firestore.rules`. The Rules are not deployed and no live sync has been verified. The main configured diagnosis route is separate and has not been called with live keys during this review.
+
+The broader dashboard currently remains a prototype shell. `src/core/profiles.js` contains unverified Class 1–10 and board-specific topic/question drafts, while the actual demonstration pack is the eight-item Class 10 Electricity pack marked unreviewed. Until content is mapped to official editions and reviewed by qualified subject and Odia-language reviewers, the broad catalog must not be described as syllabus-aligned or validated. Current Firebase target/activation gates are in `docs/FIREBASE_ARCHITECTURE.md`; provider setup is in `docs/MODEL_PROVIDERS.md`.

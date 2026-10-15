@@ -7,6 +7,7 @@ import net from 'node:net';
 import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { cleanEnv } from './helpers/cleanEnv.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CODE = 'k3Vq9xT2mZ8wLb4RnY7cPd1e'; // synthetic, 24 characters
@@ -14,7 +15,7 @@ const WRONG = 'k3Vq9xT2mZ8wLb4RnY7cPd1X'; // same length, one character differen
 const BODY = JSON.stringify({ itemId: 'EL01', optionId: 'A', explanation: 'A synthetic test explanation with enough detail.' });
 const TUNNEL = 'https://demo.example.test';
 
-const BASE_ENV = { ...process.env, HOST: '127.0.0.1', PATHASETU_MODEL_PROVIDER: 'mock', GROQ_API_KEY: '', NODE_ENV: 'development', PATHASETU_DEMO_ACCESS_CODE: '', PATHASETU_PUBLIC_DEMO: '', PATHASETU_ALLOW_DRAFT_DEMO: '', PATHASETU_ALLOWED_ORIGINS: '' };
+const BASE_ENV = cleanEnv({ HOST: '127.0.0.1', PATHASETU_MODEL_PROVIDER: 'mock', PATHASETU_MODEL_PROVIDERS: '', GROQ_API_KEY: '', NODE_ENV: 'development', PATHASETU_DEMO_ACCESS_CODE: '', PATHASETU_PUBLIC_DEMO: '', PATHASETU_ALLOW_DRAFT_DEMO: '', PATHASETU_ALLOWED_ORIGINS: '' });
 
 async function freePort() {
   return await new Promise((resolve, reject) => { const s = net.createServer(); s.once('error', reject); s.listen(0, '127.0.0.1', () => { const { port } = s.address(); s.close(() => resolve(port)); }); });

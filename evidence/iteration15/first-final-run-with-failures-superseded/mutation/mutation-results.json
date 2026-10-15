@@ -1,0 +1,1802 @@
+{
+  "node": "v22.22.0",
+  "mode": "plan",
+  "reporter": "tap",
+  "catalogueSize": 46,
+  "state": "FINISHED",
+  "complete": true,
+  "elapsedMs": 11082,
+  "budgetSeconds": 600,
+  "note": "Mutants are applied to a temporary copy of src/core only. A killed mutant means the selected tests failed against the deliberate fault. This is evidence about test sensitivity, not about learning outcomes or model accuracy.",
+  "summary": {
+    "selected": 46,
+    "run": 46,
+    "killed": 46,
+    "survived": 0,
+    "errors": 0,
+    "notRun": 0
+  },
+  "requiredFamilies": [
+    {
+      "family": "a",
+      "mutants": 10,
+      "killed": 10
+    },
+    {
+      "family": "b",
+      "mutants": 3,
+      "killed": 3
+    },
+    {
+      "family": "c",
+      "mutants": 3,
+      "killed": 3
+    }
+  ],
+  "results": [
+    {
+      "id": "A1",
+      "required": "a",
+      "description": "backoff exponent off by one (waits 10 s, 20 s, ... instead of 5 s, 10 s, ...)",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "4 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 9,
+        "failed": 4,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 253,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "a valid ISO timestamp retains the existing bounded retry behaviour"
+      ]
+    },
+    {
+      "id": "A2",
+      "required": "a",
+      "description": "backoff is never capped at maxDelayMs",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 12,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 274,
+      "failingTests": [
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts"
+      ]
+    },
+    {
+      "id": "A3",
+      "required": "a",
+      "description": "retry limit allows one extra automatic attempt (> instead of >=)",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "4 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 9,
+        "failed": 4,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 250,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again"
+      ]
+    },
+    {
+      "id": "A4",
+      "required": "a",
+      "description": "retry limit stops one attempt early",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 10,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 260,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again"
+      ]
+    },
+    {
+      "id": "A5",
+      "required": "a",
+      "description": "no retry limit at all (entries never pause)",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "4 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 9,
+        "failed": 4,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 237,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again"
+      ]
+    },
+    {
+      "id": "A6",
+      "required": "a",
+      "description": "no backoff scheduled after a failure (immediate hot retry)",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "5 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 8,
+        "failed": 5,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 244,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again",
+        "a valid ISO timestamp retains the existing bounded retry behaviour"
+      ]
+    },
+    {
+      "id": "A7",
+      "required": "a",
+      "description": "a paused entry is treated as due",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 11,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 245,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention"
+      ]
+    },
+    {
+      "id": "A8",
+      "required": "a",
+      "description": "default base delay changed from 5 s to 4 s",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 10,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 262,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "a valid ISO timestamp retains the existing bounded retry behaviour"
+      ]
+    },
+    {
+      "id": "A9",
+      "required": "a",
+      "description": "entries saved before bounded retry lose their old attempts count",
+      "groups": [
+        "retry",
+        "legacy"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(legacy entries|a legacy entry))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 5 selected test(s) failed",
+      "baseline": {
+        "executed": 5,
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 5,
+        "passed": 4,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 127,
+      "failingTests": [
+        "legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success"
+      ]
+    },
+    {
+      "id": "B1",
+      "required": "b",
+      "description": "a provider exception removes the queue entry",
+      "groups": [
+        "faults",
+        "success",
+        "retry"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(fault |a rejected diagnosis never reaches|a missing diagnosis))|(?:^(success processes|background re-check|uncertainty is never))|(?:^(default policy|custom policies|a paused entry is excluded))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "8 of 30 selected test(s) failed",
+      "baseline": {
+        "executed": 30,
+        "passed": 30,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 30,
+        "passed": 22,
+        "failed": 8,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 196,
+      "failingTests": [
+        "fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts"
+      ]
+    },
+    {
+      "id": "B2",
+      "required": "b",
+      "description": "a rejected diagnosis removes the queue entry",
+      "groups": [
+        "faults",
+        "success",
+        "retry"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(fault |a rejected diagnosis never reaches|a missing diagnosis))|(?:^(success processes|background re-check|uncertainty is never))|(?:^(default policy|custom policies|a paused entry is excluded))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "19 of 30 selected test(s) failed",
+      "baseline": {
+        "executed": 30,
+        "passed": 30,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 30,
+        "passed": 11,
+        "failed": 19,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 178,
+      "failingTests": [
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault string_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault array_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault number_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault foreign_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ]
+    },
+    {
+      "id": "B3",
+      "required": "b",
+      "description": "an entry is deleted at the moment it pauses",
+      "groups": [
+        "faults",
+        "retry",
+        "manual"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(fault |a rejected diagnosis never reaches|a missing diagnosis))|(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "6 of 30 selected test(s) failed",
+      "baseline": {
+        "executed": 30,
+        "passed": 30,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 30,
+        "passed": 24,
+        "failed": 6,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 169,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "manual retry changes only the retry fields of the chosen entry and nothing else in the state",
+        "repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again"
+      ]
+    },
+    {
+      "id": "B4",
+      "required": null,
+      "description": "the provider-supplied result is ignored when it is missing (Iteration 9 behaviour: silent local fallback)",
+      "groups": [
+        "faults"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(fault |a rejected diagnosis never reaches|a missing diagnosis)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 23 selected test(s) failed",
+      "baseline": {
+        "executed": 23,
+        "passed": 23,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 23,
+        "passed": 20,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 143,
+      "failingTests": [
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "a missing diagnosis from the provider is a failed attempt, never a silent local substitute"
+      ]
+    },
+    {
+      "id": "B5",
+      "required": null,
+      "description": "a rejected diagnosis overwrites the stored answer before it is validated",
+      "groups": [
+        "faults"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(fault |a rejected diagnosis never reaches|a missing diagnosis)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "18 of 23 selected test(s) failed",
+      "baseline": {
+        "executed": 23,
+        "passed": 23,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 23,
+        "passed": 5,
+        "failed": 18,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 145,
+      "failingTests": [
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault string_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault array_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault number_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault foreign_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ]
+    },
+    {
+      "id": "C1",
+      "required": "c",
+      "description": "validator accepts a misconception id from a different question",
+      "groups": [
+        "validator",
+        "faults"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(validator|uncertainty is never))|(?:^(fault |a rejected diagnosis never reaches|a missing diagnosis))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "5 of 26 selected test(s) failed",
+      "baseline": {
+        "executed": 26,
+        "passed": 26,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 26,
+        "passed": 21,
+        "failed": 5,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 148,
+      "failingTests": [
+        "fault foreign_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault made_up_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "a rejected diagnosis never reaches the stored answer or the confirmed misconceptions, even when the caller marks the result trusted",
+        "validator: every own misconception id is accepted and every id that belongs only to a different question is rejected",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ]
+    },
+    {
+      "id": "C2",
+      "required": "c",
+      "description": "validator lets an UNCERTAIN or NONE result carry a misconception id, and the planner then confirms it",
+      "groups": [
+        "validator",
+        "success"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(validator|uncertainty is never))|(?:^(success processes|background re-check|uncertainty is never))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 6 selected test(s) failed",
+      "baseline": {
+        "executed": 6,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 6,
+        "passed": 5,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 129,
+      "failingTests": [
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ]
+    },
+    {
+      "id": "C3",
+      "required": "c",
+      "description": "validator accepts a low-confidence misconception (threshold check removed)",
+      "groups": [
+        "validator",
+        "faults"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(validator|uncertainty is never))|(?:^(fault |a rejected diagnosis never reaches|a missing diagnosis))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 26 selected test(s) failed",
+      "baseline": {
+        "executed": 26,
+        "passed": 26,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 26,
+        "passed": 23,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 136,
+      "failingTests": [
+        "fault low_confidence_misconception: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "a rejected diagnosis never reaches the stored answer or the confirmed misconceptions, even when the caller marks the result trusted",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ]
+    },
+    {
+      "id": "C4",
+      "required": null,
+      "description": "validator confidence threshold lowered from 0.65 to 0.60",
+      "groups": [
+        "validator"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(validator|uncertainty is never)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 3 selected test(s) failed",
+      "baseline": {
+        "executed": 3,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 3,
+        "passed": 2,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 154,
+      "failingTests": [
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ]
+    },
+    {
+      "id": "C5",
+      "required": null,
+      "description": "validator ignores a question-id mismatch",
+      "groups": [
+        "validator",
+        "faults"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(validator|uncertainty is never))|(?:^(fault |a rejected diagnosis never reaches|a missing diagnosis))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 26 selected test(s) failed",
+      "baseline": {
+        "executed": 26,
+        "passed": 26,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 26,
+        "passed": 23,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 172,
+      "failingTests": [
+        "fault wrong_question: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "validator: every own misconception id is accepted and every id that belongs only to a different question is rejected",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ]
+    },
+    {
+      "id": "C6",
+      "required": null,
+      "description": "validator accepts NaN confidence (finite check removed)",
+      "groups": [
+        "validator",
+        "faults"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(validator|uncertainty is never))|(?:^(fault |a rejected diagnosis never reaches|a missing diagnosis))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 26 selected test(s) failed",
+      "baseline": {
+        "executed": 26,
+        "passed": 26,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 26,
+        "passed": 24,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 161,
+      "failingTests": [
+        "fault confidence_nan: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ]
+    },
+    {
+      "id": "C7",
+      "required": null,
+      "description": "validator accepts confidence outside 0..1",
+      "groups": [
+        "validator",
+        "faults"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(validator|uncertainty is never))|(?:^(fault |a rejected diagnosis never reaches|a missing diagnosis))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 26 selected test(s) failed",
+      "baseline": {
+        "executed": 26,
+        "passed": 26,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 26,
+        "passed": 24,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 140,
+      "failingTests": [
+        "fault confidence_above_one: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ]
+    },
+    {
+      "id": "C8",
+      "required": null,
+      "description": "validator reports an array as a different kind of problem (reason code drifts)",
+      "groups": [
+        "validator",
+        "faults"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(validator|uncertainty is never))|(?:^(fault |a rejected diagnosis never reaches|a missing diagnosis))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 26 selected test(s) failed",
+      "baseline": {
+        "executed": 26,
+        "passed": 26,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 26,
+        "passed": 25,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 140,
+      "failingTests": [
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ]
+    },
+    {
+      "id": "C9",
+      "required": null,
+      "description": "an accepted diagnosis is no longer immutable",
+      "groups": [
+        "validator",
+        "faults"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(validator|uncertainty is never))|(?:^(fault |a rejected diagnosis never reaches|a missing diagnosis))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 26 selected test(s) failed",
+      "baseline": {
+        "executed": 26,
+        "passed": 26,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 26,
+        "passed": 25,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 151,
+      "failingTests": [
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ]
+    },
+    {
+      "id": "D1",
+      "required": null,
+      "description": "success does not remove the processed entry (it would be processed again)",
+      "groups": [
+        "success",
+        "faults"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(success processes|background re-check|uncertainty is never))|(?:^(fault |a rejected diagnosis never reaches|a missing diagnosis))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "23 of 27 selected test(s) failed",
+      "baseline": {
+        "executed": 27,
+        "passed": 27,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 27,
+        "passed": 4,
+        "failed": 23,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 141,
+      "failingTests": [
+        "fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ]
+    },
+    {
+      "id": "D2",
+      "required": null,
+      "description": "a background re-check switches the question on screen",
+      "groups": [
+        "success"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(success processes|background re-check|uncertainty is never)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 4 selected test(s) failed",
+      "baseline": {
+        "executed": 4,
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 4,
+        "passed": 3,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 123,
+      "failingTests": [
+        "background re-check leaves the question on screen alone even when its recommendation points to a different question"
+      ]
+    },
+    {
+      "id": "D3",
+      "required": null,
+      "description": "manual retry also erases the cumulative attempts history",
+      "groups": [
+        "manual"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 4 selected test(s) failed",
+      "baseline": {
+        "executed": 4,
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 4,
+        "passed": 2,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 129,
+      "failingTests": [
+        "manual retry changes only the retry fields of the chosen entry and nothing else in the state",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again"
+      ]
+    },
+    {
+      "id": "D4",
+      "required": null,
+      "description": "manual retry does not clear the paused flag",
+      "groups": [
+        "manual"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 4 selected test(s) failed",
+      "baseline": {
+        "executed": 4,
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 4,
+        "passed": 1,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 123,
+      "failingTests": [
+        "manual retry changes only the retry fields of the chosen entry and nothing else in the state",
+        "repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again"
+      ]
+    },
+    {
+      "id": "D5",
+      "required": null,
+      "description": "a repeated manual retry counts again (not idempotent)",
+      "groups": [
+        "manual"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 4 selected test(s) failed",
+      "baseline": {
+        "executed": 4,
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 4,
+        "passed": 2,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 135,
+      "failingTests": [
+        "repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count",
+        "a fresh entry that never failed is not reset by a manual retry"
+      ]
+    },
+    {
+      "id": "D6",
+      "required": null,
+      "description": "manual retry of one entry resets every entry",
+      "groups": [
+        "manual"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 4 selected test(s) failed",
+      "baseline": {
+        "executed": 4,
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 4,
+        "passed": 3,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 146,
+      "failingTests": [
+        "manual retry changes only the retry fields of the chosen entry and nothing else in the state"
+      ]
+    },
+    {
+      "id": "D7",
+      "required": null,
+      "description": "queue capacity allows one entry too many",
+      "groups": [
+        "ids"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(identity|duplicate submit|every refused submission|capacity boundary|a repeated failure report)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 6 selected test(s) failed",
+      "baseline": {
+        "executed": 6,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 6,
+        "passed": 4,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 132,
+      "failingTests": [
+        "every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change",
+        "capacity boundary: the 100th entry is accepted, the 101st is refused, and a drain frees room again"
+      ]
+    },
+    {
+      "id": "D8",
+      "required": null,
+      "description": "queue capacity is checked after the answer is stored (non-atomic refusal)",
+      "groups": [
+        "ids"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(identity|duplicate submit|every refused submission|capacity boundary|a repeated failure report)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 6 selected test(s) failed",
+      "baseline": {
+        "executed": 6,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 6,
+        "passed": 4,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 132,
+      "failingTests": [
+        "every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change",
+        "capacity boundary: the 100th entry is accepted, the 101st is refused, and a drain frees room again"
+      ]
+    },
+    {
+      "id": "D9",
+      "required": null,
+      "description": "the double-submit guard is removed",
+      "groups": [
+        "ids"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(identity|duplicate submit|every refused submission|capacity boundary|a repeated failure report)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 6 selected test(s) failed",
+      "baseline": {
+        "executed": 6,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 6,
+        "passed": 4,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 151,
+      "failingTests": [
+        "duplicate submit (double tap) is refused before anything changes: no extra answer, queue entry, session or trace line",
+        "every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change"
+      ]
+    },
+    {
+      "id": "D10",
+      "required": null,
+      "description": "ids are no longer checked for uniqueness (Iteration 9 behaviour)",
+      "groups": [
+        "ids"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(identity|duplicate submit|every refused submission|capacity boundary|a repeated failure report)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 6 selected test(s) failed",
+      "baseline": {
+        "executed": 6,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 6,
+        "passed": 5,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 125,
+      "failingTests": [
+        "identity (fault injection): ids stay unique when the clock and the random suffix repeat, so one re-check cannot swallow another entry"
+      ]
+    },
+    {
+      "id": "D11",
+      "required": null,
+      "description": "failure trace lines coalesce across different queue entries",
+      "groups": [
+        "trace"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(adjacent repeats|trace is bounded)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 2 selected test(s) failed",
+      "baseline": {
+        "executed": 2,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 2,
+        "passed": 0,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 145,
+      "failingTests": [
+        "adjacent repeats of the same failure for the same entry coalesce; any intervening event keeps them separate and readable",
+        "trace is bounded by 200 lines under thousands of failures, keeps the newest events, and pauses are reported once per entry"
+      ]
+    },
+    {
+      "id": "D12",
+      "required": null,
+      "description": "failure trace lines never coalesce",
+      "groups": [
+        "trace"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(adjacent repeats|trace is bounded)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 2 selected test(s) failed",
+      "baseline": {
+        "executed": 2,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 2,
+        "passed": 1,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 170,
+      "failingTests": [
+        "adjacent repeats of the same failure for the same entry coalesce; any intervening event keeps them separate and readable"
+      ]
+    },
+    {
+      "id": "D13",
+      "required": null,
+      "description": "the trace is no longer bounded",
+      "groups": [
+        "trace"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(adjacent repeats|trace is bounded)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 2 selected test(s) failed",
+      "baseline": {
+        "executed": 2,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 2,
+        "passed": 1,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 129,
+      "failingTests": [
+        "trace is bounded by 200 lines under thousands of failures, keeps the newest events, and pauses are reported once per entry"
+      ]
+    },
+    {
+      "id": "E1",
+      "required": null,
+      "description": "repair keeps duplicate queue ids",
+      "groups": [
+        "repair",
+        "persist",
+        "legacy"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(malformed records|repair keeps|trace stays within its limit|seeded fuzz|oversized saved))|(?:^(JSON save and restore|persistence))|(?:^(legacy entries|a legacy entry))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 10 selected test(s) failed",
+      "baseline": {
+        "executed": 10,
+        "passed": 10,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 10,
+        "passed": 9,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 265,
+      "failingTests": [
+        "repair keeps every usable record around the damage and removes duplicates and junk"
+      ]
+    },
+    {
+      "id": "E2",
+      "required": null,
+      "description": "repair adds a trace line even when nothing needed repair (not idempotent)",
+      "groups": [
+        "repair",
+        "persist",
+        "legacy"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(malformed records|repair keeps|trace stays within its limit|seeded fuzz|oversized saved))|(?:^(JSON save and restore|persistence))|(?:^(legacy entries|a legacy entry))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 10 selected test(s) failed",
+      "baseline": {
+        "executed": 10,
+        "passed": 10,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 10,
+        "passed": 7,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 148,
+      "failingTests": [
+        "JSON save and restore preserves answers, drafts and every queue entry, and the restored entries behave identically",
+        "malformed records of every shape are repaired or replaced without throwing, and the repaired record is a fixed point",
+        "seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries"
+      ]
+    },
+    {
+      "id": "E3",
+      "required": null,
+      "description": "repair silently drops all but the first valid queue entry",
+      "groups": [
+        "repair",
+        "persist",
+        "legacy"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(malformed records|repair keeps|trace stays within its limit|seeded fuzz|oversized saved))|(?:^(JSON save and restore|persistence))|(?:^(legacy entries|a legacy entry))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 10 selected test(s) failed",
+      "baseline": {
+        "executed": 10,
+        "passed": 10,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 10,
+        "passed": 8,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 221,
+      "failingTests": [
+        "repair keeps every usable record around the damage and removes duplicates and junk",
+        "oversized saved collections are cut to their limits: the newest answers and the oldest queue entries are kept"
+      ]
+    },
+    {
+      "id": "E4",
+      "required": null,
+      "description": "repair can throw on a hostile record (safety net removed)",
+      "groups": [
+        "repair",
+        "persist",
+        "legacy"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(malformed records|repair keeps|trace stays within its limit|seeded fuzz|oversized saved))|(?:^(JSON save and restore|persistence))|(?:^(legacy entries|a legacy entry))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 10 selected test(s) failed",
+      "baseline": {
+        "executed": 10,
+        "passed": 10,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 10,
+        "passed": 9,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 252,
+      "failingTests": [
+        "malformed records of every shape are repaired or replaced without throwing, and the repaired record is a fixed point"
+      ]
+    },
+    {
+      "id": "E5",
+      "required": null,
+      "description": "repair does not cap an oversized queue",
+      "groups": [
+        "repair",
+        "persist",
+        "legacy"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(malformed records|repair keeps|trace stays within its limit|seeded fuzz|oversized saved))|(?:^(JSON save and restore|persistence))|(?:^(legacy entries|a legacy entry))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 10 selected test(s) failed",
+      "baseline": {
+        "executed": 10,
+        "passed": 10,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 10,
+        "passed": 9,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 323,
+      "failingTests": [
+        "oversized saved collections are cut to their limits: the newest answers and the oldest queue entries are kept"
+      ]
+    },
+    {
+      "id": "E6",
+      "required": null,
+      "description": "repair does not cap an oversized trace",
+      "groups": [
+        "repair",
+        "persist",
+        "legacy"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(malformed records|repair keeps|trace stays within its limit|seeded fuzz|oversized saved))|(?:^(JSON save and restore|persistence))|(?:^(legacy entries|a legacy entry))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 10 selected test(s) failed",
+      "baseline": {
+        "executed": 10,
+        "passed": 10,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 10,
+        "passed": 9,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 306,
+      "failingTests": [
+        "trace stays within its limit through repair, even when the saved trace is far over it"
+      ]
+    },
+    {
+      "id": "E7",
+      "required": null,
+      "description": "repair drops saved drafts",
+      "groups": [
+        "repair",
+        "persist",
+        "legacy"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(malformed records|repair keeps|trace stays within its limit|seeded fuzz|oversized saved))|(?:^(JSON save and restore|persistence))|(?:^(legacy entries|a legacy entry))"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 10 selected test(s) failed",
+      "baseline": {
+        "executed": 10,
+        "passed": 10,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 10,
+        "passed": 7,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 220,
+      "failingTests": [
+        "JSON save and restore preserves answers, drafts and every queue entry, and the restored entries behave identically",
+        "repair keeps every usable record around the damage and removes duplicates and junk",
+        "persistence: a saved record comes back as an independent copy with the whole queue and retry state, and repair finds nothing to fix"
+      ]
+    },
+    {
+      "id": "F1",
+      "required": null,
+      "description": "memory storage hands out the stored object itself instead of a copy",
+      "groups": [
+        "persist"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(JSON save and restore|persistence)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 3 selected test(s) failed",
+      "baseline": {
+        "executed": 3,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 3,
+        "passed": 2,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 142,
+      "failingTests": [
+        "persistence: a saved record comes back as an independent copy with the whole queue and retry state, and repair finds nothing to fix"
+      ]
+    },
+    {
+      "id": "F2",
+      "required": null,
+      "description": "a rejected durable write overwrites the older durable record with an empty one",
+      "groups": [
+        "persist"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(JSON save and restore|persistence)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 3 selected test(s) failed",
+      "baseline": {
+        "executed": 3,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 3,
+        "passed": 2,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 146,
+      "failingTests": [
+        "persistence fault: when a write is rejected, the older durable record is left alone, the newest state stays available in memory with its whole queue, and the reason holds no learner text"
+      ]
+    },
+    {
+      "id": "G1",
+      "required": "a",
+      "description": "malformed clock is parsed without validation, allowing retry fields to mutate before timestamp failure",
+      "groups": [
+        "atomicity",
+        "retry"
+      ],
+      "selections": [
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(default policy|custom policies|a paused entry is excluded)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "4 of 9 selected test(s) failed",
+      "baseline": {
+        "executed": 9,
+        "passed": 9,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 9,
+        "passed": 5,
+        "failed": 4,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 241,
+      "failingTests": [
+        "scheduleAfterFailure rejects malformed timestamps before mutating any retry field",
+        "recordRecheckDeferred is atomic when the injected clock is invalid",
+        "invalid timestamps are rejected before pausing an entry at the automatic retry limit",
+        "a provider diagnosis rejected by the validator leaves the queue state unchanged when its clock is invalid"
+      ]
+    }
+  ]
+}

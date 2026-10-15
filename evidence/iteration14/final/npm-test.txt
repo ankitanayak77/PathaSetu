@@ -1,0 +1,2306 @@
+
+> pathasetu-mvp@0.1.0 test
+> node --test tests/*.test.js
+
+TAP version 13
+# Subtest: a clean report passes every check
+ok 1 - a clean report passes every check
+  ---
+  duration_ms: 2.122881
+  type: 'test'
+  ...
+# Subtest: each kind of defect is reported by its own check
+ok 2 - each kind of defect is reported by its own check
+  ---
+  duration_ms: 1.648048
+  type: 'test'
+  ...
+# Subtest: the documented thresholds are the ones the audit uses
+ok 3 - the documented thresholds are the ones the audit uses
+  ---
+  duration_ms: 0.270657
+  type: 'test'
+  ...
+# Subtest: the stylesheet keeps the accessibility rules the audit depends on
+ok 4 - the stylesheet keeps the accessibility rules the audit depends on
+  ---
+  duration_ms: 0.263217
+  type: 'test'
+  ...
+# Subtest: the page declares language, viewport zoom, landmarks and decorative glyphs correctly
+ok 5 - the page declares language, viewport zoom, landmarks and decorative glyphs correctly
+  ---
+  duration_ms: 0.398025
+  type: 'test'
+  ...
+# Subtest: development with a configured access code: /api/pack and /api/recheck refuse an unauthorised client and serve an authorised one
+ok 6 - development with a configured access code: /api/pack and /api/recheck refuse an unauthorised client and serve an authorised one
+  ---
+  duration_ms: 364.210902
+  type: 'test'
+  ...
+# Subtest: production with draft demo enabled: /api/pack and /api/recheck refuse an unauthorised client and serve an authorised one
+ok 7 - production with draft demo enabled: /api/pack and /api/recheck refuse an unauthorised client and serve an authorised one
+  ---
+  duration_ms: 279.721124
+  type: 'test'
+  ...
+# Subtest: development without an access code keeps the documented local experience open
+ok 8 - development without an access code keeps the documented local experience open
+  ---
+  duration_ms: 376.216499
+  type: 'test'
+  ...
+# Subtest: production without draft demo serves no unreviewed item, even to an unauthorised client, and offers no draft re-check
+ok 9 - production without draft demo serves no unreviewed item, even to an unauthorised client, and offers no draft re-check
+  ---
+  duration_ms: 269.527144
+  type: 'test'
+  ...
+# Subtest: the smoke script sends the demo access header for the pack as well as the re-check, and stops on a refusal
+ok 10 - the smoke script sends the demo access header for the pack as well as the re-check, and stops on a refusal
+  ---
+  duration_ms: 0.733462
+  type: 'test'
+  ...
+# Subtest: the browser client sends the session-held access code with its pack request and never a provider key
+ok 11 - the browser client sends the session-held access code with its pack request and never a provider key
+  ---
+  duration_ms: 0.961204
+  type: 'test'
+  ...
+# Subtest: initial state records why the first question was selected
+ok 12 - initial state records why the first question was selected
+  ---
+  duration_ms: 1.3814
+  type: 'test'
+  ...
+# Subtest: offline submission persists a provisional proposal and queues a re-check
+ok 13 - offline submission persists a provisional proposal and queues a re-check
+  ---
+  duration_ms: 8.30459
+  type: 'test'
+  ...
+# Subtest: uncertain/empty explanation never confirms a misconception
+ok 14 - uncertain/empty explanation never confirms a misconception
+  ---
+  duration_ms: 0.308476
+  type: 'test'
+  ...
+# Subtest: answer cannot be submitted for a missing question or invalid option
+ok 15 - answer cannot be submitted for a missing question or invalid option
+  ---
+  duration_ms: 0.514828
+  type: 'test'
+  ...
+# Subtest: recheck with an invalid diagnosis is rejected and leaves the queue pending
+ok 16 - recheck with an invalid diagnosis is rejected and leaves the queue pending
+  ---
+  duration_ms: 0.727755
+  type: 'test'
+  ...
+# Subtest: mock re-check drains the queue but remains provisional and preserves current question
+ok 17 - mock re-check drains the queue but remains provisional and preserves current question
+  ---
+  duration_ms: 0.375622
+  type: 'test'
+  ...
+# Subtest: trusted changed diagnosis updates confirmed state without double-counting the prior proposal
+ok 18 - trusted changed diagnosis updates confirmed state without double-counting the prior proposal
+  ---
+  duration_ms: 0.342479
+  type: 'test'
+  ...
+# Subtest: planner prefers an alternative item for a follow-up within the same concept
+ok 19 - planner prefers an alternative item for a follow-up within the same concept
+  ---
+  duration_ms: 0.124568
+  type: 'test'
+  ...
+# Subtest: queue capacity rejects another answer without partially changing learner state
+ok 20 - queue capacity rejects another answer without partially changing learner state
+  ---
+  duration_ms: 1.054857
+  type: 'test'
+  ...
+# Subtest: deferred provider failures increment attempts and append a durable diagnostic trace
+ok 21 - deferred provider failures increment attempts and append a durable diagnostic trace
+  ---
+  duration_ms: 1.727436
+  type: 'test'
+  ...
+# Subtest: the pack yields eight distinct usable mappings
+ok 22 - the pack yields eight distinct usable mappings
+  ---
+  duration_ms: 1.803374
+  type: 'test'
+  ...
+# Subtest: incomplete, placeholder and duplicate mappings are not usable
+ok 23 - incomplete, placeholder and duplicate mappings are not usable
+  ---
+  duration_ms: 1.515796
+  type: 'test'
+  ...
+# Subtest: mappings that share a term conflict and cannot be options for each other
+ok 24 - mappings that share a term conflict and cannot be options for each other
+  ---
+  duration_ms: 0.388595
+  type: 'test'
+  ...
+# Subtest: every question in the pack yields a valid exercise: one correct option, two distinct distractors from other mappings
+ok 25 - every question in the pack yields a valid exercise: one correct option, two distinct distractors from other mappings
+  ---
+  duration_ms: 12.598567
+  type: 'test'
+  ...
+# Subtest: the exercise only uses strings that already exist in the pack (nothing is invented)
+ok 26 - the exercise only uses strings that already exist in the pack (nothing is invented)
+  ---
+  duration_ms: 6.268427
+  type: 'test'
+  ...
+# Subtest: the exercise is deterministic and rotates with the attempt number
+ok 27 - the exercise is deterministic and rotates with the attempt number
+  ---
+  duration_ms: 1.914239
+  type: 'test'
+  ...
+# Subtest: the exercise is disabled, with an explanation, when fewer than three distinct mappings exist
+ok 28 - the exercise is disabled, with an explanation, when fewer than three distinct mappings exist
+  ---
+  duration_ms: 0.525457
+  type: 'test'
+  ...
+# Subtest: the exercise is disabled when too few mappings differ from the target to avoid ambiguity
+ok 29 - the exercise is disabled when too few mappings differ from the target to avoid ambiguity
+  ---
+  duration_ms: 0.182629
+  type: 'test'
+  ...
+# Subtest: grading is exact, and a wrong answer still reveals the source mapping
+ok 30 - grading is exact, and a wrong answer still reveals the source mapping
+  ---
+  duration_ms: 0.541327
+  type: 'test'
+  ...
+# Subtest: unreviewed mappings keep the UNREVIEWED_DRAFT label; only a fully reviewed set drops it
+ok 31 - unreviewed mappings keep the UNREVIEWED_DRAFT label; only a fully reviewed set drops it
+  ---
+  duration_ms: 0.605177
+  type: 'test'
+  ...
+# Subtest: an attempt is recorded in the existing decision trace and a per-question counter
+ok 32 - an attempt is recorded in the existing decision trace and a per-question counter
+  ---
+  duration_ms: 0.875122
+  type: 'test'
+  ...
+# Subtest: revealing the source mapping is traced too
+ok 33 - revealing the source mapping is traced too
+  ---
+  duration_ms: 0.316019
+  type: 'test'
+  ...
+# Subtest: Bridge Practice is offline by construction: no network or model API is referenced or called
+ok 34 - Bridge Practice is offline by construction: no network or model API is referenced or called
+  ---
+  duration_ms: 0.593892
+  type: 'test'
+  ...
+# Subtest: an explicit CHROME_PATH that exists and is executable is used first, even when other browsers are installed
+ok 35 - an explicit CHROME_PATH that exists and is executable is used first, even when other browsers are installed
+  ---
+  duration_ms: 2.845822
+  type: 'test'
+  ...
+# Subtest: an explicit CHROME_PATH that is missing is BLOCKED; a different installed browser is never launched instead
+ok 36 - an explicit CHROME_PATH that is missing is BLOCKED; a different installed browser is never launched instead
+  ---
+  duration_ms: 0.502144
+  type: 'test'
+  ...
+# Subtest: an empty or whitespace CHROME_PATH counts as not configured and normal discovery runs
+ok 37 - an empty or whitespace CHROME_PATH counts as not configured and normal discovery runs
+  ---
+  duration_ms: 0.516926
+  type: 'test'
+  ...
+# Subtest: macOS discovery checks Google Chrome, then Chromium, then Microsoft Edge application bundles, in that order
+ok 38 - macOS discovery checks Google Chrome, then Chromium, then Microsoft Edge application bundles, in that order
+  ---
+  duration_ms: 1.612663
+  type: 'test'
+  ...
+# Subtest: macOS discovery never offers the Linux-only /usr/bin/chromium path
+ok 39 - macOS discovery never offers the Linux-only /usr/bin/chromium path
+  ---
+  duration_ms: 0.378972
+  type: 'test'
+  ...
+# Subtest: Linux discovery covers Chromium and Chrome locations; Windows discovery builds Chrome and Edge paths from the environment
+ok 40 - Linux discovery covers Chromium and Chrome locations; Windows discovery builds Chrome and Edge paths from the environment
+  ---
+  duration_ms: 0.90042
+  type: 'test'
+  ...
+# Subtest: when nothing usable exists the result is BLOCKED with the list of places tried, not an exception
+ok 41 - when nothing usable exists the result is BLOCKED with the list of places tried, not an exception
+  ---
+  duration_ms: 0.626817
+  type: 'test'
+  ...
+# Subtest: the default executable check accepts an executable file and rejects a missing path, a directory and a non-executable file
+ok 42 - the default executable check accepts an executable file and rejects a missing path, a directory and a non-executable file
+  ---
+  duration_ms: 1.710866
+  type: 'test'
+  ...
+# Subtest: the resolver is dependency-free, offline and does not download or launch anything
+ok 43 - the resolver is dependency-free, offline and does not download or launch anything
+  ---
+  duration_ms: 1.485483
+  type: 'test'
+  ...
+# Subtest: launchChrome refuses an invalid explicit path with a BROWSER_BLOCKED error instead of a raw ENOENT
+ok 44 - launchChrome refuses an invalid explicit path with a BROWSER_BLOCKED error instead of a raw ENOENT
+  ---
+  duration_ms: 2.988549
+  type: 'test'
+  ...
+# Subtest: a managed-browser policy refusal is classified as POLICY_BLOCKED and stays distinct from a missing browser
+ok 45 - a managed-browser policy refusal is classified as POLICY_BLOCKED and stays distinct from a missing browser
+  ---
+  duration_ms: 0.402805
+  type: 'test'
+  ...
+# Subtest: the evidence record names the executable, how it was chosen and its version, and carries no secrets
+ok 46 - the evidence record names the executable, how it was chosen and its version, and carries no secrets
+  ---
+  duration_ms: 0.311082
+  type: 'test'
+  ...
+# Subtest: no browser script keeps its own /usr/bin/chromium default; every launcher goes through the shared resolver
+ok 47 - no browser script keeps its own /usr/bin/chromium default; every launcher goes through the shared resolver
+  ---
+  duration_ms: 1.51578
+  type: 'test'
+  ...
+# Subtest: the syntax check covers the new resolver and capture.mjs
+ok 48 - the syntax check covers the new resolver and capture.mjs
+  ---
+  duration_ms: 0.176545
+  type: 'test'
+  ...
+# Subtest: the operator documents explain CHROME_PATH and the macOS app-bundle path, and do not imply that /usr/bin/chromium exists on a Mac
+ok 49 - the operator documents explain CHROME_PATH and the macOS app-bundle path, and do not imply that /usr/bin/chromium exists on a Mac
+  ---
+  duration_ms: 0.664523
+  type: 'test'
+  ...
+# Subtest: managed-browser administrator refusal is a BLOCKED environment result, not a product failure
+ok 50 - managed-browser administrator refusal is a BLOCKED environment result, not a product failure
+  ---
+  duration_ms: 1.869345
+  type: 'test'
+  ...
+# Subtest: an explicitly flagged browser policy error stays BLOCKED even when its message changes
+ok 51 - an explicitly flagged browser policy error stays BLOCKED even when its message changes
+  ---
+  duration_ms: 0.189833
+  type: 'test'
+  ...
+# Subtest: a missing browser stays BLOCKED and is distinguished from an administrator policy refusal
+ok 52 - a missing browser stays BLOCKED and is distinguished from an administrator policy refusal
+  ---
+  duration_ms: 0.144551
+  type: 'test'
+  ...
+# Subtest: ordinary application/test errors remain FAIL instead of being hidden as BLOCKED
+ok 53 - ordinary application/test errors remain FAIL instead of being hidden as BLOCKED
+  ---
+  duration_ms: 0.106703
+  type: 'test'
+  ...
+# Subtest: empty check results cannot be reported as a successful browser run when blocked
+ok 54 - empty check results cannot be reported as a successful browser run when blocked
+  ---
+  duration_ms: 1.296398
+  type: 'test'
+  ...
+# Subtest: a real failed check remains FAIL while an all-passing, unblocked run is PASS
+ok 55 - a real failed check remains FAIL while an all-passing, unblocked run is PASS
+  ---
+  duration_ms: 0.169086
+  type: 'test'
+  ...
+# Subtest: E2E and accessibility runners both use the shared policy classifier and preserve exit 2 semantics
+ok 56 - E2E and accessibility runners both use the shared policy classifier and preserve exit 2 semantics
+  ---
+  duration_ms: 0.998397
+  type: 'test'
+  ...
+# Subtest: CSV helper: quotes, commas, newlines, doubled quotes and a BOM round-trip
+ok 57 - CSV helper: quotes, commas, newlines, doubled quotes and a BOM round-trip
+  ---
+  duration_ms: 3.17822
+  type: 'test'
+  ...
+# Subtest: the shipped pack, worksheet and evaluation template are consistent, and every item is still a draft
+ok 58 - the shipped pack, worksheet and evaluation template are consistent, and every item is still a draft
+  ---
+  duration_ms: 8.502962
+  type: 'test'
+  ...
+# Subtest: the worksheet carries the expected columns and the shipped not-started markers are read as "not reviewed"
+ok 59 - the worksheet carries the expected columns and the shipped not-started markers are read as "not reviewed"
+  ---
+  duration_ms: 1.146992
+  type: 'test'
+  ...
+# Subtest: pack integrity: two correct options, a wrong key, an unused or foreign misconception and a missing bridge are all reported
+ok 60 - pack integrity: two correct options, a wrong key, an unused or foreign misconception and a missing bridge are all reported
+  ---
+  duration_ms: 0.692918
+  type: 'test'
+  ...
+# Subtest: worksheet drift from the pack is reported field by field
+ok 61 - worksheet drift from the pack is reported field by field
+  ---
+  duration_ms: 3.251084
+  type: 'test'
+  ...
+# Subtest: a worksheet row that is not in the pack, a duplicate row and a missing column are reported
+ok 62 - a worksheet row that is not in the pack, a duplicate row and a missing column are reported
+  ---
+  duration_ms: 4.575044
+  type: 'test'
+  ...
+# Subtest: a reviewer or review date cannot appear on an item that is still a draft
+ok 63 - a reviewer or review date cannot appear on an item that is still a draft
+  ---
+  duration_ms: 2.327184
+  type: 'test'
+  ...
+# Subtest: REVIEWED or PUBLISHED needs a real worksheet approval and a matching reviewer name and date in the pack
+ok 64 - REVIEWED or PUBLISHED needs a real worksheet approval and a matching reviewer name and date in the pack
+  ---
+  duration_ms: 4.647371
+  type: 'test'
+  ...
+# Subtest: an approval in the worksheet needs a reviewer name and PASS in all four checks, and values must be from the allowed lists
+ok 65 - an approval in the worksheet needs a reviewer name and PASS in all four checks, and values must be from the allowed lists
+  ---
+  duration_ms: 2.208433
+  type: 'test'
+  ...
+# Subtest: a fully approved worksheet row only produces a note: the pack status is never changed by code
+ok 66 - a fully approved worksheet row only produces a note: the pack status is never changed by code
+  ---
+  duration_ms: 1.949321
+  type: 'test'
+  ...
+# Subtest: the shipped evaluation template has every reviewer field empty and no authored Odia: nobody has reviewed anything
+ok 67 - the shipped evaluation template has every reviewer field empty and no authored Odia: nobody has reviewed anything
+  ---
+  duration_ms: 0.734243
+  type: 'test'
+  ...
+# Subtest: evaluation template: drift from cases.json and missing language/category rows are reported
+ok 68 - evaluation template: drift from cases.json and missing language/category rows are reported
+  ---
+  duration_ms: 7.216626
+  type: 'test'
+  ...
+# Subtest: evaluation template: a reviewer can complete rows and the check accepts them only when they are consistent
+ok 69 - evaluation template: a reviewer can complete rows and the check accepts them only when they are consistent
+  ---
+  duration_ms: 8.702978
+  type: 'test'
+  ...
+# Subtest: evaluation template: reviewer-authored Odia rows need a name, date, label and option, and an empty row cannot carry reviewer fields
+ok 70 - evaluation template: reviewer-authored Odia rows need a name, date, label and option, and an empty row cannot carry reviewer fields
+  ---
+  duration_ms: 4.646562
+  type: 'test'
+  ...
+# Subtest: the checker CLI succeeds on the shipped files
+ok 71 - the checker CLI succeeds on the shipped files
+  ---
+  duration_ms: 54.384665
+  type: 'test'
+  ...
+# Subtest: the Electricity pack is structurally valid and every option mapping is allowlisted
+ok 72 - the Electricity pack is structurally valid and every option mapping is allowlisted
+  ---
+  duration_ms: 2.017343
+  type: 'test'
+  ...
+# Subtest: bilingual draft fields are populated but clearly remain unreviewed
+ok 73 - bilingual draft fields are populated but clearly remain unreviewed
+  ---
+  duration_ms: 0.324686
+  type: 'test'
+  ...
+# Subtest: draft content cannot enter the published release set
+ok 74 - draft content cannot enter the published release set
+  ---
+  duration_ms: 0.532504
+  type: 'test'
+  ...
+# Subtest: invalid content whose option maps to a non-allowlisted misconception is rejected
+ok 75 - invalid content whose option maps to a non-allowlisted misconception is rejected
+  ---
+  duration_ms: 0.193814
+  type: 'test'
+  ...
+# Subtest: content pack rejects an incorrect option without an allowed misconception mapping
+ok 76 - content pack rejects an incorrect option without an allowed misconception mapping
+  ---
+  duration_ms: 0.782578
+  type: 'test'
+  ...
+# Subtest: content pack rejects a correct option mapped to a misconception
+ok 77 - content pack rejects a correct option mapped to a misconception
+  ---
+  duration_ms: 0.66971
+  type: 'test'
+  ...
+# Subtest: content pack rejects an allowlisted misconception that no incorrect option can produce
+ok 78 - content pack rejects an allowlisted misconception that no incorrect option can produce
+  ---
+  duration_ms: 2.19834
+  type: 'test'
+  ...
+# Subtest: reviewed and published content requires reviewer identity and a valid review timestamp
+ok 79 - reviewed and published content requires reviewer identity and a valid review timestamp
+  ---
+  duration_ms: 0.648036
+  type: 'test'
+  ...
+# Subtest: the pack contains two draft questions for each of four Electricity concepts
+ok 80 - the pack contains two draft questions for each of four Electricity concepts
+  ---
+  duration_ms: 0.373014
+  type: 'test'
+  ...
+# Subtest: doctor reports PASS only when runtime, required files, syntax, content, preflight and browser discovery pass
+ok 81 - doctor reports PASS only when runtime, required files, syntax, content, preflight and browser discovery pass
+  ---
+  duration_ms: 3.410929
+  type: 'test'
+  ...
+# Subtest: doctor fails on an unsupported Node runtime, even if its other checks pass
+ok 82 - doctor fails on an unsupported Node runtime, even if its other checks pass
+  ---
+  duration_ms: 0.331421
+  type: 'test'
+  ...
+# Subtest: doctor reports a missing browser as BLOCKED, not as a product failure or an implicit pass
+ok 83 - doctor reports a missing browser as BLOCKED, not as a product failure or an implicit pass
+  ---
+  duration_ms: 0.317145
+  type: 'test'
+  ...
+# Subtest: doctor reports a failed child check as FAIL and does not disclose provider credentials
+ok 84 - doctor reports a failed child check as FAIL and does not disclose provider credentials
+  ---
+  duration_ms: 0.467104
+  type: 'test'
+  ...
+# Subtest: a child timeout or launch error is BLOCKED, not silently converted to PASS
+ok 85 - a child timeout or launch error is BLOCKED, not silently converted to PASS
+  ---
+  duration_ms: 0.45712
+  type: 'test'
+  ...
+# Subtest: an invalid explicit CHROME_PATH is BLOCKED and is never replaced by a different browser
+ok 86 - an invalid explicit CHROME_PATH is BLOCKED and is never replaced by a different browser
+  ---
+  duration_ms: 0.404711
+  type: 'test'
+  ...
+# Subtest: Wilson interval matches known values and handles the edges
+ok 87 - Wilson interval matches known values and handles the edges
+  ---
+  duration_ms: 2.192474
+  type: 'test'
+  ...
+# Subtest: percentile uses the nearest-rank rule and ignores non-numbers
+ok 88 - percentile uses the nearest-rank rule and ignores non-numbers
+  ---
+  duration_ms: 0.258552
+  type: 'test'
+  ...
+# Subtest: both abstention-style reference labels expect UNCERTAIN
+ok 89 - both abstention-style reference labels expect UNCERTAIN
+  ---
+  duration_ms: 0.12482
+  type: 'test'
+  ...
+# Subtest: scoring: a fully matching run, with known counts
+ok 90 - scoring: a fully matching run, with known counts
+  ---
+  duration_ms: 1.260248
+  type: 'test'
+  ...
+# Subtest: scoring: wrong ids, false positives, false confidence and over-abstention are counted separately
+ok 91 - scoring: wrong ids, false positives, false confidence and over-abstention are counted separately
+  ---
+  duration_ms: 0.559801
+  type: 'test'
+  ...
+# Subtest: scoring: errors and rejections count as disagreement, and compatibility is reported apart from agreement
+ok 92 - scoring: errors and rejections count as disagreement, and compatibility is reported apart from agreement
+  ---
+  duration_ms: 1.60338
+  type: 'test'
+  ...
+# Subtest: per-misconception precision and recall are reported only with at least 3 reference cases
+ok 93 - per-misconception precision and recall are reported only with at least 3 reference cases
+  ---
+  duration_ms: 0.40351
+  type: 'test'
+  ...
+# Subtest: a prompt-injection probe is flagged only if the system followed the injected instruction
+ok 94 - a prompt-injection probe is flagged only if the system followed the injected instruction
+  ---
+  duration_ms: 0.322421
+  type: 'test'
+  ...
+# Subtest: dataset: every case is consistent with the pack (items, options, allowed ids) and its category
+ok 95 - dataset: every case is consistent with the pack (items, options, allowed ids) and its category
+  ---
+  duration_ms: 0.834256
+  type: 'test'
+  ...
+# Subtest: dataset: all four categories are present, every item is covered, and no Odia text is included without a reviewer
+ok 96 - dataset: all four categories are present, every item is covered, and no Odia text is included without a reviewer
+  ---
+  duration_ms: 0.648635
+  type: 'test'
+  ...
+# Subtest: the deterministic baseline follows its documented rule on every case and always passes validation
+ok 97 - the deterministic baseline follows its documented rule on every case and always passes validation
+  ---
+  duration_ms: 0.607998
+  type: 'test'
+  ...
+# Subtest: the report states what the numbers are not, separates compatibility from agreement, and never claims Odia ability
+ok 98 - the report states what the numbers are not, separates compatibility from agreement, and never claims Odia ability
+  ---
+  duration_ms: 1.424814
+  type: 'test'
+  ...
+# Subtest: the runner reports BLOCKED (exit 2) and writes no live results when credentials are absent
+ok 99 - the runner reports BLOCKED (exit 2) and writes no live results when credentials are absent
+  ---
+  duration_ms: 64.531984
+  type: 'test'
+  ...
+# Subtest: Groq request uses strict allowed-ID schema, bounded synthetic context, and server-side key
+ok 100 - Groq request uses strict allowed-ID schema, bounded synthetic context, and server-side key
+  ---
+  duration_ms: 1.348483
+  type: 'test'
+  ...
+# Subtest: NONE sentinel is normalized to null before independent validation
+ok 101 - NONE sentinel is normalized to null before independent validation
+  ---
+  duration_ms: 0.30802
+  type: 'test'
+  ...
+# Subtest: strict-schema-related HTTP 400 retries once with best-effort schema
+ok 102 - strict-schema-related HTTP 400 retries once with best-effort schema
+  ---
+  duration_ms: 1.456728
+  type: 'test'
+  ...
+# Subtest: other upstream errors do not expose provider response body
+ok 103 - other upstream errors do not expose provider response body
+  ---
+  duration_ms: 0.890654
+  type: 'test'
+  ...
+# Subtest: timeout aborts a hanging fetch and exposes only a safe timeout code
+ok 104 - timeout aborts a hanging fetch and exposes only a safe timeout code
+  ---
+  duration_ms: 9.889943
+  type: 'test'
+  ...
+# Subtest: request builder rejects an option that does not belong to the item
+ok 105 - request builder rejects an option that does not belong to the item
+  ---
+  duration_ms: 0.256555
+  type: 'test'
+  ...
+# Subtest: the plan documents every column of the results template, and the template header has not drifted
+ok 106 - the plan documents every column of the results template, and the template header has not drifted
+  ---
+  duration_ms: 8.94938
+  type: 'test'
+  ...
+# Subtest: the plan describes the current access behaviour: public demo mode, the throttle message, and the HTTPS runbook
+ok 107 - the plan describes the current access behaviour: public demo mode, the throttle message, and the HTTPS runbook
+  ---
+  duration_ms: 0.410697
+  type: 'test'
+  ...
+# Subtest: the event-day checklist exists and orders the work for all four devices and seven browser combinations
+ok 108 - the event-day checklist exists and orders the work for all four devices and seven browser combinations
+  ---
+  duration_ms: 0.206128
+  type: 'test'
+  ...
+# Subtest: the checklist names the exact version fields to fill and where to read them on each device
+ok 109 - the checklist names the exact version fields to fill and where to read them on each device
+  ---
+  duration_ms: 0.328459
+  type: 'test'
+  ...
+# Subtest: the stop/go checklist gates offline reliability on real-device steps and content on a recorded qualified reviewer decision
+ok 110 - the stop/go checklist gates offline reliability on real-device steps and content on a recorded qualified reviewer decision
+  ---
+  duration_ms: 0.277157
+  type: 'test'
+  ...
+# Subtest: the checklist records nothing as done: every status stays NOT TESTED, with no tester, date or result filled in
+ok 111 - the checklist records nothing as done: every status stays NOT TESTED, with no tester, date or result filled in
+  ---
+  duration_ms: 0.369974
+  type: 'test'
+  ...
+# Subtest: the teacher review guide covers every review dimension and keeps reviewer fields for the reviewer
+ok 112 - the teacher review guide covers every review dimension and keeps reviewer fields for the reviewer
+  ---
+  duration_ms: 0.552024
+  type: 'test'
+  ...
+# Subtest: P10-09 and J07 moved together: the criterion is DONE with existing evidence, the backlog feature says what was built, and only that one criterion changed since Iteration 9
+ok 113 - P10-09 and J07 moved together: the criterion is DONE with existing evidence, the backlog feature says what was built, and only that one criterion changed since Iteration 9
+  ---
+  duration_ms: 18.209655
+  type: 'test'
+  ...
+# Subtest: the mutation run is recorded: every required family and every mutant was killed, none survived, and nothing errored
+ok 114 - the mutation run is recorded: every required family and every mutant was killed, none survived, and nothing errored
+  ---
+  duration_ms: 0.469577
+  type: 'test'
+  ...
+# Subtest: the same mutants were also run against the Iteration 9 unit tests, and the two defects fixed in Iteration 10 were among the survivors
+ok 115 - the same mutants were also run against the Iteration 9 unit tests, and the two defects fixed in Iteration 10 were among the survivors
+  ---
+  duration_ms: 0.338497
+  type: 'test'
+  ...
+# Subtest: the new invariant tests were shown failing before the fix and passing after it
+ok 116 - the new invariant tests were shown failing before the fix and passing after it
+  ---
+  duration_ms: 1.328316
+  type: 'test'
+  ...
+# Subtest: Iteration 10 changed the queue core in exactly the two declared ways, and both are visible in the diff against the preserved Iteration 9 file
+ok 117 - Iteration 10 changed the queue core in exactly the two declared ways, and both are visible in the diff against the preserved Iteration 9 file
+  ---
+  duration_ms: 0.421496
+  type: 'test'
+  ...
+# Subtest: earlier evidence is unchanged: every Iteration 8 and Iteration 9 record and the latest-run files match their recorded digests, and no file was added to those folders
+ok 118 - earlier evidence is unchanged: every Iteration 8 and Iteration 9 record and the latest-run files match their recorded digests, and no file was added to those folders
+  ---
+  duration_ms: 8.813129
+  type: 'test'
+  ...
+# Subtest: the final command log has every required command with an exit status, and the browser results carry their environment
+ok 119 - the final command log has every required command with an exit status, and the browser results carry their environment
+  ---
+  duration_ms: 0.618598
+  type: 'test'
+  ...
+# Subtest: BUILD_STATUS reports Iteration 10 per environment, keeps the Iteration 9 policy block on record, and claims nothing beyond synthetic engineering tests
+ok 120 - BUILD_STATUS reports Iteration 10 per environment, keeps the Iteration 9 policy block on record, and claims nothing beyond synthetic engineering tests
+  ---
+  duration_ms: 2.403688
+  type: 'test'
+  ...
+# Subtest: the Iteration 10 matrix figure is the recomputed one, with the overall, launch, implementation and gate rows and no hard-coded average
+ok 121 - the Iteration 10 matrix figure is the recomputed one, with the overall, launch, implementation and gate rows and no hard-coded average
+  ---
+  duration_ms: 1.570547
+  type: 'test'
+  ...
+# Subtest: NEXTECH strategy maps all four core criteria and four bonus criteria to actual evidence and limits
+ok 122 - NEXTECH strategy maps all four core criteria and four bonus criteria to actual evidence and limits
+  ---
+  duration_ms: 2.491064
+  type: 'test'
+  ...
+# Subtest: Iteration 11 evidence captures a real red-before-fix run and a green-after-fix run for retry atomicity
+ok 123 - Iteration 11 evidence captures a real red-before-fix run and a green-after-fix run for retry atomicity
+  ---
+  duration_ms: 0.49591
+  type: 'test'
+  ...
+# Subtest: Iteration 11 keeps the queue hardening criterion and the eight content items honest without increasing completion counts
+ok 124 - Iteration 11 keeps the queue hardening criterion and the eight content items honest without increasing completion counts
+  ---
+  duration_ms: 5.674731
+  type: 'test'
+  ...
+# Subtest: scheduleAfterFailure rejects malformed timestamps before mutating any retry field
+ok 125 - scheduleAfterFailure rejects malformed timestamps before mutating any retry field
+  ---
+  duration_ms: 2.541434
+  type: 'test'
+  ...
+# Subtest: recordRecheckDeferred is atomic when the injected clock is invalid
+ok 126 - recordRecheckDeferred is atomic when the injected clock is invalid
+  ---
+  duration_ms: 9.586965
+  type: 'test'
+  ...
+# Subtest: invalid timestamps are rejected before pausing an entry at the automatic retry limit
+ok 127 - invalid timestamps are rejected before pausing an entry at the automatic retry limit
+  ---
+  duration_ms: 0.58436
+  type: 'test'
+  ...
+# Subtest: a provider diagnosis rejected by the validator leaves the queue state unchanged when its clock is invalid
+ok 128 - a provider diagnosis rejected by the validator leaves the queue state unchanged when its clock is invalid
+  ---
+  duration_ms: 0.531216
+  type: 'test'
+  ...
+# Subtest: a valid ISO timestamp retains the existing bounded retry behaviour
+ok 129 - a valid ISO timestamp retains the existing bounded retry behaviour
+  ---
+  duration_ms: 0.238095
+  type: 'test'
+  ...
+# Subtest: the shipped eight-question pack refuses a duplicate answer before the learner continues
+ok 130 - the shipped eight-question pack refuses a duplicate answer before the learner continues
+  ---
+  duration_ms: 0.420664
+  type: 'test'
+  ...
+# Subtest: the harness tests were shown failing before the implementation and passing after it
+ok 131 - the harness tests were shown failing before the implementation and passing after it
+  ---
+  duration_ms: 1.18042
+  type: 'test'
+  ...
+# Subtest: the whole-suite cross-check and the targeted G1 run are complete records: every mutant executed tests and none survived
+ok 132 - the whole-suite cross-check and the targeted G1 run are complete records: every mutant executed tests and none survived
+  ---
+  duration_ms: 2.658987
+  type: 'test'
+  ...
+# Subtest: the Iteration 11 harness was profiled before it was changed, and the finding is recorded without claiming a cause
+ok 133 - the Iteration 11 harness was profiled before it was changed, and the finding is recorded without claiming a cause
+  ---
+  duration_ms: 9.539083
+  type: 'test'
+  ...
+# Subtest: the official plan-mode run is complete, killed every mutant, and agrees with the whole-suite run mutant by mutant
+ok 134 - the official plan-mode run is complete, killed every mutant, and agrees with the whole-suite run mutant by mutant
+  ---
+  duration_ms: 1.147516
+  type: 'test'
+  ...
+# Subtest: earlier evidence is unchanged: every Iteration 8 to 11 record and the latest-run files match their recorded digests, and no file was added to those folders
+ok 135 - earlier evidence is unchanged: every Iteration 8 to 11 record and the latest-run files match their recorded digests, and no file was added to those folders
+  ---
+  duration_ms: 9.854904
+  type: 'test'
+  ...
+# Subtest: Iteration 12 changed tooling only: product runtime files are byte-identical to the Iteration 11 record, and the previous tooling bytes are preserved
+ok 136 - Iteration 12 changed tooling only: product runtime files are byte-identical to the Iteration 11 record, and the previous tooling bytes are preserved
+  ---
+  duration_ms: 1.792953
+  type: 'test'
+  ...
+# Subtest: the phase matrix did not move: the criteria list is identical to the Iteration 11 snapshot, 95/196, and the Iteration 12 snapshot matches the live matrix
+ok 137 - the phase matrix did not move: the criteria list is identical to the Iteration 11 snapshot, 95/196, and the Iteration 12 snapshot matches the live matrix
+  ---
+  duration_ms: 4.279673
+  type: 'test'
+  ...
+# Subtest: the quick card uses the real on-screen strings and routes, and claims nothing beyond what ran
+ok 138 - the quick card uses the real on-screen strings and routes, and claims nothing beyond what ran
+  ---
+  duration_ms: 1.057957
+  type: 'test'
+  ...
+# Subtest: BUILD_STATUS reports Iteration 12 per environment, keeps the earlier blocked and incomplete records, and claims nothing beyond synthetic engineering tests
+ok 139 - BUILD_STATUS reports Iteration 12 per environment, keeps the earlier blocked and incomplete records, and claims nothing beyond synthetic engineering tests
+  ---
+  duration_ms: 1.817066
+  type: 'test'
+  ...
+# Subtest: the final command log has every required command with an exit status, in the required order, and the environment is recorded
+ok 140 - the final command log has every required command with an exit status, in the required order, and the environment is recorded
+  ---
+  duration_ms: 1.099316
+  type: 'test'
+  ...
+# Subtest: following the recommendation online visits each of the eight questions once, in order, when every answer is correct
+ok 141 - following the recommendation online visits each of the eight questions once, in order, when every answer is correct
+  ---
+  duration_ms: 11.43749
+  type: 'test'
+  ...
+# Subtest: a wrong first answer still gets its companion question, then the plan moves forward instead of bouncing back
+ok 142 - a wrong first answer still gets its companion question, then the plan moves forward instead of bouncing back
+  ---
+  duration_ms: 0.80982
+  type: 'test'
+  ...
+# Subtest: the re-check recommendation never goes back to a question the learner has already answered while unanswered ones exist
+ok 143 - the re-check recommendation never goes back to a question the learner has already answered while unanswered ones exist
+  ---
+  duration_ms: 0.426363
+  type: 'test'
+  ...
+# Subtest: the concept bonus still prefers an unanswered question of the focused concept (existing behaviour kept)
+ok 144 - the concept bonus still prefers an unanswered question of the focused concept (existing behaviour kept)
+  ---
+  duration_ms: 0.850447
+  type: 'test'
+  ...
+# Subtest: when every question has been answered a recommendation still exists and is not the question just answered
+ok 145 - when every question has been answered a recommendation still exists and is not the question just answered
+  ---
+  duration_ms: 1.34893
+  type: 'test'
+  ...
+# Subtest: a second submit for an already-answered question that has not been continued is rejected (double tap)
+ok 146 - a second submit for an already-answered question that has not been continued is rejected (double tap)
+  ---
+  duration_ms: 8.755936
+  type: 'test'
+  ...
+# Subtest: after the learner continues, the same question can legitimately be answered again later
+ok 147 - after the learner continues, the same question can legitimately be answered again later
+  ---
+  duration_ms: 0.491365
+  type: 'test'
+  ...
+# Subtest: reconcileState replaces a missing current item and clears a recommendation that points at a missing item
+ok 148 - reconcileState replaces a missing current item and clears a recommendation that points at a missing item
+  ---
+  duration_ms: 0.457264
+  type: 'test'
+  ...
+# Subtest: reconcileState leaves a consistent state untouched and adds no trace
+ok 149 - reconcileState leaves a consistent state untouched and adds no trace
+  ---
+  duration_ms: 0.175916
+  type: 'test'
+  ...
+# Subtest: 50 repeated provider failures count 50 attempts but occupy one trace line
+ok 150 - 50 repeated provider failures count 50 attempts but occupy one trace line
+  ---
+  duration_ms: 2.57027
+  type: 'test'
+  ...
+# Subtest: a different event in between starts a new failure line instead of rewriting history
+ok 151 - a different event in between starts a new failure line instead of rewriting history
+  ---
+  duration_ms: 0.348989
+  type: 'test'
+  ...
+# Subtest: repeated invalid diagnoses for one queue entry are coalesced and keep the entry retryable
+ok 152 - repeated invalid diagnoses for one queue entry are coalesced and keep the entry retryable
+  ---
+  duration_ms: 0.721063
+  type: 'test'
+  ...
+# Subtest: all Iteration 5 explanatory documents exist and no unfilled placeholder remains in any document
+ok 153 - all Iteration 5 explanatory documents exist and no unfilled placeholder remains in any document
+  ---
+  duration_ms: 6.825471
+  type: 'test'
+  ...
+# Subtest: the jury bank answers all 126 listed questions in order, then further questions; every answer has the four required parts
+ok 154 - the jury bank answers all 126 listed questions in order, then further questions; every answer has the four required parts
+  ---
+  duration_ms: 4.36097
+  type: 'test'
+  ...
+# Subtest: question references in other documents point at questions that exist
+ok 155 - question references in other documents point at questions that exist
+  ---
+  duration_ms: 3.236302
+  type: 'test'
+  ...
+# Subtest: the claim matrix is well formed: unique IDs, known status words, evidence paths that exist, wording on both sides
+ok 156 - the claim matrix is well formed: unique IDs, known status words, evidence paths that exist, wording on both sides
+  ---
+  duration_ms: 3.792553
+  type: 'test'
+  ...
+# Subtest: stack statements are true: no dependencies, no lockfile packages, no agent framework or UI framework referenced in source
+ok 157 - stack statements are true: no dependencies, no lockfile packages, no agent framework or UI framework referenced in source
+  ---
+  duration_ms: 5.399795
+  type: 'test'
+  ...
+# Subtest: the architecture document has the only diagram: one Mermaid block in SYSTEM_ARCHITECTURE.md and none in ARCHITECTURE.md
+ok 158 - the architecture document has the only diagram: one Mermaid block in SYSTEM_ARCHITECTURE.md and none in ARCHITECTURE.md
+  ---
+  duration_ms: 0.657008
+  type: 'test'
+  ...
+# Subtest: the navigation guide covers every control id in the page, the fifteen journeys and the NOT IMPLEMENTED list
+ok 159 - the navigation guide covers every control id in the page, the fifteen journeys and the NOT IMPLEMENTED list
+  ---
+  duration_ms: 1.027206
+  type: 'test'
+  ...
+# Subtest: the guide and bank state the facts the code supports: mock default, Groq never run live, no phone tested, content unreviewed
+ok 160 - the guide and bank state the facts the code supports: mock default, Groq never run live, no phone tested, content unreviewed
+  ---
+  duration_ms: 2.518493
+  type: 'test'
+  ...
+# Subtest: prohibited claims appear only where they are being warned against
+ok 161 - prohibited claims appear only where they are being warned against
+  ---
+  duration_ms: 15.648641
+  type: 'test'
+  ...
+# Subtest: the reviewer guide carries the Iteration 5 additions and still writes no reviewer identity anywhere
+ok 162 - the reviewer guide carries the Iteration 5 additions and still writes no reviewer identity anywhere
+  ---
+  duration_ms: 1.093309
+  type: 'test'
+  ...
+# Subtest: Iteration 5 evidence records the gates as BLOCKED or NOT TESTED and never as passed
+ok 163 - Iteration 5 evidence records the gates as BLOCKED or NOT TESTED and never as passed
+  ---
+  duration_ms: 0.462647
+  type: 'test'
+  ...
+# Subtest: every response carries the documented security headers (CSP, nosniff, no-referrer)
+ok 164 - every response carries the documented security headers (CSP, nosniff, no-referrer)
+  ---
+  duration_ms: 233.343489
+  type: 'test'
+  ...
+# Subtest: traversal and private paths are refused: server code, the content folder, package files and encoded dot segments return no content
+ok 165 - traversal and private paths are refused: server code, the content folder, package files and encoded dot segments return no content
+  ---
+  duration_ms: 224.998369
+  type: 'test'
+  ...
+# Subtest: the static route serves browser modules from src/core by file-name pattern (documented in SYSTEM_ARCHITECTURE.md section 5)
+ok 166 - the static route serves browser modules from src/core by file-name pattern (documented in SYSTEM_ARCHITECTURE.md section 5)
+  ---
+  duration_ms: 215.040562
+  type: 'test'
+  ...
+# Subtest: the hosted-model request carries the learner’s typed explanation, the answer key and the Odia drafts (the privacy answers say so)
+ok 167 - the hosted-model request carries the learner’s typed explanation, the answer key and the Odia drafts (the privacy answers say so)
+  ---
+  duration_ms: 2.721026
+  type: 'test'
+  ...
+# Subtest: the shipped app always re-checks with trusted:false, so confirmed gaps are never set from the UI (documented in the guide and Q129)
+ok 168 - the shipped app always re-checks with trusted:false, so confirmed gaps are never set from the UI (documented in the guide and Q129)
+  ---
+  duration_ms: 1.107893
+  type: 'test'
+  ...
+# Subtest: the name is explained as the team’s intended meaning, a bridge for learning between languages, without claiming a verified translation
+ok 169 - the name is explained as the team’s intended meaning, a bridge for learning between languages, without claiming a verified translation
+  ---
+  duration_ms: 6.452605
+  type: 'test'
+  ...
+# Subtest: current result counts come from one marker in BUILD_STATUS; older figures appear only when labelled as baseline or as an earlier iteration
+ok 170 - current result counts come from one marker in BUILD_STATUS; older figures appear only when labelled as baseline or as an earlier iteration
+  ---
+  duration_ms: 7.289166
+  type: 'test'
+  ...
+# Subtest: the marker matches the saved final evidence once that evidence exists, and the baseline evidence is the untouched Iteration 5 result
+ok 171 - the marker matches the saved final evidence once that evidence exists, and the baseline evidence is the untouched Iteration 5 result
+  ---
+  duration_ms: 5.147405
+  type: 'test'
+  ...
+# Subtest: where the learner’s words go is stated precisely: local storage when it works, the server on re-check, the hosted model only if configured
+ok 172 - where the learner’s words go is stated precisely: local storage when it works, the server on re-check, the hosted model only if configured
+  ---
+  duration_ms: 14.801807
+  type: 'test'
+  ...
+# Subtest: shared-device wording: a family phone is the target setting, but there is one local session record and no learner profiles
+ok 173 - shared-device wording: a family phone is the target setting, but there is one local session record and no learner profiles
+  ---
+  duration_ms: 6.847765
+  type: 'test'
+  ...
+# Subtest: claims stronger than the evidence stay out unless the same line negates or qualifies them
+ok 174 - claims stronger than the evidence stay out unless the same line negates or qualifies them
+  ---
+  duration_ms: 5.009442
+  type: 'test'
+  ...
+# Subtest: organiser permission and API use are labelled team-reported unless a saved message exists; the rubric weights are not confused with the stage split
+ok 175 - organiser permission and API use are labelled team-reported unless a saved message exists; the rubric weights are not confused with the stage split
+  ---
+  duration_ms: 5.145456
+  type: 'test'
+  ...
+# Subtest: the shipped UI names the provider it is using: the answer-box hint and footer depend on the server-reported provider, and the cache name matches the docs
+ok 176 - the shipped UI names the provider it is using: the answer-box hint and footer depend on the server-reported provider, and the cache name matches the docs
+  ---
+  duration_ms: 1.68998
+  type: 'test'
+  ...
+# Subtest: the plain-language guide answers each question the Iteration 6 brief lists, including what tests prove, where data goes and how learning would be measured
+ok 177 - the plain-language guide answers each question the Iteration 6 brief lists, including what tests prove, where data goes and how learning would be measured
+  ---
+  duration_ms: 1.100429
+  type: 'test'
+  ...
+# Subtest: the decision log is well formed: fixed columns, unique IDs, known statuses and owners, no invented names or dates
+ok 178 - the decision log is well formed: fixed columns, unique IDs, known statuses and owners, no invented names or dates
+  ---
+  duration_ms: 14.166015
+  type: 'test'
+  ...
+# Subtest: every evidence token in the decision log resolves: repo paths exist, URLs are on a source list, claim IDs exist, team-reported items are labelled
+ok 179 - every evidence token in the decision log resolves: repo paths exist, URLs are on a source list, claim IDs exist, team-reported items are labelled
+  ---
+  duration_ms: 22.356893
+  type: 'test'
+  ...
+# Subtest: the register is authoritative and in step with the log: its generated index equals the CSV, and it carries the vocabulary and the three environments
+ok 180 - the register is authoritative and in step with the log: its generated index equals the CSV, and it carries the vocabulary and the three environments
+  ---
+  duration_ms: 6.395056
+  type: 'test'
+  ...
+# Subtest: the board/class/book comparison cites its sources with their stated versions and keeps source, code and team claims apart
+ok 181 - the board/class/book comparison cites its sources with their stated versions and keeps source, code and team claims apart
+  ---
+  duration_ms: 0.753534
+  type: 'test'
+  ...
+# Subtest: the eight-row crosswalk matches the pack, keeps book fields UNKNOWN and reviewer fields blank, and the comparison page lists the same facts
+ok 182 - the eight-row crosswalk matches the pack, keeps book fields UNKNOWN and reviewer fields blank, and the comparison page lists the same facts
+  ---
+  duration_ms: 1.753884
+  type: 'test'
+  ...
+# Subtest: the trust-level document covers A0 to A6 with every required field, separates the six access concepts and states the numbers the code uses
+ok 183 - the trust-level document covers A0 to A6 with every required field, separates the six access concepts and states the numbers the code uses
+  ---
+  duration_ms: 1.17285
+  type: 'test'
+  ...
+# Subtest: the Mac log, the build sandbox and the received package are recorded as separate environments, and no document says a browser check passed on the Mac
+ok 184 - the Mac log, the build sandbox and the received package are recorded as separate environments, and no document says a browser check passed on the Mac
+  ---
+  duration_ms: 9.885691
+  type: 'test'
+  ...
+# Subtest: historical Iteration 7 evidence is unaltered: its recorded runtime hashes and every earlier evidence file still match the digests taken before Iteration 8
+ok 185 - historical Iteration 7 evidence is unaltered: its recorded runtime hashes and every earlier evidence file still match the digests taken before Iteration 8
+  ---
+  duration_ms: 12.370056
+  type: 'test'
+  ...
+# Subtest: Iteration 8–14 runtime hashes form an append-only declared chain and preserve each prior runtime version
+ok 186 - Iteration 8–14 runtime hashes form an append-only declared chain and preserve each prior runtime version
+  ---
+  duration_ms: 13.140156
+  type: 'test'
+  ...
+# Subtest: the question bank answers every Iteration 7 topic with a path or URL and a limit, and every decision ID cited in the documents exists
+ok 187 - the question bank answers every Iteration 7 topic with a path or URL and a limit, and every decision ID cited in the documents exists
+  ---
+  duration_ms: 14.677083
+  type: 'test'
+  ...
+# Subtest: Iteration 7 wording rules: no verified HSC-versus-Madhyama claim, no unqualified alignment or approval claim, no compliance claim, every new document is linked and every new claim row exists
+ok 188 - Iteration 7 wording rules: no verified HSC-versus-Madhyama claim, no unqualified alignment or approval claim, no compliance claim, every new document is linked and every new claim row exists
+  ---
+  duration_ms: 12.262822
+  type: 'test'
+  ...
+# Subtest: the board coverage register has the seven tracks plus the other-state row, with every required field and a scope word
+ok 189 - the board coverage register has the seven tracks plus the other-state row, with every required field and a scope word
+  ---
+  duration_ms: 5.567901
+  type: 'test'
+  ...
+# Subtest: only BSE HSC Class X has any implementation; no other board is described as supported, reviewed or authored
+ok 190 - only BSE HSC Class X has any implementation; no other board is described as supported, reviewed or authored
+  ---
+  duration_ms: 1.169425
+  type: 'test'
+  ...
+# Subtest: CHSE is tracked as +2 only, CISCE is separated from the ICSE exam, WBBSE from WBCHSE
+ok 191 - CHSE is tracked as +2 only, CISCE is separated from the ICSE exam, WBBSE from WBCHSE
+  ---
+  duration_ms: 1.680445
+  type: 'test'
+  ...
+# Subtest: every register track appears in the comparison document, and the document names the seven tracks without a board picker
+ok 192 - every register track appears in the comparison document, and the document names the seven tracks without a board picker
+  ---
+  duration_ms: 0.579243
+  type: 'test'
+  ...
+# Subtest: no document or README claims Pathasetu is first, only, unique or without a competitor (negated mentions are allowed)
+ok 193 - no document or README claims Pathasetu is first, only, unique or without a competitor (negated mentions are allowed)
+  ---
+  duration_ms: 17.849464
+  type: 'test'
+  ...
+# Subtest: the shipped page and script contain no novelty claim
+ok 194 - the shipped page and script contain no novelty claim
+  ---
+  duration_ms: 2.649524
+  type: 'test'
+  ...
+# Subtest: the competitive landscape covers the required systems with only honest test statuses and the required conclusion
+ok 195 - the competitive landscape covers the required systems with only honest test statuses and the required conclusion
+  ---
+  duration_ms: 0.71961
+  type: 'test'
+  ...
+# Subtest: the landscape cites dated sources, marks Jigyaso unverified and does not quote ASER numbers
+ok 196 - the landscape cites dated sources, marks Jigyaso unverified and does not quote ASER numbers
+  ---
+  duration_ms: 0.548422
+  type: 'test'
+  ...
+# Subtest: the backlog CSV has no blank or duplicate IDs, all fields filled, and valid priority, decision, effort and scores
+ok 197 - the backlog CSV has no blank or duplicate IDs, all fields filled, and valid priority, decision, effort and scores
+  ---
+  duration_ms: 6.910921
+  type: 'test'
+  ...
+# Subtest: the backlog covers all eleven domains, rejects what it should, and treats NOW as "in place or done", never as a proposal
+ok 198 - the backlog covers all eleven domains, rejects what it should, and treats NOW as "in place or done", never as a proposal
+  ---
+  duration_ms: 2.683576
+  type: 'test'
+  ...
+# Subtest: the backlog markdown lists every CSV row, states the scoring direction and has no combined score
+ok 199 - the backlog markdown lists every CSV row, states the scoring direction and has no combined score
+  ---
+  duration_ms: 6.520856
+  type: 'test'
+  ...
+# Subtest: phase criteria have unique IDs for P0 to P19, known states, and DONE rows carry TEST or FILE evidence that exists
+ok 200 - phase criteria have unique IDs for P0 to P19, known states, and DONE rows carry TEST or FILE evidence that exists
+  ---
+  duration_ms: 3.724418
+  type: 'test'
+  ...
+# Subtest: a gate, a review or a real-device result is never DONE merely because a document or test exists
+ok 201 - a gate, a review or a real-device result is never DONE merely because a document or test exists
+  ---
+  duration_ms: 12.991024
+  type: 'test'
+  ...
+# Subtest: the matrix numbers equal the criteria counts: per phase, overall, implementation and readiness; the overall is not a mean of phases
+ok 202 - the matrix numbers equal the criteria counts: per phase, overall, implementation and readiness; the overall is not a mean of phases
+  ---
+  duration_ms: 3.721703
+  type: 'test'
+  ...
+# Subtest: the Iteration 8 phase-matrix snapshot stays historical and is not overwritten by Iteration 9
+ok 203 - the Iteration 8 phase-matrix snapshot stays historical and is not overwritten by Iteration 9
+  ---
+  duration_ms: 1.249119
+  type: 'test'
+  ...
+# Subtest: the Iteration 9 phase-matrix snapshot stays historical and is not overwritten by Iteration 10
+ok 204 - the Iteration 9 phase-matrix snapshot stays historical and is not overwritten by Iteration 10
+  ---
+  duration_ms: 0.920659
+  type: 'test'
+  ...
+# Subtest: the Iteration 10 phase-matrix snapshot matches the current unique criteria and current matrix
+ok 205 - the Iteration 10 phase-matrix snapshot matches the current unique criteria and current matrix
+  ---
+  duration_ms: 1.106687
+  type: 'test'
+  ...
+# Subtest: the per-board table covers the seven tracks, keeps four states apart, and agrees with the register
+ok 206 - the per-board table covers the seven tracks, keeps four states apart, and agrees with the register
+  ---
+  duration_ms: 1.188503
+  type: 'test'
+  ...
+# Subtest: the matrix, the backlog and BUILD_STATUS link to each other, and BUILD_STATUS quotes the matrix overall figure
+ok 207 - the matrix, the backlog and BUILD_STATUS link to each other, and BUILD_STATUS quotes the matrix overall figure
+  ---
+  duration_ms: 1.821369
+  type: 'test'
+  ...
+# Subtest: the Rule 4.1 record keeps the status UNCONFIRMED, the message UNSENT, and claims no approval or compliance
+ok 208 - the Rule 4.1 record keeps the status UNCONFIRMED, the message UNSENT, and claims no approval or compliance
+  ---
+  duration_ms: 11.121881
+  type: 'test'
+  ...
+# Subtest: the default provider is still the mock and the Iteration 8 resolver adds no dependency
+ok 209 - the default provider is still the mock and the Iteration 8 resolver adds no dependency
+  ---
+  duration_ms: 0.398709
+  type: 'test'
+  ...
+# Subtest: mutant ids are unique and every mutant has a description and at least one edit
+ok 210 - mutant ids are unique and every mutant has a description and at least one edit
+  ---
+  duration_ms: 1.08993
+  type: 'test'
+  ...
+# Subtest: every mutant applies to the current source exactly once per edit and changes it
+ok 211 - every mutant applies to the current source exactly once per edit and changes it
+  ---
+  duration_ms: 1.288669
+  type: 'test'
+  ...
+# Subtest: the three required families (retry timing/limit, drain on error, validator foreign id / confirmed uncertainty) each have mutants
+ok 212 - the three required families (retry timing/limit, drain on error, validator foreign id / confirmed uncertainty) each have mutants
+  ---
+  duration_ms: 0.526217
+  type: 'test'
+  ...
+# Subtest: applying an edit whose text is missing or ambiguous is an error, not a silent no-op
+ok 213 - applying an edit whose text is missing or ambiguous is an error, not a silent no-op
+  ---
+  duration_ms: 0.783861
+  type: 'test'
+  ...
+# Subtest: the shipped source files are not touched by importing or applying mutants
+ok 214 - the shipped source files are not touched by importing or applying mutants
+  ---
+  duration_ms: 0.295933
+  type: 'test'
+  ...
+# Subtest: Iteration 11 includes a mutant for malformed retry timestamps mutating state before validation
+ok 215 - Iteration 11 includes a mutant for malformed retry timestamps mutating state before validation
+  ---
+  duration_ms: 0.440592
+  type: 'test'
+  ...
+# Subtest: an unknown mutant id is an error, not an empty successful run
+ok 216 - an unknown mutant id is an error, not an empty successful run
+  ---
+  duration_ms: 50.694463
+  type: 'test'
+  ...
+# Subtest: --dry-run prints the plan without running anything, and the default output folder is the current iteration, never an earlier one
+ok 217 - --dry-run prints the plan without running anything, and the default output folder is the current iteration, never an earlier one
+  ---
+  duration_ms: 103.949195
+  type: 'test'
+  ...
+# Subtest: --list shows the test groups chosen for each mutant
+ok 218 - --list shows the test groups chosen for each mutant
+  ---
+  duration_ms: 48.192014
+  type: 'test'
+  ...
+# Subtest: a partial run records, for every mutant, its plan, the tests executed before and after, the outcome and the time, and says it is partial
+ok 219 - a partial run records, for every mutant, its plan, the tests executed before and after, the outcome and the time, and says it is partial
+  ---
+  duration_ms: 910.312046
+  type: 'test'
+  ...
+# Subtest: a run that exhausts its time budget is INCOMPLETE: unrun mutants are NOT_RUN, no score is claimed and the exit code is 3
+ok 220 - a run that exhausts its time budget is INCOMPLETE: unrun mutants are NOT_RUN, no score is claimed and the exit code is 3
+  ---
+  duration_ms: 280.0302
+  type: 'test'
+  ...
+# Subtest: full-suite mode runs every mutant against all invariant tests and records that mode
+ok 221 - full-suite mode runs every mutant against all invariant tests and records that mode
+  ---
+  duration_ms: 1906.605988
+  type: 'test'
+  ...
+# Subtest: the script does not use the default (spec/TAP-dependent) reporter and states the reporter it forces
+ok 222 - the script does not use the default (spec/TAP-dependent) reporter and states the reporter it forces
+  ---
+  duration_ms: 0.380996
+  type: 'test'
+  ...
+# Subtest: an existing results file is never replaced silently: a second run into the same folder is refused unless --overwrite is given
+ok 223 - an existing results file is never replaced silently: a second run into the same folder is refused unless --overwrite is given
+  ---
+  duration_ms: 771.434
+  type: 'test'
+  ...
+# Subtest: parseTap reads the TAP summary and counts only tests that actually ran
+ok 224 - parseTap reads the TAP summary and counts only tests that actually ran
+  ---
+  duration_ms: 2.468308
+  type: 'test'
+  ...
+# Subtest: a plan list with a missing selector, an unknown mutant, an empty plan, an unknown group or a bad pattern is rejected
+ok 225 - a plan list with a missing selector, an unknown mutant, an empty plan, an unknown group or a bad pattern is rejected
+  ---
+  duration_ms: 1.135081
+  type: 'test'
+  ...
+# Subtest: groups on the same file merge into one selection, and a group without a pattern selects the whole file
+ok 226 - groups on the same file merge into one selection, and a group without a pattern selects the whole file
+  ---
+  duration_ms: 0.320528
+  type: 'test'
+  ...
+# Subtest: a selector that matches zero tests, and a file whose tests all skip, both execute nothing
+ok 227 - a selector that matches zero tests, and a file whose tests all skip, both execute nothing
+  ---
+  duration_ms: 293.201949
+  type: 'test'
+  ...
+# Subtest: judge: KILLED only if the unmutated run passes, tests executed, and the mutated run fails the same number of tests it ran
+ok 228 - judge: KILLED only if the unmutated run passes, tests executed, and the mutated run fails the same number of tests it ran
+  ---
+  duration_ms: 635.481465
+  type: 'test'
+  ...
+# Subtest: the catalogue keeps all 46 mutants and every one has a test plan made of known groups
+ok 229 - the catalogue keeps all 46 mutants and every one has a test plan made of known groups
+  ---
+  duration_ms: 1.03711
+  type: 'test'
+  ...
+# Subtest: every test group matches real tests in the shipped files and passes on the unmutated source
+ok 230 - every test group matches real tests in the shipped files and passes on the unmutated source
+  ---
+  duration_ms: 1623.664431
+  type: 'test'
+  ...
+# Subtest: the harness helpers use no timers, network or unseeded randomness
+ok 231 - the harness helpers use no timers, network or unseeded randomness
+  ---
+  duration_ms: 0.781955
+  type: 'test'
+  ...
+# Subtest: the plan lists the four required devices with their browsers, and HTTPS for iPhone
+ok 232 - the plan lists the four required devices with their browsers, and HTTPS for iPhone
+  ---
+  duration_ms: 1.399693
+  type: 'test'
+  ...
+# Subtest: the numbered steps are contiguous and the results template has one row per combination and step
+ok 233 - the numbered steps are contiguous and the results template has one row per combination and step
+  ---
+  duration_ms: 3.090927
+  type: 'test'
+  ...
+# Subtest: every row of the shipped template is NOT TESTED with no tester, date, version or evidence filled in
+ok 234 - every row of the shipped template is NOT TESTED with no tester, date, version or evidence filled in
+  ---
+  duration_ms: 1.655997
+  type: 'test'
+  ...
+# Subtest: the mandatory steps in the template match the acceptance rule written in the plan
+ok 235 - the mandatory steps in the template match the acceptance rule written in the plan
+  ---
+  duration_ms: 0.340533
+  type: 'test'
+  ...
+# Subtest: the plan never records a phone as tested, and states what the headless audit does not cover
+ok 236 - the plan never records a phone as tested, and states what the headless audit does not cover
+  ---
+  duration_ms: 0.44492
+  type: 'test'
+  ...
+# Subtest: a safe local mock configuration passes, states that content is unreviewed, and makes no live provider request
+ok 237 - a safe local mock configuration passes, states that content is unreviewed, and makes no live provider request
+  ---
+  duration_ms: 531.649762
+  type: 'test'
+  ...
+# Subtest: public demo mode without a code fails, names the variable, and prints no secret
+ok 238 - public demo mode without a code fails, names the variable, and prints no secret
+  ---
+  duration_ms: 207.526106
+  type: 'test'
+  ...
+# Subtest: a weak code, whitespace or ambiguous public-demo value fails without echoing the value
+ok 239 - a weak code, whitespace or ambiguous public-demo value fails without echoing the value
+  ---
+  duration_ms: 1216.022168
+  type: 'test'
+  ...
+# Subtest: a public demo with a strong code and the exact HTTPS tunnel origin passes, checks the Host-rewriting route, and hides the code
+ok 240 - a public demo with a strong code and the exact HTTPS tunnel origin passes, checks the Host-rewriting route, and hides the code
+  ---
+  duration_ms: 486.915849
+  type: 'test'
+  ...
+# Subtest: --expect-origin that is missing from PATHASETU_ALLOWED_ORIGINS fails, as does an invalid expectation
+ok 241 - --expect-origin that is missing from PATHASETU_ALLOWED_ORIGINS fails, as does an invalid expectation
+  ---
+  duration_ms: 468.301491
+  type: 'test'
+  ...
+# Subtest: wildcard, path and credential origins fail without echoing credentials
+ok 242 - wildcard, path and credential origins fail without echoing credentials
+  ---
+  duration_ms: 677.052866
+  type: 'test'
+  ...
+# Subtest: a non-local tunnel origin without public demo mode fails: the tunnel would expose an open development server
+ok 243 - a non-local tunnel origin without public demo mode fails: the tunnel would expose an open development server
+  ---
+  duration_ms: 149.212293
+  type: 'test'
+  ...
+# Subtest: binding to all interfaces without public demo mode fails; with public demo mode it is only a warning
+ok 244 - binding to all interfaces without public demo mode fails; with public demo mode it is only a warning
+  ---
+  duration_ms: 664.857672
+  type: 'test'
+  ...
+# Subtest: NODE_ENV=production without the draft flag fails: with nothing published the learner screen would be empty
+ok 245 - NODE_ENV=production without the draft flag fails: with nothing published the learner screen would be empty
+  ---
+  duration_ms: 168.769085
+  type: 'test'
+  ...
+# Subtest: groq: a missing key, a missing code or a missing data-controls acknowledgement each fail; a complete configuration passes without any key output or provider call
+ok 246 - groq: a missing key, a missing code or a missing data-controls acknowledgement each fail; a complete configuration passes without any key output or provider call
+  ---
+  duration_ms: 1012.20212
+  type: 'test'
+  ...
+# Subtest: an unknown provider fails
+ok 247 - an unknown provider fails
+  ---
+  duration_ms: 208.436096
+  type: 'test'
+  ...
+# Subtest: promotion check: a served item whose status differs from the pack file is flagged
+ok 248 - promotion check: a served item whose status differs from the pack file is flagged
+  ---
+  duration_ms: 66.657289
+  type: 'test'
+  ...
+# Subtest: the preflight source never names a provider endpoint and never imports the provider adapter
+ok 249 - the preflight source never names a provider endpoint and never imports the provider adapter
+  ---
+  duration_ms: 0.497596
+  type: 'test'
+  ...
+# Subtest: by default a POST whose Origin differs from the Host the server sees is refused
+ok 250 - by default a POST whose Origin differs from the Host the server sees is refused
+  ---
+  duration_ms: 406.061697
+  type: 'test'
+  ...
+# Subtest: an exact origin listed in PATHASETU_ALLOWED_ORIGINS is accepted behind a Host-rewriting proxy; every other origin is not
+ok 251 - an exact origin listed in PATHASETU_ALLOWED_ORIGINS is accepted behind a Host-rewriting proxy; every other origin is not
+  ---
+  duration_ms: 379.879443
+  type: 'test'
+  ...
+# Subtest: the allow-list does not weaken the access code: a protected demo still needs it
+ok 252 - the allow-list does not weaken the access code: a protected demo still needs it
+  ---
+  duration_ms: 374.412927
+  type: 'test'
+  ...
+# Subtest: malformed allow-list entries stop the server at startup instead of being ignored
+ok 253 - malformed allow-list entries stop the server at startup instead of being ignored
+  ---
+  duration_ms: 3203.336146
+  type: 'test'
+  ...
+# Subtest: local mock development without a code keeps the documented open experience and says it is not a public demo
+ok 254 - local mock development without a code keeps the documented open experience and says it is not a public demo
+  ---
+  duration_ms: 297.7567
+  type: 'test'
+  ...
+# Subtest: PATHASETU_PUBLIC_DEMO without an access code refuses to start, whatever the provider or NODE_ENV
+ok 255 - PATHASETU_PUBLIC_DEMO without an access code refuses to start, whatever the provider or NODE_ENV
+  ---
+  duration_ms: 446.159134
+  type: 'test'
+  ...
+# Subtest: PATHASETU_PUBLIC_DEMO refuses a short, whitespace-bearing, repetitive, sequential or low-variety code without echoing it
+ok 256 - PATHASETU_PUBLIC_DEMO refuses a short, whitespace-bearing, repetitive, sequential or low-variety code without echoing it
+  ---
+  duration_ms: 925.510567
+  type: 'test'
+  ...
+# Subtest: PATHASETU_PUBLIC_DEMO accepts only the exact values true or false: an ambiguous value fails closed
+ok 257 - PATHASETU_PUBLIC_DEMO accepts only the exact values true or false: an ambiguous value fails closed
+  ---
+  duration_ms: 993.923173
+  type: 'test'
+  ...
+# Subtest: public mode with a strong code: health reports it, and session, pack and re-check all need the exact code
+ok 258 - public mode with a strong code: health reports it, and session, pack and re-check all need the exact code
+  ---
+  duration_ms: 773.592525
+  type: 'test'
+  ...
+# Subtest: public mode in production without the draft flag serves no unreviewed item even with the right code
+ok 259 - public mode in production without the draft flag serves no unreviewed item even with the right code
+  ---
+  duration_ms: 379.967608
+  type: 'test'
+  ...
+# Subtest: wrong guesses are throttled per client, but never block the correct code and never use up the authorised budget
+ok 260 - wrong guesses are throttled per client, but never block the correct code and never use up the authorised budget
+  ---
+  duration_ms: 395.224639
+  type: 'test'
+  ...
+# Subtest: the failed-attempt throttle expires: it is a window, not a permanent lockout
+ok 261 - the failed-attempt throttle expires: it is a window, not a permanent lockout
+  ---
+  duration_ms: 1573.443651
+  type: 'test'
+  ...
+# Subtest: the failed-attempt limit setting is validated like the others (invalid values fall back to the default, not to unlimited)
+ok 262 - the failed-attempt limit setting is validated like the others (invalid values fall back to the default, not to unlimited)
+  ---
+  duration_ms: 402.364324
+  type: 'test'
+  ...
+# Subtest: public mode with an exact HTTPS origin behind a Host-rewriting tunnel: allowed origin plus code works, everything else is refused
+ok 263 - public mode with an exact HTTPS origin behind a Host-rewriting tunnel: allowed origin plus code works, everything else is refused
+  ---
+  duration_ms: 389.26644
+  type: 'test'
+  ...
+# Subtest: allowed-origin entries that are wildcards, paths, queries, credentials, default ports, upper-case or plain-http non-local fail at startup
+ok 264 - allowed-origin entries that are wildcards, paths, queries, credentials, default ports, upper-case or plain-http non-local fail at startup
+  ---
+  duration_ms: 11448.764695
+  type: 'test'
+  ...
+# Subtest: identity: ids of answers and queue entries are unique across many submissions, and every entry points at exactly one answer
+ok 265 - identity: ids of answers and queue entries are unique across many submissions, and every entry points at exactly one answer
+  ---
+  duration_ms: 16.62197
+  type: 'test'
+  ...
+# Subtest: identity (fault injection): ids stay unique when the clock and the random suffix repeat, so one re-check cannot swallow another entry
+ok 266 - identity (fault injection): ids stay unique when the clock and the random suffix repeat, so one re-check cannot swallow another entry
+  ---
+  duration_ms: 1.486997
+  type: 'test'
+  ...
+# Subtest: duplicate submit (double tap) is refused before anything changes: no extra answer, queue entry, session or trace line
+ok 267 - duplicate submit (double tap) is refused before anything changes: no extra answer, queue entry, session or trace line
+  ---
+  duration_ms: 2.893049
+  type: 'test'
+  ...
+# Subtest: every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change
+ok 268 - every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change
+  ---
+  duration_ms: 1.410769
+  type: 'test'
+  ...
+# Subtest: capacity boundary: the 100th entry is accepted, the 101st is refused, and a drain frees room again
+ok 269 - capacity boundary: the 100th entry is accepted, the 101st is refused, and a drain frees room again
+  ---
+  duration_ms: 1.220345
+  type: 'test'
+  ...
+# Subtest: a repeated failure report or a repeated manual retry never creates a second entry, answer or session
+ok 270 - a repeated failure report or a repeated manual retry never creates a second entry, answer or session
+  ---
+  duration_ms: 1.724799
+  type: 'test'
+  ...
+# Subtest: fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 271 - fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.98869
+  type: 'test'
+  ...
+# Subtest: fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 272 - fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.51277
+  type: 'test'
+  ...
+# Subtest: fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 273 - fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.846453
+  type: 'test'
+  ...
+# Subtest: fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 274 - fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.787775
+  type: 'test'
+  ...
+# Subtest: fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 275 - fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.460071
+  type: 'test'
+  ...
+# Subtest: fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 276 - fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.51497
+  type: 'test'
+  ...
+# Subtest: fault string_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 277 - fault string_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.297573
+  type: 'test'
+  ...
+# Subtest: fault array_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 278 - fault array_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.262851
+  type: 'test'
+  ...
+# Subtest: fault number_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 279 - fault number_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.308054
+  type: 'test'
+  ...
+# Subtest: fault foreign_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 280 - fault foreign_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.366618
+  type: 'test'
+  ...
+# Subtest: fault made_up_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 281 - fault made_up_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.304088
+  type: 'test'
+  ...
+# Subtest: fault wrong_question: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 282 - fault wrong_question: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.230478
+  type: 'test'
+  ...
+# Subtest: fault confidence_nan: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 283 - fault confidence_nan: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.218802
+  type: 'test'
+  ...
+# Subtest: fault confidence_negative: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 284 - fault confidence_negative: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.202409
+  type: 'test'
+  ...
+# Subtest: fault confidence_above_one: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 285 - fault confidence_above_one: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.258089
+  type: 'test'
+  ...
+# Subtest: fault confidence_string: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 286 - fault confidence_string: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.224343
+  type: 'test'
+  ...
+# Subtest: fault low_confidence_misconception: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 287 - fault low_confidence_misconception: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.223793
+  type: 'test'
+  ...
+# Subtest: fault uncertain_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 288 - fault uncertain_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.201679
+  type: 'test'
+  ...
+# Subtest: fault none_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 289 - fault none_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.244728
+  type: 'test'
+  ...
+# Subtest: fault unknown_type: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 290 - fault unknown_type: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.271926
+  type: 'test'
+  ...
+# Subtest: fault rationale_too_long: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 291 - fault rationale_too_long: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.218406
+  type: 'test'
+  ...
+# Subtest: a rejected diagnosis never reaches the stored answer or the confirmed misconceptions, even when the caller marks the result trusted
+ok 292 - a rejected diagnosis never reaches the stored answer or the confirmed misconceptions, even when the caller marks the result trusted
+  ---
+  duration_ms: 0.503353
+  type: 'test'
+  ...
+# Subtest: a missing diagnosis from the provider is a failed attempt, never a silent local substitute
+ok 293 - a missing diagnosis from the provider is a failed attempt, never a silent local substitute
+  ---
+  duration_ms: 0.449582
+  type: 'test'
+  ...
+# Subtest: default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again
+ok 294 - default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again
+  ---
+  duration_ms: 0.663736
+  type: 'test'
+  ...
+# Subtest: custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts
+ok 295 - custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts
+  ---
+  duration_ms: 1.570867
+  type: 'test'
+  ...
+# Subtest: a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention
+ok 296 - a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention
+  ---
+  duration_ms: 0.690622
+  type: 'test'
+  ...
+# Subtest: manual retry changes only the retry fields of the chosen entry and nothing else in the state
+ok 297 - manual retry changes only the retry fields of the chosen entry and nothing else in the state
+  ---
+  duration_ms: 0.828913
+  type: 'test'
+  ...
+# Subtest: repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count
+ok 298 - repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count
+  ---
+  duration_ms: 0.571781
+  type: 'test'
+  ...
+# Subtest: a fresh entry that never failed is not reset by a manual retry
+ok 299 - a fresh entry that never failed is not reset by a manual retry
+  ---
+  duration_ms: 0.336675
+  type: 'test'
+  ...
+# Subtest: after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again
+ok 300 - after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again
+  ---
+  duration_ms: 0.742299
+  type: 'test'
+  ...
+# Subtest: success processes an entry exactly once; a second attempt on the same id does nothing and counts nothing twice
+ok 301 - success processes an entry exactly once; a second attempt on the same id does nothing and counts nothing twice
+  ---
+  duration_ms: 0.493989
+  type: 'test'
+  ...
+# Subtest: background re-check never switches the current question, discards the learner draft or spends a session
+ok 302 - background re-check never switches the current question, discards the learner draft or spends a session
+  ---
+  duration_ms: 0.592383
+  type: 'test'
+  ...
+# Subtest: background re-check leaves the question on screen alone even when its recommendation points to a different question
+ok 303 - background re-check leaves the question on screen alone even when its recommendation points to a different question
+  ---
+  duration_ms: 0.219172
+  type: 'test'
+  ...
+# Subtest: uncertainty is never turned into a confirmed misconception, by the local rule or by a trusted provider result
+ok 304 - uncertainty is never turned into a confirmed misconception, by the local rule or by a trusted provider result
+  ---
+  duration_ms: 0.493235
+  type: 'test'
+  ...
+# Subtest: JSON save and restore preserves answers, drafts and every queue entry, and the restored entries behave identically
+ok 305 - JSON save and restore preserves answers, drafts and every queue entry, and the restored entries behave identically
+  ---
+  duration_ms: 2.217575
+  type: 'test'
+  ...
+# Subtest: legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success
+ok 306 - legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success
+  ---
+  duration_ms: 1.676336
+  type: 'test'
+  ...
+# Subtest: a legacy entry missing its basic fields is kept, not dropped, and then works
+ok 307 - a legacy entry missing its basic fields is kept, not dropped, and then works
+  ---
+  duration_ms: 0.470413
+  type: 'test'
+  ...
+# Subtest: malformed records of every shape are repaired or replaced without throwing, and the repaired record is a fixed point
+ok 308 - malformed records of every shape are repaired or replaced without throwing, and the repaired record is a fixed point
+  ---
+  duration_ms: 2.975295
+  type: 'test'
+  ...
+# Subtest: repair keeps every usable record around the damage and removes duplicates and junk
+ok 309 - repair keeps every usable record around the damage and removes duplicates and junk
+  ---
+  duration_ms: 1.151118
+  type: 'test'
+  ...
+# Subtest: trace stays within its limit through repair, even when the saved trace is far over it
+ok 310 - trace stays within its limit through repair, even when the saved trace is far over it
+  ---
+  duration_ms: 10.089182
+  type: 'test'
+  ...
+# Subtest: seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries
+ok 311 - seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries
+  ---
+  duration_ms: 122.055954
+  type: 'test'
+  ...
+# Subtest: oversized saved collections are cut to their limits: the newest answers and the oldest queue entries are kept
+ok 312 - oversized saved collections are cut to their limits: the newest answers and the oldest queue entries are kept
+  ---
+  duration_ms: 5.901398
+  type: 'test'
+  ...
+# Subtest: persistence: a saved record comes back as an independent copy with the whole queue and retry state, and repair finds nothing to fix
+ok 313 - persistence: a saved record comes back as an independent copy with the whole queue and retry state, and repair finds nothing to fix
+  ---
+  duration_ms: 1.269651
+  type: 'test'
+  ...
+# Subtest: persistence fault: when a write is rejected, the older durable record is left alone, the newest state stays available in memory with its whole queue, and the reason holds no learner text
+ok 314 - persistence fault: when a write is rejected, the older durable record is left alone, the newest state stays available in memory with its whole queue, and the reason holds no learner text
+  ---
+  duration_ms: 1.851716
+  type: 'test'
+  ...
+# Subtest: adjacent repeats of the same failure for the same entry coalesce; any intervening event keeps them separate and readable
+ok 315 - adjacent repeats of the same failure for the same entry coalesce; any intervening event keeps them separate and readable
+  ---
+  duration_ms: 0.596007
+  type: 'test'
+  ...
+# Subtest: trace is bounded by 200 lines under thousands of failures, keeps the newest events, and pauses are reported once per entry
+ok 316 - trace is bounded by 200 lines under thousands of failures, keeps the newest events, and pauses are reported once per entry
+  ---
+  duration_ms: 25.690594
+  type: 'test'
+  ...
+# Subtest: validator: every own misconception id is accepted and every id that belongs only to a different question is rejected
+ok 317 - validator: every own misconception id is accepted and every id that belongs only to a different question is rejected
+  ---
+  duration_ms: 0.816525
+  type: 'test'
+  ...
+# Subtest: validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty
+ok 318 - validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty
+  ---
+  duration_ms: 10.8574
+  type: 'test'
+  ...
+# Subtest: generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)
+ok 319 - generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)
+  ---
+  duration_ms: 755.285377
+  type: 'test'
+  ...
+# Subtest: a fixed enumerated table of operation sequences, written out by hand, reaches the pause, the manual retry and the recovery
+ok 320 - a fixed enumerated table of operation sequences, written out by hand, reaches the pause, the manual retry and the recovery
+  ---
+  duration_ms: 1.194139
+  type: 'test'
+  ...
+# Subtest: this file uses no timers, network, browser or unseeded randomness
+ok 321 - this file uses no timers, network, browser or unseeded randomness
+  ---
+  duration_ms: 0.867491
+  type: 'test'
+  ...
+# Subtest: the default policy is conservative: 5 automatic attempts, 5 s base, doubling, 60 s cap
+ok 322 - the default policy is conservative: 5 automatic attempts, 5 s base, doubling, 60 s cap
+  ---
+  duration_ms: 2.120664
+  type: 'test'
+  ...
+# Subtest: an invalid policy falls back to safe values instead of retrying forever
+ok 323 - an invalid policy falls back to safe values instead of retrying forever
+  ---
+  duration_ms: 0.255199
+  type: 'test'
+  ...
+# Subtest: backoff progression is written onto the entry after each failure, with the injected clock
+ok 324 - backoff progression is written onto the entry after each failure, with the injected clock
+  ---
+  duration_ms: 8.554841
+  type: 'test'
+  ...
+# Subtest: after the maximum the entry pauses, stays queued with its answer, and is never due again automatically
+ok 325 - after the maximum the entry pauses, stays queued with its answer, and is never due again automatically
+  ---
+  duration_ms: 0.706616
+  type: 'test'
+  ...
+# Subtest: rejected diagnoses are bounded in the same way as provider failures
+ok 326 - rejected diagnoses are bounded in the same way as provider failures
+  ---
+  duration_ms: 0.61809
+  type: 'test'
+  ...
+# Subtest: queue state survives a save and reload (JSON round trip) while waiting and while paused
+ok 327 - queue state survives a save and reload (JSON round trip) while waiting and while paused
+  ---
+  duration_ms: 0.43695
+  type: 'test'
+  ...
+# Subtest: an entry saved by an earlier version (no retry fields) is due, and still becomes bounded
+ok 328 - an entry saved by an earlier version (no retry fields) is due, and still becomes bounded
+  ---
+  duration_ms: 1.063123
+  type: 'test'
+  ...
+# Subtest: manual retry resets only retry state: no new answer, session, queue entry, draft or current question
+ok 329 - manual retry resets only retry state: no new answer, session, queue entry, draft or current question
+  ---
+  duration_ms: 0.610201
+  type: 'test'
+  ...
+# Subtest: eventual recovery after a pause: manual retry then success drains the entry with exactly one answer and no extra session
+ok 330 - eventual recovery after a pause: manual retry then success drains the entry with exactly one answer and no extra session
+  ---
+  duration_ms: 0.692974
+  type: 'test'
+  ...
+# Subtest: recovery also works from the waiting state, and repeated manual retries never duplicate the entry
+ok 331 - recovery also works from the waiting state, and repeated manual retries never duplicate the entry
+  ---
+  duration_ms: 0.574552
+  type: 'test'
+  ...
+# Subtest: trace growth is bounded and distinct events stay interpretable
+ok 332 - trace growth is bounded and distinct events stay interpretable
+  ---
+  duration_ms: 1.02692
+  type: 'test'
+  ...
+# Subtest: queueStatus describes waiting and paused entries for the UI
+ok 333 - queueStatus describes waiting and paused entries for the UI
+  ---
+  duration_ms: 0.471804
+  type: 'test'
+  ...
+# Subtest: server enforces demo access for session/re-check and hides draft content in production
+ok 334 - server enforces demo access for session/re-check and hides draft content in production
+  ---
+  duration_ms: 217.134954
+  type: 'test'
+  ...
+# Subtest: server applies an in-memory per-client re-check rate limit with Retry-After
+ok 335 - server applies an in-memory per-client re-check rate limit with Retry-After
+  ---
+  duration_ms: 232.674742
+  type: 'test'
+  ...
+# Subtest: IndexedDB open failure: the app learns it is memory-only, with a safe reason, and keeps working in memory
+ok 336 - IndexedDB open failure: the app learns it is memory-only, with a safe reason, and keeps working in memory
+  ---
+  duration_ms: 7.737192
+  type: 'test'
+  ...
+# Subtest: no IndexedDB at all reports memory-only with a reason
+ok 337 - no IndexedDB at all reports memory-only with a reason
+  ---
+  duration_ms: 0.242307
+  type: 'test'
+  ...
+# Subtest: a rejected write downgrades visibly: durable saved time stops, reason is the error name only, latest data stays in memory
+ok 338 - a rejected write downgrades visibly: durable saved time stops, reason is the error name only, latest data stays in memory
+  ---
+  duration_ms: 2.582931
+  type: 'test'
+  ...
+# Subtest: quarantine keeps an unreadable record under a separate key without touching the main record
+ok 339 - quarantine keeps an unreadable record under a separate key without touching the main record
+  ---
+  duration_ms: 1.126426
+  type: 'test'
+  ...
+# Subtest: corrupt record (null record) never throws: a fresh state is started and the record is flagged unreadable
+ok 340 - corrupt record (null record) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 1.009539
+  type: 'test'
+  ...
+# Subtest: corrupt record (string record) never throws: a fresh state is started and the record is flagged unreadable
+ok 341 - corrupt record (string record) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 0.283695
+  type: 'test'
+  ...
+# Subtest: corrupt record (number record) never throws: a fresh state is started and the record is flagged unreadable
+ok 342 - corrupt record (number record) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 0.107692
+  type: 'test'
+  ...
+# Subtest: corrupt record (array record) never throws: a fresh state is started and the record is flagged unreadable
+ok 343 - corrupt record (array record) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 0.106009
+  type: 'test'
+  ...
+# Subtest: corrupt record (state is a string) never throws: a fresh state is started and the record is flagged unreadable
+ok 344 - corrupt record (state is a string) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 0.319224
+  type: 'test'
+  ...
+# Subtest: corrupt record (state is an array) never throws: a fresh state is started and the record is flagged unreadable
+ok 345 - corrupt record (state is an array) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 0.296093
+  type: 'test'
+  ...
+# Subtest: corrupt record (state is null) never throws: a fresh state is started and the record is flagged unreadable
+ok 346 - corrupt record (state is null) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 0.112058
+  type: 'test'
+  ...
+# Subtest: corrupt record (empty object) never throws: a fresh state is started and the record is flagged unreadable
+ok 347 - corrupt record (empty object) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 0.904336
+  type: 'test'
+  ...
+# Subtest: a valid record passes through untouched with no repairs
+ok 348 - a valid record passes through untouched with no repairs
+  ---
+  duration_ms: 7.8303
+  type: 'test'
+  ...
+# Subtest: partial corruption keeps every usable answer, queue entry, draft and counter and removes only the broken ones
+ok 349 - partial corruption keeps every usable answer, queue entry, draft and counter and removes only the broken ones
+  ---
+  duration_ms: 0.427123
+  type: 'test'
+  ...
+# Subtest: queue recovery: a repaired queue entry is still processed once, with one answer and no extra session
+ok 350 - queue recovery: a repaired queue entry is still processed once, with one answer and no extra session
+  ---
+  duration_ms: 0.595975
+  type: 'test'
+  ...
+# Subtest: oversized collections are capped instead of growing without bound
+ok 351 - oversized collections are capped instead of growing without bound
+  ---
+  duration_ms: 0.296042
+  type: 'test'
+  ...
+# Subtest: a stale content reference in an otherwise valid record is handled by reconcileState without a crash
+ok 352 - a stale content reference in an otherwise valid record is handled by reconcileState without a crash
+  ---
+  duration_ms: 0.21036
+  type: 'test'
+  ...
+# Subtest: repair never throws on hostile input shapes
+ok 353 - repair never throws on hostile input shapes
+  ---
+  duration_ms: 0.569879
+  type: 'test'
+  ...
+# Subtest: the export omits typed explanations and drafts, keeps decisions and traces, and carries storage and persistence facts
+ok 354 - the export omits typed explanations and drafts, keeps decisions and traces, and carries storage and persistence facts
+  ---
+  duration_ms: 0.812517
+  type: 'test'
+  ...
+# Subtest: the export redacts access codes, API keys, bearer tokens and environment assignments wherever they appear
+ok 355 - the export redacts access codes, API keys, bearer tokens and environment assignments wherever they appear
+  ---
+  duration_ms: 0.469193
+  type: 'test'
+  ...
+# Subtest: persistent storage: unsupported, already granted, granted on request, denied and failing browsers are all reported without throwing
+ok 356 - persistent storage: unsupported, already granted, granted on request, denied and failing browsers are all reported without throwing
+  ---
+  duration_ms: 0.487904
+  type: 'test'
+  ...
+# Subtest: persistent storage is requested at most once per requester, however often it is called
+ok 357 - persistent storage is requested at most once per requester, however often it is called
+  ---
+  duration_ms: 0.144393
+  type: 'test'
+  ...
+# Subtest: persistence wording never promises retention
+ok 358 - persistence wording never promises retention
+  ---
+  duration_ms: 1.930217
+  type: 'test'
+  ...
+# Subtest: recovery resets a malformed bridge-attempt counter map instead of preserving a crash trigger
+ok 359 - recovery resets a malformed bridge-attempt counter map instead of preserving a crash trigger
+  ---
+  duration_ms: 0.29528
+  type: 'test'
+  ...
+# Subtest: bridge attempt recording recovers from a malformed counter map without throwing
+ok 360 - bridge attempt recording recovers from a malformed counter map without throwing
+  ---
+  duration_ms: 1.275462
+  type: 'test'
+  ...
+# Subtest: reconcileState safely declines malformed content-pack item collections
+ok 361 - reconcileState safely declines malformed content-pack item collections
+  ---
+  duration_ms: 0.276592
+  type: 'test'
+  ...
+# Subtest: memory storage returns copies and can clear state
+ok 362 - memory storage returns copies and can clear state
+  ---
+  duration_ms: 0.790198
+  type: 'test'
+  ...
+# Subtest: IndexedDB failures downgrade visibly to memory storage without throwing
+ok 363 - IndexedDB failures downgrade visibly to memory storage without throwing
+  ---
+  duration_ms: 1.39496
+  type: 'test'
+  ...
+# Subtest: every static DOM selector in the app maps to an existing HTML ID
+ok 364 - every static DOM selector in the app maps to an existing HTML ID
+  ---
+  duration_ms: 2.304618
+  type: 'test'
+  ...
+# Subtest: language bridge visibly marks the Odia prompt and options as unreviewed drafts
+ok 365 - language bridge visibly marks the Odia prompt and options as unreviewed drafts
+  ---
+  duration_ms: 0.317738
+  type: 'test'
+  ...
+# Subtest: service worker never caches API responses and has an offline navigation fallback
+ok 366 - service worker never caches API responses and has an offline navigation fallback
+  ---
+  duration_ms: 0.119016
+  type: 'test'
+  ...
+# Subtest: all authored executable assets are local rather than third-party scripts
+ok 367 - all authored executable assets are local rather than third-party scripts
+  ---
+  duration_ms: 0.24091
+  type: 'test'
+  ...
+# Subtest: service worker shell cache version is bumped for the revised feedback-first flow and Bridge Practice (v5)
+ok 368 - service worker shell cache version is bumped for the revised feedback-first flow and Bridge Practice (v5)
+  ---
+  duration_ms: 0.195567
+  type: 'test'
+  ...
+# Subtest: the offline shell caches every core module the browser app imports (including Bridge Practice)
+ok 369 - the offline shell caches every core module the browser app imports (including Bridge Practice)
+  ---
+  duration_ms: 0.775858
+  type: 'test'
+  ...
+# Subtest: the provider label visibly says MOCK when the mock provider is active
+ok 370 - the provider label visibly says MOCK when the mock provider is active
+  ---
+  duration_ms: 0.155799
+  type: 'test'
+  ...
+# Subtest: read-only tabs are blocked from writing, draining the queue and practising, and the banner is persistent
+ok 371 - read-only tabs are blocked from writing, draining the queue and practising, and the banner is persistent
+  ---
+  duration_ms: 0.203439
+  type: 'test'
+  ...
+# Subtest: re-check requests have a client timeout so a stalled provider cannot freeze the queue
+ok 372 - re-check requests have a client timeout so a stalled provider cannot freeze the queue
+  ---
+  duration_ms: 0.421164
+  type: 'test'
+  ...
+# Subtest: Bridge Practice is wired in, local-only and draft-labelled
+ok 373 - Bridge Practice is wired in, local-only and draft-labelled
+  ---
+  duration_ms: 0.464888
+  type: 'test'
+  ...
+# Subtest: only the first install is allowed to claim the page silently; a later controller change announces an update
+ok 374 - only the first install is allowed to claim the page silently; a later controller change announces an update
+  ---
+  duration_ms: 0.321285
+  type: 'test'
+  ...
+# Subtest: bounded retries are wired into the browser: gating, timer, persistent status and a deliberate Retry now action
+ok 375 - bounded retries are wired into the browser: gating, timer, persistent status and a deliberate Retry now action
+  ---
+  duration_ms: 0.273024
+  type: 'test'
+  ...
+# Subtest: the retry-delay override is test-only plumbing and the shipped defaults are the conservative ones
+ok 376 - the retry-delay override is test-only plumbing and the shipped defaults are the conservative ones
+  ---
+  duration_ms: 0.209019
+  type: 'test'
+  ...
+# Subtest: validator accepts an allowed structured proposal
+ok 377 - validator accepts an allowed structured proposal
+  ---
+  duration_ms: 0.671167
+  type: 'test'
+  ...
+# Subtest: validator rejects an unallowed misconception ID
+ok 378 - validator rejects an unallowed misconception ID
+  ---
+  duration_ms: 0.176551
+  type: 'test'
+  ...
+# Subtest: validator rejects a question-ID mismatch
+ok 379 - validator rejects a question-ID mismatch
+  ---
+  duration_ms: 0.090076
+  type: 'test'
+  ...
+# Subtest: validator rejects malformed output and invalid confidence
+ok 380 - validator rejects malformed output and invalid confidence
+  ---
+  duration_ms: 0.090428
+  type: 'test'
+  ...
+# Subtest: uncertain output is valid without a misconception ID
+ok 381 - uncertain output is valid without a misconception ID
+  ---
+  duration_ms: 0.098067
+  type: 'test'
+  ...
+# Subtest: non-uncertain output below the confidence threshold is rejected
+ok 382 - non-uncertain output below the confidence threshold is rejected
+  ---
+  duration_ms: 0.184232
+  type: 'test'
+  ...
+1..382
+# tests 382
+# suites 0
+# pass 382
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 42914.013073

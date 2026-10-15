@@ -1,0 +1,81 @@
+{
+  "node": "v22.16.0",
+  "mode": "plan",
+  "reporter": "tap",
+  "catalogueSize": 46,
+  "state": "FINISHED",
+  "complete": false,
+  "elapsedMs": 608,
+  "budgetSeconds": 600,
+  "note": "Mutants are applied to a temporary copy of src/core only. A killed mutant means the selected tests failed against the deliberate fault. This is evidence about test sensitivity, not about learning outcomes or model accuracy.",
+  "summary": {
+    "selected": 1,
+    "run": 1,
+    "killed": 1,
+    "survived": 0,
+    "errors": 0,
+    "notRun": 0
+  },
+  "requiredFamilies": [
+    {
+      "family": "a",
+      "mutants": 1,
+      "killed": 1
+    },
+    {
+      "family": "b",
+      "mutants": 0,
+      "killed": 0
+    },
+    {
+      "family": "c",
+      "mutants": 0,
+      "killed": 0
+    }
+  ],
+  "results": [
+    {
+      "id": "A8",
+      "required": "a",
+      "description": "default base delay changed from 5 s to 4 s",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 10,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 291,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "a valid ISO timestamp retains the existing bounded retry behaviour"
+      ]
+    }
+  ]
+}

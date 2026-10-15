@@ -1,0 +1,168 @@
+
+> pathasetu-mvp@0.1.0 e2e
+> node scripts/browser-regression.mjs
+
+
+== A: initial load, labels, first visit
+PASS  A1  initial question loads with 4 options — QUESTION EL01 · CLOSED CIRCUIT
+PASS  A2  provider label says MOCK — provider label = "MOCK PROVIDER · DEMO RULES · NO LIVE AI"
+PASS  A3  draft-content labels are visible (badge and prototype warning) — badge="UNREVIEWED DRAFT"
+PASS  A4  a first visit does not announce an "App update ready" notice — !
+Prototype content · not for real learners
+The Electricity questions and Odia bridge fields are unr
+
+== B: answer, feedback, explicit continue
+PASS  B1  answer shows provisional feedback and remediation while the current question stays — question=QUESTION EL01 · CLOSED CIRCUIT
+PASS  B2  recommendation is offered but not applied automatically
+PASS  B3  applying the recommendation explicitly changes the question — QUESTION EL02 · CLOSED CIRCUIT
+
+== C: offline answer is queued exactly once
+PASS  C1  one answer and one queue entry despite a double submit — answers=1; queue=1; persisted answers=1; persisted queue=1
+PASS  C2  one learning session is consumed — 10 learning sessions left -> 9 learning sessions left
+
+== D: reconnect drains the queue without disturbing a draft
+PASS  D1  queue drains after reconnect with no manual action — ✓
+Re-check processed · MOCK
+1 queued re-check processed. The result remains provisional; n
+PASS  D2  typed draft and selected option stay on the same question — question=QUESTION EL03 · ENERGY TRANSFER; option=C; text="Draft on EL03 must stay with EL03."
+PASS  D3  focus and caret survive the reconnect re-render — focus="explanation-input"; caret=5
+PASS  D4  the draft is never stored under another question — stored draft ids=EL01,EL02,EL03
+
+== E: reload offline, cold start, queue survives
+PASS  E1  offline reload serves the app shell, content and saved answers — answers=1; queue=1; connection=OFFLINE · local mode
+PASS  E2  the connection indicator says offline while offline — OFFLINE · local mode
+PASS  E3  queue drains after reconnect following a reload — ✓
+Re-check processed · MOCK
+1 queued re-check processed. The result remains prov
+PASS  E4  a queue left by a closed tab is recovered on a cold start without a tap — from EL02; answers=2; queue=0
+
+== L: an unsent draft survives a reload
+PASS  L1  the draft is stored in IndexedDB under its own question — stored={"optionId":"C","explanation":"A half-written explanation that must survive a reload.","updatedAt":"2026-10-14T06:09:57.
+PASS  L2  after a full reload the draft text and selected option come back on the same question — option=C; text="A half-written explanation that must survive a reload."
+
+== F: missing or stale content cannot strand the learner
+PASS  F1  a missing current item is replaced and stale queue entries are dropped — question=QUESTION EL01 · CLOSED CIRCUIT; queue=0
+PASS  F2  recovery is recorded in the trace — plan_selected,content_mismatch_recovered,recommendation_cleared,queue_dropped,queue_dropped
+PASS  F3  the recommendation never points at a missing item — null
+PASS  F4  recovery causes no page exceptions
+
+== G: two tabs: read-only second tab, no lost update
+PASS  G1  the second tab is read-only with a persistent banner and disabled controls — !
+Read-only session
+Another Pathasetu tab owns the writable session. This tab will not sav
+PASS  G2  closing the read-only tab does not overwrite the writer's progress — persisted answers=1
+PASS  G3  the writer tab still has its answer after a reload — answers=1
+
+== G3: two tabs: a read-only tab never processes the queue
+PASS  G5  the read-only tab sends no re-check request — tab B re-check requests=0
+PASS  G7  the read-only state stays visible (a transient notice cannot hide it) — banner visible=true
+PASS  G6  the queued answer is re-checked exactly once across both tabs — total re-check POSTs=1; persisted answers=1
+
+== K: Bridge Practice works offline, by keyboard, and is traced
+PASS  K1  three options, an everyday Odia prompt, the UNREVIEWED DRAFT label and an offline tag — options=3; badge="UNREVIEWED DRAFT"
+PASS  K2  the answer is not shown in the bridge card while the exercise is unanswered — Everyday Odia ତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ। School Odia te
+PASS  K3  an option can be chosen from the keyboard and gives immediate feedback; focus stays on it — feedback="Matches the pack’s draft mapping. The mapping itself has not"; focus=B1
+PASS  K4  exactly one of the three options is correct and each choice gets immediate feedback — correct,wrong,wrong
+PASS  K5  after an attempt the full mapping appears in the bridge card — Everyday Odia ତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ। School Odia te
+PASS  K6  revealing shows the source mapping with its UNREVIEWED_DRAFT status — Everyday Odia ତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ। School Odia te
+PASS  K7  three attempts and the reveal are in the persisted decision trace with network:false — attempts=3; counter=3
+PASS  K8  the trace panel shows the bridge attempts to the learner — 11:40:10 AM | bridge mapping revealed | 
+PASS  K9  the whole interaction made no API request (the background reachability probe is excluded) — non-probe API requests=0; offline=true
+PASS  K10  Try another builds a fresh, different exercise deterministically from the saved attempt count — options changed and the reveal is closed
+
+== M: protected draft demo: the code gates content, the UI still works once authorised
+PASS  M1  without a code the overlay shows and no draft question is rendered — question=""
+PASS  M2  an unauthorised pack request from the page gets 401 with no content — status=401
+PASS  M3  a wrong code is refused and the overlay stays — That session code was not accepted.
+PASS  M4  the right code unlocks the overlay and loads the first question without a reload — QUESTION EL01 · CLOSED CIRCUIT
+PASS  M5  a reload in the same tab keeps working through the session-held code — QUESTION EL01 · CLOSED CIRCUIT
+PASS  M6  an authorised answer is re-checked by the protected route — ✓
+Re-check processed · MOCK
+1 queued re-check processed. The result remains prov
+PASS  M7  the code lives only in session storage: not in IndexedDB and not in localStorage — {"inDb":false,"inLocal":false,"inSession":true}
+
+== T: throttled access: a wait message, the right code still works, and a 429 never discards a saved pack or the code
+PASS  T1  repeated wrong codes end in a clear "too many attempts, wait" message, not a generic refusal — Too many attempts from this connection. Wait about 59 seconds, then try again. The correct code is still accepted.
+PASS  T2  the right code still unlocks the demo while wrong guesses are being throttled — QUESTION EL01 · CLOSED CIRCUIT
+PASS  T3  a 429 from /api/session or /api/pack keeps the saved pack, the session code and the working screen — {"overlayHidden":true,"hasCode":true,"question":"QUESTION EL01 · CLOSED CIRCUIT"}
+PASS  T4  once the throttle lifts, the same tab continues without asking for the code again — QUESTION EL01 · CLOSED CIRCUIT
+
+== N: bounded retries: pause, persistence, manual retry, recovery without duplicates
+PASS  N1  automatic attempts stop at the configured maximum and a persistent paused status with Retry now appears — re-check POSTs=3; status="Re-check paused · needs attention Pathasetu stopped retrying automatically after 3 failed attempts. "
+PASS  N2  reachability events and time passing cause no further automatic attempts — re-check POSTs after 4 s=3
+PASS  N3  the answer and the queue entry are still saved, flagged as needing attention, and no extra session was used — queue=1; answers=1; needsAttention=true; attempts=3
+PASS  N4  after a reload the paused state is still shown and nothing is retried automatically — re-check POSTs=3
+PASS  N5  a read-only tab shows the status with Retry now disabled and sends no re-check — retryDisabled=true
+PASS  N6  a manual retry recovers the queue with exactly one answer, no extra session, and one more request — answers=1; sessions="9 learning sessions left"; re-check POSTs=4
+PASS  N7  the active question, the draft, the option and the caret are untouched by the retry — question=QUESTION EL02 · CLOSED CIRCUIT; option=B; caret=6
+PASS  N8  the status disappears after recovery and the trace explains the pause and the manual retry — recheck_paused,learner_applied_updated_plan,recheck_manual_retry,recheck_complete
+
+== N2: bounded retries: the waiting state and an early manual retry
+PASS  N9  after the first failure the status says waiting, shows the attempt count and the next try — Re-check waiting · attempt 1 of 4 failed Your answer is saved. Next automatic try in about 4 s. Retry now
+PASS  N10  no second automatic attempt happens before the backoff has elapsed — re-check POSTs=1
+PASS  N11  Retry now during the wait recovers immediately, once — answers=1; re-check POSTs=2
+
+== P: storage failures are reported honestly
+PASS  P1  IndexedDB open failure: the app still runs, says progress is NOT saved, names the reason and never says "Saved in this browser" — status="Not saved to this device: the browser blocked local storage (SecurityError). Progress is k"
+PASS  P2  the learning loop still works in memory and the warning stays — answers=1
+PASS  P3  a rejected write flips the status to NOT saved with the reason, and a persistent banner appears — before="Saved in this browser’s IndexedDB on thi"; after="Not saved to this device: the browser blocked local storage (QuotaExce"
+PASS  P4  the older durable record is left as it was: the re-check result after the failure is NOT claimed as saved — durable queue=1; durable mode=LOCAL_PROPOSAL_PENDING_RECHECK; in-memory queue=0
+
+== R: corrupt saved state recovers without crashing
+PASS  R1  a totally unreadable record starts a fresh session with a clear notice instead of crashing — answers=0; notice="! Saved progress could not be read Pathasetu started a fresh session. "
+PASS  R2  the unreadable record is kept under a separate key, not deleted — backup state="this is not a state object"
+PASS  R3  saving works again after recovery and the status says saved — errors=0
+PASS  R4  partial corruption is repaired: the valid answer and queued re-check survive and the queue drains once — answers=1; queue=0
+PASS  R5  the repair is recorded in the trace as counts only — answer_submitted,saved_state_repaired,recheck_complete
+
+== P2: persistent-storage reporting (stubbed browser responses)
+PASS  P2.granted.a  granted: before any answer nothing is requested — calls=0; text="Persistent storage is requested after your first saved answe"
+PASS  P2.granted.b  granted: reported truthfully and requested at most once — calls=1; text="The browser granted persistent storage. That makes clearing less likely but does"
+PASS  P2.denied.a  denied: before any answer nothing is requested — calls=0; text="Persistent storage is requested after your first saved answe"
+PASS  P2.denied.b  denied: reported truthfully and requested at most once — calls=1; text="Persistent storage was not granted. The browser may clear this data when space i"
+PASS  P2.unsupported.a  unsupported: before any answer nothing is requested — calls=0; text="This browser cannot request persistent storage. It may clear"
+PASS  P2.unsupported.b  unsupported: reported truthfully and requested at most once — calls=0; text="This browser cannot request persistent storage. It may clear this data without w"
+PASS  P2.failing.a  failing: before any answer nothing is requested — calls=0; text="Persistent storage is requested after your first saved answe"
+PASS  P2.failing.b  failing: reported truthfully and requested at most once — calls=1; text="The persistent-storage request failed. Treat saved progress as clearable."
+
+== S: the trace export hides typed text and secrets
+PASS  S1  the export is valid JSON, marked as draft content, and lists decisions and the trace — answers=1; trace=3
+PASS  S2  the typed explanation is not exported (only its length) — {"redacted":true,"characters":65}
+PASS  S3  no access code, API-key-like string or header value appears in the export — scanned the whole file
+
+== Q: provider labels follow what the server reports (stubbed Groq-configured server; no live call)
+PASS  Q1  when the server reports Groq, the footer names the provider and model and says accuracy is unvalidated — CONFIGURED · GROQ · openai/gpt-oss-20b · ACCURACY UNVALIDATED
+PASS  Q2  the answer box no longer says "This mock does not interpret the explanation" when Groq is configured, and says the text goes to a hosted model — Type in your own words. When the check runs it is sent to the server and on to the configured hosted model; that model’s accuracy has not been validated.
+PASS  Q3  the latest-attempt card says the re-check came from GROQ and that the hosted-model proposal is provisional, not a demo rule — LATEST ATTEMPT · RECHECKED GROQ | Stub response for a label test; not a live model. This hosted-model proposal remains provisional and has not been evalua
+PASS  Q4  the notice names the provider that processed the re-check — ✓
+Re-check processed · GROQ
+1 queued re-check processed. The result remains provisional; no mastery 
+PASS  Q5  the exported trace records provider groq, the model and the answer mode RECHECKED_GROQ — provider=groq; model=openai/gpt-oss-20b; mode=RECHECKED_GROQ
+
+== G2: no Web Locks: a visible warning
+PASS  G4  without Web Locks the app shows a persistent single-tab warning — !
+Single-tab protection unavailable
+This browser does not provide Web Locks here
+
+== H: service worker: shell offline, API never cached
+PASS  H1  no /api/ response is stored in any cache — 15 cached; api entries=0
+
+== I: service worker update is announced and applied
+PASS  I1  an updated service worker announces the update — ✓
+App update ready
+The refreshed application is available. Reload once to apply 
+PASS  I2  one reload runs the new code (not stranded on the old shell) — before=null; after=next
+
+== J: provider failures leave state consistent and entries retryable
+PASS  J1  provider HTTP 500: answer kept, entry stays queued with a counted attempt — queue=1; attempts=1
+PASS  J1b  provider HTTP 500: the entry drains once the provider works again — queue after recovery=0
+PASS  J2  invalid JSON: answer kept, entry stays queued with a counted attempt — queue=1; attempts=1
+PASS  J2b  invalid JSON: the entry drains once the provider works again — queue after recovery=0
+PASS  J3  invalid diagnosis: answer kept, entry stays queued with a counted attempt — queue=1; attempts=1
+PASS  J3b  invalid diagnosis: the entry drains once the provider works again — queue after recovery=0
+PASS  J4  a hung provider request times out: the entry stays queued with a counted attempt — queue=1; attempts=1 after up to 16 s
+PASS  J4b  after a hang the queue drains once the provider works again — queue after recovery=0
+PASS  J5  no uncaught exceptions during failure handling
+PASS  Z1  no uncaught exceptions or console errors across the verified journeys — 0 errors
+
+Browser regression: PASS; 100 passed, 0 failed, 0 blocked; /home/claude/pw/it12/work/evidence/browser-regression-latest.json

@@ -1,0 +1,5 @@
+npm run capture: exit 2 (10 HTTP/API checks passed, 0 failed, 1 browser navigation BLOCKED by ERR_BLOCKED_BY_ADMINISTRATOR)
+npm run e2e: exit 2 (BLOCKED by browser policy before any scenario completed; 0 checks passed, 0 failed, 1 blocked)
+npm run a11y: exit 2 (BLOCKED by browser policy before any viewport/state; 0 states, 0 checks, 0 failed)
+CHROME_PATH=/nonexistent/pathasetu-browser npm run e2e: exit 2 (expected BLOCKED; no fallback browser tried)
+The installed browser executable exists (Chromium 144.0.7559.96) but policy prevents navigating to localhost in this sandbox. No attempt was made to bypass that policy.

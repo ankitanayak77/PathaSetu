@@ -79,3 +79,925 @@
 .bridge-option-text span:last-child{color:#4f5f75}
 .secondary-button{font-size:12px}
 .trace-row{grid-template-columns:max-content 1fr}
+
+/* Iteration 16: the result card shows the answer key and why; a fixed Continue bar keeps the next step within thumb reach. */
+.result-card.key-miss{border-color:#eedcba;background:#fffaf0}
+.result-card.key-miss .result-kicker,.result-card.key-miss .result-title{color:#7a4f12}
+.result-key,.result-why{margin-top:10px;background:#fff;border:1px solid #e3e8ef;border-radius:10px;padding:11px;font-size:13px;line-height:1.6;color:#31455d;display:grid;gap:4px}
+.result-key small{font-size:12px;color:#4f5f75}
+.why-odia{margin:0;font-size:15px;line-height:1.8;font-family:"Noto Sans Oriya","Noto Sans Oriya UI",serif}
+.result-why p{margin:0}
+.result-continue{margin-top:12px;width:100%}
+.continue-bar{position:fixed;left:0;right:0;bottom:0;z-index:50;padding:12px max(16px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));background:rgba(255,255,255,.96);border-top:1px solid var(--line);box-shadow:0 -6px 24px rgba(16,36,66,.10);display:flex;justify-content:center}
+.continue-bar .primary-button{width:min(100%,520px);font-size:14px}
+body.has-continue-bar{padding-bottom:84px}
+.footer #reset-demo{min-height:44px;color:#7a4f12}
+#progress-bar{width:0}
+
+/* Iteration 16 Step 2: Family Multi-Profile Hub, Stoplight Runner, Agent Strip, CRI & Doubt Box */
+.setu-v2-hub {
+  border: 2px solid #0b5fff;
+  background: #f8faff;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.setu-v2-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+.stoplight-pill {
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+}
+.stoplight-red { border-left: 5px solid #b91c1c; }
+.stoplight-yellow { border-left: 5px solid #b45309; }
+.stoplight-green { border-left: 5px solid #15803d; }
+.agent-strip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.agent-step-chip {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid #1e293b;
+  background: #ffffff;
+  color: #0f172a;
+}
+.agent-step-chip.done {
+  background: #ecfdf5;
+  border-color: #047857;
+  color: #065f46;
+  font-weight: 600;
+}
+.cri-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+.odia-first-active .odia-draft {
+  font-size: 1.22rem;
+  line-height: 1.75;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* Iteration 16 Step 3B: Multi-Screen Onboarding & Left-Sidebar Shell */
+.setu-onboarding-modal {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #f8fafc;
+  border-radius: 16px;
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+  border: 2px solid #d69a39;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.22);
+}
+.setu-onboarding-modal h2, .setu-onboarding-modal h3, .setu-onboarding-modal label {
+  color: #f8fafc;
+}
+.setu-onboarding-modal .muted {
+  color: #cbd5e1;
+}
+.setu-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.85rem;
+  margin: 1rem 0;
+}
+.setu-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.setu-input-group input, .setu-input-group select {
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #94a3b8;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 0.95rem;
+}
+.setu-error-msg {
+  color: #fca5a5;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+}
+.setu-app-shell {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+  margin-bottom: 1.25rem;
+}
+@media (max-width: 860px) {
+  .setu-app-shell {
+    grid-template-columns: 1fr;
+  }
+}
+.setu-sidebar {
+  background: #0f172a;
+  color: #f8fafc;
+  border-radius: 14px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  position: sticky;
+  top: 1rem;
+}
+.setu-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #e2e8f0;
+  font-weight: 500;
+  cursor: pointer;
+}
+.setu-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.setu-nav-btn.active {
+  background: #d69a39;
+  color: #0f172a;
+  font-weight: 700;
+}
+.setu-stage-panel {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 1.25rem;
+}
+.setu-skip-explanation-card {
+  border: 2px solid #0e9f6e;
+  background: #ecfdf5;
+  color: #064e3b;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 0.85rem;
+}
+.setu-view-hide-practice .workspace-grid {
+  display: none !important;
+}
+
+/* Iteration 16 Step 5: Full-Viewport Command Center & Textbook Studio */
+body.setu-shell-mounted .hero {
+  display: none;
+}
+body.setu-shell-mounted main.container {
+  max-width: 1380px;
+  padding-top: 1rem;
+}
+.setu-v2-hub {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin-bottom: 1.25rem !important;
+}
+.setu-app-shell {
+  display: grid;
+  grid-template-columns: 270px minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+@media (max-width: 920px) {
+  .setu-app-shell {
+    grid-template-columns: 1fr;
+  }
+}
+.setu-sidebar {
+  background: linear-gradient(180deg, #0b192c 0%, #102442 100%);
+  color: #f8fafc;
+  border-radius: 16px;
+  padding: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  position: sticky;
+  top: 1rem;
+  box-shadow: 0 14px 34px rgba(11, 25, 44, 0.22);
+  border: 1px solid rgba(214, 154, 57, 0.35);
+}
+.setu-stage-panel {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+.setu-textbook-banner {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+  color: #f8fafc;
+  border-radius: 14px;
+  padding: 1.25rem;
+  margin: 0.85rem 0 1.15rem;
+  border-left: 6px solid #d69a39;
+}
+.setu-textbook-banner h3, .setu-textbook-banner strong {
+  color: #f8fafc;
+}
+.setu-formula-box {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(245, 176, 65, 0.45);
+  border-radius: 8px;
+  padding: 0.55rem 0.85rem;
+  margin-top: 0.65rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #fde68a;
+  font-weight: 600;
+}
+.setu-textarea-ingest {
+  width: 100%;
+  min-height: 76px;
+  border-radius: 10px;
+  border: 1px solid #94a3b8;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
+}
+
+/* Iteration 16 Step 6: True Multi-Page Router & Physical Stage Docking */
+body.setu-shell-mounted .hero {
+  display: none !important;
+}
+body.setu-shell-mounted > main > .workspace-grid {
+  display: none !important;
+}
+.setu-docked-practice-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.85fr);
+  gap: 1.25rem;
+  margin-top: 1rem;
+  align-items: start;
+}
+@media (max-width: 960px) {
+  .setu-docked-practice-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.setu-landing-hero {
+  background: linear-gradient(135deg, #0b192c 0%, #102442 60%, #1e3a5f 100%);
+  color: #f8fafc;
+  border-radius: 20px;
+  padding: 2.75rem 2.25rem;
+  border: 2px solid #d69a39;
+  box-shadow: 0 20px 45px rgba(11, 25, 44, 0.25);
+  margin: 1rem 0 2rem;
+}
+.setu-landing-hero h1 {
+  color: #ffffff;
+  font-size: 2.3rem;
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+}
+.setu-google-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: #ffffff !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  padding: 0.8rem 1.35rem !important;
+  border-radius: 999px !important;
+  border: 2px solid #d69a39 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+}
+.setu-live-ai-box {
+  background: #f0fdf4;
+  border: 2px solid #0e9f6e;
+  border-radius: 14px;
+  padding: 1.15rem;
+  margin-top: 1rem;
+}
+.setu-role-badge {
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(245, 176, 65, 0.2);
+  color: #fde68a;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-top: 0.35rem;
+}
+
+/* Iteration 16 Step 7: Strict Multi-Page Viewport Isolation */
+body.setu-hide-chrome > main > details,
+body.setu-hide-chrome > main > section:not(.setu-v2-hub),
+body.setu-hide-chrome > footer {
+  display: none !important;
+}
+.setu-page-breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 0.65rem 1.15rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(214, 154, 57, 0.4);
+}
+.setu-google-chooser {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.85rem;
+  margin: 1.15rem 0;
+}
+.setu-google-account-card {
+  background: #ffffff;
+  color: #0f172a;
+  border: 2px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.setu-google-account-card:hover {
+  border-color: #0b5fff;
+  transform: translateY(-2px);
+}
+.setu-telemetry-bar {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-left: 5px solid #0b5fff;
+  border-radius: 10px;
+  padding: 0.6rem 0.95rem;
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+  color: #0f172a;
+}
+
+/* Iteration 16 Step 8: Strict Auth Gate & Clean Production UI (No Draft Clutter) */
+/* Strictly hide the entire system until authentication is completed */
+body.setu-auth-locked > main > *:not(.setu-v2-hub),
+body.setu-auth-locked > footer,
+body.setu-hide-chrome > main > *:not(.setu-v2-hub),
+body.setu-hide-chrome > footer {
+  display: none !important;
+}
+
+/* Hide Prototype / Unreviewed Draft badges & callout banners visually while keeping DOM nodes for tests */
+.draft-callout,
+.hero-badge,
+.status-Strip .pill-subtle,
+#question-status,
+#bridge-status,
+.odia-box .odia-label {
+  display: none !important;
+}
+
+/* Iteration 16 Step 9: Single Unified System Isolation */
+body.setu-unified-mode > header,
+body.setu-unified-mode > footer,
+body.setu-unified-mode > #continue-bar,
+body.setu-unified-mode > main > *:not(.setu-v2-hub) {
+  display: none !important;
+}
+body.setu-unified-mode {
+  background: #f1f5f9;
+  margin: 0;
+  padding: 0;
+}
+body.setu-unified-mode > main.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+.setu-unified-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0b192c;
+  color: #f8fafc;
+  padding: 0.9rem 1.5rem;
+  border-radius: 14px;
+  margin-bottom: 1.25rem;
+  border: 1px solid rgba(214, 154, 57, 0.45);
+  box-shadow: 0 8px 24px rgba(11, 25, 44, 0.15);
+}
+.setu-unified-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+.setu-unified-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #d69a39 0%, #f5b041 100%);
+  color: #0b192c;
+  font-weight: 900;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.setu-practice-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.9fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+@media (max-width: 980px) {
+  .setu-practice-layout {
+    grid-template-columns: 1fr;
+  }
+}
+.setu-q-card {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+.setu-q-odia-prompt {
+  background: #fffbeb;
+  border-left: 5px solid #d69a39;
+  padding: 1rem 1.15rem;
+  border-radius: 10px;
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.75;
+  margin: 0.85rem 0;
+}
+.setu-opt-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  width: 100%;
+  text-align: left;
+  background: #f8fafc;
+  border: 2px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 0.65rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.setu-opt-btn:hover {
+  border-color: #0b5fff;
+  background: #eff6ff;
+}
+.setu-opt-btn.selected {
+  border-color: #d69a39;
+  background: #fef3c7;
+}
+.setu-opt-badge {
+  min-width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #0b192c;
+  color: #ffffff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.setu-side-widget {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 1.15rem;
+  margin-bottom: 1rem;
+}
+
+/* Pathasetu frontend refresh: one calm, responsive system across every view. */
+body.setu-unified-mode {
+  min-height: 100vh;
+  background: #eef2f6;
+  color: #182b43;
+}
+body.setu-unified-mode > main.page-shell {
+  width: min(100%, 1540px);
+  max-width: 1540px;
+  min-height: calc(100vh - 24px);
+  margin: 0 auto;
+  padding: 18px clamp(16px, 2.5vw, 36px) 36px;
+}
+.setu-v2-hub {
+  width: 100%;
+  max-width: none;
+  color: #182b43;
+  font-size: 15px;
+}
+.setu-unified-topbar {
+  min-height: 68px;
+  margin-bottom: 20px;
+  padding: 12px 18px;
+  border: 1px solid #243c5a;
+  border-radius: 14px;
+  background: #102442;
+  box-shadow: 0 5px 16px rgba(16, 36, 66, .10);
+}
+.setu-unified-brand { min-width: 0; }
+.setu-unified-brand strong { font-size: 16px !important; letter-spacing: -.2px; }
+.setu-unified-brand small { display: block; margin-top: 2px; color: #d1dbe8 !important; font-size: 12px; }
+.setu-unified-logo { flex: 0 0 auto; }
+.setu-unified-topbar .cri-chip-row { flex-wrap: wrap; justify-content: flex-end; }
+.setu-role-badge {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  margin: 0;
+  padding: 7px 10px;
+  border: 1px solid #dbe3ed;
+  border-radius: 999px;
+  background: #f7f9fc;
+  color: #40536d;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.setu-unified-topbar .setu-role-badge {
+  border-color: rgba(255,255,255,.18);
+  background: rgba(255,255,255,.08);
+  color: #eaf0f7;
+}
+.setu-unified-topbar .setu-guardian-status.is-connected {
+  border-color: rgba(115, 210, 169, .5);
+  background: rgba(31, 111, 78, .35);
+  color: #c9f3df;
+}
+.setu-app-shell {
+  grid-template-columns: 252px minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(16px, 2vw, 24px);
+  margin: 0;
+}
+.setu-sidebar {
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  gap: 5px;
+  padding: 14px;
+  border: 1px solid #263f5c;
+  border-radius: 16px;
+  background: linear-gradient(165deg, #102442 0%, #0d1c31 100%);
+  box-shadow: 0 8px 24px rgba(16, 36, 66, .12);
+}
+.setu-sidebar > div:first-child {
+  padding: 6px 8px 14px !important;
+  margin-bottom: 6px !important;
+  border-color: rgba(255,255,255,.13) !important;
+}
+.setu-sidebar > div:first-child strong {
+  color: #f1b84f !important;
+  font-size: 15px !important;
+  line-height: 1.4;
+}
+.setu-sidebar > div:first-child small { margin-top: 3px; font-size: 12px; }
+.setu-sidebar > div:first-child .setu-role-badge {
+  display: flex;
+  margin-top: 10px;
+  border-color: rgba(255,255,255,.14);
+  background: rgba(255,255,255,.09);
+  color: #e7edf5;
+}
+.setu-nav-group {
+  padding: 12px 9px 4px;
+  color: #b7c5d6;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+.setu-nav-btn {
+  min-height: 44px;
+  gap: 10px;
+  padding: 9px 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: #e0e7ef;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  transition: background .16s ease, border-color .16s ease, color .16s ease;
+}
+.setu-nav-btn:hover { background: rgba(255,255,255,.09); }
+.setu-nav-btn.active,
+.setu-nav-btn[aria-current="page"] {
+  border-color: rgba(241,184,79,.5);
+  background: #e1a43a;
+  color: #102442;
+  box-shadow: inset 3px 0 0 #ffd98b;
+}
+.setu-nav-icon {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 7px;
+  background: rgba(255,255,255,.10);
+  color: inherit;
+  font-size: 15px;
+  font-weight: 800;
+}
+.setu-stage-panel {
+  min-width: 0;
+  padding: clamp(18px, 2.2vw, 30px);
+  border: 1px solid #d8e0e9;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 6px 22px rgba(16, 36, 66, .045);
+}
+.setu-page-heading {
+  display: grid;
+  justify-items: start;
+  gap: 7px;
+  padding: 0 0 19px;
+  border-bottom: 1px solid #e8edf2;
+}
+.setu-page-eyebrow {
+  color: #80551a;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.25px;
+}
+.setu-page-heading h1 {
+  margin: 0;
+  color: #102442;
+  font-size: clamp(25px, 3vw, 34px);
+  font-weight: 760;
+  letter-spacing: -.9px;
+  line-height: 1.16;
+}
+.setu-page-heading p {
+  max-width: 760px;
+  margin: 0;
+  color: #53657a;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.setu-context-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 3px;
+  padding: 6px 9px;
+  border: 1px solid #dfe6ee;
+  border-radius: 8px;
+  background: #f7f9fb;
+  color: #425670;
+  font-size: 12px;
+  font-weight: 650;
+}
+.setu-telemetry-bar {
+  margin: 16px 0 10px;
+  padding: 9px 12px;
+  border-color: #dce5ef;
+  border-left: 3px solid #4b76a7;
+  background: #f7f9fc;
+  color: #44566c;
+  font-size: 12px;
+}
+.setu-stage-panel > .setu-role-badge[role="note"] {
+  display: block;
+  width: 100%;
+  border-color: #f0dfbc;
+  border-radius: 9px;
+  background: #fff9ed;
+  color: #6d501f;
+  line-height: 1.5;
+}
+.setu-page-tools {
+  display: flex;
+  justify-content: flex-end;
+  margin: 14px 0 0;
+}
+.setu-page-tools .cri-chip-row { margin: 0; }
+.setu-page-tools .secondary-button,
+.setu-page-tools .setu-role-badge { min-height: 36px; font-size: 12px; }
+.setu-language-status {
+  align-self: center;
+  max-width: 320px;
+  color: #52647a;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.setu-home-odia {
+  font-size: 17px !important;
+  font-weight: 700;
+  color: #fff !important;
+}
+.setu-feature-status {
+  margin: 9px 0 0;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.setu-source-note {
+  margin: 6px 0 18px;
+  color: #62748a;
+  font-size: 12px;
+}
+.setu-home-welcome {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, .34fr);
+  gap: 24px;
+  align-items: center;
+  margin: 20px 0 24px;
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid #2a4567;
+  border-radius: 15px;
+  background: linear-gradient(120deg, #102442 0%, #17395f 100%);
+  color: #f7f9fc;
+  box-shadow: 0 8px 24px rgba(16,36,66,.12);
+}
+.setu-home-welcome .setu-page-eyebrow { color: #f1bd67; }
+.setu-home-welcome h2 { margin: 7px 0; color: #fff; font-size: clamp(22px, 2.8vw, 30px); letter-spacing: -.7px; }
+.setu-home-welcome p { max-width: 640px; margin: 0; color: #d2dce8; font-size: 14px; line-height: 1.6; }
+.setu-home-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 17px; }
+.setu-home-stat {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-height: 130px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,.19);
+  border-radius: 12px;
+  background: rgba(255,255,255,.08);
+}
+.setu-home-stat strong { color: #ffd98e; font-size: 36px; line-height: 1; }
+.setu-home-stat span { color: #fff; font-size: 13px; font-weight: 650; }
+.setu-home-stat small { margin-top: 6px; color: #cbd7e5; font-size: 12px; line-height: 1.45; }
+.setu-home-account-action {
+  justify-self: start;
+  margin-top: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ffdb97;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 750;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.setu-v2-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px; margin: 12px 0; }
+.stoplight-pill {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #dce4ec;
+  border-left-width: 4px;
+  border-radius: 12px;
+  background: #fbfcfd;
+  box-shadow: none;
+}
+.stoplight-pill strong { display: block; color: #203752; font-size: 14px; line-height: 1.5; }
+.stoplight-pill .small-label { margin: 7px 0 3px; color: #576a81; font-size: 11px; }
+.stoplight-pill .muted { color: #53657b; font-size: 13px; line-height: 1.55; }
+.stoplight-red { border-left-color: #b54b42; }
+.stoplight-yellow { border-left-color: #c8892d; }
+.stoplight-green { border-left-color: #37866b; }
+.agent-strip-row { gap: 7px; margin: 8px 0 18px; }
+.agent-step-chip {
+  padding: 7px 10px;
+  border-color: #dce4ec;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #40556f;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.agent-step-chip.done { border-color: #b7dfcd; background: #edf8f2; color: #235e48; }
+.setu-practice-layout { grid-template-columns: minmax(0, 1.45fr) minmax(250px, .8fr); gap: 15px; }
+.setu-q-card, .setu-side-widget, .side-card {
+  border: 1px solid #dce4ec;
+  border-radius: 13px;
+  box-shadow: none;
+}
+.setu-q-card { padding: clamp(16px, 2vw, 24px); }
+.setu-opt-btn { border-width: 1px; border-color: #dce4ec; background: #fff; }
+.setu-opt-btn:hover { border-color: #c4964c; background: #fffaf1; }
+.setu-opt-btn.selected { border-color: #b9822e; background: #fff5e3; }
+.setu-opt-btn:focus-visible, .setu-nav-btn:focus-visible, .setu-home-actions button:focus-visible { outline: 3px solid #3c6fa8; outline-offset: 2px; }
+.setu-side-widget { padding: 15px; background: #f8fafc; }
+.setu-textbook-banner { border-radius: 12px; }
+.setu-textarea-ingest { min-height: 100px; border-color: #cbd6e2; color: #182b43; }
+.setu-inline-note {
+  max-width: 850px;
+  margin: 12px 0;
+  padding: 10px 12px;
+  border: 1px solid #e3e8ef;
+  border-radius: 9px;
+  background: #f8fafc;
+  color: #53657b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.setu-unavailable-panel, .setu-empty-state {
+  margin: 20px 0;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid #dce4ec;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+.setu-unavailable-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 12px;
+  background: #e9eef5;
+  color: #294767;
+  font-size: 21px;
+  font-weight: 800;
+}
+.setu-unavailable-panel h2 { margin: 14px 0 7px; color: #102442; font-size: 21px; }
+.setu-unavailable-panel > p, .setu-empty-state p { max-width: 760px; color: #53657b; line-height: 1.65; }
+.setu-empty-state { display: grid; justify-items: start; gap: 7px; }
+.setu-empty-state strong { color: #203752; font-size: 17px; }
+.setu-empty-state p { margin: 0 0 8px; }
+.setu-stage-panel button { max-width: 100%; }
+.setu-stage-panel button:disabled { opacity: .62; cursor: not-allowed; }
+.setu-landing-hero {
+  max-width: 900px;
+  margin: 30px auto 12vh;
+  padding: clamp(28px, 6vw, 64px);
+  border: 1px solid #304b6c;
+  border-radius: 18px;
+  background: linear-gradient(125deg, #102442 0%, #19385e 100%);
+  color: #f7f9fc;
+  box-shadow: 0 15px 40px rgba(16,36,66,.15);
+}
+.setu-landing-hero h1 { max-width: 700px; margin: 18px 0 12px; color: #fff; font-size: clamp(32px, 5vw, 52px); line-height: 1.1; letter-spacing: -1.5px; }
+.setu-landing-hero .muted { max-width: 670px; color: #d3ddea; font-size: 15px; line-height: 1.7; }
+.setu-landing-hero .primary-button { margin-top: 9px; }
+@media (max-width: 920px) {
+  body.setu-unified-mode > main.page-shell { padding: 12px 14px 24px; }
+  .setu-app-shell { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .setu-sidebar {
+    position: sticky;
+    z-index: 20;
+    top: 8px;
+    max-height: none;
+    flex-direction: row;
+    align-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 8px;
+    border-radius: 12px;
+    scrollbar-width: thin;
+  }
+  .setu-sidebar > div:first-child, .setu-nav-group { display: none; }
+  .setu-nav-btn {
+    width: auto;
+    min-width: max-content;
+    min-height: 42px;
+    padding: 8px 10px;
+    white-space: nowrap;
+  }
+  .setu-nav-btn:last-child { margin: 0 !important; border: 1px solid transparent !important; }
+  .setu-nav-icon { width: 22px; height: 22px; }
+  .setu-stage-panel { padding: clamp(16px, 3vw, 24px); }
+  .setu-home-welcome { grid-template-columns: minmax(0, 1fr) minmax(150px, .4fr); }
+}
+@media (max-width: 640px) {
+  body.setu-unified-mode > main.page-shell { padding: 8px 9px 18px; }
+  .setu-unified-topbar { align-items: flex-start; flex-direction: column; gap: 10px; padding: 12px; }
+  .setu-unified-topbar .cri-chip-row { justify-content: flex-start; }
+  .setu-unified-brand small { max-width: 280px; line-height: 1.45; }
+  .setu-app-shell { gap: 8px; }
+  .setu-sidebar { top: 4px; gap: 4px; padding: 6px; }
+  .setu-nav-btn { min-height: 40px; padding: 7px 9px; font-size: 12px; }
+  .setu-stage-panel { padding: 15px 13px; border-radius: 12px; }
+  .setu-page-heading { gap: 6px; padding-bottom: 15px; }
+  .setu-page-heading h1 { font-size: 26px; }
+  .setu-page-heading p { font-size: 13px; }
+  .setu-context-chip { font-size: 11px; line-height: 1.5; }
+  .setu-page-tools { justify-content: flex-start; }
+  .setu-page-tools .cri-chip-row { justify-content: flex-start; }
+  .setu-home-welcome { grid-template-columns: 1fr; gap: 16px; margin: 14px 0 20px; padding: 20px 16px; }
+  .setu-home-stat { min-height: auto; grid-template-columns: auto 1fr; align-items: center; column-gap: 10px; }
+  .setu-home-stat strong { grid-row: span 2; font-size: 32px; }
+  .setu-home-stat small { grid-column: 2; margin: 0; }
+  .setu-home-account-action { grid-column: 2; }
+  .setu-practice-layout { grid-template-columns: minmax(0, 1fr); }
+  .setu-q-card { padding: 15px; }
+  .setu-q-card .card-header { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .setu-stage-panel .cri-chip-row { gap: 7px; }
+  .setu-stage-panel .primary-button, .setu-stage-panel .secondary-button { min-height: 42px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .setu-nav-btn, .setu-opt-btn, .setu-google-account-card { transition: none; }
+}

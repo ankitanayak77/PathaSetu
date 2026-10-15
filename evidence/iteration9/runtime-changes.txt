@@ -1,0 +1,7 @@
+# Iteration 9 declared runtime/tooling changes; app UI, learning logic and educational content intentionally unchanged.
+MODIFIED	package.json	Added the no-network local doctor command and configured syntax checks for its CLI and helper libraries.
+MODIFIED	scripts/browser-regression.mjs	Classifies administrator-policy navigation blocks as BLOCKED (exit 2) and does not count skipped scenarios as failures or passes.
+MODIFIED	scripts/accessibility-audit.mjs	Writes a structured BLOCKED report and exits 2 when a managed browser policy prevents page navigation.
+ADDED	scripts/doctor.mjs	CLI for local PASS/FAIL/BLOCKED diagnostics; no live provider call or browser launch.
+ADDED	scripts/lib/doctor.mjs	Testable doctor report using existing checks and browser finder.
+ADDED	scripts/lib/browser-run-status.mjs	Shared policy/error classifier and honest pass/fail/blocked aggregation for browser test runners.

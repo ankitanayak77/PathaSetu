@@ -1,5 +1,5 @@
 {
-  "startedAt": "2026-10-13T09:08:13.789Z",
+  "startedAt": "2026-10-15T04:04:08.367Z",
   "checks": [
     {
       "id": "A1",
@@ -23,7 +23,7 @@
       "id": "A4",
       "title": "a first visit does not announce an \"App update ready\" notice",
       "passed": true,
-      "detail": "!\nPrototype content · not for real learners\nThe Electricity questions and Odia bridge fields are unr"
+      "detail": "!Prototype content · not for real learnersThe Electricity questions and Odia bridge fields are unrev"
     },
     {
       "id": "B1",
@@ -59,7 +59,7 @@
       "id": "D1",
       "title": "queue drains after reconnect with no manual action",
       "passed": true,
-      "detail": "✓\nRe-check processed · MOCK\n1 queued re-check processed. The result remains provisional; n"
+      "detail": "✓Re-check processed · MOCK1 queued re-check processed. The result remains provisional; no "
     },
     {
       "id": "D2",
@@ -70,8 +70,8 @@
     {
       "id": "D3",
       "title": "focus and caret survive the reconnect re-render",
-      "passed": true,
-      "detail": "focus=\"explanation-input\"; caret=5"
+      "passed": false,
+      "detail": "focus=\"\"; caret=0"
     },
     {
       "id": "D4",
@@ -95,7 +95,7 @@
       "id": "E3",
       "title": "queue drains after reconnect following a reload",
       "passed": true,
-      "detail": "✓\nRe-check processed · MOCK\n1 queued re-check processed. The result remains prov"
+      "detail": "✓Re-check processed · MOCK1 queued re-check processed. The result remains provis"
     },
     {
       "id": "E4",
@@ -107,7 +107,7 @@
       "id": "L1",
       "title": "the draft is stored in IndexedDB under its own question",
       "passed": true,
-      "detail": "stored={\"optionId\":\"C\",\"explanation\":\"A half-written explanation that must survive a reload.\",\"updatedAt\":\"2026-10-13T09:08:25."
+      "detail": "stored={\"optionId\":\"C\",\"explanation\":\"A half-written explanation that must survive a reload.\",\"updatedAt\":\"2026-10-15T04:04:21."
     },
     {
       "id": "L2",
@@ -143,7 +143,7 @@
       "id": "G1",
       "title": "the second tab is read-only with a persistent banner and disabled controls",
       "passed": true,
-      "detail": "!\nRead-only session\nAnother Pathasetu tab owns the writable session. This tab will not sav"
+      "detail": "!Read-only sessionAnother Pathasetu tab owns the writable session. This tab will not save "
     },
     {
       "id": "G2",
@@ -166,8 +166,8 @@
     {
       "id": "G7",
       "title": "the read-only state stays visible (a transient notice cannot hide it)",
-      "passed": true,
-      "detail": "banner visible=true"
+      "passed": false,
+      "detail": "banner visible=false"
     },
     {
       "id": "G6",
@@ -185,55 +185,13 @@
       "id": "K2",
       "title": "the answer is not shown in the bridge card while the exercise is unanswered",
       "passed": true,
-      "detail": "Everyday Odia ତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ। School Odia te"
+      "detail": "Everyday Odiaତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ।School Odia term"
     },
     {
-      "id": "K3",
-      "title": "an option can be chosen from the keyboard and gives immediate feedback; focus stays on it",
-      "passed": true,
-      "detail": "feedback=\"Matches the pack’s draft mapping. The mapping itself has not\"; focus=B1"
-    },
-    {
-      "id": "K4",
-      "title": "exactly one of the three options is correct and each choice gets immediate feedback",
-      "passed": true,
-      "detail": "correct,wrong,wrong"
-    },
-    {
-      "id": "K5",
-      "title": "after an attempt the full mapping appears in the bridge card",
-      "passed": true,
-      "detail": "Everyday Odia ତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ। School Odia te"
-    },
-    {
-      "id": "K6",
-      "title": "revealing shows the source mapping with its UNREVIEWED_DRAFT status",
-      "passed": true,
-      "detail": "Everyday Odia ତାର ମଝିରେ ଫାଙ୍କ ରହିଲେ ବିଦ୍ୟୁତ୍ ଚାଲିବାର ପୂରା ରାସ୍ତା ରହେ ନାହିଁ। School Odia te"
-    },
-    {
-      "id": "K7",
-      "title": "three attempts and the reveal are in the persisted decision trace with network:false",
-      "passed": true,
-      "detail": "attempts=3; counter=3"
-    },
-    {
-      "id": "K8",
-      "title": "the trace panel shows the bridge attempts to the learner",
-      "passed": true,
-      "detail": "02:38:38 PM | bridge mapping revealed | "
-    },
-    {
-      "id": "K9",
-      "title": "the whole interaction made no API request (the background reachability probe is excluded)",
-      "passed": true,
-      "detail": "non-probe API requests=0; offline=true"
-    },
-    {
-      "id": "K10",
-      "title": "Try another builds a fresh, different exercise deterministically from the saved attempt count",
-      "passed": true,
-      "detail": "options changed and the reveal is closed"
+      "id": "K.run",
+      "title": "Bridge Practice works offline, by keyboard, and is traced: scenario ran to completion",
+      "passed": false,
+      "detail": "wait_timeout:keyboard activation:last={\"options\":[{\"id\":\"B1\",\"pressed\":\"false\",\"cls\":\"bridge-option\",\"text\":\"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen circuit / closed circuit\"},{\"id\":\"B2\",\"pressed\":\"false\",\"cls\":\"bridge-option\",\"text\":\"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transfer\"},{\"id\":\"B3\",\"pressed\":\"false\",\"cls\":\"bridge-option\",\"text\":\"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍"
     },
     {
       "id": "M1",
@@ -269,7 +227,7 @@
       "id": "M6",
       "title": "an authorised answer is re-checked by the protected route",
       "passed": true,
-      "detail": "✓\nRe-check processed · MOCK\n1 queued re-check processed. The result remains prov"
+      "detail": "✓Re-check processed · MOCK1 queued re-check processed. The result remains provis"
     },
     {
       "id": "M7",
@@ -305,7 +263,7 @@
       "id": "N1",
       "title": "automatic attempts stop at the configured maximum and a persistent paused status with Retry now appears",
       "passed": true,
-      "detail": "re-check POSTs=3; status=\"Re-check paused · needs attention Pathasetu stopped retrying automatically after 3 failed attempts. \""
+      "detail": "re-check POSTs=3; status=\"Re-check paused · needs attentionPathasetu stopped retrying automatically after 3 failed attempts. Y\""
     },
     {
       "id": "N2",
@@ -340,8 +298,8 @@
     {
       "id": "N7",
       "title": "the active question, the draft, the option and the caret are untouched by the retry",
-      "passed": true,
-      "detail": "question=QUESTION EL02 · CLOSED CIRCUIT; option=B; caret=6"
+      "passed": false,
+      "detail": "question=QUESTION EL02 · CLOSED CIRCUIT; option=B; caret=0"
     },
     {
       "id": "N8",
@@ -353,7 +311,7 @@
       "id": "N9",
       "title": "after the first failure the status says waiting, shows the attempt count and the next try",
       "passed": true,
-      "detail": "Re-check waiting · attempt 1 of 4 failed Your answer is saved. Next automatic try in about 4 s. Retry now"
+      "detail": "Re-check waiting · attempt 1 of 4 failedYour answer is saved. Next automatic try in about 4 s. Retry now"
     },
     {
       "id": "N10",
@@ -395,7 +353,7 @@
       "id": "R1",
       "title": "a totally unreadable record starts a fresh session with a clear notice instead of crashing",
       "passed": true,
-      "detail": "answers=0; notice=\"! Saved progress could not be read Pathasetu started a fresh session. \""
+      "detail": "answers=0; notice=\"!Saved progress could not be readPathasetu started a fresh session. Th\""
     },
     {
       "id": "R2",
@@ -419,7 +377,7 @@
       "id": "R5",
       "title": "the repair is recorded in the trace as counts only",
       "passed": true,
-      "detail": "answer_submitted,saved_state_repaired,recheck_complete"
+      "detail": "answer_submitted,recheck_complete,saved_state_repaired"
     },
     {
       "id": "P2.granted.a",
@@ -503,13 +461,13 @@
       "id": "Q3",
       "title": "the latest-attempt card says the re-check came from GROQ and that the hosted-model proposal is provisional, not a demo rule",
       "passed": true,
-      "detail": "LATEST ATTEMPT · RECHECKED GROQ | Stub response for a label test; not a live model. This hosted-model proposal remains provisional and has not been evalua"
+      "detail": "LATEST ATTEMPT · RECHECKED GROQ | Your reasoning could not be checked yet. Stub response for a label test; not a live model. This model proposal remains p"
     },
     {
       "id": "Q4",
       "title": "the notice names the provider that processed the re-check",
       "passed": true,
-      "detail": "✓\nRe-check processed · GROQ\n1 queued re-check processed. The result remains provisional; no mastery "
+      "detail": "✓Re-check processed · GROQ1 queued re-check processed. The result remains provisional; no mastery wa"
     },
     {
       "id": "Q5",
@@ -521,19 +479,19 @@
       "id": "G4",
       "title": "without Web Locks the app shows a persistent single-tab warning",
       "passed": true,
-      "detail": "!\nSingle-tab protection unavailable\nThis browser does not provide Web Locks here"
+      "detail": "!Single-tab protection unavailableThis browser does not provide Web Locks here. "
     },
     {
       "id": "H1",
       "title": "no /api/ response is stored in any cache",
       "passed": true,
-      "detail": "15 cached; api entries=0"
+      "detail": "19 cached; api entries=0"
     },
     {
       "id": "I1",
       "title": "an updated service worker announces the update",
       "passed": true,
-      "detail": "✓\nApp update ready\nThe refreshed application is available. Reload once to apply "
+      "detail": "✓App update readyThe refreshed application is available. Reload once to apply it"
     },
     {
       "id": "I2",
@@ -596,6 +554,54 @@
       "detail": ""
     },
     {
+      "id": "X1",
+      "title": "the header names the configured chain and model, not the mock",
+      "passed": true,
+      "detail": "CONFIGURED · ollama · fake-model · ACCURACY UNVALIDATED"
+    },
+    {
+      "id": "X.run",
+      "title": "model chain (fake Ollama): labelled models, model-suggested next question with its reason, server-configured retry policy: scenario ran to completion",
+      "passed": false,
+      "detail": "wait_timeout:model re-check:last={\"question\":\"QUESTION EL01 · CLOSED CIRCUIT\",\"answers\":\"1\",\"queue\":\"1\",\"sessions\":\"9 learning sessions left\",\"notice\":\"!Re-check pausedPathasetu stopped retrying automatically after 3 failed attempts. Your answer is still saved. Use “Retry now” when the server is back.\",\"banner\":\"\",\"bridgeButtonsDis"
+    },
+    {
+      "id": "U1",
+      "title": "before any answer there is no Continue bar",
+      "passed": true,
+      "detail": "{\"title\":\"\",\"key\":\"\",\"why\":\"\",\"cardButton\":false,\"bar\":false,\"barText\":\"Continue →\",\"barBottom\":469,\"question\":\"QUESTION"
+    },
+    {
+      "id": "U2",
+      "title": "a wrong choice says it is not the answer-key choice and shows the key B with its text",
+      "passed": true,
+      "detail": "✗ Not the answer-key choice | Answer key: B The circuit is open, so a continuous current does not flow.ପରିପଥ ଖ"
+    },
+    {
+      "id": "U3",
+      "title": "the explanation appears in Odia (draft) and English",
+      "passed": true,
+      "detail": "Whyନିରନ୍ତର ବିଦ୍ୟୁତ୍ ଧାରା ପାଇଁ ବନ୍ଦ ଚାଳକ ପଥ ଆବଶ୍ୟକ। ତାରର ଫାଙ୍କ ସେହି ପଥକୁ ଭାଙ୍ଗିଦିଏ। · draftA steady current needs a close"
+    },
+    {
+      "id": "U4",
+      "title": "the Continue bar is visible at the bottom of the viewport and names the next question, and the card has its own Continue button",
+      "passed": false,
+      "detail": "{\"bar\":true,\"barBottom\":469,\"barText\":\"Continue to EL02 →\"}"
+    },
+    {
+      "id": "U5",
+      "title": "the bar moves to the next question and then hides",
+      "passed": true,
+      "detail": "{\"title\":\"\",\"key\":\"\",\"why\":\"\",\"cardButton\":false,\"bar\":false,\"barText\":\"Continue to EL02 →\",\"barBottom\":469,\"question\":\""
+    },
+    {
+      "id": "U6",
+      "title": "the answer-key choice with no explanation says it matches the key and never asks for more reasoning in a locked form",
+      "passed": true,
+      "detail": "✓ Matches the answer key"
+    },
+    {
       "id": "Z1",
       "title": "no uncaught exceptions or console errors across the verified journeys",
       "passed": true,
@@ -606,145 +612,166 @@
     {
       "id": "A",
       "title": "initial load, labels, first visit",
-      "ms": 2181,
+      "ms": 2606,
       "completed": true
     },
     {
       "id": "B",
       "title": "answer, feedback, explicit continue",
-      "ms": 1311,
+      "ms": 1408,
       "completed": true
     },
     {
       "id": "C",
       "title": "offline answer is queued exactly once",
-      "ms": 2080,
+      "ms": 2108,
       "completed": true
     },
     {
       "id": "D",
       "title": "reconnect drains the queue without disturbing a draft",
-      "ms": 2423,
+      "ms": 2419,
       "completed": true
     },
     {
       "id": "E",
       "title": "reload offline, cold start, queue survives",
-      "ms": 3202,
+      "ms": 3319,
       "completed": true
     },
     {
       "id": "L",
       "title": "an unsent draft survives a reload",
-      "ms": 2051,
+      "ms": 2059,
       "completed": true
     },
     {
       "id": "F",
       "title": "missing or stale content cannot strand the learner",
-      "ms": 1285,
+      "ms": 1401,
       "completed": true
     },
     {
       "id": "G",
       "title": "two tabs: read-only second tab, no lost update",
-      "ms": 2942,
+      "ms": 2945,
       "completed": true
     },
     {
       "id": "G3",
       "title": "two tabs: a read-only tab never processes the queue",
-      "ms": 5571,
+      "ms": 5548,
       "completed": true
     },
     {
       "id": "K",
       "title": "Bridge Practice works offline, by keyboard, and is traced",
-      "ms": 1885,
-      "completed": true
+      "ms": 5786,
+      "completed": false,
+      "error": "wait_timeout:keyboard activation:last={\"options\":[{\"id\":\"B1\",\"pressed\":\"false\",\"cls\":\"bridge-option\",\"text\":\"Aଖୋଲା ପରିପଥ / ବନ୍ଦ ପରିପଥopen circuit / closed circuit\"},{\"id\":\"B2\",\"pressed\":\"false\",\"cls\":\"bridge-option\",\"text\":\"Bଶକ୍ତି ସ୍ଥାନାନ୍ତରenergy transfer\"},{\"id\":\"B3\",\"pressed\":\"false\",\"cls\":\"bridge-option\",\"text\":\"Cପ୍ରତିରୋଧକ / ତାପ ଶକ୍"
     },
     {
       "id": "M",
       "title": "protected draft demo: the code gates content, the UI still works once authorised",
-      "ms": 1693,
+      "ms": 1711,
       "completed": true
     },
     {
       "id": "T",
       "title": "throttled access: a wait message, the right code still works, and a 429 never discards a saved pack or the code",
-      "ms": 7369,
+      "ms": 7326,
       "completed": true
     },
     {
       "id": "N",
       "title": "bounded retries: pause, persistence, manual retry, recovery without duplicates",
-      "ms": 12349,
+      "ms": 12434,
       "completed": true
     },
     {
       "id": "N2",
       "title": "bounded retries: the waiting state and an early manual retry",
-      "ms": 1427,
+      "ms": 1594,
       "completed": true
     },
     {
       "id": "P",
       "title": "storage failures are reported honestly",
-      "ms": 2519,
+      "ms": 2614,
       "completed": true
     },
     {
       "id": "R",
       "title": "corrupt saved state recovers without crashing",
-      "ms": 4364,
+      "ms": 4061,
       "completed": true
     },
     {
       "id": "P2",
       "title": "persistent-storage reporting (stubbed browser responses)",
-      "ms": 6907,
+      "ms": 7381,
       "completed": true
     },
     {
       "id": "S",
       "title": "the trace export hides typed text and secrets",
-      "ms": 1444,
+      "ms": 1475,
       "completed": true
     },
     {
       "id": "Q",
       "title": "provider labels follow what the server reports (stubbed Groq-configured server; no live call)",
-      "ms": 1325,
+      "ms": 1310,
       "completed": true
     },
     {
       "id": "G2",
       "title": "no Web Locks: a visible warning",
-      "ms": 1155,
+      "ms": 1181,
       "completed": true
     },
     {
       "id": "H",
       "title": "service worker: shell offline, API never cached",
-      "ms": 1497,
+      "ms": 1353,
       "completed": true
     },
     {
       "id": "I",
       "title": "service worker update is announced and applied",
-      "ms": 4213,
+      "ms": 4258,
       "completed": true
     },
     {
       "id": "J",
       "title": "provider failures leave state consistent and entries retryable",
-      "ms": 30935,
+      "ms": 30900,
+      "completed": true
+    },
+    {
+      "id": "X",
+      "title": "model chain (fake Ollama): labelled models, model-suggested next question with its reason, server-configured retry policy",
+      "ms": 16484,
+      "completed": false,
+      "error": "wait_timeout:model re-check:last={\"question\":\"QUESTION EL01 · CLOSED CIRCUIT\",\"answers\":\"1\",\"queue\":\"1\",\"sessions\":\"9 learning sessions left\",\"notice\":\"!Re-check pausedPathasetu stopped retrying automatically after 3 failed attempts. Your answer is still saved. Use “Retry now” when the server is back.\",\"banner\":\"\",\"bridgeButtonsDis"
+    },
+    {
+      "id": "U",
+      "title": "Iteration 16: the result shows the answer key and why, and a fixed Continue bar is the way forward",
+      "ms": 1806,
       "completed": true
     }
   ],
   "limitation": "Headless Chromium on one machine. Not a physical-phone test, not Samsung Internet, not iPhone Safari, not educational validation.",
-  "browser": "Chrome/141.0.7390.37",
-  "completedAt": "2026-10-13T09:09:55.922Z",
-  "passCount": 100,
-  "failCount": 0
+  "browser": {
+    "status": "FOUND",
+    "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "selectedBy": "standard location",
+    "version": "Chrome/155.0.8059.40"
+  },
+  "completedAt": "2026-10-15T04:06:13.858Z",
+  "status": "FAIL",
+  "passCount": 95,
+  "failCount": 6,
+  "blockedCount": 0
 }

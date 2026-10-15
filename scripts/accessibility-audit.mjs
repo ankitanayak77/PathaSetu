@@ -7,6 +7,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { sleep, freePort, startServer, launchChrome } from './lib/devtools.mjs';
+import { browserRecord } from './lib/browser-path.mjs';
+import { classifyBrowserFailure } from './lib/browser-run-status.mjs';
 import { AUDIT_EXPRESSION, evaluateAudit, tabAudit } from './lib/a11y-audit.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -70,12 +72,12 @@ const states = [
   }]
 ];
 
-const all = []; let blocked = null;
+const all = []; let blocked = null; let browserInfo = null;
 let server;
 try {
   const port = await freePort();
   server = await startServer({ root: ROOT, port });
-  try { const probe = await launchChrome(); await probe.kill(); } catch (error) { blocked = `no usable browser: ${error.message}`; }
+  try { const probe = await launchChrome(); browserInfo = browserRecord(probe.selection, await probe.version().catch(() => null)); await probe.kill(); } catch (error) { blocked = `no usable browser: ${error.message}`; browserInfo = { status: 'BLOCKED', executable: null, selectedBy: error.reason ?? 'launch_failed', version: null }; }
   if (!blocked) {
     const base = `http://localhost:${port}`;
     for (const viewport of VIEWPORTS) {
@@ -107,12 +109,16 @@ try {
       }
     } finally { await guarded.stop(); }
   }
+} catch (error) {
+  const classification = classifyBrowserFailure(error);
+  if (classification.status === 'BLOCKED') blocked = classification.summary;
+  else throw error;
 } finally { await server?.stop(); }
 
 await fs.mkdir(OUT_DIR, { recursive: true });
 const checks = all.flatMap((entry) => entry.checks);
 const failed = checks.filter((c) => !c.passed);
-const summary = { generatedAt: new Date().toISOString(), blocked, browser: process.env.CHROME_PATH ? 'CHROME_PATH override' : 'default', limitation: 'Headless Chromium with viewport emulation. Not a screen-reader test, not a real-phone test, not proof of WCAG conformance.', states: all.length, checks: checks.length, failed: failed.length };
+const summary = { generatedAt: new Date().toISOString(), blocked, browser: browserInfo, limitation: 'Headless Chromium with viewport emulation. Not a screen-reader test, not a real-phone test, not proof of WCAG conformance.', states: all.length, checks: checks.length, failed: failed.length };
 await fs.writeFile(path.join(OUT_DIR, 'a11y-report.json'), JSON.stringify({ summary, results: all.map(({ viewport, state, report, tab, checks: c }) => ({ viewport, state, report, tab, checks: c })) }, null, 2));
 const lines = [`# Accessibility and mobile-readiness audit (automated)`, '', `Generated ${summary.generatedAt}. ${summary.limitation}`, '', blocked ? `**BLOCKED:** ${blocked}` : `${summary.states} state/viewport combinations, ${summary.checks} checks, **${summary.failed} failed**.`, ''];
 for (const c of failed) lines.push(`- FAIL ${c.title} — ${c.detail}`);

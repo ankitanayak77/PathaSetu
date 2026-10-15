@@ -42,7 +42,7 @@ test('all authored executable assets are local rather than third-party scripts',
 });
 
 test('service worker shell cache version is bumped for the revised feedback-first flow and Bridge Practice (v5)', () => {
-  assert.match(sw, /pathasetu-shell-v8/);
+  assert.match(sw, /pathasetu-shell-v12/);
   assert.doesNotMatch(sw, /pathasetu-shell-v4/);
   assert.match(app, /Review the feedback and remediation below/);
   assert.match(app, /Continue to \$\{next\.id\}/);
@@ -71,9 +71,28 @@ test('the offline shell caches every core module the browser app imports (includ
   for (const asset of ['/index.html', '/styles.css', '/app.js']) assert.ok(shell.includes(`'${asset}'`), `${asset} missing from the shell`);
 });
 
+test('Firebase integration modules are in the offline shell and cloud config is optional', () => {
+  const shell = sw.match(/const SHELL = \[([^\]]+)\]/)[1];
+  assert.ok(shell.includes("'/core/cloudProgress.js'"));
+  assert.ok(shell.includes("'/core/firebaseClient.js'"));
+  assert.match(app, /from '\/core\/firebaseClient\.js'/);
+  assert.match(app, /\/api\/firebase\/config/);
+  assert.match(read('src/core/firebaseClient.js'), /if \(!config\?\.enabled\) return null/);
+});
+
 test('the provider label visibly says MOCK when the mock provider is active', () => {
   assert.match(html, /<span id="provider-label">MOCK PROVIDER/);
   assert.match(app, /'MOCK PROVIDER · DEMO RULES · NO LIVE AI'/);
+});
+
+test('learner-facing thinking goals use plain language and do not silently classify untagged questions', () => {
+  const profiles = read('src/core/profiles.js');
+  assert.match(app, /THINKING GOAL: /);
+  assert.match(profiles, /UNCLASSIFIED: \{ label: 'Thinking goal not tagged yet'/);
+  assert.match(profiles, /Show what an idea means in your own words/);
+  assert.match(app, /These counts show answers that matched a draft answer key/);
+  assert.doesNotMatch(app, /textContent = 'Bloom: '/);
+  assert.match(profiles, /bloomSummary\[meta\?\.bloom\] \|\| bloomSummary\.UNCLASSIFIED/);
 });
 
 test('read-only tabs are blocked from writing, draining the queue and practising, and the banner is persistent', () => {
@@ -84,7 +103,9 @@ test('read-only tabs are blocked from writing, draining the queue and practising
 });
 
 test('re-check requests have a client timeout so a stalled provider cannot freeze the queue', () => {
-  assert.match(app, /const RECHECK_TIMEOUT_MS = \d+;/);
+  // Iteration 15: the timeout is reported by the server (/api/health recheckTimeoutMs) instead of a constant in the browser.
+  assert.match(app, /setTimeout\(\(\) => controller\.abort\(\), ui\.recheckTimeoutMs\)/);
+  assert.doesNotMatch(app, /const RECHECK_TIMEOUT_MS/);
   assert.match(app, /signal: controller\.signal/);
   assert.match(app, /recheck_timeout/);
 });

@@ -1,8 +1,8 @@
 # Pathasetu — pitch and demo scripts
 
-Written 13 October 2026. These scripts say only what the evidence supports. Every number and label can be traced in `CLAIM_EVIDENCE_MATRIX.csv`. If a sentence below is not true on the day (for example a phone test has not happened), cut it; do not soften the rule.
+Written 13 October 2026; current evidence refreshed for Iteration 11 on 14 October. These scripts say only what the evidence supports. Every number and label can be traced in `CLAIM_EVIDENCE_MATRIX.csv`. If a sentence below is not true on the day (for example a phone test has not happened), cut it; do not soften the rule.
 
-**Schedule.** The event page lists a 7-minute live MVP pitch and 5 minutes of CTO questions for the final (Day 2, 10:00 AM–3:00 PM) and a mid-evaluation (GitHub commit audit, working agent-workflow demo, architecture) on Day 1. The public pages disagree about the mid-evaluation hours (shown as 4:00–7:00 PM while Day 1 ends at 6:00 PM). **Use the slot the organisers assigned to your team. None has been given in writing, so treat all timings here as the plan, not the schedule.** Source: <https://www.nirmit.space/events/nextech>.
+**Schedule.** The team supplied a photographed participant agenda: Day 1 mid-evaluation begins at 3:00 PM onwards; Day 2 GitHub submission access closes at 8:00 AM, the hackathon concludes at 9:00 AM, and final evaluation runs 9:00 AM–12:30 PM. The earlier public event page had different/conflicting times for the final and mid-evaluation. **Use the supplied participant handout and any updates from the official briefing; follow your team’s assigned slot.** This schedule transcription is not a written Rule 4.1 ruling. Details are in `docs/NEXTECH_24H_DEMO_STRATEGY.md` and <https://www.nirmit.space/events/nextech>.
 
 **Always on screen during the live demo:** the footer label "MOCK PROVIDER · DEMO RULES · NO LIVE AI", the "UNREVIEWED DRAFT" badge and the "Draft demo pack" strip. Do not hide or crop them.
 
@@ -42,7 +42,7 @@ Written 13 October 2026. These scripts say only what the evidence supports. Ever
 | 0:20–1:00 | "Observe state, propose a diagnosis, validate it, update state, choose the next action, write the reason. Proposer is a swappable slot; validator is an allow-list; only two functions write state." | `docs/SYSTEM_ARCHITECTURE.md` diagram, two boxes (phone and server) |
 | 1:00–1:50 | "Submit → local rule → validator → save → queue entry → planner picks next question and explains why." | Answer EL01 option A with a typed reason; open **Agent decision trace** |
 | 1:50–2:30 | "Offline: same loop with the network off. The re-check waits; five bounded tries, then paused with Retry now." | Browser offline switch; answer; show "pending re-checks 1"; turn network on |
-| 2:30–3:00 | "Evidence: 207 unit tests, 100 browser checks in headless Chromium, 462 accessibility checks. Not on phones. No live model call yet." | `evidence/iteration6/final/` folder |
+| 2:30–3:00 | "Evidence: 451/451 unit tests pass. 46 deliberately injected faults in the retry, queue and validator code are all caught by our tests. In this sandbox 112 browser checks and 462 accessibility checks passed. Earlier environments that blocked navigation are recorded as BLOCKED, not passed. No phone test and no real model call: the model chain was tested with fake servers only." | `evidence/iteration16/final/` folder |
 
 ## C. Seven-minute final presentation and live demo
 
@@ -58,7 +58,7 @@ Based on the story order in the Iteration 5 brief: problem and persona → solut
 | 2:00–2:45 | 4. Architecture | "Almost everything runs on the phone. The server serves files and the question pack and does the second check. The model slot sits behind a validator. The model can never write the learner's state." | Show `SYSTEM_ARCHITECTURE.md` Mermaid diagram (phone box, server box, dashed model box) | Skip the table; point at three arrows |
 | 2:45–4:15 | 5. Live learning loop | "Question one. I pick the wrong option and give a reason." | (1) Show why EL01 was first on the plan card. (2) Pick option **A**, type "The current keeps building up in the wire." (3) Press **Check my thinking**. (4) Read "Possible concept gap — provisional" and the "Next learning action". (5) Open **Agent decision trace**. (6) Point at **Continue to EL02 →** and say it does not move by itself. | Headless runs recommended EL02 after answering EL01 with A. If your screen shows another, say what it shows and why (the plan card states the reason). |
 | 4:15–5:30 | 6. Offline, reconnect, Bridge Practice | "Now I lose the network." | (1) DevTools **Network → Offline**; pill says OFFLINE. (2) Press **Continue**, answer the next question; point to "Saved offline · re-check queued" and "pending re-checks 1". (3) Do **Bridge Practice**: pick a pair, read the feedback, **Reveal the source mapping**, then show the trace line with `network:false`. (4) Network back **Online**; wait for "Re-check processed · MOCK"; point at the plan card's updated recommendation and say the open question and typed text did not move. | The re-check may take a few seconds. Fill the time with the trace explanation. |
-| 5:30–6:10 | 7. Evidence | "207 unit tests, 100 browser checks, 462 accessibility checks. All in headless Chromium on Linux. The team's own managed machine blocked browsers by policy, so those are recorded as blocked. Evaluation: 47 English cases we wrote; 34 agree with our labels; the rule abstained on only 2 of 12 unclear cases. That is a weakness we know." | Slide of the evidence table (numbers from `evidence/iteration6/final/`) | Do not add numbers that are not on the slide |
+| 5:30–6:10 | 7. Evidence | "451/451 unit tests pass, and the 46-fault mutation check finishes with every fault caught. In this sandbox 112 browser checks and 462 accessibility checks passed. The Iteration 11 and Iteration 9 environments blocked navigation; those stay recorded as BLOCKED, not as passes. These are synthetic engineering tests, not learning results. Evaluation: 47 English synthetic cases; 34 agree with our labels; the deterministic rule abstained on only 2 of 12 unclear cases. That is a known weakness." | Evidence slide from `evidence/iteration16/final/`; historical results remain in `evidence/iteration10/final/` and `evidence/iteration11/final/` | Do not add numbers that are not on the slide |
 | 6:10–7:00 | 8. Limits and next | "Before you ask: the diagnosis here is a rule; no live model call has been made; the Odia is a draft no teacher has reviewed; no phone has run it; the code was built with AI assistance on 12–13 October, before the event window, and we are being open about that. Next: teacher review, phones, an Odia evaluation. Closing line A5." | Slide: three limits, three next steps | — |
 
 **Do not say during the demo:** "fully offline", "works on all phones", "understands what the child wrote", "the AI explains", "teacher-approved".
@@ -111,3 +111,17 @@ Keep the provider on **mock** for every phone and stage demo unless a live run h
 ## G. Rehearsal record
 
 The 8-step story (unlock; why this question; answer and diagnosis; airplane mode; queue and restore; re-check, failure, replanning; Bridge Practice offline; provider status and limits) is mapped to the automated checks that exercised each step in `evidence/iteration6/final/REHEARSAL_MAPPING.md` (updated from the Iteration 5 mapping in `evidence/iteration5/final/`). That mapping is **headless Chromium evidence only**; a human rehearsal on the event laptop and phone is **NOT DONE** and should be done and timed before the event.
+
+## H. Safe wording for board, class, book and access (Iteration 7)
+
+Use these lines when the conversation turns to curriculum, books or security. The reasons and sources are in `docs/BOARD_CLASS_BOOK_COMPARISON.md` and `docs/AUTHENTICATION_AND_TRUST_LEVELS.md`.
+
+| Topic | Say | Do not say |
+|---|---|---|
+| Board and class | "Our learner follows the BSE Odisha Class X General Science syllabus, Electricity, session 2026-27. That is a scoping choice, not a study." | "HSC, not Madhyama", as a verified distinction; "all Odisha students"; "works for CBSE or ICSE" |
+| Book and edition | "We don't yet know the exact book edition or page for each question. A teacher has to fill that in." | A chapter or page number from memory; "it follows the textbook" |
+| Alignment | "Not yet item by item: mapped at a high level to the syllabus topic; the item-by-item check is pending." | "Curriculum-aligned", "syllabus-approved", "teacher-approved" |
+| Content rights | "The questions are our own drafts. We don't copy textbook pages." | "No copyright issues" |
+| Access | "A shared code keeps a private demo from being open. It is not a login and it isn't production security." | "Secure", "authenticated users", "production secure" |
+| Shared phone | "We designed for shared phones, but today there is one saved record, so two children would share it." | Do not say: "Supports family phones" (it does not) |
+| Where the Mac stands | "Our unit tests and checks pass on our Mac. The browser tests have not run there; they ran in a Linux sandbox because the scripts look for a Linux browser path." | "The browser tests pass on our laptops" |

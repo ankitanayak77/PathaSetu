@@ -1,0 +1,341 @@
+{
+  "node": "v22.16.0",
+  "mode": "plan",
+  "reporter": "tap",
+  "catalogueSize": 46,
+  "state": "IN_PROGRESS",
+  "complete": false,
+  "elapsedMs": 5742,
+  "budgetSeconds": 600,
+  "note": "Mutants are applied to a temporary copy of src/core only. A killed mutant means the selected tests failed against the deliberate fault. This is evidence about test sensitivity, not about learning outcomes or model accuracy.",
+  "summary": {
+    "selected": 46,
+    "run": 7,
+    "killed": 7,
+    "survived": 0,
+    "errors": 0,
+    "notRun": 0
+  },
+  "requiredFamilies": [
+    {
+      "family": "a",
+      "mutants": 10,
+      "killed": 7
+    },
+    {
+      "family": "b",
+      "mutants": 3,
+      "killed": 0
+    },
+    {
+      "family": "c",
+      "mutants": 3,
+      "killed": 0
+    }
+  ],
+  "results": [
+    {
+      "id": "A1",
+      "required": "a",
+      "description": "backoff exponent off by one (waits 10 s, 20 s, ... instead of 5 s, 10 s, ...)",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "4 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 9,
+        "failed": 4,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 400,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "a valid ISO timestamp retains the existing bounded retry behaviour"
+      ]
+    },
+    {
+      "id": "A2",
+      "required": "a",
+      "description": "backoff is never capped at maxDelayMs",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 12,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 372,
+      "failingTests": [
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts"
+      ]
+    },
+    {
+      "id": "A3",
+      "required": "a",
+      "description": "retry limit allows one extra automatic attempt (> instead of >=)",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "4 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 9,
+        "failed": 4,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 342,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again"
+      ]
+    },
+    {
+      "id": "A4",
+      "required": "a",
+      "description": "retry limit stops one attempt early",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 10,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 315,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again"
+      ]
+    },
+    {
+      "id": "A5",
+      "required": "a",
+      "description": "no retry limit at all (entries never pause)",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "4 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 9,
+        "failed": 4,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 309,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again"
+      ]
+    },
+    {
+      "id": "A6",
+      "required": "a",
+      "description": "no backoff scheduled after a failure (immediate hot retry)",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "5 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 8,
+        "failed": 5,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 283,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again",
+        "a valid ISO timestamp retains the existing bounded retry behaviour"
+      ]
+    },
+    {
+      "id": "A7",
+      "required": "a",
+      "description": "a paused entry is treated as due",
+      "groups": [
+        "retry",
+        "manual",
+        "atomicity"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "(?:^(default policy|custom policies|a paused entry is excluded))|(?:^(manual retry|repeating a manual retry|a fresh entry that never failed|after a pause))"
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 13 selected test(s) failed",
+      "baseline": {
+        "executed": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 13,
+        "passed": 11,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 261,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention"
+      ]
+    }
+  ]
+}

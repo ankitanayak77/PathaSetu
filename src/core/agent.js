@@ -5,9 +5,36 @@ import { validateDiagnosis } from './validator.js';
 const MAX_TRACE = 200;
 const MAX_QUEUE = 100;
 const MAX_ANSWERS = 500;
+const PLAN_RATIONALE_MAX = 300;
+
+// Iteration 15: a model may suggest the next question. The suggestion is accepted only if it names a different question that
+// exists in the pack and carries a short written reason; otherwise the deterministic planner is used and the record says so.
+function acceptPlan(planOverride, pack, currentItemId, answeringProvider) {
+  if (!planOverride || typeof planOverride !== 'object' || Array.isArray(planOverride)) return null;
+  const target = pack.items.find((candidate) => candidate.id === planOverride.nextItemId);
+  if (!target || target.id === currentItemId) return null;
+  if (typeof planOverride.rationale !== 'string' || !planOverride.rationale.trim()) return null;
+  return {
+    forItemId: target.id, source: 'model',
+    provider: typeof planOverride.provider === 'string' && planOverride.provider ? planOverride.provider.slice(0, 40) : answeringProvider,
+    model: typeof planOverride.model === 'string' && planOverride.model ? planOverride.model.slice(0, 80) : null,
+    rationale: planOverride.rationale.trim().slice(0, PLAN_RATIONALE_MAX)
+  };
+}
 
 function uid(prefix = 'evt') {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+// Ids only have to be unique inside one learner's saved state. A clock + random suffix is nearly always enough, but if it ever
+// repeats, two queue entries would share an id and re-checking one would remove both. So the id is checked against the ids
+// already present and gets a counter suffix when it is taken.
+function uniqueId(prefix, existing) {
+  const taken = new Set(existing.map((entry) => entry?.id));
+  const base = uid(prefix);
+  let id = base;
+  for (let n = 2; taken.has(id); n += 1) id = `${base}-${n}`;
+  return id;
 }
 
 export function initialState(pack) {
@@ -47,12 +74,14 @@ function appendFailureTrace(state, event) {
 
 // Repairs references that no longer exist in the current content pack. Never guesses an answer.
 export function reconcileState(state, pack) {
-  const ids = new Set(pack.items.map((item) => item.id));
+  if (!Array.isArray(pack?.items)) return false;
+  const items = pack.items.filter((item) => item && typeof item === 'object' && typeof item.id === 'string' && item.id.length > 0);
+  const ids = new Set(items.map((item) => item.id));
   let changed = false;
-  if (pack.items.length && !ids.has(state.learner.currentItemId)) {
+  if (items.length && !ids.has(state.learner.currentItemId)) {
     const prior = state.learner.currentItemId;
-    state.learner.currentItemId = pack.items[0].id;
-    appendTrace(state, { type: 'content_mismatch_recovered', previousItemId: prior, nextItemId: pack.items[0].id });
+    state.learner.currentItemId = items[0].id;
+    appendTrace(state, { type: 'content_mismatch_recovered', previousItemId: prior, nextItemId: items[0].id });
     changed = true;
   }
   const next = state.learner.nextRecommendedItemId;
@@ -73,7 +102,9 @@ export function chooseNextItem(state, pack, excludeId = null, focusConceptId = n
   const candidates = usable.filter((item) => item.id !== excludeId);
   const pool = candidates.length ? candidates : usable;
   const currentGaps = new Set(Object.keys(state.learner.confirmedMisconceptions).filter((id) => state.learner.confirmedMisconceptions[id] > 0));
-  const scored = pool.map((item) => ({ item, score: (focusConceptId && item.conceptId === focusConceptId ? -20 : 0) + (item.allowedMisconceptionIds.some((id) => currentGaps.has(id)) ? -10 : 0) + (seen.get(item.id) ?? 0) * 5 + ((state.learner.seenItemIds.includes(item.id)) ? 1 : 0) }));
+  // The same-concept bonus only attracts a question the learner has not answered yet; otherwise a re-check would pull the plan back
+  // to a question that was just answered and bounce between the first two questions of a concept.
+  const scored = pool.map((item) => ({ item, score: (focusConceptId && item.conceptId === focusConceptId && !seen.has(item.id) ? -20 : 0) + (item.allowedMisconceptionIds.some((id) => currentGaps.has(id)) ? -10 : 0) + (seen.get(item.id) ?? 0) * 5 + ((state.learner.seenItemIds.includes(item.id)) ? 1 : 0) }));
   scored.sort((a, b) => a.score - b.score || a.item.id.localeCompare(b.item.id));
   return scored[0].item;
 }
@@ -95,7 +126,7 @@ export function submitAnswer({ state, pack, itemId, optionId, explanation, onlin
   // This first MVP uses only an option-linked mock. Its output is always provisional;
   // an online HTTP request alone does not establish semantic or educational validity.
   const answer = {
-    id: uid('ans'), itemId, optionId, explanation: cleanExplanation,
+    id: uniqueId('ans', state.answers), itemId, optionId, explanation: cleanExplanation,
     submittedAt: now, mode: online ? 'LOCAL_PROPOSAL_PENDING_RECHECK' : 'OFFLINE_RULE',
     diagnosis: { ...diagnosis, provisional: true },
     reviewStatus: item.status
@@ -106,12 +137,13 @@ export function submitAnswer({ state, pack, itemId, optionId, explanation, onlin
   // Proposals from the mock never update confirmed mastery state.
   // Every local proposal gets a server re-check, even when the server currently appears
   // reachable. If online, the UI drains it immediately; if offline, it remains queued.
-  state.queue.push({ id: uid('q'), answerId: answer.id, itemId, createdAt: now, attempts: 0, status: online ? 'PENDING_PROVIDER_RECHECK' : 'PENDING_RECHECK' });
+  state.queue.push({ id: uniqueId('q', state.queue), answerId: answer.id, itemId, createdAt: now, attempts: 0, status: online ? 'PENDING_PROVIDER_RECHECK' : 'PENDING_RECHECK' });
   const next = chooseNextItem(state, pack, itemId);
   // Keep the answered question visible so the learner can read its feedback and
   // remediation. Moving to the next item is an explicit learner action.
   state.learner.currentItemId = itemId;
   state.learner.nextRecommendedItemId = next?.id ?? null;
+  state.learner.nextPlan = { forItemId: next?.id ?? null, source: 'deterministic_local', provider: null, model: null, rationale: null };
   state.learner.sessionsRemaining = Math.max(0, state.learner.sessionsRemaining - 1);
   state.lastUpdated = now;
   appendTrace(state, { type: 'answer_submitted', itemId, optionId, diagnosisType: diagnosis.type, misconceptionId: diagnosis.misconceptionId, provisional: true, action: diagnosis.type === 'MISCONCEPTION' ? 'show_remediation_and_queue_recheck_if_offline' : diagnosis.type === 'UNCERTAIN' ? 'ask_for_clarification' : 'schedule_follow_up', nextItemId: next?.id ?? null });
@@ -168,7 +200,12 @@ function applyDiagnosisToState(state, diagnosis, item) {
   state.learner.confirmedMisconceptions[diagnosis.misconceptionId] = (state.learner.confirmedMisconceptions[diagnosis.misconceptionId] ?? 0) + 1;
 }
 
-export function recheckQueued({ state, pack, queueId, online = true, diagnosisOverride = null, trusted = false, provider = 'mock', now = new Date().toISOString(), policy = RETRY_POLICY }) {
+export function recheckQueued(params) {
+  const { state, pack, queueId, online = true, diagnosisOverride, trusted = false, provider = 'mock', now = new Date().toISOString(), policy = RETRY_POLICY } = params;
+  // Passing `diagnosisOverride` at all means "this is the provider's answer". If that answer is missing (null/undefined) it is a
+  // malformed result and fails validation; it must never fall back to the local rule and drain the entry under the provider's
+  // name. Only a call that omits the key (the offline/local path) uses the local rule.
+  const providerSupplied = Object.hasOwn(params, 'diagnosisOverride');
   if (!online) return { state, drained: false, reason: 'offline' };
   const queueItem = state.queue.find((entry) => entry.id === queueId);
   if (!queueItem) return { state, drained: false, reason: 'queue_item_not_found' };
@@ -179,7 +216,7 @@ export function recheckQueued({ state, pack, queueId, online = true, diagnosisOv
     appendTrace(state, { type: 'queue_dropped', reason: 'content_or_answer_missing', queueId });
     return { state, drained: true, reason: 'stale_queue_item_dropped' };
   }
-  const proposal = diagnosisOverride ?? proposeDiagnosis({ item, optionId: answer.optionId, explanation: answer.explanation });
+  const proposal = providerSupplied ? diagnosisOverride : proposeDiagnosis({ item, optionId: answer.optionId, explanation: answer.explanation });
   const checked = validateDiagnosis(proposal, item);
   if (!checked.ok) {
     registerFailure({ state, entry: queueItem, type: 'recheck_rejected', reason: checked.reason, now, policy, itemId: item.id });
@@ -198,11 +235,14 @@ export function recheckQueued({ state, pack, queueId, online = true, diagnosisOv
   if (trusted && updated.type === 'MISCONCEPTION' && (changed || prior.provisional)) applyDiagnosisToState(state, updated, item);
   state.queue = state.queue.filter((entry) => entry.id !== queueId);
   const oldCurrent = state.learner.currentItemId;
-  const next = chooseNextItem(state, pack, item.id, item.conceptId);
+  const modelPlan = Object.hasOwn(params, 'planOverride') ? acceptPlan(params.planOverride, pack, item.id, String(provider)) : null;
+  const next = modelPlan ? pack.items.find((candidate) => candidate.id === modelPlan.forItemId) : chooseNextItem(state, pack, item.id, item.conceptId);
+  const planSource = modelPlan ? 'model' : Object.hasOwn(params, 'planOverride') ? 'deterministic_fallback' : 'deterministic_local';
   // A re-check may update the recommended plan, but it never silently replaces the
   // question currently being edited. The UI asks the learner to apply the new plan.
   state.learner.nextRecommendedItemId = next?.id ?? null;
+  state.learner.nextPlan = modelPlan ?? { forItemId: next?.id ?? null, source: planSource, provider: null, model: null, rationale: null };
   state.lastUpdated = new Date().toISOString();
-  appendTrace(state, { type: 'recheck_complete', itemId: item.id, queueId, previousDiagnosis: prior.type, diagnosisType: updated.type, misconceptionId: updated.misconceptionId, provisional: updated.provisional, planChanged: oldCurrent !== state.learner.nextRecommendedItemId, currentItemPreserved: true, nextItemId: state.learner.nextRecommendedItemId });
+  appendTrace(state, { type: 'recheck_complete', planSource, itemId: item.id, queueId, previousDiagnosis: prior.type, diagnosisType: updated.type, misconceptionId: updated.misconceptionId, provisional: updated.provisional, planChanged: oldCurrent !== state.learner.nextRecommendedItemId, currentItemPreserved: true, nextItemId: state.learner.nextRecommendedItemId });
   return { state, drained: true, reason: 'ok', answer, nextItem: next };
 }

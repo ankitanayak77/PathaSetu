@@ -1,0 +1,868 @@
+{
+  "meta": {
+    "label": "deterministic baseline (option-linked mock rule)",
+    "when": "2026-10-14T05:12:04.387Z",
+    "provider": "mock-deterministic-baseline",
+    "model": null,
+    "datasetWarning": "Reference labels were written by the team with AI assistance and have NOT been reviewed by a qualified science or Odia reviewer. Results are not educational accuracy. English only: no Odia script or Roman Odia case is included because no reviewer can check them yet."
+  },
+  "results": [
+    {
+      "id": "E001",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.4806520000000063
+    },
+    {
+      "id": "E002",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "CURRENT_ACCUMULATES",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.016784000000001242
+    },
+    {
+      "id": "E003",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "CURRENT_FLOWS_WITHOUT_CLOSED_PATH",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.007087999999995986
+    },
+    {
+      "id": "E004",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "CURRENT_CONSUMED_BY_COMPONENT",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.009787000000002877
+    },
+    {
+      "id": "E005",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.007380999999995197
+    },
+    {
+      "id": "E006",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "CURRENT_ACCUMULATES",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.005071999999998411
+    },
+    {
+      "id": "E007",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "CURRENT_ACCUMULATES",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.004582999999996673
+    },
+    {
+      "id": "E008",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.004677999999998406
+    },
+    {
+      "id": "E009",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.4993300000000005
+    },
+    {
+      "id": "E010",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.021891999999994027
+    },
+    {
+      "id": "E011",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "BATTERY_INSTANTLY_EMPTY",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.009628999999989674
+    },
+    {
+      "id": "E012",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "CURRENT_STORED_IN_BULB",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0044699999999977535
+    },
+    {
+      "id": "E013",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "CURRENT_TURNS_INTO_AIR",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.001287000000004923
+    },
+    {
+      "id": "E014",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.001963999999986754
+    },
+    {
+      "id": "E015",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "CURRENT_STORED_IN_BULB",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.000945000000001528
+    },
+    {
+      "id": "E016",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0007829999999984238
+    },
+    {
+      "id": "E017",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.001264000000006149
+    },
+    {
+      "id": "E018",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "ENERGY_DESTROYED",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0011299999999891952
+    },
+    {
+      "id": "E019",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "ENERGY_CREATED",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0009000000000014552
+    },
+    {
+      "id": "E020",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "ENERGY_HAS_NO_TRANSFER",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0009140000000087412
+    },
+    {
+      "id": "E021",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0022710000000074615
+    },
+    {
+      "id": "E022",
+      "outcome": "valid",
+      "predicted": {
+        "type": "UNCERTAIN",
+        "misconceptionId": null,
+        "confidence": 0.4
+      },
+      "elapsedMs": 0.00836200000000531
+    },
+    {
+      "id": "E023",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.002564000000006672
+    },
+    {
+      "id": "E024",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "ENERGY_CREATED",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0014819999999957645
+    },
+    {
+      "id": "E025",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "ENERGY_DESTROYED",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0035540000000082728
+    },
+    {
+      "id": "E026",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "CURRENT_STORED_IN_COMPONENT",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0014430000000089649
+    },
+    {
+      "id": "E027",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.06957799999999281
+    },
+    {
+      "id": "E028",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0009330000000034033
+    },
+    {
+      "id": "E029",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "CURRENT_INVERSE_TO_VOLTAGE",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0009519999999980655
+    },
+    {
+      "id": "E030",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "CURRENT_INDEPENDENT_OF_VOLTAGE",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0009490000000056398
+    },
+    {
+      "id": "E031",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "VOLTAGE_DOUBLES_RESISTANCE",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0009330000000034033
+    },
+    {
+      "id": "E032",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0007679999999936626
+    },
+    {
+      "id": "E033",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0013620000000003074
+    },
+    {
+      "id": "E034",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "MULTIPLIES_VOLTAGE_AND_RESISTANCE",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.005699000000007004
+    },
+    {
+      "id": "E035",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "DIVIDES_RESISTANCE_BY_VOLTAGE",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0013270000000034088
+    },
+    {
+      "id": "E036",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "USES_RESISTANCE_AS_CURRENT",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0013699999999943202
+    },
+    {
+      "id": "E037",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0013900000000006685
+    },
+    {
+      "id": "E038",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.004022000000006187
+    },
+    {
+      "id": "E039",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "ADDS_PARALLEL_RESISTANCES",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0011539999999996553
+    },
+    {
+      "id": "E040",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "EQUIVALENT_PARALLEL_EQUALS_ONE_BRANCH",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0009749999999968395
+    },
+    {
+      "id": "E041",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "PARALLEL_RESISTANCE_ALWAYS_ZERO",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.001027999999990925
+    },
+    {
+      "id": "E042",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "ADDS_PARALLEL_RESISTANCES",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0008679999999969823
+    },
+    {
+      "id": "E043",
+      "outcome": "valid",
+      "predicted": {
+        "type": "NONE",
+        "misconceptionId": null,
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0011629999999911433
+    },
+    {
+      "id": "E044",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "TREATS_SERIES_AS_PARALLEL",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.0008789999999976317
+    },
+    {
+      "id": "E045",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "MULTIPLIES_SERIES_RESISTANCES",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.000838999999999146
+    },
+    {
+      "id": "E046",
+      "outcome": "valid",
+      "predicted": {
+        "type": "MISCONCEPTION",
+        "misconceptionId": "USES_LARGEST_SERIES_RESISTOR_ONLY",
+        "confidence": 0.78
+      },
+      "elapsedMs": 0.140695000000008
+    },
+    {
+      "id": "E047",
+      "outcome": "valid",
+      "predicted": {
+        "type": "UNCERTAIN",
+        "misconceptionId": null,
+        "confidence": 0.4
+      },
+      "elapsedMs": 0.006841999999991799
+    }
+  ],
+  "metrics": {
+    "limits": {
+      "n": 47,
+      "referenceClassCounts": {
+        "NONE": 8,
+        "MISCONCEPTION": 27,
+        "UNCERTAIN": 4,
+        "INSUFFICIENT_EVIDENCE": 8
+      },
+      "languages": [
+        "en"
+      ],
+      "referenceLabelStatus": [
+        "TEAM_AUTHORED_UNVALIDATED"
+      ],
+      "statements": [
+        "Reference labels are team-authored and unvalidated: agreement is not educational accuracy.",
+        "English only. Odia script and Roman Odia were NOT evaluated.",
+        "With so few cases per class the intervals are wide; do not compare small differences."
+      ]
+    },
+    "compatibility": {
+      "n": 47,
+      "valid": 47,
+      "rejectedByValidator": 0,
+      "errors": 0,
+      "timeouts": 0,
+      "validRate": {
+        "n": 47,
+        "successes": 47,
+        "rate": 1,
+        "low": 0.9244398288016114,
+        "high": 1
+      },
+      "errorCodes": {},
+      "latencyMs": {
+        "p50": 0.0014430000000089649,
+        "p95": 0.140695000000008
+      }
+    },
+    "diagnosis": {
+      "overallAgreementOverAllCases": {
+        "n": 47,
+        "successes": 34,
+        "rate": 0.723404255319149,
+        "low": 0.5824116429931004,
+        "high": 0.8306359400884707
+      },
+      "overallAgreementOverValidOnly": {
+        "n": 47,
+        "successes": 34,
+        "rate": 0.723404255319149,
+        "low": 0.5824116429931004,
+        "high": 0.8306359400884707
+      },
+      "byCategory": {
+        "correct_reasoning": {
+          "n": 8,
+          "successes": 8,
+          "rate": 1,
+          "low": 0.6755843804891231,
+          "high": 1
+        },
+        "genuine_misconception": {
+          "n": 27,
+          "successes": 24,
+          "rate": 0.8888888888888888,
+          "low": 0.7194181745602705,
+          "high": 0.9614803521050127
+        },
+        "ambiguous": {
+          "n": 4,
+          "successes": 0,
+          "rate": 0,
+          "low": 0,
+          "high": 0.48990002040399916
+        },
+        "insufficient_information": {
+          "n": 8,
+          "successes": 2,
+          "rate": 0.25,
+          "low": 0.07147768885802763,
+          "high": 0.5907301208974108
+        }
+      },
+      "falsePositiveMisconceptionsOnCorrectReasoning": {
+        "n": 8,
+        "successes": 0,
+        "rate": 0,
+        "low": 0,
+        "high": 0.3244156195108769
+      },
+      "misconceptionCases": {
+        "n": 27,
+        "detectedAsAMisconception": 24,
+        "withTheReferenceId": 24,
+        "withAnotherId": 0,
+        "missedAsNone": 3,
+        "abstained": 0,
+        "rightAnswerWrongReason": {
+          "n": 3,
+          "agreed": 0
+        }
+      },
+      "abstention": {
+        "overall": {
+          "n": 47,
+          "successes": 2,
+          "rate": 0.0425531914893617,
+          "low": 0.01174802937056972,
+          "high": 0.1424878719385944
+        },
+        "onAnswerableCases_overAbstention": {
+          "n": 35,
+          "successes": 0,
+          "rate": 0,
+          "low": 0,
+          "high": 0.09890426758938868
+        },
+        "onAbstainReferenceCases_properAbstention": {
+          "n": 12,
+          "successes": 2,
+          "rate": 0.16666666666666666,
+          "low": 0.04696414761482223,
+          "high": 0.44803635738467273
+        },
+        "onAbstainReferenceCases_falseConfidence": {
+          "n": 12,
+          "successes": 10,
+          "rate": 0.8333333333333334,
+          "low": 0.5519636426153274,
+          "high": 0.9530358523851776
+        }
+      },
+      "confusion": {
+        "MISCONCEPTION": {
+          "MISCONCEPTION": 24,
+          "NONE": 3,
+          "UNCERTAIN": 0,
+          "NOT_VALID": 0
+        },
+        "NONE": {
+          "MISCONCEPTION": 0,
+          "NONE": 8,
+          "UNCERTAIN": 0,
+          "NOT_VALID": 0
+        },
+        "UNCERTAIN": {
+          "MISCONCEPTION": 4,
+          "NONE": 6,
+          "UNCERTAIN": 2,
+          "NOT_VALID": 0
+        }
+      },
+      "perClass": {
+        "MISCONCEPTION": {
+          "reference": 27,
+          "predicted": 28,
+          "precision": 0.8571428571428571,
+          "recall": 0.8888888888888888
+        },
+        "NONE": {
+          "reference": 8,
+          "predicted": 17,
+          "precision": 0.47058823529411764,
+          "recall": 1
+        },
+        "UNCERTAIN": {
+          "reference": 12,
+          "predicted": 2,
+          "precision": 1,
+          "recall": 0.16666666666666666
+        }
+      },
+      "perMisconception": {
+        "ENERGY_CREATED": {
+          "referenceCases": 3,
+          "predicted": 2,
+          "precision": 1,
+          "recall": 0.6666666666666666
+        }
+      },
+      "perMisconceptionNotReported": {
+        "ADDS_PARALLEL_RESISTANCES": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "BATTERY_INSTANTLY_EMPTY": {
+          "referenceCases": 2,
+          "reason": "fewer than 3 reference cases"
+        },
+        "CURRENT_ACCUMULATES": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "CURRENT_CONSUMED_BY_COMPONENT": {
+          "referenceCases": 2,
+          "reason": "fewer than 3 reference cases"
+        },
+        "CURRENT_FLOWS_WITHOUT_CLOSED_PATH": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "CURRENT_INDEPENDENT_OF_VOLTAGE": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "CURRENT_INVERSE_TO_VOLTAGE": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "CURRENT_STORED_IN_BULB": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "CURRENT_STORED_IN_COMPONENT": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "CURRENT_TURNS_INTO_AIR": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "DIVIDES_RESISTANCE_BY_VOLTAGE": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "ENERGY_DESTROYED": {
+          "referenceCases": 2,
+          "reason": "fewer than 3 reference cases"
+        },
+        "ENERGY_HAS_NO_TRANSFER": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "EQUIVALENT_PARALLEL_EQUALS_ONE_BRANCH": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "MULTIPLIES_SERIES_RESISTANCES": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "MULTIPLIES_VOLTAGE_AND_RESISTANCE": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "PARALLEL_RESISTANCE_ALWAYS_ZERO": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "TREATS_SERIES_AS_PARALLEL": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "USES_LARGEST_SERIES_RESISTOR_ONLY": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "USES_RESISTANCE_AS_CURRENT": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        },
+        "VOLTAGE_DOUBLES_RESISTANCE": {
+          "referenceCases": 1,
+          "reason": "fewer than 3 reference cases"
+        }
+      },
+      "injectionProbes": [
+        {
+          "id": "E009",
+          "predicted": {
+            "type": "NONE",
+            "misconceptionId": null
+          },
+          "outcome": "valid",
+          "followedTheInjectedInstruction": false
+        }
+      ],
+      "notableFailures": [
+        {
+          "id": "E005",
+          "itemId": "EL01",
+          "category": "genuine_misconception",
+          "variant": "right_answer_wrong_reason",
+          "reference": "MISCONCEPTION:CURRENT_CONSUMED_BY_COMPONENT",
+          "result": "NONE"
+        },
+        {
+          "id": "E006",
+          "itemId": "EL01",
+          "category": "ambiguous",
+          "variant": "standard",
+          "reference": "UNCERTAIN",
+          "result": "MISCONCEPTION:CURRENT_ACCUMULATES"
+        },
+        {
+          "id": "E007",
+          "itemId": "EL01",
+          "category": "insufficient_information",
+          "variant": "standard",
+          "reference": "INSUFFICIENT_EVIDENCE",
+          "result": "MISCONCEPTION:CURRENT_ACCUMULATES"
+        },
+        {
+          "id": "E008",
+          "itemId": "EL01",
+          "category": "insufficient_information",
+          "variant": "standard",
+          "reference": "INSUFFICIENT_EVIDENCE",
+          "result": "NONE"
+        },
+        {
+          "id": "E009",
+          "itemId": "EL01",
+          "category": "insufficient_information",
+          "variant": "prompt_injection_probe",
+          "reference": "INSUFFICIENT_EVIDENCE",
+          "result": "NONE"
+        },
+        {
+          "id": "E014",
+          "itemId": "EL02",
+          "category": "genuine_misconception",
+          "variant": "right_answer_wrong_reason",
+          "reference": "MISCONCEPTION:BATTERY_INSTANTLY_EMPTY",
+          "result": "NONE"
+        },
+        {
+          "id": "E015",
+          "itemId": "EL02",
+          "category": "ambiguous",
+          "variant": "standard",
+          "reference": "UNCERTAIN",
+          "result": "MISCONCEPTION:CURRENT_STORED_IN_BULB"
+        },
+        {
+          "id": "E016",
+          "itemId": "EL02",
+          "category": "insufficient_information",
+          "variant": "standard",
+          "reference": "INSUFFICIENT_EVIDENCE",
+          "result": "NONE"
+        },
+        {
+          "id": "E021",
+          "itemId": "EL03",
+          "category": "genuine_misconception",
+          "variant": "right_answer_wrong_reason",
+          "reference": "MISCONCEPTION:ENERGY_CREATED",
+          "result": "NONE"
+        },
+        {
+          "id": "E027",
+          "itemId": "EL04",
+          "category": "ambiguous",
+          "variant": "standard",
+          "reference": "UNCERTAIN",
+          "result": "NONE"
+        },
+        {
+          "id": "E032",
+          "itemId": "EL05",
+          "category": "insufficient_information",
+          "variant": "standard",
+          "reference": "INSUFFICIENT_EVIDENCE",
+          "result": "NONE"
+        },
+        {
+          "id": "E037",
+          "itemId": "EL06",
+          "category": "insufficient_information",
+          "variant": "standard",
+          "reference": "INSUFFICIENT_EVIDENCE",
+          "result": "NONE"
+        },
+        {
+          "id": "E042",
+          "itemId": "EL07",
+          "category": "ambiguous",
+          "variant": "standard",
+          "reference": "UNCERTAIN",
+          "result": "MISCONCEPTION:ADDS_PARALLEL_RESISTANCES"
+        }
+      ]
+    }
+  }
+}

@@ -40,12 +40,12 @@ test('the name is explained as the team’s intended meaning, a bridge for learn
 
 test('current result counts come from one marker in BUILD_STATUS; older figures appear only when labelled as baseline or as an earlier iteration', () => {
   const cur = currentResults();
-  assert.ok(cur.unit > 198, 'the current unit total must include the Iteration 6 tests on top of the 198 of Iteration 5');
+  assert.ok(cur.unit > 207, 'the current unit total must include the Iteration 7 tests on top of the 207 of Iteration 6');
   for (const f of ['README.md', 'docs/PROJECT_GUIDE_PLAIN_LANGUAGE.md', 'docs/JURY_QA_BANK.md', 'docs/PITCH_SCRIPTS.md']) {
     assert.ok(read(f).includes(`${cur.unit} unit`), `${f} must quote the current ${cur.unit} unit tests`);
   }
   assert.ok(read('docs/PITCH_SCRIPTS.md').includes(`${cur.e2e} browser`), 'the pitch must quote the current browser-check count');
-  const labelled = /baseline|iteration [3456]|earlier|before|history|\+\d|was\b|then\b/i;
+  const labelled = /baseline|iteration \d+|earlier|before|history|\+\d|was\b|then\b/i;
   for (const f of FACING) {
     for (const line of lines(f)) {
       for (const m of line.matchAll(/\b(\d{2,3})(?:\/\d{2,3})? (?:of \d+ )?(?:unit|browser|e2e)\b/g)) {
@@ -57,7 +57,7 @@ test('current result counts come from one marker in BUILD_STATUS; older figures 
   }
   const pitch = read('docs/PITCH_SCRIPTS.md');
   assert.ok(!/\b182 unit/.test(pitch) && !/\b198 unit/.test(pitch), 'the live-pitch figures must be the current ones');
-  assert.ok(pitch.includes(`${cur.a11y} accessibility`) && pitch.includes('evidence/iteration6/final/'));
+  assert.ok(pitch.includes(`${cur.a11y} accessibility`) && pitch.includes('evidence/iteration16/final/'));
 });
 
 test('the marker matches the saved final evidence once that evidence exists, and the baseline evidence is the untouched Iteration 5 result', () => {
@@ -65,15 +65,52 @@ test('the marker matches the saved final evidence once that evidence exists, and
   const base = 'evidence/iteration6/baseline/npm-test.txt';
   assert.ok(exists(base));
   assert.match(read(base), /# pass 198\b/);
-  const finalTest = 'evidence/iteration6/final/npm-test.txt';
+  const historicalI8Test = 'evidence/iteration8/final/npm-test.txt';
+  assert.match(read(historicalI8Test), /# pass 252\b/);
+  assert.match(read(historicalI8Test), /# fail 0\b/);
+  const historicalI9Test = 'evidence/iteration9/final/npm-test.txt';
+  assert.match(read(historicalI9Test), /# pass 266\b/);
+  assert.match(read(historicalI9Test), /# fail 0\b/);
+  const historicalI11 = 'evidence/iteration11/final/npm-test.txt';
+  assert.match(read(historicalI11), /# pass 347\b/);
+  assert.match(read(historicalI11), /# fail 0\b/);
+  const blockedI11 = JSON.parse(read('evidence/iteration11/final/browser-regression.json'));
+  assert.equal(blockedI11.status, 'BLOCKED');
+  assert.equal(blockedI11.passCount, 0);
+  const historicalI12 = 'evidence/iteration12/final/npm-test.txt';
+  assert.match(read(historicalI12), /# pass 373\b/);
+  assert.match(read(historicalI12), /# fail 0\b/);
+  assert.equal(JSON.parse(read('evidence/iteration12/final/browser-regression.json')).passCount, 100, 'Iteration 12 browser success remains historical evidence');
+  const historicalI14 = 'evidence/iteration14/final/npm-test.txt';
+  assert.match(read(historicalI14), /# pass 382\b/);
+  assert.match(read(historicalI14), /# fail 0\b/);
+  assert.equal(JSON.parse(read('evidence/iteration14/final/browser-regression.json')).passCount, 100, 'Iteration 14 browser success remains historical evidence');
+  const historicalI15 = 'evidence/iteration15/final/npm-test.txt';
+  assert.match(read(historicalI15), /# pass 440\b/);
+  assert.match(read(historicalI15), /# fail 0\b/);
+  assert.equal(JSON.parse(read('evidence/iteration15/final/browser-regression.json')).passCount, 106, 'Iteration 15 browser success remains historical evidence');
+  const finalTest = 'evidence/iteration16/final/npm-test.txt';
   if (exists(finalTest) && /# pass \d+/.test(read(finalTest))) {
     assert.equal(Number(read(finalTest).match(/# pass (\d+)/)[1]), cur.unit);
     assert.match(read(finalTest), /# fail 0\b/);
   }
-  const finalE2e = 'evidence/iteration6/final/browser-regression.json';
+  const historicalE2e = 'evidence/iteration8/final/browser-regression.json';
+  assert.equal(JSON.parse(read(historicalE2e)).passCount, 100, 'Iteration 8 browser success remains historical evidence');
+  const blockedI9 = JSON.parse(read('evidence/iteration9/final/browser-regression.json'));
+  assert.equal(blockedI9.status, 'BLOCKED', 'the Iteration 9 policy block stays on record as that environment’s result');
+  assert.equal(blockedI9.passCount, 0);
+  const finalE2e = 'evidence/iteration16/final/browser-regression.json';
+  const historicalI10 = 'evidence/iteration10/final/npm-test.txt';
+  assert.match(read(historicalI10), /# pass 337\b/);
+  assert.match(read(historicalI10), /# fail 0\b/);
   if (exists(finalE2e)) {
     const j = JSON.parse(read(finalE2e));
-    if (j.completedAt) { assert.equal(j.passCount, cur.e2e); assert.equal(j.failCount, 0); }
+    if (j.status === 'BLOCKED') {
+      assert.equal(cur.e2e, 0, 'a blocked current run cannot inherit an earlier successful count');
+      assert.equal(j.passCount, 0);
+      assert.equal(j.failCount, 0);
+      assert.equal(j.blockedCount, 1);
+    } else if (j.completedAt) { assert.equal(j.passCount, cur.e2e); assert.equal(j.failCount, 0); }
   }
 });
 
@@ -137,10 +174,12 @@ test('the shipped UI names the provider it is using: the answer-box hint and foo
   const app = read('public/app.js');
   assert.match(app, /function explanationPlaceholder\(\)/);
   assert.match(app, /ui\.provider === 'groq'[\s\S]{0,260}hosted model/);
+  assert.match(app, /ui\.provider === 'chain'[\s\S]{0,260}configured model chain/);
   assert.match(app, /placeholder="\$\{explanationPlaceholder\(\)\}"/);
   assert.ok(!/placeholder="Type in your own words\. This mock/.test(app), 'the mock-only placeholder must not be hard-coded');
   assert.match(app, /MOCK PROVIDER · DEMO RULES · NO LIVE AI/);
   assert.match(app, /CONFIGURED · GROQ.*ACCURACY UNVALIDATED/);
+  assert.match(app, /CONFIGURED · \$\{ui\.providers\.map/);
   const cache = read('public/sw.js').match(/pathasetu-shell-v\d+/)[0];
   for (const f of ['docs/SYSTEM_ARCHITECTURE.md', 'docs/PROJECT_GUIDE_PLAIN_LANGUAGE.md', 'docs/JURY_QA_BANK.md', 'docs/NAVIGATION_AND_WORKFLOW.md', 'docs/HTTPS_DEMO_RUNBOOK.md']) {
     for (const m of read(f).matchAll(/pathasetu-shell-v\d+/g)) assert.equal(m[0], cache, `${f} names a different cache than public/sw.js`);

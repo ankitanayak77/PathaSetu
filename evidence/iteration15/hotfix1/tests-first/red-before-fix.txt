@@ -1,0 +1,78 @@
+✔ cleanEnv removes every provider, model, access and server variable from the inherited environment, keeps the rest, and applies the overrides (2.243583ms)
+✖ no test file hands the raw terminal environment to a server or script it starts (6.220009ms)
+✖ the suites that start a server or preflight still pass when the operator has exported a full provider chain, keys and an access code (240103.900245ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 1
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 240206.596292
+
+✖ failing tests:
+
+test at tests/iteration15-hermetic-env.test.js:23:1
+✖ no test file hands the raw terminal environment to a server or script it starts (6.220009ms)
+  AssertionError [ERR_ASSERTION]: use cleanEnv() from tests/helpers/cleanEnv.js instead of spreading process.env
+  + actual - expected
+  
+  + [
+  +   'access-policy.test.js',
+  +   'evaluation.test.js',
+  +   'iteration15-preflight.test.js',
+  +   'iteration15-server-chain.test.js',
+  +   'iteration5-evidence.test.js',
+  +   'preflight.test.js',
+  +   'proxy-origin.test.js',
+  +   'public-demo.test.js',
+  +   'server.test.js'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///home/claude/pw/it15/work/tests/iteration15-hermetic-env.test.js:29:10)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1047:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+      at Test.postRun (node:internal/test_runner/test:1173:19)
+      at Test.run (node:internal/test_runner/test:1101:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'access-policy.test.js', 'evaluation.test.js', 'iteration15-preflight.test.js', 'iteration15-server-chain.test.js', 'iteration5-evidence.test.js', 'preflight.test.js', 'proxy-origin.test.js', 'public-demo.test.js', 'server.test.js' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/iteration15-hermetic-env.test.js:32:1
+✖ the suites that start a server or preflight still pass when the operator has exported a full provider chain, keys and an access code (240103.900245ms)
+  AssertionError [ERR_ASSERTION]: tests failed under an exported provider environment
+  + actual - expected
+  
+  + [
+  +   'not ok 3 - development without an access code keeps the documented local experience open',
+  +   'not ok 4 - production without draft demo serves no unreviewed item, even to an unauthorised client, and offers no draft re-check',
+  +   'not ok 25 - chain mode: health reports the ordered providers, planning, retry policy and re-check timeout without exposing secrets',
+  +   'not ok 26 - chain mode: a re-check asks the model for the diagnosis and then for the next question, and returns both labelled with provider and model',
+  +   'not ok 27 - chain mode: if the model gives no usable plan the answer still succeeds with plan null (the browser then labels its own fallback)',
+  +   'not ok 28 - chain mode: PATHASETU_MODEL_PLANNING=off never asks for a plan',
+  +   'not ok 29 - chain mode: when every provider fails the reply is an honest 502 with codes only; the mock rule is never substituted',
+  +   'not ok 30 - chain mode: an oversized or malformed history is ignored, not trusted, and does not break the re-check'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///home/claude/pw/it15/work/tests/iteration15-hermetic-env.test.js:46:10)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1047:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+      at Test.postRun (node:internal/test_runner/test:1173:19)
+      at Test.run (node:internal/test_runner/test:1101:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:744:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'not ok 3 - development without an access code keeps the documented local experience open', 'not ok 4 - production without draft demo serves no unreviewed item, even to an unauthorised client, and offers no draft re-check', 'not ok 25 - chain mode: health reports the ordered providers, planning, retry policy and re-check timeout without exposing secrets', 'not ok 26 - chain mode: a re-check asks the model for the diagnosis and then for the next question, and returns both labelled with provider and model', 'not ok 27 - chain mode: if the model gives no usable plan the answer still succeeds with plan null (the browser then labels its own fallback)', 'not ok 28 - chain mode: PATHASETU_MODEL_PLANNING=off never asks for a plan', 'not ok 29 - chain mode: when every provider fails the reply is an honest 502 with codes only; the mock rule is never substituted', 'not ok 30 - chain mode: an oversized or malformed history is ignored, not trusted, and does not break the re-check' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

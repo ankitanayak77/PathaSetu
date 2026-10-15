@@ -1,0 +1,5 @@
+Whitespace check (the archive has no .git, so this was run on an ephemeral comparison repository)
+method: git init on a copy of the exact Iteration 9 tree; commit; replace the contents with the Iteration 10 tree; git add -A; git diff --cached --check
+scope 1, everything except evidence/: exit 0, no whitespace errors (source, tests, scripts, docs, package.json)
+scope 2, evidence/iteration10/: 45 findings, all in captured raw tool output (npm and test logs, generated reports, the red-before-fix runs) where trailing spaces come from the tools that printed them. These files are records and were not edited to hide that.
+The ephemeral repository was not shipped. No commit exists in the delivered tree.

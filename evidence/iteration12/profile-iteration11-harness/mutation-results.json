@@ -1,0 +1,783 @@
+{
+  "node": "v22.22.0",
+  "testFile": "tests/queue-invariants.test.js, tests/iteration11-retry-atomicity.test.js",
+  "note": "Mutants are applied to a temporary copy of src/core only. A killed mutant means the tests failed against the deliberate fault. This is evidence about test sensitivity, not about learning outcomes or model accuracy.",
+  "summary": {
+    "total": 46,
+    "killed": 46,
+    "survived": 0,
+    "errors": 0
+  },
+  "requiredFamilies": [
+    {
+      "family": "a",
+      "mutants": 10,
+      "killed": 10
+    },
+    {
+      "family": "b",
+      "mutants": 3,
+      "killed": 3
+    },
+    {
+      "family": "c",
+      "mutants": 3,
+      "killed": 3
+    }
+  ],
+  "results": [
+    {
+      "id": "A1",
+      "required": "a",
+      "description": "backoff exponent off by one (waits 10 s, 20 s, ... instead of 5 s, 10 s, ...)",
+      "status": "KILLED",
+      "detail": "28 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 28,
+      "failingTests": [
+        "a valid ISO timestamp retains the existing bounded retry behaviour",
+        "fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ],
+      "durationMs": 1104
+    },
+    {
+      "id": "A2",
+      "required": "a",
+      "description": "backoff is never capped at maxDelayMs",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 1,
+      "failingTests": [
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts"
+      ],
+      "durationMs": 1075
+    },
+    {
+      "id": "A3",
+      "required": "a",
+      "description": "retry limit allows one extra automatic attempt (> instead of >=)",
+      "status": "KILLED",
+      "detail": "7 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 7,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again",
+        "legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success",
+        "seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries"
+      ],
+      "durationMs": 736
+    },
+    {
+      "id": "A4",
+      "required": "a",
+      "description": "retry limit stops one attempt early",
+      "status": "KILLED",
+      "detail": "5 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 5,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again",
+        "legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 754
+    },
+    {
+      "id": "A5",
+      "required": "a",
+      "description": "no retry limit at all (entries never pause)",
+      "status": "KILLED",
+      "detail": "8 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 8,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again",
+        "legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success",
+        "seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries"
+      ],
+      "durationMs": 703
+    },
+    {
+      "id": "A6",
+      "required": "a",
+      "description": "no backoff scheduled after a failure (immediate hot retry)",
+      "status": "KILLED",
+      "detail": "29 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 29,
+      "failingTests": [
+        "a valid ISO timestamp retains the existing bounded retry behaviour",
+        "fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ],
+      "durationMs": 400
+    },
+    {
+      "id": "A7",
+      "required": "a",
+      "description": "a paused entry is treated as due",
+      "status": "KILLED",
+      "detail": "3 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 3,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 819
+    },
+    {
+      "id": "A8",
+      "required": "a",
+      "description": "default base delay changed from 5 s to 4 s",
+      "status": "KILLED",
+      "detail": "24 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 24,
+      "failingTests": [
+        "a valid ISO timestamp retains the existing bounded retry behaviour",
+        "fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ],
+      "durationMs": 1050
+    },
+    {
+      "id": "A9",
+      "required": "a",
+      "description": "entries saved before bounded retry lose their old attempts count",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 1,
+      "failingTests": [
+        "legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success"
+      ],
+      "durationMs": 1023
+    },
+    {
+      "id": "B1",
+      "required": "b",
+      "description": "a provider exception removes the queue entry",
+      "status": "KILLED",
+      "detail": "21 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 21,
+      "failingTests": [
+        "recordRecheckDeferred is atomic when the injected clock is invalid",
+        "invalid timestamps are rejected before pausing an entry at the automatic retry limit",
+        "a repeated failure report or a repeated manual retry never creates a second entry, answer or session",
+        "fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ],
+      "durationMs": 383
+    },
+    {
+      "id": "B2",
+      "required": "b",
+      "description": "a rejected diagnosis removes the queue entry",
+      "status": "KILLED",
+      "detail": "20 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 20,
+      "failingTests": [
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault string_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault array_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault number_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault foreign_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ],
+      "durationMs": 400
+    },
+    {
+      "id": "B3",
+      "required": "b",
+      "description": "an entry is deleted at the moment it pauses",
+      "status": "KILLED",
+      "detail": "13 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 13,
+      "failingTests": [
+        "a repeated failure report or a repeated manual retry never creates a second entry, answer or session",
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "manual retry changes only the retry fields of the chosen entry and nothing else in the state",
+        "repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count"
+      ],
+      "durationMs": 681
+    },
+    {
+      "id": "B4",
+      "required": null,
+      "description": "the provider-supplied result is ignored when it is missing (Iteration 9 behaviour: silent local fallback)",
+      "status": "KILLED",
+      "detail": "4 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 4,
+      "failingTests": [
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "a missing diagnosis from the provider is a failed attempt, never a silent local substitute",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 427
+    },
+    {
+      "id": "B5",
+      "required": null,
+      "description": "a rejected diagnosis overwrites the stored answer before it is validated",
+      "status": "KILLED",
+      "detail": "20 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 20,
+      "failingTests": [
+        "a provider diagnosis rejected by the validator leaves the queue state unchanged when its clock is invalid",
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault string_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault array_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault number_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ],
+      "durationMs": 401
+    },
+    {
+      "id": "C1",
+      "required": "c",
+      "description": "validator accepts a misconception id from a different question",
+      "status": "KILLED",
+      "detail": "6 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 6,
+      "failingTests": [
+        "fault foreign_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault made_up_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "a rejected diagnosis never reaches the stored answer or the confirmed misconceptions, even when the caller marks the result trusted",
+        "validator: every own misconception id is accepted and every id that belongs only to a different question is rejected",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 429
+    },
+    {
+      "id": "C2",
+      "required": "c",
+      "description": "validator lets an UNCERTAIN or NONE result carry a misconception id, and the planner then confirms it",
+      "status": "KILLED",
+      "detail": "5 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 5,
+      "failingTests": [
+        "fault uncertain_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault none_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "a rejected diagnosis never reaches the stored answer or the confirmed misconceptions, even when the caller marks the result trusted",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 418
+    },
+    {
+      "id": "C3",
+      "required": "c",
+      "description": "validator accepts a low-confidence misconception (threshold check removed)",
+      "status": "KILLED",
+      "detail": "4 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 4,
+      "failingTests": [
+        "fault low_confidence_misconception: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "a rejected diagnosis never reaches the stored answer or the confirmed misconceptions, even when the caller marks the result trusted",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 456
+    },
+    {
+      "id": "C4",
+      "required": null,
+      "description": "validator confidence threshold lowered from 0.65 to 0.60",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 1,
+      "failingTests": [
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ],
+      "durationMs": 1037
+    },
+    {
+      "id": "C5",
+      "required": null,
+      "description": "validator ignores a question-id mismatch",
+      "status": "KILLED",
+      "detail": "5 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 5,
+      "failingTests": [
+        "fault wrong_question: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "adjacent repeats of the same failure for the same entry coalesce; any intervening event keeps them separate and readable",
+        "validator: every own misconception id is accepted and every id that belongs only to a different question is rejected",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 414
+    },
+    {
+      "id": "C6",
+      "required": null,
+      "description": "validator accepts NaN confidence (finite check removed)",
+      "status": "KILLED",
+      "detail": "3 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 3,
+      "failingTests": [
+        "fault confidence_nan: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 447
+    },
+    {
+      "id": "C7",
+      "required": null,
+      "description": "validator accepts confidence outside 0..1",
+      "status": "KILLED",
+      "detail": "3 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 3,
+      "failingTests": [
+        "fault confidence_above_one: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 467
+    },
+    {
+      "id": "C8",
+      "required": null,
+      "description": "validator reports an array as a different kind of problem (reason code drifts)",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 1,
+      "failingTests": [
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ],
+      "durationMs": 1093
+    },
+    {
+      "id": "C9",
+      "required": null,
+      "description": "an accepted diagnosis is no longer immutable",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 1,
+      "failingTests": [
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ],
+      "durationMs": 1022
+    },
+    {
+      "id": "D1",
+      "required": null,
+      "description": "success does not remove the processed entry (it would be processed again)",
+      "status": "KILLED",
+      "detail": "30 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 30,
+      "failingTests": [
+        "identity (fault injection): ids stay unique when the clock and the random suffix repeat, so one re-check cannot swallow another entry",
+        "capacity boundary: the 100th entry is accepted, the 101st is refused, and a drain frees room again",
+        "fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ],
+      "durationMs": 446
+    },
+    {
+      "id": "D2",
+      "required": null,
+      "description": "a background re-check switches the question on screen",
+      "status": "KILLED",
+      "detail": "2 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 2,
+      "failingTests": [
+        "background re-check never switches the current question, discards the learner draft or spends a session",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 393
+    },
+    {
+      "id": "D3",
+      "required": null,
+      "description": "manual retry also erases the cumulative attempts history",
+      "status": "KILLED",
+      "detail": "2 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 2,
+      "failingTests": [
+        "manual retry changes only the retry fields of the chosen entry and nothing else in the state",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again"
+      ],
+      "durationMs": 1122
+    },
+    {
+      "id": "D4",
+      "required": null,
+      "description": "manual retry does not clear the paused flag",
+      "status": "KILLED",
+      "detail": "6 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 6,
+      "failingTests": [
+        "manual retry changes only the retry fields of the chosen entry and nothing else in the state",
+        "repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again",
+        "legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)",
+        "a fixed enumerated table of operation sequences, written out by hand, reaches the pause, the manual retry and the recovery"
+      ],
+      "durationMs": 755
+    },
+    {
+      "id": "D5",
+      "required": null,
+      "description": "a repeated manual retry counts again (not idempotent)",
+      "status": "KILLED",
+      "detail": "3 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 3,
+      "failingTests": [
+        "repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count",
+        "a fresh entry that never failed is not reset by a manual retry",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 408
+    },
+    {
+      "id": "D6",
+      "required": null,
+      "description": "manual retry of one entry resets every entry",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 1,
+      "failingTests": [
+        "manual retry changes only the retry fields of the chosen entry and nothing else in the state"
+      ],
+      "durationMs": 1018
+    },
+    {
+      "id": "D7",
+      "required": null,
+      "description": "queue capacity allows one entry too many",
+      "status": "KILLED",
+      "detail": "2 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 2,
+      "failingTests": [
+        "every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change",
+        "capacity boundary: the 100th entry is accepted, the 101st is refused, and a drain frees room again"
+      ],
+      "durationMs": 1142
+    },
+    {
+      "id": "D8",
+      "required": null,
+      "description": "queue capacity is checked after the answer is stored (non-atomic refusal)",
+      "status": "KILLED",
+      "detail": "2 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 2,
+      "failingTests": [
+        "every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change",
+        "capacity boundary: the 100th entry is accepted, the 101st is refused, and a drain frees room again"
+      ],
+      "durationMs": 1089
+    },
+    {
+      "id": "D9",
+      "required": null,
+      "description": "the double-submit guard is removed",
+      "status": "KILLED",
+      "detail": "4 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 4,
+      "failingTests": [
+        "the shipped eight-question pack refuses a duplicate answer before the learner continues",
+        "duplicate submit (double tap) is refused before anything changes: no extra answer, queue entry, session or trace line",
+        "every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 461
+    },
+    {
+      "id": "D10",
+      "required": null,
+      "description": "ids are no longer checked for uniqueness (Iteration 9 behaviour)",
+      "status": "KILLED",
+      "detail": "2 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 2,
+      "failingTests": [
+        "identity (fault injection): ids stay unique when the clock and the random suffix repeat, so one re-check cannot swallow another entry",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 464
+    },
+    {
+      "id": "D11",
+      "required": null,
+      "description": "failure trace lines coalesce across different queue entries",
+      "status": "KILLED",
+      "detail": "2 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 2,
+      "failingTests": [
+        "adjacent repeats of the same failure for the same entry coalesce; any intervening event keeps them separate and readable",
+        "trace is bounded by 200 lines under thousands of failures, keeps the newest events, and pauses are reported once per entry"
+      ],
+      "durationMs": 1144
+    },
+    {
+      "id": "D12",
+      "required": null,
+      "description": "failure trace lines never coalesce",
+      "status": "KILLED",
+      "detail": "2 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 2,
+      "failingTests": [
+        "seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries",
+        "adjacent repeats of the same failure for the same entry coalesce; any intervening event keeps them separate and readable"
+      ],
+      "durationMs": 1099
+    },
+    {
+      "id": "D13",
+      "required": null,
+      "description": "the trace is no longer bounded",
+      "status": "KILLED",
+      "detail": "2 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 2,
+      "failingTests": [
+        "trace stays within its limit through repair, even when the saved trace is far over it",
+        "trace is bounded by 200 lines under thousands of failures, keeps the newest events, and pauses are reported once per entry"
+      ],
+      "durationMs": 1376
+    },
+    {
+      "id": "E1",
+      "required": null,
+      "description": "repair keeps duplicate queue ids",
+      "status": "KILLED",
+      "detail": "2 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 2,
+      "failingTests": [
+        "repair keeps every usable record around the damage and removes duplicates and junk",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 458
+    },
+    {
+      "id": "E2",
+      "required": null,
+      "description": "repair adds a trace line even when nothing needed repair (not idempotent)",
+      "status": "KILLED",
+      "detail": "4 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 4,
+      "failingTests": [
+        "JSON save and restore preserves answers, drafts and every queue entry, and the restored entries behave identically",
+        "malformed records of every shape are repaired or replaced without throwing, and the repaired record is a fixed point",
+        "seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 397
+    },
+    {
+      "id": "E3",
+      "required": null,
+      "description": "repair silently drops all but the first valid queue entry",
+      "status": "KILLED",
+      "detail": "3 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 3,
+      "failingTests": [
+        "repair keeps every usable record around the damage and removes duplicates and junk",
+        "oversized saved collections are cut to their limits: the newest answers and the oldest queue entries are kept",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 484
+    },
+    {
+      "id": "E4",
+      "required": null,
+      "description": "repair can throw on a hostile record (safety net removed)",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 1,
+      "failingTests": [
+        "malformed records of every shape are repaired or replaced without throwing, and the repaired record is a fixed point"
+      ],
+      "durationMs": 1269
+    },
+    {
+      "id": "E5",
+      "required": null,
+      "description": "repair does not cap an oversized queue",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 1,
+      "failingTests": [
+        "oversized saved collections are cut to their limits: the newest answers and the oldest queue entries are kept"
+      ],
+      "durationMs": 1130
+    },
+    {
+      "id": "E6",
+      "required": null,
+      "description": "repair does not cap an oversized trace",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 1,
+      "failingTests": [
+        "trace stays within its limit through repair, even when the saved trace is far over it"
+      ],
+      "durationMs": 1084
+    },
+    {
+      "id": "E7",
+      "required": null,
+      "description": "repair drops saved drafts",
+      "status": "KILLED",
+      "detail": "4 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 4,
+      "failingTests": [
+        "JSON save and restore preserves answers, drafts and every queue entry, and the restored entries behave identically",
+        "repair keeps every usable record around the damage and removes duplicates and junk",
+        "persistence: a saved record comes back as an independent copy with the whole queue and retry state, and repair finds nothing to fix",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ],
+      "durationMs": 426
+    },
+    {
+      "id": "F1",
+      "required": null,
+      "description": "memory storage hands out the stored object itself instead of a copy",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 1,
+      "failingTests": [
+        "persistence: a saved record comes back as an independent copy with the whole queue and retry state, and repair finds nothing to fix"
+      ],
+      "durationMs": 1125
+    },
+    {
+      "id": "F2",
+      "required": null,
+      "description": "a rejected durable write overwrites the older durable record with an empty one",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 1,
+      "failingTests": [
+        "persistence fault: when a write is rejected, the older durable record is left alone, the newest state stays available in memory with its whole queue, and the reason holds no learner text"
+      ],
+      "durationMs": 1221
+    },
+    {
+      "id": "G1",
+      "required": "a",
+      "description": "malformed clock is parsed without validation, allowing retry fields to mutate before timestamp failure",
+      "status": "KILLED",
+      "detail": "4 test(s) failed",
+      "exitCode": 1,
+      "tests": 62,
+      "failed": 4,
+      "failingTests": [
+        "scheduleAfterFailure rejects malformed timestamps before mutating any retry field",
+        "recordRecheckDeferred is atomic when the injected clock is invalid",
+        "invalid timestamps are rejected before pausing an entry at the automatic retry limit",
+        "a provider diagnosis rejected by the validator leaves the queue state unchanged when its clock is invalid"
+      ],
+      "durationMs": 1118
+    }
+  ]
+}

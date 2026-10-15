@@ -6,6 +6,7 @@ import fs from 'node:fs';
 import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { cleanEnv } from './helpers/cleanEnv.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CODE = 'Pf7Kq2Vx9mT4Lb8RnY3cZd1e'; // synthetic, 24 characters
@@ -15,7 +16,7 @@ const CLEAN = { HOST: '', PORT: '', NODE_ENV: '', PATHASETU_MODEL_PROVIDER: '', 
 
 function preflight(env = {}, args = []) {
   return new Promise((resolve) => {
-    const child = spawn(process.execPath, ['scripts/preflight.mjs', ...args], { cwd: ROOT, env: { ...process.env, ...CLEAN, ...env }, stdio: ['ignore', 'pipe', 'pipe'] });
+    const child = spawn(process.execPath, ['scripts/preflight.mjs', ...args], { cwd: ROOT, env: cleanEnv({ ...CLEAN, ...env }), stdio: ['ignore', 'pipe', 'pipe'] });
     let out = ''; child.stdout.on('data', (c) => { out += c; }); child.stderr.on('data', (c) => { out += c; });
     const timer = setTimeout(() => child.kill('SIGKILL'), 45000);
     child.on('exit', (code) => { clearTimeout(timer); resolve({ code, out }); });

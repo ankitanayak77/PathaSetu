@@ -1,0 +1,11 @@
+
+> pathasetu-mvp@0.1.0 mutation
+> node scripts/mutation-check.mjs --only A8 --out evidence/iteration13/mutation-a8-probe
+
+unmutated selections: 2; executed 13 test(s); failing or empty: 0
+A8   KILLED   (a) default base delay changed from 5 s to 4 s — 3 of 13 selected test(s) failed [291 ms]
+
+mode plan; FINISHED (partial: --only); elapsed 0.6 s
+mutants: 1 selected; run 1; killed 1; survived 0; errors 0; not run 0
+family a: 1/1 killed; family b: 0/0 killed; family c: 0/0 killed
+written: evidence/iteration13/mutation-a8-probe/mutation-results.json and .md

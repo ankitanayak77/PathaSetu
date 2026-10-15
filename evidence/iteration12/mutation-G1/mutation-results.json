@@ -1,0 +1,81 @@
+{
+  "node": "v22.22.0",
+  "mode": "plan",
+  "reporter": "tap",
+  "catalogueSize": 46,
+  "state": "FINISHED",
+  "complete": false,
+  "elapsedMs": 666,
+  "budgetSeconds": 600,
+  "note": "Mutants are applied to a temporary copy of src/core only. A killed mutant means the selected tests failed against the deliberate fault. This is evidence about test sensitivity, not about learning outcomes or model accuracy.",
+  "summary": {
+    "selected": 1,
+    "run": 1,
+    "killed": 1,
+    "survived": 0,
+    "errors": 0,
+    "notRun": 0
+  },
+  "requiredFamilies": [
+    {
+      "family": "a",
+      "mutants": 1,
+      "killed": 1
+    },
+    {
+      "family": "b",
+      "mutants": 0,
+      "killed": 0
+    },
+    {
+      "family": "c",
+      "mutants": 0,
+      "killed": 0
+    }
+  ],
+  "results": [
+    {
+      "id": "G1",
+      "required": "a",
+      "description": "malformed clock is parsed without validation, allowing retry fields to mutate before timestamp failure",
+      "groups": [
+        "atomicity",
+        "retry"
+      ],
+      "selections": [
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": "^(default policy|custom policies|a paused entry is excluded)"
+        }
+      ],
+      "status": "KILLED",
+      "detail": "4 of 9 selected test(s) failed",
+      "baseline": {
+        "executed": 9,
+        "passed": 9,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 9,
+        "passed": 5,
+        "failed": 4,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 323,
+      "failingTests": [
+        "scheduleAfterFailure rejects malformed timestamps before mutating any retry field",
+        "recordRecheckDeferred is atomic when the injected clock is invalid",
+        "invalid timestamps are rejected before pausing an entry at the automatic retry limit",
+        "a provider diagnosis rejected by the validator leaves the queue state unchanged when its clock is invalid"
+      ]
+    }
+  ]
+}

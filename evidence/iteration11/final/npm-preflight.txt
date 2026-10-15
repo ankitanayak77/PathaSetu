@@ -1,0 +1,28 @@
+
+> pathasetu-mvp@0.1.0 preflight
+> node scripts/preflight.mjs
+
+PASS  P01   Node 22.16.0 (this project needs >= 20)
+PASS  P02   all 17 required files present
+PASS  P03   content pack loads: 8 items; statuses UNREVIEWED_DRAFT=8
+INFO  P03b  content is NOT reviewed: all 8 items are UNREVIEWED_DRAFT; no qualified Odia-medium science reviewer decision is recorded
+PASS  P04   content consistency check passes (pack, review worksheet and evaluation files agree). Consistency is not review.
+PASS  P05   provider: mock (no live provider request is possible)
+INFO  P06   public demo mode: off (local development behaviour)
+INFO  P07   PATHASETU_DEMO_ACCESS_CODE: not set (allowed only for local mock development)
+PASS  P08   HOST: 127.0.0.1 (loopback only)
+INFO  P09   PATHASETU_ALLOWED_ORIGINS: none. That is correct for local use or a tunnel that preserves the Host header; a Host-rewriting tunnel needs the exact external origin listed or every POST returns 403.
+INFO  P11   unreviewed draft items WILL be served (8 of 8), labelled as demo draft content; nothing is promoted by this setting
+PASS  P12   harness server started on a loopback port (provider forced to mock; PATHASETU_MODEL_PROVIDER=mock is validated above, not exercised)
+PASS  P13   GET /api/health: 200; provider=mock, publicDemo=false, accessRequired=false
+PASS  P14   GET /api/session with no code (none configured): 200
+PASS  P16   GET /api/pack: 200; 8 item(s) served
+PASS  P18   served item statuses match the pack file (8 unreviewed draft item(s) are served as drafts; none promoted)
+PASS  P19   POST /api/recheck with a synthetic answer: 200 (expected 200); mock provider, no network
+PASS  P21   GET /: 200
+PASS  P21   GET /sw.js: 200
+PASS  P21   GET /manifest.webmanifest: 200
+INFO  P99   no live provider request was made: the harness runs with the mock provider and a blank API key
+
+PREFLIGHT: PASSED (15 pass, 0 warn, 0 fail)
+This confirms configuration and local routes only. It does not review content, test a phone, or call a model provider.

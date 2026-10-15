@@ -1,0 +1,13 @@
+date: 2026-10-14T06:08:34+00:00
+git: none (archive has no .git)
+node v22.22.0; npm 10.9.4; os: Linux 6.18.44-fc-v114
+CHROME_PATH=<unset>
+GROQ_API_KEY: NOT SET
+PATHASETU_MODEL_PROVIDER: set (value not recorded)
+GROQ_MODEL: NOT SET
+PATHASETU_DEMO_ACCESS_CODE: NOT SET
+PATHASETU_PUBLIC_DEMO: NOT SET
+PATHASETU_ALLOWED_ORIGINS: NOT SET
+PATHASETU_PROVIDER_DATA_CONTROLS_ACK: NOT SET
+finder result: {"status":"FOUND","path":"/opt/google/chrome/chrome","source":"standard location"}
+browser version: Chromium 141.0.7390.37 

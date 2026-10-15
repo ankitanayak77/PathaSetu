@@ -1,0 +1,247 @@
+TAP version 13
+# Subtest: IndexedDB open failure: the app learns it is memory-only, with a safe reason, and keeps working in memory
+ok 1 - IndexedDB open failure: the app learns it is memory-only, with a safe reason, and keeps working in memory
+  ---
+  duration_ms: 11.368353
+  type: 'test'
+  ...
+# Subtest: no IndexedDB at all reports memory-only with a reason
+ok 2 - no IndexedDB at all reports memory-only with a reason
+  ---
+  duration_ms: 0.343908
+  type: 'test'
+  ...
+# Subtest: a rejected write downgrades visibly: durable saved time stops, reason is the error name only, latest data stays in memory
+ok 3 - a rejected write downgrades visibly: durable saved time stops, reason is the error name only, latest data stays in memory
+  ---
+  duration_ms: 4.268045
+  type: 'test'
+  ...
+# Subtest: quarantine keeps an unreadable record under a separate key without touching the main record
+ok 4 - quarantine keeps an unreadable record under a separate key without touching the main record
+  ---
+  duration_ms: 7.404335
+  type: 'test'
+  ...
+# Subtest: corrupt record (null record) never throws: a fresh state is started and the record is flagged unreadable
+ok 5 - corrupt record (null record) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 1.264665
+  type: 'test'
+  ...
+# Subtest: corrupt record (string record) never throws: a fresh state is started and the record is flagged unreadable
+ok 6 - corrupt record (string record) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 0.417659
+  type: 'test'
+  ...
+# Subtest: corrupt record (number record) never throws: a fresh state is started and the record is flagged unreadable
+ok 7 - corrupt record (number record) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 0.222435
+  type: 'test'
+  ...
+# Subtest: corrupt record (array record) never throws: a fresh state is started and the record is flagged unreadable
+ok 8 - corrupt record (array record) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 0.191468
+  type: 'test'
+  ...
+# Subtest: corrupt record (state is a string) never throws: a fresh state is started and the record is flagged unreadable
+ok 9 - corrupt record (state is a string) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 0.529137
+  type: 'test'
+  ...
+# Subtest: corrupt record (state is an array) never throws: a fresh state is started and the record is flagged unreadable
+ok 10 - corrupt record (state is an array) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 0.549027
+  type: 'test'
+  ...
+# Subtest: corrupt record (state is null) never throws: a fresh state is started and the record is flagged unreadable
+ok 11 - corrupt record (state is null) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 0.150296
+  type: 'test'
+  ...
+# Subtest: corrupt record (empty object) never throws: a fresh state is started and the record is flagged unreadable
+ok 12 - corrupt record (empty object) never throws: a fresh state is started and the record is flagged unreadable
+  ---
+  duration_ms: 0.16605
+  type: 'test'
+  ...
+# Subtest: a valid record passes through untouched with no repairs
+ok 13 - a valid record passes through untouched with no repairs
+  ---
+  duration_ms: 13.49778
+  type: 'test'
+  ...
+# Subtest: partial corruption keeps every usable answer, queue entry, draft and counter and removes only the broken ones
+ok 14 - partial corruption keeps every usable answer, queue entry, draft and counter and removes only the broken ones
+  ---
+  duration_ms: 0.540664
+  type: 'test'
+  ...
+# Subtest: queue recovery: a repaired queue entry is still processed once, with one answer and no extra session
+ok 15 - queue recovery: a repaired queue entry is still processed once, with one answer and no extra session
+  ---
+  duration_ms: 0.9427
+  type: 'test'
+  ...
+# Subtest: oversized collections are capped instead of growing without bound
+ok 16 - oversized collections are capped instead of growing without bound
+  ---
+  duration_ms: 0.306131
+  type: 'test'
+  ...
+# Subtest: a stale content reference in an otherwise valid record is handled by reconcileState without a crash
+ok 17 - a stale content reference in an otherwise valid record is handled by reconcileState without a crash
+  ---
+  duration_ms: 0.291118
+  type: 'test'
+  ...
+# Subtest: repair never throws on hostile input shapes
+ok 18 - repair never throws on hostile input shapes
+  ---
+  duration_ms: 1.180459
+  type: 'test'
+  ...
+# Subtest: the export omits typed explanations and drafts, keeps decisions and traces, and carries storage and persistence facts
+ok 19 - the export omits typed explanations and drafts, keeps decisions and traces, and carries storage and persistence facts
+  ---
+  duration_ms: 0.957051
+  type: 'test'
+  ...
+# Subtest: the export redacts access codes, API keys, bearer tokens and environment assignments wherever they appear
+ok 20 - the export redacts access codes, API keys, bearer tokens and environment assignments wherever they appear
+  ---
+  duration_ms: 0.638191
+  type: 'test'
+  ...
+# Subtest: persistent storage: unsupported, already granted, granted on request, denied and failing browsers are all reported without throwing
+ok 21 - persistent storage: unsupported, already granted, granted on request, denied and failing browsers are all reported without throwing
+  ---
+  duration_ms: 1.18199
+  type: 'test'
+  ...
+# Subtest: persistent storage is requested at most once per requester, however often it is called
+ok 22 - persistent storage is requested at most once per requester, however often it is called
+  ---
+  duration_ms: 0.162114
+  type: 'test'
+  ...
+# Subtest: persistence wording never promises retention
+ok 23 - persistence wording never promises retention
+  ---
+  duration_ms: 0.566594
+  type: 'test'
+  ...
+# Subtest: recovery resets a malformed bridge-attempt counter map instead of preserving a crash trigger
+not ok 24 - recovery resets a malformed bridge-attempt counter map instead of preserving a crash trigger
+  ---
+  duration_ms: 5.241958
+  type: 'test'
+  location: '/mnt/data/pathasetu_iteration13/work/tests/storage-resilience.test.js:242:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+
+    7 !== {}
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 7
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///mnt/data/pathasetu_iteration13/work/tests/storage-resilience.test.js:245:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: bridge attempt recording recovers from a malformed counter map without throwing
+not ok 25 - bridge attempt recording recovers from a malformed counter map without throwing
+  ---
+  duration_ms: 1.771249
+  type: 'test'
+  location: '/mnt/data/pathasetu_iteration13/work/tests/storage-resilience.test.js:249:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Got unwanted exception.
+    Actual message: "Cannot create property 'EL01' on number '7'"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+  error: "Cannot create property 'EL01' on number '7'"
+  name: 'TypeError'
+  stack: |-
+    recordBridgeAttempt (file:///mnt/data/pathasetu_iteration13/work/src/core/bridge.js:91:49)
+    file:///mnt/data/pathasetu_iteration13/work/tests/storage-resilience.test.js:253:29
+    getActual (node:assert:531:5)
+    Function.doesNotThrow (node:assert:697:32)
+    TestContext.<anonymous> (file:///mnt/data/pathasetu_iteration13/work/tests/storage-resilience.test.js:253:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+  operator: 'doesNotThrow'
+  stack: |-
+    TestContext.<anonymous> (file:///mnt/data/pathasetu_iteration13/work/tests/storage-resilience.test.js:253:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: reconcileState safely declines malformed content-pack item collections
+not ok 26 - reconcileState safely declines malformed content-pack item collections
+  ---
+  duration_ms: 0.47795
+  type: 'test'
+  location: '/mnt/data/pathasetu_iteration13/work/tests/storage-resilience.test.js:257:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Got unwanted exception.
+    Actual message: "Cannot read properties of null (reading 'map')"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+  error: "Cannot read properties of null (reading 'map')"
+  name: 'TypeError'
+  stack: |-
+    reconcileState (file:///mnt/data/pathasetu_iteration13/work/src/core/agent.js:61:34)
+    file:///mnt/data/pathasetu_iteration13/work/tests/storage-resilience.test.js:259:42
+    getActual (node:assert:531:5)
+    Function.doesNotThrow (node:assert:697:32)
+    TestContext.<anonymous> (file:///mnt/data/pathasetu_iteration13/work/tests/storage-resilience.test.js:259:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+  operator: 'doesNotThrow'
+  stack: |-
+    TestContext.<anonymous> (file:///mnt/data/pathasetu_iteration13/work/tests/storage-resilience.test.js:259:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 23
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 183.566941
+exit=1

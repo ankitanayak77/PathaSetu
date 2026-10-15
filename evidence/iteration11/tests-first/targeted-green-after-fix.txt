@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: scheduleAfterFailure rejects malformed timestamps before mutating any retry field
+ok 1 - scheduleAfterFailure rejects malformed timestamps before mutating any retry field
+  ---
+  duration_ms: 5.326176
+  type: 'test'
+  ...
+# Subtest: recordRecheckDeferred is atomic when the injected clock is invalid
+ok 2 - recordRecheckDeferred is atomic when the injected clock is invalid
+  ---
+  duration_ms: 27.164218
+  type: 'test'
+  ...
+# Subtest: invalid timestamps are rejected before pausing an entry at the automatic retry limit
+ok 3 - invalid timestamps are rejected before pausing an entry at the automatic retry limit
+  ---
+  duration_ms: 1.723988
+  type: 'test'
+  ...
+# Subtest: a provider diagnosis rejected by the validator leaves the queue state unchanged when its clock is invalid
+ok 4 - a provider diagnosis rejected by the validator leaves the queue state unchanged when its clock is invalid
+  ---
+  duration_ms: 1.730591
+  type: 'test'
+  ...
+# Subtest: a valid ISO timestamp retains the existing bounded retry behaviour
+ok 5 - a valid ISO timestamp retains the existing bounded retry behaviour
+  ---
+  duration_ms: 0.203865
+  type: 'test'
+  ...
+# Subtest: the shipped eight-question pack refuses a duplicate answer before the learner continues
+ok 6 - the shipped eight-question pack refuses a duplicate answer before the learner continues
+  ---
+  duration_ms: 1.146353
+  type: 'test'
+  ...
+# Subtest: mutant ids are unique and every mutant has a description and at least one edit
+ok 7 - mutant ids are unique and every mutant has a description and at least one edit
+  ---
+  duration_ms: 2.83064
+  type: 'test'
+  ...
+# Subtest: every mutant applies to the current source exactly once per edit and changes it
+ok 8 - every mutant applies to the current source exactly once per edit and changes it
+  ---
+  duration_ms: 2.216819
+  type: 'test'
+  ...
+# Subtest: the three required families (retry timing/limit, drain on error, validator foreign id / confirmed uncertainty) each have mutants
+ok 9 - the three required families (retry timing/limit, drain on error, validator foreign id / confirmed uncertainty) each have mutants
+  ---
+  duration_ms: 0.784657
+  type: 'test'
+  ...
+# Subtest: applying an edit whose text is missing or ambiguous is an error, not a silent no-op
+ok 10 - applying an edit whose text is missing or ambiguous is an error, not a silent no-op
+  ---
+  duration_ms: 2.041927
+  type: 'test'
+  ...
+# Subtest: the shipped source files are not touched by importing or applying mutants
+ok 11 - the shipped source files are not touched by importing or applying mutants
+  ---
+  duration_ms: 0.862287
+  type: 'test'
+  ...
+# Subtest: Iteration 11 includes a mutant for malformed retry timestamps mutating state before validation
+ok 12 - Iteration 11 includes a mutant for malformed retry timestamps mutating state before validation
+  ---
+  duration_ms: 1.335537
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 182.182542

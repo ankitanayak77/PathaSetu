@@ -16,4 +16,4 @@ test('uncertain output is valid without a misconception ID', () => {
   const result = validateDiagnosis({ questionId: item.id, type: 'UNCERTAIN', misconceptionId: null, confidence: 0.4, rationale: 'Not enough evidence.' }, item);
   assert.equal(result.ok, true);
 });
-test('non-uncertain output below the confidence threshold is rejected', () => assert.equal(validateDiagnosis({ ...base, confidence: 0.2 }, item).reason, 'below_confidence_threshold'));
+test('non-uncertain output below the confidence threshold is kept as UNCERTAIN (Iteration 16), not accepted as a misconception', () => { const r = validateDiagnosis({ ...base, confidence: 0.2 }, item); assert.equal(r.ok, true); assert.equal(r.reason, 'below_confidence_threshold'); assert.equal(r.value.type, 'UNCERTAIN'); assert.equal(r.value.misconceptionId, null); });

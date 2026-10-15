@@ -1,0 +1,1941 @@
+{
+  "node": "v22.22.0",
+  "mode": "full-suite",
+  "reporter": "tap",
+  "catalogueSize": 46,
+  "state": "FINISHED",
+  "complete": true,
+  "elapsedMs": 39007,
+  "budgetSeconds": 600,
+  "note": "Mutants are applied to a temporary copy of src/core only. A killed mutant means the selected tests failed against the deliberate fault. This is evidence about test sensitivity, not about learning outcomes or model accuracy.",
+  "summary": {
+    "selected": 46,
+    "run": 46,
+    "killed": 46,
+    "survived": 0,
+    "errors": 0,
+    "notRun": 0
+  },
+  "requiredFamilies": [
+    {
+      "family": "a",
+      "mutants": 10,
+      "killed": 10
+    },
+    {
+      "family": "b",
+      "mutants": 3,
+      "killed": 3
+    },
+    {
+      "family": "c",
+      "mutants": 3,
+      "killed": 3
+    }
+  ],
+  "results": [
+    {
+      "id": "A1",
+      "required": "a",
+      "description": "backoff exponent off by one (waits 10 s, 20 s, ... instead of 5 s, 10 s, ...)",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "28 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 34,
+        "failed": 28,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1219,
+      "failingTests": [
+        "fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ]
+    },
+    {
+      "id": "A2",
+      "required": "a",
+      "description": "backoff is never capped at maxDelayMs",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 61,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1182,
+      "failingTests": [
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts"
+      ]
+    },
+    {
+      "id": "A3",
+      "required": "a",
+      "description": "retry limit allows one extra automatic attempt (> instead of >=)",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "7 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 55,
+        "failed": 7,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 904,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again",
+        "legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success",
+        "seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries"
+      ]
+    },
+    {
+      "id": "A4",
+      "required": "a",
+      "description": "retry limit stops one attempt early",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "5 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 57,
+        "failed": 5,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 872,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again",
+        "legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "A5",
+      "required": "a",
+      "description": "no retry limit at all (entries never pause)",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "8 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 54,
+        "failed": 8,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 815,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again",
+        "legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success",
+        "seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries"
+      ]
+    },
+    {
+      "id": "A6",
+      "required": "a",
+      "description": "no backoff scheduled after a failure (immediate hot retry)",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "29 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 33,
+        "failed": 29,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 504,
+      "failingTests": [
+        "fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ]
+    },
+    {
+      "id": "A7",
+      "required": "a",
+      "description": "a paused entry is treated as due",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 59,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 836,
+      "failingTests": [
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "A8",
+      "required": "a",
+      "description": "default base delay changed from 5 s to 4 s",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "24 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 38,
+        "failed": 24,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1181,
+      "failingTests": [
+        "fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ]
+    },
+    {
+      "id": "A9",
+      "required": "a",
+      "description": "entries saved before bounded retry lose their old attempts count",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 61,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1161,
+      "failingTests": [
+        "legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success"
+      ]
+    },
+    {
+      "id": "B1",
+      "required": "b",
+      "description": "a provider exception removes the queue entry",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "21 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 41,
+        "failed": 21,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 461,
+      "failingTests": [
+        "a repeated failure report or a repeated manual retry never creates a second entry, answer or session",
+        "fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again"
+      ]
+    },
+    {
+      "id": "B2",
+      "required": "b",
+      "description": "a rejected diagnosis removes the queue entry",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "20 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 42,
+        "failed": 20,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 515,
+      "failingTests": [
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault string_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault array_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault number_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault foreign_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ]
+    },
+    {
+      "id": "B3",
+      "required": "b",
+      "description": "an entry is deleted at the moment it pauses",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "13 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 49,
+        "failed": 13,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 967,
+      "failingTests": [
+        "a repeated failure report or a repeated manual retry never creates a second entry, answer or session",
+        "default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again",
+        "custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts",
+        "a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention",
+        "manual retry changes only the retry fields of the chosen entry and nothing else in the state",
+        "repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count"
+      ]
+    },
+    {
+      "id": "B4",
+      "required": null,
+      "description": "the provider-supplied result is ignored when it is missing (Iteration 9 behaviour: silent local fallback)",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "4 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 58,
+        "failed": 4,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 504,
+      "failingTests": [
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "a missing diagnosis from the provider is a failed attempt, never a silent local substitute",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "B5",
+      "required": null,
+      "description": "a rejected diagnosis overwrites the stored answer before it is validated",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "20 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 42,
+        "failed": 20,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 500,
+      "failingTests": [
+        "fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault string_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault array_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault number_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault foreign_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ]
+    },
+    {
+      "id": "C1",
+      "required": "c",
+      "description": "validator accepts a misconception id from a different question",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "6 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 56,
+        "failed": 6,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 552,
+      "failingTests": [
+        "fault foreign_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault made_up_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "a rejected diagnosis never reaches the stored answer or the confirmed misconceptions, even when the caller marks the result trusted",
+        "validator: every own misconception id is accepted and every id that belongs only to a different question is rejected",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "C2",
+      "required": "c",
+      "description": "validator lets an UNCERTAIN or NONE result carry a misconception id, and the planner then confirms it",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "5 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 57,
+        "failed": 5,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 573,
+      "failingTests": [
+        "fault uncertain_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault none_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "a rejected diagnosis never reaches the stored answer or the confirmed misconceptions, even when the caller marks the result trusted",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "C3",
+      "required": "c",
+      "description": "validator accepts a low-confidence misconception (threshold check removed)",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "4 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 58,
+        "failed": 4,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 578,
+      "failingTests": [
+        "fault low_confidence_misconception: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "a rejected diagnosis never reaches the stored answer or the confirmed misconceptions, even when the caller marks the result trusted",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "C4",
+      "required": null,
+      "description": "validator confidence threshold lowered from 0.65 to 0.60",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 61,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1365,
+      "failingTests": [
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ]
+    },
+    {
+      "id": "C5",
+      "required": null,
+      "description": "validator ignores a question-id mismatch",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "5 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 57,
+        "failed": 5,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 539,
+      "failingTests": [
+        "fault wrong_question: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "adjacent repeats of the same failure for the same entry coalesce; any intervening event keeps them separate and readable",
+        "validator: every own misconception id is accepted and every id that belongs only to a different question is rejected",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "C6",
+      "required": null,
+      "description": "validator accepts NaN confidence (finite check removed)",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 59,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 493,
+      "failingTests": [
+        "fault confidence_nan: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "C7",
+      "required": null,
+      "description": "validator accepts confidence outside 0..1",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 59,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 560,
+      "failingTests": [
+        "fault confidence_above_one: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "C8",
+      "required": null,
+      "description": "validator reports an array as a different kind of problem (reason code drifts)",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 61,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1139,
+      "failingTests": [
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ]
+    },
+    {
+      "id": "C9",
+      "required": null,
+      "description": "an accepted diagnosis is no longer immutable",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 61,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1265,
+      "failingTests": [
+        "validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty"
+      ]
+    },
+    {
+      "id": "D1",
+      "required": null,
+      "description": "success does not remove the processed entry (it would be processed again)",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "30 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 32,
+        "failed": 30,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 482,
+      "failingTests": [
+        "identity (fault injection): ids stay unique when the clock and the random suffix repeat, so one re-check cannot swallow another entry",
+        "capacity boundary: the 100th entry is accepted, the 101st is refused, and a drain frees room again",
+        "fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works",
+        "fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works"
+      ]
+    },
+    {
+      "id": "D2",
+      "required": null,
+      "description": "a background re-check switches the question on screen",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 60,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 495,
+      "failingTests": [
+        "background re-check never switches the current question, discards the learner draft or spends a session",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "D3",
+      "required": null,
+      "description": "manual retry also erases the cumulative attempts history",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 60,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1097,
+      "failingTests": [
+        "manual retry changes only the retry fields of the chosen entry and nothing else in the state",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again"
+      ]
+    },
+    {
+      "id": "D4",
+      "required": null,
+      "description": "manual retry does not clear the paused flag",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "6 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 56,
+        "failed": 6,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 855,
+      "failingTests": [
+        "manual retry changes only the retry fields of the chosen entry and nothing else in the state",
+        "repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count",
+        "after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again",
+        "legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)",
+        "a fixed enumerated table of operation sequences, written out by hand, reaches the pause, the manual retry and the recovery"
+      ]
+    },
+    {
+      "id": "D5",
+      "required": null,
+      "description": "a repeated manual retry counts again (not idempotent)",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 59,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 499,
+      "failingTests": [
+        "repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count",
+        "a fresh entry that never failed is not reset by a manual retry",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "D6",
+      "required": null,
+      "description": "manual retry of one entry resets every entry",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 61,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1174,
+      "failingTests": [
+        "manual retry changes only the retry fields of the chosen entry and nothing else in the state"
+      ]
+    },
+    {
+      "id": "D7",
+      "required": null,
+      "description": "queue capacity allows one entry too many",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 60,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1057,
+      "failingTests": [
+        "every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change",
+        "capacity boundary: the 100th entry is accepted, the 101st is refused, and a drain frees room again"
+      ]
+    },
+    {
+      "id": "D8",
+      "required": null,
+      "description": "queue capacity is checked after the answer is stored (non-atomic refusal)",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 60,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1171,
+      "failingTests": [
+        "every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change",
+        "capacity boundary: the 100th entry is accepted, the 101st is refused, and a drain frees room again"
+      ]
+    },
+    {
+      "id": "D9",
+      "required": null,
+      "description": "the double-submit guard is removed",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "4 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 58,
+        "failed": 4,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 468,
+      "failingTests": [
+        "duplicate submit (double tap) is refused before anything changes: no extra answer, queue entry, session or trace line",
+        "every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)",
+        "the shipped eight-question pack refuses a duplicate answer before the learner continues"
+      ]
+    },
+    {
+      "id": "D10",
+      "required": null,
+      "description": "ids are no longer checked for uniqueness (Iteration 9 behaviour)",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 60,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 465,
+      "failingTests": [
+        "identity (fault injection): ids stay unique when the clock and the random suffix repeat, so one re-check cannot swallow another entry",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "D11",
+      "required": null,
+      "description": "failure trace lines coalesce across different queue entries",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 60,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1075,
+      "failingTests": [
+        "adjacent repeats of the same failure for the same entry coalesce; any intervening event keeps them separate and readable",
+        "trace is bounded by 200 lines under thousands of failures, keeps the newest events, and pauses are reported once per entry"
+      ]
+    },
+    {
+      "id": "D12",
+      "required": null,
+      "description": "failure trace lines never coalesce",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 60,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1071,
+      "failingTests": [
+        "seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries",
+        "adjacent repeats of the same failure for the same entry coalesce; any intervening event keeps them separate and readable"
+      ]
+    },
+    {
+      "id": "D13",
+      "required": null,
+      "description": "the trace is no longer bounded",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 60,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 961,
+      "failingTests": [
+        "trace stays within its limit through repair, even when the saved trace is far over it",
+        "trace is bounded by 200 lines under thousands of failures, keeps the newest events, and pauses are reported once per entry"
+      ]
+    },
+    {
+      "id": "E1",
+      "required": null,
+      "description": "repair keeps duplicate queue ids",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "2 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 60,
+        "failed": 2,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 464,
+      "failingTests": [
+        "repair keeps every usable record around the damage and removes duplicates and junk",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "E2",
+      "required": null,
+      "description": "repair adds a trace line even when nothing needed repair (not idempotent)",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "4 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 58,
+        "failed": 4,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 411,
+      "failingTests": [
+        "JSON save and restore preserves answers, drafts and every queue entry, and the restored entries behave identically",
+        "malformed records of every shape are repaired or replaced without throwing, and the repaired record is a fixed point",
+        "seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "E3",
+      "required": null,
+      "description": "repair silently drops all but the first valid queue entry",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "3 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 59,
+        "failed": 3,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 482,
+      "failingTests": [
+        "repair keeps every usable record around the damage and removes duplicates and junk",
+        "oversized saved collections are cut to their limits: the newest answers and the oldest queue entries are kept",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "E4",
+      "required": null,
+      "description": "repair can throw on a hostile record (safety net removed)",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 61,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1086,
+      "failingTests": [
+        "malformed records of every shape are repaired or replaced without throwing, and the repaired record is a fixed point"
+      ]
+    },
+    {
+      "id": "E5",
+      "required": null,
+      "description": "repair does not cap an oversized queue",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 61,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1157,
+      "failingTests": [
+        "oversized saved collections are cut to their limits: the newest answers and the oldest queue entries are kept"
+      ]
+    },
+    {
+      "id": "E6",
+      "required": null,
+      "description": "repair does not cap an oversized trace",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 61,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1108,
+      "failingTests": [
+        "trace stays within its limit through repair, even when the saved trace is far over it"
+      ]
+    },
+    {
+      "id": "E7",
+      "required": null,
+      "description": "repair drops saved drafts",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "4 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 58,
+        "failed": 4,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 465,
+      "failingTests": [
+        "JSON save and restore preserves answers, drafts and every queue entry, and the restored entries behave identically",
+        "repair keeps every usable record around the damage and removes duplicates and junk",
+        "persistence: a saved record comes back as an independent copy with the whole queue and retry state, and repair finds nothing to fix",
+        "generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)"
+      ]
+    },
+    {
+      "id": "F1",
+      "required": null,
+      "description": "memory storage hands out the stored object itself instead of a copy",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 61,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1100,
+      "failingTests": [
+        "persistence: a saved record comes back as an independent copy with the whole queue and retry state, and repair finds nothing to fix"
+      ]
+    },
+    {
+      "id": "F2",
+      "required": null,
+      "description": "a rejected durable write overwrites the older durable record with an empty one",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "1 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 61,
+        "failed": 1,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1010,
+      "failingTests": [
+        "persistence fault: when a write is rejected, the older durable record is left alone, the newest state stays available in memory with its whole queue, and the reason holds no learner text"
+      ]
+    },
+    {
+      "id": "G1",
+      "required": "a",
+      "description": "malformed clock is parsed without validation, allowing retry fields to mutate before timestamp failure",
+      "groups": [
+        "all"
+      ],
+      "selections": [
+        {
+          "file": "tests/queue-invariants.test.js",
+          "pattern": null
+        },
+        {
+          "file": "tests/iteration11-retry-atomicity.test.js",
+          "pattern": null
+        }
+      ],
+      "status": "KILLED",
+      "detail": "4 of 62 selected test(s) failed",
+      "baseline": {
+        "executed": 62,
+        "passed": 62,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0
+      },
+      "mutated": {
+        "executed": 62,
+        "passed": 58,
+        "failed": 4,
+        "skipped": 0,
+        "exitCode": 1
+      },
+      "exitCode": 1,
+      "durationMs": 1035,
+      "failingTests": [
+        "scheduleAfterFailure rejects malformed timestamps before mutating any retry field",
+        "recordRecheckDeferred is atomic when the injected clock is invalid",
+        "invalid timestamps are rejected before pausing an entry at the automatic retry limit",
+        "a provider diagnosis rejected by the validator leaves the queue state unchanged when its clock is invalid"
+      ]
+    }
+  ]
+}

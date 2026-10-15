@@ -1,0 +1,8 @@
+npm-ci: exit=0 started=2026-10-13T20:58:10+00:00 duration_ms=738 cmd="npm ci"
+npm-test: exit=0 started=2026-10-13T20:58:11+00:00 duration_ms=34988 cmd="npm test"
+npm-check: exit=0 started=2026-10-13T20:58:46+00:00 duration_ms=852 cmd="npm run check"
+npm-check-content: exit=0 started=2026-10-13T20:58:47+00:00 duration_ms=179 cmd="npm run check:content"
+npm-preflight: exit=0 started=2026-10-13T20:58:47+00:00 duration_ms=652 cmd="npm run preflight"
+npm-doctor: exit=0 started=2026-10-13T20:58:47+00:00 duration_ms=2044 cmd="npm run doctor"
+npm-evaluate: exit=0 started=2026-10-13T20:58:50+00:00 duration_ms=216 cmd="npm run evaluate -- --out evidence/iteration10/baseline/evaluation"
+DONE

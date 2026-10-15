@@ -1,0 +1,5 @@
+# Iteration 13 declared runtime changes (append-only chain from Iteration 12). No public UI, service-worker or content-pack changes.
+# KIND<TAB>FILE<TAB>REASON
+MODIFIED	src/core/agent.js	Guard reconciliation against malformed content-pack item collections; return without mutation when items are not an array and ignore unusable item entries.
+MODIFIED	src/core/bridge.js	Recover from a malformed bridge-attempt counter map and invalid per-item counters rather than throwing during a practice attempt.
+MODIFIED	src/core/recovery.js	Validate persisted bridge-attempt counters; reset a malformed map and remove invalid entries while preserving valid learner state.

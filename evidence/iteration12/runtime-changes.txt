@@ -1,0 +1,6 @@
+# Iteration 12 declared runtime/tooling changes (append-only chain from Iteration 11). src/, public/ and content/ are unchanged.
+# KIND<TAB>FILE<TAB>REASON
+ADDED	scripts/lib/mutation-plan.mjs	Pure planning and judging helpers for the mutation run: TAP parsing that excludes the file entry, plan validation, per-file test selections, strict KILLED/SURVIVED/ERROR judgement.
+MODIFIED	scripts/lib/mutants.mjs	Add TEST_GROUPS, MUTANT_PLANS and FULL_SUITE_FILES so each of the 46 mutants runs only the tests for its behaviour; the mutants themselves are unchanged.
+MODIFIED	scripts/mutation-check.mjs	Per-mutant test plans, forced TAP reporter, executed-test accounting, time budget with INCOMPLETE state, incremental report, overwrite guard, --full, --dry-run, unknown-id rejection.
+MODIFIED	package.json	Add the syntax check for scripts/lib/mutation-plan.mjs to the check chain.

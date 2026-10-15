@@ -7,17 +7,21 @@ import { loadPack, selectPublishedItems } from '../core/content.js';
 import { proposeDiagnosis } from '../core/mockModel.js';
 import { validateDiagnosis } from '../core/validator.js';
 import { createGroqModel } from './groqModel.js';
+import { parseModelConfig } from './modelConfig.js';
 import { assessAccessCode, describeAccessCodeProblems, parseAllowedOrigins, parsePublicDemoFlag, positiveInteger, DEFAULT_FAILED_ATTEMPT_LIMIT, GENERATE_CODE_HINT } from './access.js';
+import { firebaseWebConfig, firebaseConnectSources } from './firebaseConfig.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const PUBLIC = path.join(ROOT, 'public');
+
 const PORT = Number(process.env.PORT || 4173);
 const HOST = process.env.HOST || '127.0.0.1';
 const PACK = loadPack();
 const MAX_BODY_BYTES = 16 * 1024;
-const PROVIDER = process.env.PATHASETU_MODEL_PROVIDER || 'mock';
-if (!['mock', 'groq'].includes(PROVIDER)) throw new Error('PATHASETU_MODEL_PROVIDER must be mock or groq');
-if (PROVIDER === 'groq' && !process.env.GROQ_API_KEY) throw new Error('GROQ_API_KEY is required when PATHASETU_MODEL_PROVIDER=groq');
+// Iteration 15: PATHASETU_MODEL_PROVIDERS (ordered list of ollama, gemini, groq) selects a model chain; the older
+// PATHASETU_MODEL_PROVIDER=mock|groq switch still works. All parsing and validation lives in ./modelConfig.js.
+const MODEL = parseModelConfig(process.env);
+const PROVIDER = MODEL.mode;
 const ACTIVE_MODEL = PROVIDER === 'groq' ? (process.env.GROQ_MODEL || 'openai/gpt-oss-20b') : null;
 const ACCESS_CODE = process.env.PATHASETU_DEMO_ACCESS_CODE || '';
 const RATE_WINDOW_MS = positiveInteger(process.env.PATHASETU_RATE_WINDOW_MS, 60_000);
@@ -26,6 +30,8 @@ const RECHECK_RATE_LIMIT = positiveInteger(process.env.PATHASETU_RECHECK_RATE_LI
 const FAILED_ATTEMPT_LIMIT = positiveInteger(process.env.PATHASETU_FAILED_ATTEMPT_LIMIT, DEFAULT_FAILED_ATTEMPT_LIMIT);
 // Public/tunnel demo mode is explicit and fail-closed: it needs a strong access code regardless of provider or NODE_ENV.
 const PUBLIC_DEMO = parsePublicDemoFlag(process.env.PATHASETU_PUBLIC_DEMO);
+const FIREBASE_CONFIG = firebaseWebConfig(process.env);
+const CONNECT_SOURCES = firebaseConnectSources(FIREBASE_CONFIG);
 const rateBuckets = new Map();
 
 // Fixed-window counters, in memory, per route and socket address. `count` is the number of events in the current window.
@@ -65,7 +71,7 @@ function authorise(req, res) {
 }
 function draftDemoEnabled() { return process.env.NODE_ENV !== 'production' || process.env.PATHASETU_ALLOW_DRAFT_DEMO === 'true'; }
 // A strong code is required for public demo mode, a Groq endpoint, or a production draft demo. The message never contains the code.
-const CODE_REQUIRED = PUBLIC_DEMO || PROVIDER === 'groq' || (process.env.NODE_ENV === 'production' && process.env.PATHASETU_ALLOW_DRAFT_DEMO === 'true');
+const CODE_REQUIRED = PUBLIC_DEMO || MODEL.needsAccessCode || (process.env.NODE_ENV === 'production' && process.env.PATHASETU_ALLOW_DRAFT_DEMO === 'true');
 if (CODE_REQUIRED) {
   const assessment = assessAccessCode(ACCESS_CODE);
   if (!assessment.ok) throw new Error(`Set PATHASETU_DEMO_ACCESS_CODE to a random value of at least 16 characters for a public demo, Groq or production draft-demo endpoint (current value rejected: ${describeAccessCodeProblems(assessment.problems)}). Generate one locally with: ${GENERATE_CODE_HINT}`);
@@ -85,8 +91,19 @@ const TYPES = new Map([
   ['.svg', 'image/svg+xml'], ['.webmanifest', 'application/manifest+json; charset=utf-8']
 ]);
 
+function securityHeaders() {
+  const authDomain = FIREBASE_CONFIG.enabled ? `https://${FIREBASE_CONFIG.web.authDomain}` : "'self'";
+  const authFrames = FIREBASE_CONFIG.enabled ? ` ${authDomain} https://accounts.google.com` : '';
+  const emulatorFrames = FIREBASE_CONFIG.emulators?.auth ? ` ${FIREBASE_CONFIG.emulators.auth}` : '';
+  return {
+    'x-content-type-options': 'nosniff',
+    'referrer-policy': 'no-referrer',
+    'content-security-policy': `default-src 'self'; connect-src ${CONNECT_SOURCES}; img-src 'self' data:; style-src 'self'; script-src 'self' https://www.gstatic.com; frame-src 'self'${authFrames}${emulatorFrames}; base-uri 'none'; frame-ancestors 'none'; form-action 'self'${FIREBASE_CONFIG.enabled ? ` ${authDomain}` : ''}`
+  };
+}
+
 function send(res, status, body, type = 'application/json; charset=utf-8', headers = {}) {
-  res.writeHead(status, { 'content-type': type, 'cache-control': 'no-store', 'x-content-type-options': 'nosniff', 'referrer-policy': 'no-referrer', 'content-security-policy': "default-src 'self'; connect-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'", ...headers });
+  res.writeHead(status, { 'content-type': type, 'cache-control': 'no-store', ...securityHeaders(), ...headers });
   res.end(type.startsWith('application/json') ? JSON.stringify(body) : body);
 }
 
@@ -139,7 +156,8 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);
   if (url.pathname.startsWith('/api/')) {
     if (!originAllowed(req)) return send(res, 403, { error: 'origin_not_allowed' });
-    if (req.method === 'GET' && url.pathname === '/api/health') return send(res, 200, { ok: true, provider: PROVIDER, model: ACTIVE_MODEL, accessRequired: Boolean(ACCESS_CODE), publicDemo: PUBLIC_DEMO, time: new Date().toISOString() });
+    if (req.method === 'GET' && url.pathname === '/api/health') return send(res, 200, { ok: true, provider: PROVIDER, model: ACTIVE_MODEL, accessRequired: Boolean(ACCESS_CODE), publicDemo: PUBLIC_DEMO, providers: MODEL.chain ? MODEL.chain.providers : [], planning: MODEL.planning, retryPolicy: MODEL.retryPolicy, retryPolicySource: MODEL.retryPolicySource, recheckTimeoutMs: MODEL.recheckTimeoutMs, time: new Date().toISOString() });
+    if (req.method === 'GET' && url.pathname === '/api/firebase/config') return send(res, 200, FIREBASE_CONFIG);
     if (req.method === 'GET' && url.pathname === '/api/session') {
       if (!authorise(req, res)) return;
       if (enforceRateLimit(req, res, 'session', SESSION_RATE_LIMIT)) return;
@@ -156,6 +174,8 @@ const server = http.createServer(async (req, res) => {
       const items = allowDraftDemo ? PACK.items : selectPublishedItems(PACK);
       return send(res, 200, { packId: PACK.packId, subject: PACK.subject, topic: PACK.topic, classLevel: PACK.classLevel, medium: PACK.medium, languageBridge: PACK.languageBridge, demoDraftMode: allowDraftDemo && items.some((item) => item.status !== 'PUBLISHED'), items });
     }
+
+    // Firebase auth/sync and experimental corpus/AI routes were removed until they have verified auth, rules, rate limits, and provider wiring.
     if (req.method === 'POST' && url.pathname === '/api/recheck') {
       if (!authorise(req, res)) return;
       if (enforceRateLimit(req, res, 'recheck', RECHECK_RATE_LIMIT)) return;
@@ -169,14 +189,24 @@ const server = http.createServer(async (req, res) => {
         if (!draftDemoEnabled() && !selectPublishedItems(PACK).some((candidate) => candidate.id === item.id)) {
           return send(res, 404, { error: 'content_not_published' });
         }
+        if (MODEL.chain) {
+          const served = draftDemoEnabled() ? PACK.items : selectPublishedItems(PACK);
+          const out = await MODEL.chain.diagnose({ item, optionId: body.optionId, explanation: body.explanation });
+          const checked = validateDiagnosis(out.diagnosis, item);
+          if (!checked.ok) return send(res, 422, { error: 'diagnosis_rejected', reason: checked.reason });
+          // The plan call is best effort: no usable suggestion means plan:null and the browser labels its own fallback.
+          const plan = MODEL.planning ? await MODEL.chain.suggestPlan({ pack: { items: served }, justAnsweredItemId: item.id, history: Array.isArray(body.history) ? body.history.slice(-30) : [] }) : null;
+          return send(res, 200, { provider: out.provider, model: out.model, diagnosis: checked.value, plan, planAttempted: MODEL.planning, attempts: out.attempts.map(({ provider, code }) => ({ provider, code })), note: 'Structured model proposal, validated against the allowed misconception list; still provisional and not educationally validated.' });
+        }
         const proposal = await getDiagnosis({ item, optionId: body.optionId, explanation: body.explanation });
         const checked = validateDiagnosis(proposal, item);
         if (!checked.ok) return send(res, 422, { error: 'diagnosis_rejected', reason: checked.reason });
-        return send(res, 200, { provider: PROVIDER, model: ACTIVE_MODEL, diagnosis: checked.value, note: PROVIDER === 'mock' ? 'This result comes from the option-linked demo rule, not semantic language understanding.' : 'Structured provider proposal; still provisional and not educationally validated.' });
+        return send(res, 200, { provider: PROVIDER, model: ACTIVE_MODEL, diagnosis: checked.value, plan: null, planAttempted: false, note: PROVIDER === 'mock' ? 'This result comes from the option-linked demo rule, not semantic language understanding.' : 'Structured provider proposal; still provisional and not educationally validated.' });
       } catch (error) {
         if (error?.statusCode === 413) return send(res, 413, { error: 'body_too_large' });
         if (error?.statusCode === 400 && error?.message === 'invalid_json') return send(res, 400, { error: 'invalid_json' });
-        const status = error?.code === 'groq_timeout' ? 504 : error?.statusCode || 502;
+        if (error?.code === 'all_providers_failed') return send(res, 502, { error: 'all_providers_failed', attempts: (error.attempts ?? []).map(({ provider, code }) => ({ provider: String(provider).slice(0, 20), code: String(code).replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 80) })) });
+        const status = /(?:^|_)timeout$/.test(String(error?.code || '')) ? 504 : error?.statusCode || 502;
         const safeCode = String(error?.code || error?.message || 'request_failed').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 80);
         return send(res, status, { error: status === 504 ? 'provider_timeout' : 'provider_request_failed', code: safeCode });
       }
@@ -189,7 +219,7 @@ const server = http.createServer(async (req, res) => {
   if (!fs.existsSync(file) || !fs.statSync(file).isFile()) return send(res, 404, { error: 'not_found' });
   const ext = path.extname(file).toLowerCase();
   const headers = { 'cache-control': file.endsWith('index.html') ? 'no-cache' : 'public, max-age=0, must-revalidate' };
-  res.writeHead(200, { 'content-type': TYPES.get(ext) || 'application/octet-stream', 'x-content-type-options': 'nosniff', 'referrer-policy': 'no-referrer', 'content-security-policy': "default-src 'self'; connect-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'", ...headers });
+  res.writeHead(200, { 'content-type': TYPES.get(ext) || 'application/octet-stream', ...securityHeaders(), ...headers });
   if (req.method === 'HEAD') return res.end();
   fs.createReadStream(file).pipe(res);
 });
@@ -197,6 +227,6 @@ const server = http.createServer(async (req, res) => {
 server.requestTimeout = 10_000;
 server.headersTimeout = 12_000;
 server.keepAliveTimeout = 5_000;
-server.listen(PORT, HOST, () => console.log(`Pathasetu listening on http://${HOST}:${PORT} provider=${PROVIDER} publicDemo=${PUBLIC_DEMO}${ACTIVE_MODEL ? ` model=${ACTIVE_MODEL}` : ''} node=${process.version}`));
+server.listen(PORT, HOST, () => console.log(`Pathasetu listening on http://${HOST}:${PORT} provider=${PROVIDER}${MODEL.chain ? ` chain=${MODEL.chain.providers.map((p) => p.name).join(">")}` : ""} publicDemo=${PUBLIC_DEMO}${ACTIVE_MODEL ? ` model=${ACTIVE_MODEL}` : ''} node=${process.version}`));
 
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => server.close(() => process.exit(0)));

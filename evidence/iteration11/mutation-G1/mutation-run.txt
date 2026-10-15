@@ -1,0 +1,10 @@
+
+> pathasetu-mvp@0.1.0 mutation
+> node scripts/mutation-check.mjs --out evidence/iteration11/mutation-G1 --only G1 --tests tests/iteration11-retry-atomicity.test.js
+
+baseline (unmutated copy): exit=0 tests=6 pass=6 fail=0
+G1   KILLED   (a) malformed clock is parsed without validation, allowing retry fields to mutate before timestamp failure — 4 test(s) failed
+
+mutants: 1; killed 1; survived 0; errors 0
+family a: 1/1 killed; family b: 0/0 killed; family c: 0/0 killed
+written: evidence/iteration11/mutation-G1/mutation-results.json and .md

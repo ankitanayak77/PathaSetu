@@ -1,0 +1,677 @@
+{
+  "node": "v22.22.0",
+  "testFile": "tests/retry.test.js, tests/agent.test.js, tests/validator.test.js, tests/storage.test.js, tests/storage-resilience.test.js, tests/iteration2-core.test.js",
+  "note": "Mutants are applied to a temporary copy of src/core only. A killed mutant means the tests failed against the deliberate fault. This is evidence about test sensitivity, not about learning outcomes or model accuracy.",
+  "summary": {
+    "total": 45,
+    "killed": 33,
+    "survived": 12,
+    "errors": 0
+  },
+  "requiredFamilies": [
+    {
+      "family": "a",
+      "mutants": 9,
+      "killed": 9
+    },
+    {
+      "family": "b",
+      "mutants": 3,
+      "killed": 3
+    },
+    {
+      "family": "c",
+      "mutants": 3,
+      "killed": 2
+    }
+  ],
+  "results": [
+    {
+      "id": "A1",
+      "required": "a",
+      "description": "backoff exponent off by one (waits 10 s, 20 s, ... instead of 5 s, 10 s, ...)",
+      "status": "KILLED",
+      "detail": "4 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 4,
+      "failingTests": [
+        "the default policy is conservative: 5 automatic attempts, 5 s base, doubling, 60 s cap",
+        "backoff progression is written onto the entry after each failure, with the injected clock",
+        "queue state survives a save and reload (JSON round trip) while waiting and while paused",
+        "queueStatus describes waiting and paused entries for the UI"
+      ],
+      "durationMs": 887
+    },
+    {
+      "id": "A2",
+      "required": "a",
+      "description": "backoff is never capped at maxDelayMs",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "the default policy is conservative: 5 automatic attempts, 5 s base, doubling, 60 s cap"
+      ],
+      "durationMs": 620
+    },
+    {
+      "id": "A3",
+      "required": "a",
+      "description": "retry limit allows one extra automatic attempt (> instead of >=)",
+      "status": "KILLED",
+      "detail": "8 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 8,
+      "failingTests": [
+        "50 repeated provider failures count 50 attempts but occupy one trace line",
+        "repeated invalid diagnoses for one queue entry are coalesced and keep the entry retryable",
+        "after the maximum the entry pauses, stays queued with its answer, and is never due again automatically",
+        "rejected diagnoses are bounded in the same way as provider failures",
+        "queue state survives a save and reload (JSON round trip) while waiting and while paused",
+        "an entry saved by an earlier version (no retry fields) is due, and still becomes bounded"
+      ],
+      "durationMs": 751
+    },
+    {
+      "id": "A4",
+      "required": "a",
+      "description": "retry limit stops one attempt early",
+      "status": "KILLED",
+      "detail": "4 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 4,
+      "failingTests": [
+        "50 repeated provider failures count 50 attempts but occupy one trace line",
+        "repeated invalid diagnoses for one queue entry are coalesced and keep the entry retryable",
+        "backoff progression is written onto the entry after each failure, with the injected clock",
+        "an entry saved by an earlier version (no retry fields) is due, and still becomes bounded"
+      ],
+      "durationMs": 662
+    },
+    {
+      "id": "A5",
+      "required": "a",
+      "description": "no retry limit at all (entries never pause)",
+      "status": "KILLED",
+      "detail": "9 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 9,
+      "failingTests": [
+        "50 repeated provider failures count 50 attempts but occupy one trace line",
+        "repeated invalid diagnoses for one queue entry are coalesced and keep the entry retryable",
+        "after the maximum the entry pauses, stays queued with its answer, and is never due again automatically",
+        "rejected diagnoses are bounded in the same way as provider failures",
+        "queue state survives a save and reload (JSON round trip) while waiting and while paused",
+        "an entry saved by an earlier version (no retry fields) is due, and still becomes bounded"
+      ],
+      "durationMs": 756
+    },
+    {
+      "id": "A6",
+      "required": "a",
+      "description": "no backoff scheduled after a failure (immediate hot retry)",
+      "status": "KILLED",
+      "detail": "3 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 3,
+      "failingTests": [
+        "backoff progression is written onto the entry after each failure, with the injected clock",
+        "queue state survives a save and reload (JSON round trip) while waiting and while paused",
+        "queueStatus describes waiting and paused entries for the UI"
+      ],
+      "durationMs": 697
+    },
+    {
+      "id": "A7",
+      "required": "a",
+      "description": "a paused entry is treated as due",
+      "status": "KILLED",
+      "detail": "2 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 2,
+      "failingTests": [
+        "after the maximum the entry pauses, stays queued with its answer, and is never due again automatically",
+        "queue state survives a save and reload (JSON round trip) while waiting and while paused"
+      ],
+      "durationMs": 674
+    },
+    {
+      "id": "A8",
+      "required": "a",
+      "description": "default base delay changed from 5 s to 4 s",
+      "status": "KILLED",
+      "detail": "4 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 4,
+      "failingTests": [
+        "the default policy is conservative: 5 automatic attempts, 5 s base, doubling, 60 s cap",
+        "an invalid policy falls back to safe values instead of retrying forever",
+        "backoff progression is written onto the entry after each failure, with the injected clock",
+        "queueStatus describes waiting and paused entries for the UI"
+      ],
+      "durationMs": 841
+    },
+    {
+      "id": "A9",
+      "required": "a",
+      "description": "entries saved before bounded retry lose their old attempts count",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "an entry saved by an earlier version (no retry fields) is due, and still becomes bounded"
+      ],
+      "durationMs": 785
+    },
+    {
+      "id": "B1",
+      "required": "b",
+      "description": "a provider exception removes the queue entry",
+      "status": "KILLED",
+      "detail": "11 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 11,
+      "failingTests": [
+        "deferred provider failures increment attempts and append a durable diagnostic trace",
+        "50 repeated provider failures count 50 attempts but occupy one trace line",
+        "a different event in between starts a new failure line instead of rewriting history",
+        "backoff progression is written onto the entry after each failure, with the injected clock",
+        "after the maximum the entry pauses, stays queued with its answer, and is never due again automatically",
+        "queue state survives a save and reload (JSON round trip) while waiting and while paused"
+      ],
+      "durationMs": 936
+    },
+    {
+      "id": "B2",
+      "required": "b",
+      "description": "a rejected diagnosis removes the queue entry",
+      "status": "KILLED",
+      "detail": "3 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 3,
+      "failingTests": [
+        "recheck with an invalid diagnosis is rejected and leaves the queue pending",
+        "repeated invalid diagnoses for one queue entry are coalesced and keep the entry retryable",
+        "rejected diagnoses are bounded in the same way as provider failures"
+      ],
+      "durationMs": 760
+    },
+    {
+      "id": "B3",
+      "required": "b",
+      "description": "an entry is deleted at the moment it pauses",
+      "status": "KILLED",
+      "detail": "8 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 8,
+      "failingTests": [
+        "50 repeated provider failures count 50 attempts but occupy one trace line",
+        "repeated invalid diagnoses for one queue entry are coalesced and keep the entry retryable",
+        "after the maximum the entry pauses, stays queued with its answer, and is never due again automatically",
+        "rejected diagnoses are bounded in the same way as provider failures",
+        "queue state survives a save and reload (JSON round trip) while waiting and while paused",
+        "manual retry resets only retry state: no new answer, session, queue entry, draft or current question"
+      ],
+      "durationMs": 1376
+    },
+    {
+      "id": "B4",
+      "required": null,
+      "description": "the provider-supplied result is ignored when it is missing (Iteration 9 behaviour: silent local fallback)",
+      "status": "SURVIVED",
+      "detail": "all tests passed against the mutant",
+      "exitCode": 0,
+      "tests": 60,
+      "failed": 0,
+      "failingTests": [],
+      "durationMs": 1067
+    },
+    {
+      "id": "B5",
+      "required": null,
+      "description": "a rejected diagnosis overwrites the stored answer before it is validated",
+      "status": "SURVIVED",
+      "detail": "all tests passed against the mutant",
+      "exitCode": 0,
+      "tests": 60,
+      "failed": 0,
+      "failingTests": [],
+      "durationMs": 879
+    },
+    {
+      "id": "C1",
+      "required": "c",
+      "description": "validator accepts a misconception id from a different question",
+      "status": "KILLED",
+      "detail": "2 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 2,
+      "failingTests": [
+        "recheck with an invalid diagnosis is rejected and leaves the queue pending",
+        "validator rejects an unallowed misconception ID"
+      ],
+      "durationMs": 1110
+    },
+    {
+      "id": "C2",
+      "required": "c",
+      "description": "validator lets an UNCERTAIN or NONE result carry a misconception id, and the planner then confirms it",
+      "status": "SURVIVED",
+      "detail": "all tests passed against the mutant",
+      "exitCode": 0,
+      "tests": 60,
+      "failed": 0,
+      "failingTests": [],
+      "durationMs": 825
+    },
+    {
+      "id": "C3",
+      "required": "c",
+      "description": "validator accepts a low-confidence misconception (threshold check removed)",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "non-uncertain output below the confidence threshold is rejected"
+      ],
+      "durationMs": 866
+    },
+    {
+      "id": "C4",
+      "required": null,
+      "description": "validator confidence threshold lowered from 0.65 to 0.60",
+      "status": "SURVIVED",
+      "detail": "all tests passed against the mutant",
+      "exitCode": 0,
+      "tests": 60,
+      "failed": 0,
+      "failingTests": [],
+      "durationMs": 801
+    },
+    {
+      "id": "C5",
+      "required": null,
+      "description": "validator ignores a question-id mismatch",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "validator rejects a question-ID mismatch"
+      ],
+      "durationMs": 964
+    },
+    {
+      "id": "C6",
+      "required": null,
+      "description": "validator accepts NaN confidence (finite check removed)",
+      "status": "SURVIVED",
+      "detail": "all tests passed against the mutant",
+      "exitCode": 0,
+      "tests": 60,
+      "failed": 0,
+      "failingTests": [],
+      "durationMs": 1008
+    },
+    {
+      "id": "C7",
+      "required": null,
+      "description": "validator accepts confidence outside 0..1",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "validator rejects malformed output and invalid confidence"
+      ],
+      "durationMs": 1060
+    },
+    {
+      "id": "C8",
+      "required": null,
+      "description": "validator reports an array as a different kind of problem (reason code drifts)",
+      "status": "SURVIVED",
+      "detail": "all tests passed against the mutant",
+      "exitCode": 0,
+      "tests": 60,
+      "failed": 0,
+      "failingTests": [],
+      "durationMs": 1131
+    },
+    {
+      "id": "C9",
+      "required": null,
+      "description": "an accepted diagnosis is no longer immutable",
+      "status": "SURVIVED",
+      "detail": "all tests passed against the mutant",
+      "exitCode": 0,
+      "tests": 60,
+      "failed": 0,
+      "failingTests": [],
+      "durationMs": 756
+    },
+    {
+      "id": "D1",
+      "required": null,
+      "description": "success does not remove the processed entry (it would be processed again)",
+      "status": "KILLED",
+      "detail": "4 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 4,
+      "failingTests": [
+        "mock re-check drains the queue but remains provisional and preserves current question",
+        "repeated invalid diagnoses for one queue entry are coalesced and keep the entry retryable",
+        "eventual recovery after a pause: manual retry then success drains the entry with exactly one answer and no extra session",
+        "queue recovery: a repaired queue entry is still processed once, with one answer and no extra session"
+      ],
+      "durationMs": 888
+    },
+    {
+      "id": "D2",
+      "required": null,
+      "description": "a background re-check switches the question on screen",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "mock re-check drains the queue but remains provisional and preserves current question"
+      ],
+      "durationMs": 760
+    },
+    {
+      "id": "D3",
+      "required": null,
+      "description": "manual retry also erases the cumulative attempts history",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "manual retry resets only retry state: no new answer, session, queue entry, draft or current question"
+      ],
+      "durationMs": 716
+    },
+    {
+      "id": "D4",
+      "required": null,
+      "description": "manual retry does not clear the paused flag",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "manual retry resets only retry state: no new answer, session, queue entry, draft or current question"
+      ],
+      "durationMs": 739
+    },
+    {
+      "id": "D5",
+      "required": null,
+      "description": "a repeated manual retry counts again (not idempotent)",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "manual retry resets only retry state: no new answer, session, queue entry, draft or current question"
+      ],
+      "durationMs": 755
+    },
+    {
+      "id": "D6",
+      "required": null,
+      "description": "manual retry of one entry resets every entry",
+      "status": "SURVIVED",
+      "detail": "all tests passed against the mutant",
+      "exitCode": 0,
+      "tests": 60,
+      "failed": 0,
+      "failingTests": [],
+      "durationMs": 957
+    },
+    {
+      "id": "D7",
+      "required": null,
+      "description": "queue capacity allows one entry too many",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "queue capacity rejects another answer without partially changing learner state"
+      ],
+      "durationMs": 1376
+    },
+    {
+      "id": "D8",
+      "required": null,
+      "description": "queue capacity is checked after the answer is stored (non-atomic refusal)",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "queue capacity rejects another answer without partially changing learner state"
+      ],
+      "durationMs": 1101
+    },
+    {
+      "id": "D9",
+      "required": null,
+      "description": "the double-submit guard is removed",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "a second submit for an already-answered question that has not been continued is rejected (double tap)"
+      ],
+      "durationMs": 886
+    },
+    {
+      "id": "D10",
+      "required": null,
+      "description": "ids are no longer checked for uniqueness (Iteration 9 behaviour)",
+      "status": "SURVIVED",
+      "detail": "all tests passed against the mutant",
+      "exitCode": 0,
+      "tests": 60,
+      "failed": 0,
+      "failingTests": [],
+      "durationMs": 750
+    },
+    {
+      "id": "D11",
+      "required": null,
+      "description": "failure trace lines coalesce across different queue entries",
+      "status": "SURVIVED",
+      "detail": "all tests passed against the mutant",
+      "exitCode": 0,
+      "tests": 60,
+      "failed": 0,
+      "failingTests": [],
+      "durationMs": 819
+    },
+    {
+      "id": "D12",
+      "required": null,
+      "description": "failure trace lines never coalesce",
+      "status": "KILLED",
+      "detail": "3 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 3,
+      "failingTests": [
+        "50 repeated provider failures count 50 attempts but occupy one trace line",
+        "repeated invalid diagnoses for one queue entry are coalesced and keep the entry retryable",
+        "trace growth is bounded and distinct events stay interpretable"
+      ],
+      "durationMs": 913
+    },
+    {
+      "id": "D13",
+      "required": null,
+      "description": "the trace is no longer bounded",
+      "status": "SURVIVED",
+      "detail": "all tests passed against the mutant",
+      "exitCode": 0,
+      "tests": 60,
+      "failed": 0,
+      "failingTests": [],
+      "durationMs": 999
+    },
+    {
+      "id": "E1",
+      "required": null,
+      "description": "repair keeps duplicate queue ids",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "partial corruption keeps every usable answer, queue entry, draft and counter and removes only the broken ones"
+      ],
+      "durationMs": 1270
+    },
+    {
+      "id": "E2",
+      "required": null,
+      "description": "repair adds a trace line even when nothing needed repair (not idempotent)",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "a valid record passes through untouched with no repairs"
+      ],
+      "durationMs": 766
+    },
+    {
+      "id": "E3",
+      "required": null,
+      "description": "repair silently drops all but the first valid queue entry",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "partial corruption keeps every usable answer, queue entry, draft and counter and removes only the broken ones"
+      ],
+      "durationMs": 775
+    },
+    {
+      "id": "E4",
+      "required": null,
+      "description": "repair can throw on a hostile record (safety net removed)",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "repair never throws on hostile input shapes"
+      ],
+      "durationMs": 574
+    },
+    {
+      "id": "E5",
+      "required": null,
+      "description": "repair does not cap an oversized queue",
+      "status": "SURVIVED",
+      "detail": "all tests passed against the mutant",
+      "exitCode": 0,
+      "tests": 60,
+      "failed": 0,
+      "failingTests": [],
+      "durationMs": 627
+    },
+    {
+      "id": "E6",
+      "required": null,
+      "description": "repair does not cap an oversized trace",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "oversized collections are capped instead of growing without bound"
+      ],
+      "durationMs": 673
+    },
+    {
+      "id": "E7",
+      "required": null,
+      "description": "repair drops saved drafts",
+      "status": "KILLED",
+      "detail": "2 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 2,
+      "failingTests": [
+        "a valid record passes through untouched with no repairs",
+        "partial corruption keeps every usable answer, queue entry, draft and counter and removes only the broken ones"
+      ],
+      "durationMs": 537
+    },
+    {
+      "id": "F1",
+      "required": null,
+      "description": "memory storage hands out the stored object itself instead of a copy",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "memory storage returns copies and can clear state"
+      ],
+      "durationMs": 548
+    },
+    {
+      "id": "F2",
+      "required": null,
+      "description": "a rejected durable write overwrites the older durable record with an empty one",
+      "status": "KILLED",
+      "detail": "1 test(s) failed",
+      "exitCode": 1,
+      "tests": 60,
+      "failed": 1,
+      "failingTests": [
+        "a rejected write downgrades visibly: durable saved time stops, reason is the error name only, latest data stays in memory"
+      ],
+      "durationMs": 756
+    }
+  ]
+}

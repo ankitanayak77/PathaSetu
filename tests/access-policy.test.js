@@ -7,6 +7,7 @@ import net from 'node:net';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { cleanEnv } from './helpers/cleanEnv.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CODE = 'test-pathasetu-access-code-12345';
@@ -18,7 +19,7 @@ async function freePort() {
 async function withServer(env, fn) {
   const port = await freePort();
   const base = `http://127.0.0.1:${port}`;
-  const child = spawn(process.execPath, ['src/server/server.js'], { cwd: ROOT, env: { ...process.env, HOST: '127.0.0.1', PORT: String(port), PATHASETU_MODEL_PROVIDER: 'mock', GROQ_API_KEY: '', NODE_ENV: '', PATHASETU_ALLOW_DRAFT_DEMO: '', PATHASETU_DEMO_ACCESS_CODE: '', ...env }, stdio: ['ignore', 'pipe', 'pipe'] });
+  const child = spawn(process.execPath, ['src/server/server.js'], { cwd: ROOT, env: cleanEnv({ HOST: '127.0.0.1', PORT: String(port), PATHASETU_MODEL_PROVIDER: 'mock', PATHASETU_MODEL_PROVIDERS: '', GROQ_API_KEY: '', NODE_ENV: '', PATHASETU_ALLOW_DRAFT_DEMO: '', PATHASETU_DEMO_ACCESS_CODE: '', ...env }), stdio: ['ignore', 'pipe', 'pipe'] });
   let logs = '';
   child.stdout.on('data', (c) => { logs += c; }); child.stderr.on('data', (c) => { logs += c; });
   try {
@@ -96,5 +97,6 @@ test('the browser client sends the session-held access code with its pack reques
   const app = fs.readFileSync(path.join(ROOT, 'public/app.js'), 'utf8');
   const packFetch = app.split('\n').find((line) => line.includes("fetch('/api/pack'"));
   assert.match(packFetch, /x-pathasetu-demo-code/);
-  assert.doesNotMatch(app, /GROQ_API_KEY|gsk_|Authorization/i);
+  // Firebase Authentication uses browser authorization APIs; only provider credentials are forbidden in the client bundle.
+  assert.doesNotMatch(app, /GROQ_API_KEY|gsk_/i);
 });

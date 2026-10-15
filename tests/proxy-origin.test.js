@@ -7,6 +7,7 @@ import net from 'node:net';
 import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { cleanEnv } from './helpers/cleanEnv.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const BODY = JSON.stringify({ itemId: 'EL01', optionId: 'A', explanation: 'A synthetic test explanation with enough detail.' });
@@ -17,7 +18,7 @@ async function freePort() {
 }
 async function withServer(env, fn) {
   const port = await freePort();
-  const child = spawn(process.execPath, ['src/server/server.js'], { cwd: ROOT, env: { ...process.env, HOST: '127.0.0.1', PORT: String(port), PATHASETU_MODEL_PROVIDER: 'mock', GROQ_API_KEY: '', NODE_ENV: 'development', PATHASETU_DEMO_ACCESS_CODE: '', PATHASETU_ALLOWED_ORIGINS: '', ...env }, stdio: ['ignore', 'pipe', 'pipe'] });
+  const child = spawn(process.execPath, ['src/server/server.js'], { cwd: ROOT, env: cleanEnv({ HOST: '127.0.0.1', PORT: String(port), PATHASETU_MODEL_PROVIDER: 'mock', PATHASETU_MODEL_PROVIDERS: '', GROQ_API_KEY: '', NODE_ENV: 'development', PATHASETU_DEMO_ACCESS_CODE: '', PATHASETU_ALLOWED_ORIGINS: '', ...env }), stdio: ['ignore', 'pipe', 'pipe'] });
   let logs = ''; child.stdout.on('data', (c) => { logs += c; }); child.stderr.on('data', (c) => { logs += c; });
   try {
     for (let i = 0; i < 60; i++) { try { if ((await fetch(`http://127.0.0.1:${port}/api/health`)).ok) break; } catch { /* retry */ } await new Promise((r) => setTimeout(r, 100)); }
@@ -30,7 +31,7 @@ const post = (port, origin) => new Promise((resolve, reject) => {
   req.on('error', reject); req.end(BODY);
 });
 const exitCode = async (env) => {
-  const child = spawn(process.execPath, ['src/server/server.js'], { cwd: ROOT, env: { ...process.env, HOST: '127.0.0.1', PORT: String(await freePort()), PATHASETU_MODEL_PROVIDER: 'mock', GROQ_API_KEY: '', NODE_ENV: 'development', ...env }, stdio: ['ignore', 'pipe', 'pipe'] });
+  const child = spawn(process.execPath, ['src/server/server.js'], { cwd: ROOT, env: cleanEnv({ HOST: '127.0.0.1', PORT: String(await freePort()), PATHASETU_MODEL_PROVIDER: 'mock', PATHASETU_MODEL_PROVIDERS: '', GROQ_API_KEY: '', NODE_ENV: 'development', ...env }), stdio: ['ignore', 'pipe', 'pipe'] });
   let err = ''; child.stderr.on('data', (c) => { err += c; });
   const code = await new Promise((resolve) => { const timer = setTimeout(() => { child.kill('SIGKILL'); resolve('still-running'); }, 2500); child.on('exit', (c) => { clearTimeout(timer); resolve(c); }); });
   return { code, err };

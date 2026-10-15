@@ -1,0 +1,18 @@
+not ok 1 - an explicit CHROME_PATH that exists and is executable is used first, even when other browsers are installed
+not ok 2 - an explicit CHROME_PATH that is missing is BLOCKED; a different installed browser is never launched instead
+not ok 3 - an empty or whitespace CHROME_PATH counts as not configured and normal discovery runs
+not ok 4 - macOS discovery checks Google Chrome, then Chromium, then Microsoft Edge application bundles, in that order
+not ok 5 - macOS discovery never offers the Linux-only /usr/bin/chromium path
+not ok 6 - Linux discovery covers Chromium and Chrome locations; Windows discovery builds Chrome and Edge paths from the environment
+not ok 7 - when nothing usable exists the result is BLOCKED with the list of places tried, not an exception
+not ok 8 - the default executable check accepts an executable file and rejects a missing path, a directory and a non-executable file
+not ok 9 - the resolver is dependency-free, offline and does not download or launch anything
+not ok 10 - launchChrome refuses an invalid explicit path with a BROWSER_BLOCKED error instead of a raw ENOENT
+not ok 11 - a managed-browser policy refusal is classified as POLICY_BLOCKED and stays distinct from a missing browser
+not ok 12 - the evidence record names the executable, how it was chosen and its version, and carries no secrets
+not ok 13 - no browser script keeps its own /usr/bin/chromium default; every launcher goes through the shared resolver
+not ok 14 - the syntax check covers the new resolver and capture.mjs
+not ok 15 - the operator documents explain CHROME_PATH and the macOS app-bundle path, and do not imply that /usr/bin/chromium exists on a Mac
+# tests 15
+# pass 0
+# fail 15

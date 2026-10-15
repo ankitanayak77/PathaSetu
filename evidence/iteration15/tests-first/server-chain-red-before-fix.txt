@@ -1,0 +1,153 @@
+TAP version 13
+# Subtest: chain mode: health reports the ordered providers, planning, retry policy and re-check timeout without exposing secrets
+not ok 1 - chain mode: health reports the ordered providers, planning, retry policy and re-check timeout without exposing secrets
+  ---
+  duration_ms: 258.853546
+  type: 'test'
+  location: '/home/claude/pw/it15/work/tests/iteration15-server-chain.test.js:47:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'mock' !== 'chain'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'chain'
+  actual: 'mock'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it15/work/tests/iteration15-server-chain.test.js:52:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: chain mode: a re-check asks the model for the diagnosis and then for the next question, and returns both labelled with provider and model
+not ok 2 - chain mode: a re-check asks the model for the diagnosis and then for the next question, and returns both labelled with provider and model
+  ---
+  duration_ms: 233.993065
+  type: 'test'
+  location: '/home/claude/pw/it15/work/tests/iteration15-server-chain.test.js:63:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'mock' !== 'ollama'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ollama'
+  actual: 'mock'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it15/work/tests/iteration15-server-chain.test.js:71:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: chain mode: if the model gives no usable plan the answer still succeeds with plan null (the browser then labels its own fallback)
+not ok 3 - chain mode: if the model gives no usable plan the answer still succeeds with plan null (the browser then labels its own fallback)
+  ---
+  duration_ms: 229.548951
+  type: 'test'
+  location: '/home/claude/pw/it15/work/tests/iteration15-server-chain.test.js:80:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - null
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it15/work/tests/iteration15-server-chain.test.js:85:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: chain mode: PATHASETU_MODEL_PLANNING=off never asks for a plan
+not ok 4 - chain mode: PATHASETU_MODEL_PLANNING=off never asks for a plan
+  ---
+  duration_ms: 223.074049
+  type: 'test'
+  location: '/home/claude/pw/it15/work/tests/iteration15-server-chain.test.js:90:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it15/work/tests/iteration15-server-chain.test.js:94:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: chain mode: when every provider fails the reply is an honest 502 with codes only; the mock rule is never substituted
+not ok 5 - chain mode: when every provider fails the reply is an honest 502 with codes only; the mock rule is never substituted
+  ---
+  duration_ms: 221.204649
+  type: 'test'
+  location: '/home/claude/pw/it15/work/tests/iteration15-server-chain.test.js:101:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 502
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 502
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it15/work/tests/iteration15-server-chain.test.js:106:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: chain mode: an oversized or malformed history is ignored, not trusted, and does not break the re-check
+not ok 6 - chain mode: an oversized or malformed history is ignored, not trusted, and does not break the re-check
+  ---
+  duration_ms: 124.183709
+  type: 'test'
+  location: '/home/claude/pw/it15/work/tests/iteration15-server-chain.test.js:116:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'body')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it15/work/tests/iteration15-server-chain.test.js:125:49)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: tests/iteration15-server-chain.test.js
+not ok 1 - tests/iteration15-server-chain.test.js
+  ---
+  duration_ms: 8009.23721
+  type: 'test'
+  location: '/home/claude/pw/it15/work/tests/iteration15-server-chain.test.js:1:1'
+  failureType: 'testTimeoutFailure'
+  error: 'test timed out after 8000ms'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 0
+# fail 6
+# cancelled 1
+# skipped 0
+# todo 0
+# duration_ms 8023.551535

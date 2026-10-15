@@ -1,0 +1,122 @@
+TAP version 13
+# Subtest: following the recommendation online visits each of the eight questions once, in order, when every answer is correct
+not ok 1 - following the recommendation online visits each of the eight questions once, in order, when every answer is correct
+  ---
+  duration_ms: 26.560903
+  type: 'test'
+  location: '/home/claude/pw/it14/work/tests/iteration14-planner.test.js:34:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the re-check must not send the learner back to a question that was just answered
+    + actual - expected
+    
+      [
+        'EL01',
+        'EL02',
+    +   'EL01',
+    +   'EL02',
+    +   'EL01',
+    +   'EL02',
+    +   'EL01',
+    +   'EL02'
+    -   'EL03',
+    -   'EL04',
+    -   'EL05',
+    -   'EL06',
+    -   'EL07',
+    -   'EL08'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'EL01'
+    1: 'EL02'
+    2: 'EL03'
+    3: 'EL04'
+    4: 'EL05'
+    5: 'EL06'
+    6: 'EL07'
+    7: 'EL08'
+  actual:
+    0: 'EL01'
+    1: 'EL02'
+    2: 'EL01'
+    3: 'EL02'
+    4: 'EL01'
+    5: 'EL02'
+    6: 'EL01'
+    7: 'EL02'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it14/work/tests/iteration14-planner.test.js:36:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: a wrong first answer still gets its companion question, then the plan moves forward instead of bouncing back
+not ok 2 - a wrong first answer still gets its companion question, then the plan moves forward instead of bouncing back
+  ---
+  duration_ms: 1.149272
+  type: 'test'
+  location: '/home/claude/pw/it14/work/tests/iteration14-planner.test.js:39:1'
+  failureType: 'testCodeFailure'
+  error: 'after the companion question the plan must not return to the first question'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'EL01'
+  actual: 'EL01'
+  operator: 'notStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it14/work/tests/iteration14-planner.test.js:42:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: the re-check recommendation never goes back to a question the learner has already answered while unanswered ones exist
+not ok 3 - the re-check recommendation never goes back to a question the learner has already answered while unanswered ones exist
+  ---
+  duration_ms: 0.465346
+  type: 'test'
+  location: '/home/claude/pw/it14/work/tests/iteration14-planner.test.js:46:1'
+  failureType: 'testCodeFailure'
+  error: 'step 2: EL01 was recommended again after being answered'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/pw/it14/work/tests/iteration14-planner.test.js:53:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: the concept bonus still prefers an unanswered question of the focused concept (existing behaviour kept)
+ok 4 - the concept bonus still prefers an unanswered question of the focused concept (existing behaviour kept)
+  ---
+  duration_ms: 0.33986
+  type: 'test'
+  ...
+# Subtest: when every question has been answered a recommendation still exists and is not the question just answered
+ok 5 - when every question has been answered a recommendation still exists and is not the question just answered
+  ---
+  duration_ms: 1.626912
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 2
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 155.345375

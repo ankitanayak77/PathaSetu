@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: scheduleAfterFailure rejects malformed timestamps before mutating any retry field
+ok 1 - scheduleAfterFailure rejects malformed timestamps before mutating any retry field
+  ---
+  duration_ms: 8.317826
+  type: 'test'
+  ...
+# Subtest: recordRecheckDeferred is atomic when the injected clock is invalid
+ok 2 - recordRecheckDeferred is atomic when the injected clock is invalid
+  ---
+  duration_ms: 41.766421
+  type: 'test'
+  ...
+# Subtest: invalid timestamps are rejected before pausing an entry at the automatic retry limit
+ok 3 - invalid timestamps are rejected before pausing an entry at the automatic retry limit
+  ---
+  duration_ms: 7.143567
+  type: 'test'
+  ...
+# Subtest: a provider diagnosis rejected by the validator leaves the queue state unchanged when its clock is invalid
+ok 4 - a provider diagnosis rejected by the validator leaves the queue state unchanged when its clock is invalid
+  ---
+  duration_ms: 1.697175
+  type: 'test'
+  ...
+# Subtest: a valid ISO timestamp retains the existing bounded retry behaviour
+ok 5 - a valid ISO timestamp retains the existing bounded retry behaviour
+  ---
+  duration_ms: 0.191759
+  type: 'test'
+  ...
+# Subtest: the shipped eight-question pack refuses a duplicate answer before the learner continues
+ok 6 - the shipped eight-question pack refuses a duplicate answer before the learner continues
+  ---
+  duration_ms: 4.391707
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 491.174958

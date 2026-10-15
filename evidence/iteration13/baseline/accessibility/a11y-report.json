@@ -1,0 +1,17 @@
+{
+  "summary": {
+    "generatedAt": "2026-10-14T08:04:46.128Z",
+    "blocked": "A managed browser policy blocked navigation. This run cannot establish whether the application journey passes or fails.",
+    "browser": {
+      "status": "FOUND",
+      "executable": "/usr/bin/chromium",
+      "selectedBy": "standard location",
+      "version": "Chrome/144.0.7559.96"
+    },
+    "limitation": "Headless Chromium with viewport emulation. Not a screen-reader test, not a real-phone test, not proof of WCAG conformance.",
+    "states": 0,
+    "checks": 0,
+    "failed": 0
+  },
+  "results": []
+}

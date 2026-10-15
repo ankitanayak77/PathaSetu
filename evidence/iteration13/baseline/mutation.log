@@ -1,0 +1,12 @@
+
+> pathasetu-mvp@0.1.0 mutation
+> node scripts/mutation-check.mjs --out evidence/iteration13/mutation
+
+unmutated selections: 17; executed 191 test(s); failing or empty: 0
+A1   KILLED   (a) backoff exponent off by one (waits 10 s, 20 s, ... instead of 5 s, 10 s, ...) — 4 of 13 selected test(s) failed [400 ms]
+A2   KILLED   (a) backoff is never capped at maxDelayMs — 1 of 13 selected test(s) failed [372 ms]
+A3   KILLED   (a) retry limit allows one extra automatic attempt (> instead of >=) — 4 of 13 selected test(s) failed [342 ms]
+A4   KILLED   (a) retry limit stops one attempt early — 3 of 13 selected test(s) failed [315 ms]
+A5   KILLED   (a) no retry limit at all (entries never pause) — 4 of 13 selected test(s) failed [309 ms]
+A6   KILLED   (a) no backoff scheduled after a failure (immediate hot retry) — 5 of 13 selected test(s) failed [283 ms]
+A7   KILLED   (a) a paused entry is treated as due — 2 of 13 selected test(s) failed [261 ms]

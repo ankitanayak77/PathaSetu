@@ -1,0 +1,14 @@
+Pathasetu Iteration 13 environment and provenance
+Date: 14 October 2026 (IST)
+Base archive: Pathasetu_MVP_iteration12_2026-10-14.zip
+Base SHA-256: 33a668e4511f0b0825d0fcfe51b416d572e93447a54bef893c49702c5a0c77df (matches SHA256SUMS_Iteration12.txt)
+Base ZIP integrity: PASS
+Base archive includes no .git; no HEAD, clean-tree state, or commit is claimed.
+Runtime: Linux container; Node v22.16.0; npm 10.9.2; Chromium executable /usr/bin/chromium.
+Node 23+ binary: not available in this environment; TAP reporter behavior on Node 23+ remains unverified.
+Provider: mock; no live Groq/Gemini/Claude request; no API key read; no .env, tunnel, deployment, paid service or analytics used.
+Browser policy: local Chromium navigation returned ERR_BLOCKED_BY_ADMINISTRATOR. Capture, E2E and accessibility are BLOCKED for this run and do not inherit Iteration 12 browser passes.
+Physical devices: none tested.
+Content: 8 items; all 8 remain UNREVIEWED_DRAFT, including Odia text.
+Human gates: Rule 4.1 UNCONFIRMED; organiser clarification UNSENT; no new dated human artefacts supplied.
+No commit created.

@@ -8,6 +8,7 @@ import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { assessAccessCode, describeAccessCodeProblems, parseAllowedOrigins, parsePublicDemoFlag, MIN_ACCESS_CODE_LENGTH, GENERATE_CODE_HINT } from '../../src/server/access.js';
 import { loadPack } from '../../src/core/content.js';
+import { parseModelEnv } from '../../src/server/modelEnv.js';
 
 export const MIN_NODE_MAJOR = 20;
 export const REQUIRED_FILES = [
@@ -53,7 +54,7 @@ const SYNTHETIC_ANSWER = { itemId: 'EL01', optionId: 'A', explanation: 'A synthe
 export async function runPreflight({ env = process.env, root, expectOrigin = null, nodeVersion = process.versions.node } = {}) {
   const checks = [];
   const add = (status, id, message) => checks.push({ status, id, message });
-  const secrets = [env.PATHASETU_DEMO_ACCESS_CODE, env.GROQ_API_KEY].filter((value) => typeof value === 'string' && value.length >= 4);
+  const secrets = [env.PATHASETU_DEMO_ACCESS_CODE, env.GROQ_API_KEY, env.GEMINI_API_KEY].filter((value) => typeof value === 'string' && value.length >= 4);
   const redact = (text) => secrets.reduce((acc, secret) => acc.split(secret).join('[redacted]'), String(text));
 
   // P01 Node
@@ -88,10 +89,28 @@ export async function runPreflight({ env = process.env, root, expectOrigin = nul
   const provider = env.PATHASETU_MODEL_PROVIDER || 'mock';
   const providerOk = ['mock', 'groq'].includes(provider);
   let codeRequired = false;
-  if (!providerOk) add('FAIL', 'P05', 'PATHASETU_MODEL_PROVIDER must be mock or groq');
+  // Iteration 15: an ordered chain (PATHASETU_MODEL_PROVIDERS) and the retry/time settings use the same pure parser as the server.
+  const chainRequested = Boolean(env.PATHASETU_MODEL_PROVIDERS);
+  let modelEnv = null;
+  try { modelEnv = parseModelEnv(env); }
+  catch (error) { if (chainRequested || /^PATHASETU_(RETRY|MODEL_(TIMEOUT|DEADLINE|PLANNING))/.test(error.message)) add('FAIL', 'P05', redact(error.message)); }
+  if (modelEnv) {
+    const { retryPolicy: r, retryPolicySource: src } = modelEnv;
+    add('INFO', 'P05r', `retry policy (${src}): ${r.maxAutomaticAttempts} attempts, base ${r.baseDelayMs} ms, factor ${r.factor}, cap ${r.maxDelayMs} ms`);
+  }
+  if (chainRequested && modelEnv?.mode === 'chain') {
+    add('PASS', 'P05', `model chain: ${modelEnv.providers.map((p) => `${p.name} (${p.model})`).join(' → ')}; planning ${modelEnv.planning ? 'on' : 'off'}; per-provider ${modelEnv.timings.perProviderTimeoutMs} ms, whole chain ${modelEnv.timings.deadlineMs} ms (live model calls happen only through the access-protected /api/recheck)`);
+    if (modelEnv.hosted) {
+      codeRequired = true;
+      add(env.PATHASETU_PROVIDER_DATA_CONTROLS_ACK === 'true' ? 'PASS' : 'FAIL', 'P05e', env.PATHASETU_PROVIDER_DATA_CONTROLS_ACK === 'true'
+        ? 'PATHASETU_PROVIDER_DATA_CONTROLS_ACK=true: you have recorded that you reviewed the hosted providers\' data controls and will send synthetic data only'
+        : 'A hosted provider is in the chain but PATHASETU_PROVIDER_DATA_CONTROLS_ACK is not "true". Review that provider\'s data controls, then set it to true to confirm you will send synthetic data only (never real children\'s responses).');
+    }
+  } else if (chainRequested) { /* the parse error was reported above */ }
+  else if (!providerOk) add('FAIL', 'P05', 'PATHASETU_MODEL_PROVIDER must be mock or groq');
   else add('PASS', 'P05', `provider: ${provider}${provider === 'mock' ? ' (no live provider request is possible)' : ' (live model calls happen only through the access-protected /api/recheck)'}`);
-  if (provider === 'mock' && env.GROQ_API_KEY) add('WARN', 'P05b', 'GROQ_API_KEY is set but the provider is mock, so it is unused. Unset it unless you intend a Groq run.');
-  if (provider === 'groq') {
+  if (!chainRequested && provider === 'mock' && env.GROQ_API_KEY) add('WARN', 'P05b', 'GROQ_API_KEY is set but the provider is mock, so it is unused. Unset it unless you intend a Groq run.');
+  if (!chainRequested && provider === 'groq') {
     codeRequired = true;
     add(env.GROQ_API_KEY ? 'PASS' : 'FAIL', 'P05c', `GROQ_API_KEY: ${env.GROQ_API_KEY ? 'set (value not shown)' : 'MISSING; set it in your local environment, never in chat or in a file in the repository'}`);
     add('INFO', 'P05d', `GROQ_MODEL: ${env.GROQ_MODEL || 'openai/gpt-oss-20b (default)'}`);
@@ -165,7 +184,7 @@ async function routeChecks({ env, root, add, redact, publicDemo, code, origins, 
   const port = await freePort();
   const childEnv = {
     ...env, HOST: '127.0.0.1', PORT: String(port),
-    PATHASETU_MODEL_PROVIDER: 'mock', GROQ_API_KEY: '', GROQ_MODEL: '', // the harness can never reach a provider
+    PATHASETU_MODEL_PROVIDER: 'mock', PATHASETU_MODEL_PROVIDERS: '', OLLAMA_URL: '', OLLAMA_MODEL: '', GEMINI_API_KEY: '', GEMINI_MODEL: '', GROQ_API_KEY: '', GROQ_MODEL: '', // the harness can never reach a provider
     PATHASETU_FAILED_ATTEMPT_LIMIT: '1000', PATHASETU_SESSION_RATE_LIMIT: '1000', PATHASETU_RECHECK_RATE_LIMIT: '1000'
   };
   const child = spawn(process.execPath, ['src/server/server.js'], { cwd: root, env: childEnv, stdio: ['ignore', 'pipe', 'pipe'] });

@@ -1,0 +1,11 @@
+npm-ci: exit=0 started=2026-10-13T16:44:21+00:00 duration_ms=357 cmd="npm ci"
+npm-test: exit=0 started=2026-10-13T16:44:21+00:00 duration_ms=35410 cmd="npm test"
+npm-check: exit=0 started=2026-10-13T16:44:57+00:00 duration_ms=875 cmd="npm run check"
+npm-check-content: exit=0 started=2026-10-13T16:44:58+00:00 duration_ms=184 cmd="npm run check:content"
+npm-preflight: exit=0 started=2026-10-13T16:44:58+00:00 duration_ms=715 cmd="npm run preflight"
+npm-e2e-invalid-chrome-path: exit=2 started=2026-10-13T16:44:59+00:00 duration_ms=195 cmd="env CHROME_PATH=/nonexistent/pathasetu-browser npm run e2e"
+npm-capture: exit=0 started=2026-10-13T16:44:59+00:00 duration_ms=3564 cmd="npm run capture"
+npm-e2e: exit=0 started=2026-10-13T16:45:03+00:00 duration_ms=104220 cmd="npm run e2e"
+npm-a11y: exit=0 started=2026-10-13T16:46:47+00:00 duration_ms=54592 cmd="env A11Y_OUT=/home/claude/pw/it4/Pathasetu_MVP/evidence/iteration8/final/accessibility npm run a11y"
+npm-evaluate: exit=0 started=2026-10-13T16:47:41+00:00 duration_ms=212 cmd="npm run evaluate"
+DONE

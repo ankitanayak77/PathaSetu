@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: an unknown mutant id is an error, not an empty successful run
+ok 1 - an unknown mutant id is an error, not an empty successful run
+  ---
+  duration_ms: 74.147704
+  type: 'test'
+  ...
+# Subtest: --dry-run prints the plan without running anything, and the default output folder is the current iteration, never an earlier one
+ok 2 - --dry-run prints the plan without running anything, and the default output folder is the current iteration, never an earlier one
+  ---
+  duration_ms: 125.556268
+  type: 'test'
+  ...
+# Subtest: --list shows the test groups chosen for each mutant
+ok 3 - --list shows the test groups chosen for each mutant
+  ---
+  duration_ms: 64.210208
+  type: 'test'
+  ...
+# Subtest: a partial run records, for every mutant, its plan, the tests executed before and after, the outcome and the time, and says it is partial
+ok 4 - a partial run records, for every mutant, its plan, the tests executed before and after, the outcome and the time, and says it is partial
+  ---
+  duration_ms: 1096.432552
+  type: 'test'
+  ...
+# Subtest: a run that exhausts its time budget is INCOMPLETE: unrun mutants are NOT_RUN, no score is claimed and the exit code is 3
+ok 5 - a run that exhausts its time budget is INCOMPLETE: unrun mutants are NOT_RUN, no score is claimed and the exit code is 3
+  ---
+  duration_ms: 338.608444
+  type: 'test'
+  ...
+# Subtest: full-suite mode runs every mutant against all invariant tests and records that mode
+ok 6 - full-suite mode runs every mutant against all invariant tests and records that mode
+  ---
+  duration_ms: 1945.650685
+  type: 'test'
+  ...
+# Subtest: the script does not use the default (spec/TAP-dependent) reporter and states the reporter it forces
+ok 7 - the script does not use the default (spec/TAP-dependent) reporter and states the reporter it forces
+  ---
+  duration_ms: 0.379518
+  type: 'test'
+  ...
+# Subtest: an existing results file is never replaced silently: a second run into the same folder is refused unless --overwrite is given
+ok 8 - an existing results file is never replaced silently: a second run into the same folder is refused unless --overwrite is given
+  ---
+  duration_ms: 793.464226
+  type: 'test'
+  ...
+# Subtest: parseTap reads the TAP summary and counts only tests that actually ran
+ok 9 - parseTap reads the TAP summary and counts only tests that actually ran
+  ---
+  duration_ms: 2.64357
+  type: 'test'
+  ...
+# Subtest: a plan list with a missing selector, an unknown mutant, an empty plan, an unknown group or a bad pattern is rejected
+ok 10 - a plan list with a missing selector, an unknown mutant, an empty plan, an unknown group or a bad pattern is rejected
+  ---
+  duration_ms: 1.035338
+  type: 'test'
+  ...
+# Subtest: groups on the same file merge into one selection, and a group without a pattern selects the whole file
+ok 11 - groups on the same file merge into one selection, and a group without a pattern selects the whole file
+  ---
+  duration_ms: 0.322511
+  type: 'test'
+  ...
+# Subtest: a selector that matches zero tests, and a file whose tests all skip, both execute nothing
+ok 12 - a selector that matches zero tests, and a file whose tests all skip, both execute nothing
+  ---
+  duration_ms: 313.351
+  type: 'test'
+  ...
+# Subtest: judge: KILLED only if the unmutated run passes, tests executed, and the mutated run fails the same number of tests it ran
+ok 13 - judge: KILLED only if the unmutated run passes, tests executed, and the mutated run fails the same number of tests it ran
+  ---
+  duration_ms: 734.390747
+  type: 'test'
+  ...
+# Subtest: the catalogue keeps all 46 mutants and every one has a test plan made of known groups
+ok 14 - the catalogue keeps all 46 mutants and every one has a test plan made of known groups
+  ---
+  duration_ms: 1.809019
+  type: 'test'
+  ...
+# Subtest: every test group matches real tests in the shipped files and passes on the unmutated source
+ok 15 - every test group matches real tests in the shipped files and passes on the unmutated source
+  ---
+  duration_ms: 1903.647513
+  type: 'test'
+  ...
+# Subtest: the harness helpers use no timers, network or unseeded randomness
+ok 16 - the harness helpers use no timers, network or unseeded randomness
+  ---
+  duration_ms: 0.866015
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7601.227143

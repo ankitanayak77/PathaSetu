@@ -1,0 +1,7 @@
+# Iteration 8 declared runtime changes (browser portability only). kind<TAB>file<TAB>reason
+ADDED	scripts/lib/browser-path.mjs	Shared, offline browser finder: explicit CHROME_PATH first, then standard macOS/Linux/Windows locations; BLOCKED instead of ENOENT
+MODIFIED	scripts/lib/devtools.mjs	launchChrome uses the shared finder; invalid explicit path throws BROWSER_BLOCKED, never falls back
+MODIFIED	scripts/capture.mjs	Uses the shared finder; missing browser is reported BLOCKED, not a failed check; evidence records executable and version
+MODIFIED	scripts/browser-regression.mjs	Uses the shared finder for its pre-check; evidence records executable and version
+MODIFIED	scripts/accessibility-audit.mjs	Evidence records executable and version instead of a generic label
+MODIFIED	package.json	check script now covers scripts/lib/browser-path.mjs and scripts/capture.mjs

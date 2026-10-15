@@ -3,10 +3,13 @@
 //   CHROME_PATH=... node scripts/browser-regression.mjs --only D,G
 // Exit codes: 0 all passed, 1 at least one failed, 2 blocked (no browser) and nothing failed.
 import fs from 'node:fs/promises';
+import http from 'node:http';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { HOST, sleep, freePort, startServer, launchChrome } from './lib/devtools.mjs';
+import { resolveBrowser, browserRecord } from './lib/browser-path.mjs';
+import { classifyBrowserFailure, summarizeBrowserRun } from './lib/browser-run-status.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'evidence', 'browser-regression-latest.json');
@@ -14,6 +17,7 @@ const onlyArg = process.argv.indexOf('--only');
 const only = onlyArg > -1 ? new Set(process.argv[onlyArg + 1].split(',')) : null;
 const results = { startedAt: new Date().toISOString(), checks: [], scenarios: [], limitation: 'Headless Chromium on one machine. Not a physical-phone test, not Samsung Internet, not iPhone Safari, not educational validation.' };
 const allErrors = [];
+let policyBlocked = null;
 
 function check(id, title, passed, detail = '') {
   results.checks.push({ id, title, passed, detail: String(detail).slice(0, 400) });
@@ -49,7 +53,7 @@ async function withEnv(fn, { serverEnv = {}, root = ROOT, port } = {}) {
   const p = port ?? await freePort();
   const server = await startServer({ root, port: p, env: serverEnv });
   const chrome = await launchChrome();
-  results.browser ??= await chrome.version();
+  results.browser ??= browserRecord(chrome.selection, await chrome.version());
   const env = { server, chrome, port: p, base: `http://localhost:${p}`, root };
   try { return await fn(env); } finally { await chrome.kill(); await server.stop(); }
 }
@@ -60,15 +64,28 @@ async function controlled(page) {
   await page.waitFor(`(async () => { const keys = await caches.keys(); let n = 0; for (const k of keys) n += (await (await caches.open(k)).keys()).length; return { controller: Boolean(navigator.serviceWorker.controller), cached: n }; })()`, (v) => v.controller && v.cached >= 8, 12000, 'service worker controlling and shell cached');
 }
 async function scenario(id, title, fn) {
-  if (only && !only.has(id)) return;
+  if (policyBlocked || (only && !only.has(id))) return;
   console.log(`\n== ${id}: ${title}`);
   const t0 = Date.now();
   try { await fn(); results.scenarios.push({ id, title, ms: Date.now() - t0, completed: true }); }
-  catch (error) { check(`${id}.run`, `${title}: scenario ran to completion`, false, error.message); results.scenarios.push({ id, title, ms: Date.now() - t0, completed: false, error: error.message }); }
+  catch (error) {
+    const classification = classifyBrowserFailure(error);
+    if (classification.status === 'BLOCKED') {
+      policyBlocked = classification;
+      results.blocked = true;
+      results.blockReason = classification.reason;
+      results.blockSummary = classification.summary;
+      results.scenarios.push({ id, title, ms: Date.now() - t0, completed: false, blocked: true, reason: classification.reason, error: classification.summary });
+      console.log(`BLOCKED ${id} ${title} — ${classification.summary}`);
+      return;
+    }
+    check(`${id}.run`, `${title}: scenario ran to completion`, false, error.message);
+    results.scenarios.push({ id, title, ms: Date.now() - t0, completed: false, error: error.message });
+  }
 }
 
-try { await fs.access(process.env.CHROME_PATH || '/usr/bin/chromium'); }
-catch { console.log('BLOCKED: no Chrome/Chromium binary. Set CHROME_PATH.'); results.blocked = true; await fs.mkdir(path.dirname(OUT), { recursive: true }); await fs.writeFile(OUT, JSON.stringify(results, null, 2)); process.exit(2); }
+const browserSelection = resolveBrowser();
+if (browserSelection.status !== 'FOUND') { console.log(`BLOCKED: ${browserSelection.detail}`); results.blocked = true; results.browser = browserRecord(browserSelection, null); results.browser.tried = browserSelection.tried; await fs.mkdir(path.dirname(OUT), { recursive: true }); await fs.writeFile(OUT, JSON.stringify(results, null, 2)); process.exit(2); }
 
 // ---------------------------------------------------------------------------------------------------------------
 await scenario('A', 'initial load, labels, first visit', async () => withEnv(async ({ chrome, base }) => {
@@ -567,7 +584,7 @@ await scenario('Q', 'provider labels follow what the server reports (stubbed Gro
   await page.evaluate(submitExpr('A', 'Synthetic explanation for the label test.'));
   await page.waitFor(UI, (v) => v.answers === '1' && v.queue === '0', 12000, 'stubbed groq re-check');
   const card = await page.evaluate("(() => ({ kicker: document.querySelector('.result-kicker')?.textContent || '', text: document.querySelector('.result-text')?.textContent || '' }))()");
-  check('Q3', 'the latest-attempt card says the re-check came from GROQ and that the hosted-model proposal is provisional, not a demo rule', /RECHECKED GROQ/.test(card.kicker) && /hosted-model proposal remains provisional/.test(card.text) && !/deterministic demo rule/.test(card.text), `${card.kicker} | ${card.text.slice(0, 120)}`);
+  check('Q3', 'the latest-attempt card says the re-check came from GROQ and that the hosted-model proposal is provisional, not a demo rule', /RECHECKED GROQ/.test(card.kicker) && /model proposal remains provisional/.test(card.text) && !/deterministic demo rule/.test(card.text), `${card.kicker} | ${card.text.slice(0, 120)}`);
   const ui = await page.evaluate(UI);
   check('Q4', 'the notice names the provider that processed the re-check', /Re-check processed · GROQ/.test(ui.notice), ui.notice.slice(0, 100));
   await page.evaluate("document.querySelector('#download-trace').click()");
@@ -673,11 +690,68 @@ await scenario('J', 'provider failures leave state consistent and entries retrya
   allErrors.push(...page.errors);
 }));
 
-check('Z1', 'no uncaught exceptions or console errors across the verified journeys', allErrors.length === 0, allErrors.slice(0, 3).join(' | ') || '0 errors');
+await scenario('X', 'model chain (fake Ollama): labelled models, model-suggested next question with its reason, server-configured retry policy', async () => {
+  // A fake Ollama proves the browser wiring only. It is not a language model and says nothing about real model quality.
+  const PLAN_ID = 'EL04';
+  const calls = [];
+  const fake = http.createServer(async (req, res) => {
+    const chunks = []; for await (const c of req) chunks.push(c);
+    const body = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+    const diagnosing = Boolean(body.format?.properties?.misconceptionId);
+    calls.push(diagnosing ? 'diagnosis' : 'plan');
+    const content = diagnosing
+      ? { questionId: 'EL01', type: 'MISCONCEPTION', misconceptionId: 'CURRENT_ACCUMULATES', confidence: 0.9, rationale: 'Fake model: selected option A.' }
+      : { nextItemId: PLAN_ID, rationale: 'Fake model: practise the next idea.' };
+    res.writeHead(200, { 'content-type': 'application/json' });
+    res.end(JSON.stringify({ message: { role: 'assistant', content: JSON.stringify(content) }, done: true, done_reason: 'stop' }));
+  });
+  await new Promise((resolve) => fake.listen(0, HOST, resolve));
+  try {
+    await withEnv(async ({ chrome, base }) => {
+      const page = await chrome.newPage(`${base}/`);
+      const first = await page.waitFor(UI, (v) => /ollama/.test(v.provider), 12000, 'provider label from /api/health');
+      check('X1', 'the header names the configured chain and model, not the mock', /ollama · fake-model/.test(first.provider) && !/MOCK/.test(first.provider), first.provider);
+      await page.evaluate(submitExpr('A', 'The current keeps building up in the wire.'));
+      await page.waitFor(UI, (v) => v.answers === '1' && v.queue === '0', 15000, 'model re-check');
+      const rec = (await page.evaluate(READ_DB))?.state;
+      check('X2', 'the answer was re-checked by the model chain and recorded under its provider', rec.answers[0].mode === 'RECHECKED_OLLAMA' && rec.answers[0].diagnosis.provisional === true, `${rec.answers[0].mode}; provisional=${rec.answers[0].diagnosis.provisional}`);
+      check('X3', 'the model chose the next question and the record labels it as model-chosen with provider, model and reason', rec.learner.nextRecommendedItemId === PLAN_ID && rec.learner.nextPlan?.source === 'model' && rec.learner.nextPlan.model === 'fake-model' && /practise the next idea/.test(rec.learner.nextPlan.rationale), JSON.stringify(rec.learner.nextPlan));
+      const reason = await page.evaluate("document.querySelector('#plan-reason')?.innerText || ''");
+      check('X4', 'the screen shows the model reason and says it is a suggestion, not a validated assessment', /suggested by ollama · fake-model/.test(reason) && /practise the next idea/.test(reason) && /not a validated assessment/.test(reason), reason.slice(0, 200));
+      check('X5', 'one diagnosis call and one planning call were made for the single re-check', calls.join(',') === 'diagnosis,plan', calls.join(','));
+      const policy = await page.evaluate("fetch('/api/health').then((r) => r.json()).then((h) => h.retryPolicy)");
+      check('X6', 'the retry policy in force comes from the server configuration', policy.baseDelayMs === 1500 && policy.maxAutomaticAttempts === 3, JSON.stringify(policy));
+      allErrors.push(...page.errors);
+    }, { serverEnv: { PATHASETU_MODEL_PROVIDER: '', PATHASETU_MODEL_PROVIDERS: 'ollama', OLLAMA_URL: `http://${HOST}:${fake.address().port}`, OLLAMA_MODEL: 'fake-model', PATHASETU_RETRY_BASE_DELAY_MS: '1500', PATHASETU_RETRY_MAX_ATTEMPTS: '3' } });
+  } finally { await new Promise((resolve) => fake.close(resolve)); }
+});
+
+await scenario('U', 'Iteration 16: the result shows the answer key and why, and a fixed Continue bar is the way forward', async () => withEnv(async ({ chrome, base }) => {
+  const page = await chrome.newPage(`${base}/`);
+  await ready(page);
+  const RC = `(() => ({ title: document.querySelector('.result-title')?.innerText || '', key: document.querySelector('.result-key')?.innerText || '', why: document.querySelector('.result-why')?.innerText || '', cardButton: Boolean(document.querySelector('[data-action="continue"]')), bar: !document.querySelector('#continue-bar')?.classList.contains('hidden'), barText: document.querySelector('#continue-bar-button')?.innerText || '', barBottom: (() => { const r = document.querySelector('#continue-bar')?.getBoundingClientRect(); return r ? Math.round(innerHeight - r.bottom) : null; })(), question: document.querySelector('.question-id')?.textContent || '' }))()`;
+  const before = await page.evaluate(RC);
+  check('U1', 'before any answer there is no Continue bar', before.bar === false, JSON.stringify(before).slice(0, 120));
+  await page.evaluate(submitExpr('A', 'The current keeps building up in the wire.'));
+  await page.waitFor(UI, (v) => v.answers === '1' && v.queue === '0' && v.applyVisible, 10000, 'answer processed');
+  const r = await page.evaluate(RC);
+  check('U2', 'a wrong choice says it is not the answer-key choice and shows the key B with its text', /Not the answer-key choice/.test(r.title) && /Answer key: B/.test(r.key) && /circuit is open/.test(r.key), `${r.title} | ${r.key.slice(0, 80)}`);
+  check('U3', 'the explanation appears in Odia (draft) and English', /[\u0B00-\u0B7F]/.test(r.why) && /closed conducting path/.test(r.why), r.why.slice(0, 120));
+  check('U4', 'the Continue bar is visible at the bottom of the viewport and names the next question, and the card has its own Continue button', r.bar === true && r.barBottom === 0 && /Continue to EL02/.test(r.barText) && r.cardButton === true, JSON.stringify({ bar: r.bar, barBottom: r.barBottom, barText: r.barText }));
+  await page.evaluate("document.querySelector('#continue-bar-button').click()");
+  const after = await page.waitFor(RC, (x) => /EL02/.test(x.question), 5000, 'continue from the bar');
+  check('U5', 'the bar moves to the next question and then hides', /EL02/.test(after.question) && after.bar === false, JSON.stringify(after).slice(0, 120));
+  await page.evaluate(submitExpr('A', ''));
+  await page.waitFor(UI, (v) => v.answers === '2' && v.queue === '0', 10000, 'second answer processed');
+  const ok = await page.evaluate(RC);
+  check('U6', 'the answer-key choice with no explanation says it matches the key and never asks for more reasoning in a locked form', /Matches the answer key/.test(ok.title) && !/Please add/.test(await page.evaluate("document.querySelector('.result-card')?.innerText || ''")), ok.title);
+  allErrors.push(...page.errors);
+}));
+
+if (!policyBlocked) check('Z1', 'no uncaught exceptions or console errors across the verified journeys', allErrors.length === 0, allErrors.slice(0, 3).join(' | ') || '0 errors');
 results.completedAt = new Date().toISOString();
-results.passCount = results.checks.filter((c) => c.passed).length;
-results.failCount = results.checks.filter((c) => !c.passed).length;
+Object.assign(results, summarizeBrowserRun({ checks: results.checks, blocked: policyBlocked }));
 await fs.mkdir(path.dirname(OUT), { recursive: true });
 await fs.writeFile(OUT, JSON.stringify(results, null, 2));
-console.log(`\nBrowser regression: ${results.passCount} passed, ${results.failCount} failed; ${OUT}`);
-process.exit(results.failCount ? 1 : 0);
+console.log(`\nBrowser regression: ${results.status}; ${results.passCount} passed, ${results.failCount} failed, ${results.blockedCount} blocked; ${OUT}`);
+process.exit(results.status === 'FAIL' ? 1 : results.status === 'BLOCKED' ? 2 : 0);

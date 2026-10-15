@@ -11,6 +11,7 @@ import { proposeDiagnosis } from '../src/core/mockModel.js';
 import { validateDiagnosis } from '../src/core/validator.js';
 import { wilson, percentile, expectedType, scoreRun } from '../scripts/lib/eval-metrics.mjs';
 import { renderReport } from '../scripts/lib/eval-report.mjs';
+import { cleanEnv } from './helpers/cleanEnv.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dataset = JSON.parse(fs.readFileSync(path.join(ROOT, 'evaluation/cases.json'), 'utf8'));
@@ -164,7 +165,7 @@ test('the report states what the numbers are not, separates compatibility from a
 test('the runner reports BLOCKED (exit 2) and writes no live results when credentials are absent', () => {
   const out = fs.mkdtempSync(path.join(ROOT, 'evidence', 'tmp-eval-'));
   try {
-    const env = { ...process.env }; for (const key of ['GROQ_API_KEY', 'PATHASETU_MODEL_PROVIDER', 'GROQ_MODEL', 'PATHASETU_DEMO_ACCESS_CODE']) delete env[key];
+    const env = cleanEnv();
     const run = spawnSync(process.execPath, ['scripts/evaluate-diagnosis.mjs', '--provider', 'groq', '--out', out], { cwd: ROOT, env, encoding: 'utf8' });
     assert.equal(run.status, 2);
     assert.match(run.stderr, /BLOCKED/);

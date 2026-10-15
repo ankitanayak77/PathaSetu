@@ -1,0 +1,15 @@
+Pathasetu Iteration 13 — human-gate status
+Date: 14 October 2026 (IST)
+
+No new dated human artefacts were supplied in this run. Therefore no human gate changes state.
+- Rule 4.1: UNCONFIRMED.
+- Organiser clarification: UNSENT.
+- Official GitHub-submission instructions received: NOT REPORTED / UNVERIFIED.
+- Physical phone or team Mac completed docs/PHONE_TEST_RESULTS_TEMPLATE.csv: NOT REPORTED; no physical-device result is claimed.
+- Qualified Odia-medium Science teacher review: NOT REPORTED; all 8 items and Odia strings remain UNREVIEWED_DRAFT.
+- Matrix: 95/196 (48.5%) overall; implementation 95/148; readiness gates 0/48. No criterion state changed.
+- D215(a): one-question double-submit remains an open human decision.
+- J09: NOT_STARTED; issue UNKNOWN.
+- Team estimate of about 50 teams remains team-reported and unverified.
+
+Action requested from the team: supply dated artefacts (organiser reply, actual submission instructions, completed phone/Mac test log, and/or reviewer worksheet) before any corresponding criterion changes. No status has been inferred from automated tests.

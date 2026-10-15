@@ -1,0 +1,17 @@
+# Iteration 15 declared runtime changes (append-only chain from Iteration 14). Model providers, model-suggested planning, configurable retry policy and a draft-question generator.
+# KIND	FILE	REASON
+ADDED	src/server/providers.js	Ollama, Gemini and Groq clients, the ordered provider chain (diagnosis, next-question suggestion, draft generation) and the validators that accept or reject what a model returns.
+ADDED	src/server/modelEnv.js	Pure parsing and validation of the model, time-budget and retry environment variables; shared by the server and by preflight.
+ADDED	src/server/modelConfig.js	Builds the provider chain from the validated environment; no model name or key is built in.
+ADDED	scripts/generate-draft-items.mjs	Asks the configured chain to draft new questions for a concept; output is AI-generated, UNREVIEWED_DRAFT and written outside the app folders.
+MODIFIED	src/core/agent.js	Re-check accepts a validated model plan (planOverride) and records which planner produced the recommendation (nextPlan, planSource); the deterministic planner remains as a labelled fallback.
+MODIFIED	src/core/recovery.js	A saved state with a missing answers, queue or trace array is now repaired and reported (found by the seeded fuzz); previously it passed through unrepaired.
+MODIFIED	src/server/server.js	Reads the model configuration from modelEnv/modelConfig; /api/health reports providers, planning, retry policy and re-check timeout; /api/recheck can return a model plan and an honest 502 when every provider fails.
+MODIFIED	public/app.js	Generic provider labels, sends an id-only history, passes the model plan to the re-check, shows the model reason, and takes the retry policy and re-check timeout from the server.
+MODIFIED	public/sw.js	Cache name pathasetu-shell-v8 to pathasetu-shell-v9 because app.js changed and the shell is cache-first.
+MODIFIED	scripts/browser-regression.mjs	New scenario X (model chain against a fake Ollama).
+MODIFIED	scripts/capture.mjs	The capture server explicitly blanks PATHASETU_MODEL_PROVIDERS so a shell variable cannot reach a model.
+MODIFIED	scripts/evaluate-diagnosis.mjs	The single-provider evaluation server explicitly blanks PATHASETU_MODEL_PROVIDERS.
+MODIFIED	scripts/lib/devtools.mjs	The browser-test server explicitly blanks PATHASETU_MODEL_PROVIDERS unless a scenario sets it.
+MODIFIED	scripts/lib/preflight.mjs	Preflight understands the model chain, hosted-provider data-controls acknowledgement, retry settings; its harness server is forced to the mock and can never reach a provider.
+MODIFIED	package.json	generate:drafts script and syntax checks for the new files.

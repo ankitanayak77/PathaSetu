@@ -201,7 +201,7 @@ Each has a plain version and a technical version, then the test marks. IDs like 
 
 ### J14. Service-worker update
 **Plain.** After a new version is deployed, the next visit shows "App update ready — Reload once to apply it". One reload loads the new code.
-**Technical.** `registration.update()`; `controllerchange` (ignored on first install); cache name `pathasetu-shell-v8` replaced on activate.
+**Technical.** `registration.update()`; `controllerchange` (ignored on first install); current cache is `pathasetu-shell-v12`, replacing the prior cache on activate. The UI no longer unregisters the service worker or deletes caches during every render.
 **Marks.** unit/static: `uiStatic.test.js`. headless: I1, I2, A4, H1. phone: NOT TESTED (phone step 16 also needs a second build).
 
 ### J15. IndexedDB write failure, persistence warning and trace export

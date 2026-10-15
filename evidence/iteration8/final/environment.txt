@@ -1,0 +1,48 @@
+date: 2026-10-13T16:44:21+00:00
+HEAD: 54f7c4c8068fcd70e1e775e5b6fe7f5ff19a1815
+tree-of-HEAD: d44684eef96b4f5255c40041e0024b167d669418
+commits: 26
+$ git status --short
+ M README.md
+ M docs/BOARD_CLASS_BOOK_COMPARISON.md
+ M docs/BUILD_STATUS.md
+ M docs/DECISION_LOG.csv
+ M docs/DECISION_REGISTER.md
+ M docs/DEMO_RUNBOOK.md
+ M docs/JURY_QA_BANK.md
+ M docs/PITCH_SCRIPTS.md
+ M docs/PROJECT_GUIDE_PLAIN_LANGUAGE.md
+ M evidence/browser-regression-latest.json
+ M evidence/capture-latest.json
+ M evidence/pathasetu-browser-latest.png
+ M package.json
+ M scripts/accessibility-audit.mjs
+ M scripts/browser-regression.mjs
+ M scripts/capture.mjs
+ M scripts/lib/devtools.mjs
+ M tests/iteration6-claims.test.js
+ M tests/iteration7-decisions.test.js
+?? docs/BOARD_COVERAGE_REGISTER.csv
+?? docs/COMPETITIVE_LANDSCAPE.md
+?? docs/FEATURE_OPPORTUNITY_BACKLOG.csv
+?? docs/FEATURE_OPPORTUNITY_BACKLOG.md
+?? docs/ORGANIZER_CLARIFICATION_UNSENT.md
+?? docs/PHASE_COMPLETION_MATRIX.md
+?? docs/PHASE_CRITERIA.csv
+?? docs/RULE_4_1_STATUS.md
+?? evidence/iteration8/
+?? scripts/lib/browser-path.mjs
+?? tests/browser-path.test.js
+?? tests/iteration8-docs.test.js
+(end status)
+node v22.22.0; npm 10.9.4; git 2.43.0; os: Linux 6.18.44-fc-v114
+CHROME_PATH=<unset>
+GROQ_API_KEY: NOT SET
+PATHASETU_MODEL_PROVIDER: set (value not recorded)
+GROQ_MODEL: NOT SET
+PATHASETU_DEMO_ACCESS_CODE: NOT SET
+PATHASETU_PUBLIC_DEMO: NOT SET
+PATHASETU_ALLOWED_ORIGINS: NOT SET
+PATHASETU_PROVIDER_DATA_CONTROLS_ACK: NOT SET
+finder result: {"status":"FOUND","path":"/opt/google/chrome/chrome","source":"standard location"}
+browser version: Chromium 141.0.7390.37 

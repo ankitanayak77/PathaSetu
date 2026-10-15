@@ -1,11 +1,11 @@
 {
-  "startedAt": "2026-10-13T09:08:10.068Z",
-  "baseUrl": "http://127.0.0.1:36791",
+  "startedAt": "2026-10-13T20:45:15.053Z",
+  "baseUrl": "http://127.0.0.1:43983",
   "checks": [
     {
       "name": "server starts",
       "passed": true,
-      "detail": "Pathasetu listening on http://127.0.0.1:36791 provider=mock publicDemo=false node=v22.22.0"
+      "detail": "Pathasetu listening on http://127.0.0.1:43983 provider=mock publicDemo=false node=v22.16.0"
     },
     {
       "name": "homepage returns HTML",
@@ -53,59 +53,16 @@
       "detail": "HTTP 200"
     },
     {
-      "name": "Chromium renders Pathasetu question and options",
-      "passed": true,
-      "detail": "question=QUESTION EL01 · CLOSED CIRCUIT; options=4"
-    },
-    {
-      "name": "UI visibly identifies draft content and mock provider",
-      "passed": true,
-      "detail": "provider=MOCK PROVIDER · DEMO RULES · NO LIVE AI"
-    },
-    {
-      "name": "online answer preserves the current question with remediation and an explicit next step",
-      "passed": true,
-      "detail": "current=QUESTION EL01 · CLOSED CIRCUIT; next=Updated recommendation · EL02\n"
-    },
-    {
-      "name": "learner explicitly continues to the recommended question",
-      "passed": true,
-      "detail": "current=QUESTION EL02 · CLOSED CIRCUIT"
-    },
-    {
-      "name": "offline answer is saved and queued while its feedback remains available",
-      "passed": true,
-      "detail": "queue=1; current=QUESTION EL02 · CLOSED CIRCUIT"
-    },
-    {
-      "name": "reconnect drains queue and keeps draft attached to original question",
-      "passed": true,
-      "detail": "current=QUESTION EL03 · ENERGY TRANSFER; queue=0; option=C"
-    },
-    {
-      "name": "reconnect exposes updated next-step plan without switching the active question",
-      "passed": true,
-      "detail": "recommendation=Updated recommendation · EL01 A complete circuit. Your current question and its draft remain unchang"
-    },
-    {
-      "name": "decision trace is visible and records reconnect behavior",
-      "passed": true,
-      "detail": "trace entries rendered=34"
-    },
-    {
-      "name": "no uncaught page exceptions or console errors",
-      "passed": true,
-      "detail": "0 browser page errors"
+      "name": "Chromium E2E journey",
+      "passed": null,
+      "status": "BLOCKED",
+      "detail": "The managed Chromium policy blocked localhost navigation (ERR_BLOCKED_BY_ADMINISTRATOR). Run npm run capture on a machine/browser that permits local development URLs."
     }
   ],
   "limitation": "Headless Chromium E2E is not a substitute for physical Samsung/iPhone testing or educational validation.",
-  "browser": {
-    "version": "Chrome/141.0.7390.37",
-    "errors": [],
-    "screenshot": "/home/claude/pw/it4/Pathasetu_MVP/evidence/pathasetu-browser-latest.png"
-  },
-  "completedAt": "2026-10-13T09:08:12.430Z",
-  "passCount": 19,
+  "browserE2E": "BLOCKED_BY_BROWSER_POLICY",
+  "completedAt": "2026-10-13T20:45:15.679Z",
+  "passCount": 10,
   "failCount": 0,
-  "blockedCount": 0
+  "blockedCount": 1
 }

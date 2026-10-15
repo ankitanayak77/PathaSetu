@@ -1,0 +1,9 @@
+Environment recorded: 2026-10-14T05:31:39Z
+Kernel: Linux 6.18.44 x86_64
+Node: v22.16.0
+npm: 10.9.2
+Git used only for synthetic patch generation later; archive contains no .git metadata.
+Browser candidate: /usr/bin/chromium
+Chromium 144.0.7559.96 built on Debian GNU/Linux 13 (trixie)
+Provider: mock (no live provider request)
+Managed browser policy: localhost navigation returned ERR_BLOCKED_BY_ADMINISTRATOR. No bypass attempted.

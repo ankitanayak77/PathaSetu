@@ -69,7 +69,7 @@ if (missing.length) {
 const HOST = '127.0.0.1';
 const port = await new Promise((resolve, reject) => { const s = net.createServer(); s.once('error', reject); s.listen(0, HOST, () => { const { port: p } = s.address(); s.close(() => resolve(p)); }); });
 const model = process.env.GROQ_MODEL || 'openai/gpt-oss-20b';
-const server = spawn(process.execPath, ['src/server/server.js'], { cwd: ROOT, env: { ...process.env, HOST, PORT: String(port), NODE_ENV: 'development', PATHASETU_MODEL_PROVIDER: 'groq', GROQ_MODEL: model }, stdio: ['ignore', 'ignore', 'ignore'] });
+const server = spawn(process.execPath, ['src/server/server.js'], { cwd: ROOT, env: { ...process.env, HOST, PORT: String(port), NODE_ENV: 'development', PATHASETU_MODEL_PROVIDER: 'groq', PATHASETU_MODEL_PROVIDERS: '', GROQ_MODEL: model }, stdio: ['ignore', 'ignore', 'ignore'] });
 const delay = Number(process.env.EVAL_DELAY_MS || 2300);
 const results = [];
 try {

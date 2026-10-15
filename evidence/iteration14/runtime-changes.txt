@@ -1,0 +1,4 @@
+# Iteration 14 declared runtime changes (append-only chain from Iteration 13). No public UI, service-worker, content-pack, board or answer-label changes.
+# KIND	FILE	REASON
+MODIFIED	src/core/agent.js	Planner scoring: the same-concept bonus applies only to questions not yet answered, so a re-check no longer pulls the plan back to a question just answered (EL01/EL02 bounce).
+MODIFIED	scripts/capture.mjs	The reconnect plan check no longer requires the plan to name EL01 (that expectation encoded the bounce fixed in agent.js); it now requires the active question and draft preserved, the preserved-draft notice, and a plan that is either hidden because it points at the question on screen or names a different one.

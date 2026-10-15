@@ -1,0 +1,26 @@
+
+> pathasetu-mvp@0.1.0 capture
+> node scripts/capture.mjs
+
+PASS server starts — Pathasetu listening on http://127.0.0.1:36261 provider=mock publicDemo=false node=v22.22.0
+PASS homepage returns HTML — HTTP 200
+PASS health endpoint reports mock provider — provider=mock
+PASS draft pack clearly identifies draft status — items=8; bilingual drafts present; all unreviewed
+PASS recheck returns a bounded mock proposal — HTTP 200
+PASS invalid option is rejected — HTTP 400
+PASS oversized API request is rejected — HTTP 413
+PASS cross-origin API request is rejected — HTTP 403
+PASS browser-safe core module is served — HTTP 200
+PASS service worker avoids caching API routes — HTTP 200
+PASS Chromium renders Pathasetu question and options — question=QUESTION EL01 · CLOSED CIRCUIT; options=4
+PASS UI visibly identifies draft content and mock provider — provider=MOCK PROVIDER · DEMO RULES · NO LIVE AI
+PASS online answer preserves the current question with remediation and an explicit next step — current=QUESTION EL01 · CLOSED CIRCUIT; next=Updated recommendation · EL02
+
+PASS learner explicitly continues to the recommended question — current=QUESTION EL02 · CLOSED CIRCUIT
+PASS offline answer is saved and queued while its feedback remains available — queue=1; current=QUESTION EL02 · CLOSED CIRCUIT
+PASS reconnect drains queue and keeps draft attached to original question — current=QUESTION EL03 · ENERGY TRANSFER; queue=0; option=C
+FAIL reconnect exposes updated next-step plan without switching the active question — recommendation=
+PASS decision trace is visible and records reconnect behavior — trace entries rendered=34
+PASS no uncaught page exceptions or console errors — 0 browser page errors
+
+Capture result: 18 passed, 1 failed, 0 blocked; /home/claude/pw/it14/work/evidence/capture-latest.json

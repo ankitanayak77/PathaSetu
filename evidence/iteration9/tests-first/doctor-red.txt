@@ -1,0 +1,5 @@
+Iteration 9 test-first evidence
+Date: 14 October 2026 (IST; current build session)
+Command before implementation: node --test tests/doctor.test.js
+Result: expected RED. The test file imported scripts/lib/doctor.mjs before that module existed; Node returned ERR_MODULE_NOT_FOUND and the test process exited 1.
+The implementation was added only after recording the failing test run.

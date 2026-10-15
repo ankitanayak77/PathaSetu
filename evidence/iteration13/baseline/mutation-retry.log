@@ -1,0 +1,56 @@
+
+> pathasetu-mvp@0.1.0 mutation
+> node scripts/mutation-check.mjs --out evidence/iteration13/mutation-baseline-retry
+
+unmutated selections: 17; executed 191 test(s); failing or empty: 0
+A1   KILLED   (a) backoff exponent off by one (waits 10 s, 20 s, ... instead of 5 s, 10 s, ...) — 4 of 13 selected test(s) failed [355 ms]
+A2   KILLED   (a) backoff is never capped at maxDelayMs — 1 of 13 selected test(s) failed [325 ms]
+A3   KILLED   (a) retry limit allows one extra automatic attempt (> instead of >=) — 4 of 13 selected test(s) failed [376 ms]
+A4   KILLED   (a) retry limit stops one attempt early — 3 of 13 selected test(s) failed [319 ms]
+A5   KILLED   (a) no retry limit at all (entries never pause) — 4 of 13 selected test(s) failed [328 ms]
+A6   KILLED   (a) no backoff scheduled after a failure (immediate hot retry) — 5 of 13 selected test(s) failed [297 ms]
+A7   KILLED   (a) a paused entry is treated as due — 2 of 13 selected test(s) failed [311 ms]
+A8   KILLED   (a) default base delay changed from 5 s to 4 s — 3 of 13 selected test(s) failed [320 ms]
+A9   KILLED   (a) entries saved before bounded retry lose their old attempts count — 1 of 5 selected test(s) failed [163 ms]
+B1   KILLED   (b) a provider exception removes the queue entry — 8 of 29 selected test(s) failed [225 ms]
+B2   KILLED   (b) a rejected diagnosis removes the queue entry — 19 of 29 selected test(s) failed [198 ms]
+B3   KILLED   (b) an entry is deleted at the moment it pauses — 6 of 30 selected test(s) failed [188 ms]
+B4   KILLED       the provider-supplied result is ignored when it is missing (Iteration 9 behaviour: silent local fallback) — 3 of 23 selected test(s) failed [172 ms]
+B5   KILLED       a rejected diagnosis overwrites the stored answer before it is validated — 18 of 23 selected test(s) failed [184 ms]
+C1   KILLED   (c) validator accepts a misconception id from a different question — 5 of 26 selected test(s) failed [198 ms]
+C2   KILLED   (c) validator lets an UNCERTAIN or NONE result carry a misconception id, and the planner then confirms it — 1 of 5 selected test(s) failed [158 ms]
+C3   KILLED   (c) validator accepts a low-confidence misconception (threshold check removed) — 3 of 26 selected test(s) failed [187 ms]
+C4   KILLED       validator confidence threshold lowered from 0.65 to 0.60 — 1 of 3 selected test(s) failed [173 ms]
+C5   KILLED       validator ignores a question-id mismatch — 3 of 26 selected test(s) failed [190 ms]
+C6   KILLED       validator accepts NaN confidence (finite check removed) — 2 of 26 selected test(s) failed [185 ms]
+C7   KILLED       validator accepts confidence outside 0..1 — 2 of 26 selected test(s) failed [209 ms]
+C8   KILLED       validator reports an array as a different kind of problem (reason code drifts) — 1 of 26 selected test(s) failed [190 ms]
+C9   KILLED       an accepted diagnosis is no longer immutable — 1 of 26 selected test(s) failed [188 ms]
+D1   KILLED       success does not remove the processed entry (it would be processed again) — 23 of 26 selected test(s) failed [196 ms]
+D2   KILLED       a background re-check switches the question on screen — 1 of 3 selected test(s) failed [168 ms]
+D3   KILLED       manual retry also erases the cumulative attempts history — 2 of 4 selected test(s) failed [171 ms]
+D4   KILLED       manual retry does not clear the paused flag — 3 of 4 selected test(s) failed [179 ms]
+D5   KILLED       a repeated manual retry counts again (not idempotent) — 2 of 4 selected test(s) failed [179 ms]
+D6   KILLED       manual retry of one entry resets every entry — 1 of 4 selected test(s) failed [170 ms]
+D7   KILLED       queue capacity allows one entry too many — 2 of 6 selected test(s) failed [178 ms]
+D8   KILLED       queue capacity is checked after the answer is stored (non-atomic refusal) — 2 of 6 selected test(s) failed [181 ms]
+D9   KILLED       the double-submit guard is removed — 2 of 6 selected test(s) failed [230 ms]
+D10  KILLED       ids are no longer checked for uniqueness (Iteration 9 behaviour) — 1 of 6 selected test(s) failed [165 ms]
+D11  KILLED       failure trace lines coalesce across different queue entries — 2 of 2 selected test(s) failed [176 ms]
+D12  KILLED       failure trace lines never coalesce — 1 of 2 selected test(s) failed [175 ms]
+D13  KILLED       the trace is no longer bounded — 1 of 2 selected test(s) failed [166 ms]
+E1   KILLED       repair keeps duplicate queue ids — 1 of 10 selected test(s) failed [282 ms]
+E2   KILLED       repair adds a trace line even when nothing needed repair (not idempotent) — 3 of 10 selected test(s) failed [177 ms]
+E3   KILLED       repair silently drops all but the first valid queue entry — 2 of 10 selected test(s) failed [312 ms]
+E4   KILLED       repair can throw on a hostile record (safety net removed) — 1 of 10 selected test(s) failed [297 ms]
+E5   KILLED       repair does not cap an oversized queue — 1 of 10 selected test(s) failed [366 ms]
+E6   KILLED       repair does not cap an oversized trace — 1 of 10 selected test(s) failed [291 ms]
+E7   KILLED       repair drops saved drafts — 3 of 10 selected test(s) failed [294 ms]
+F1   KILLED       memory storage hands out the stored object itself instead of a copy — 1 of 3 selected test(s) failed [174 ms]
+F2   KILLED       a rejected durable write overwrites the older durable record with an empty one — 1 of 3 selected test(s) failed [153 ms]
+G1   KILLED   (a) malformed clock is parsed without validation, allowing retry fields to mutate before timestamp failure — 4 of 9 selected test(s) failed [301 ms]
+
+mode plan; FINISHED (complete catalogue); elapsed 14.0 s
+mutants: 46 selected; run 46; killed 46; survived 0; errors 0; not run 0
+family a: 10/10 killed; family b: 3/3 killed; family c: 3/3 killed
+written: evidence/iteration13/mutation-baseline-retry/mutation-results.json and .md

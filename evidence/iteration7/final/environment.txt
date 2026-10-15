@@ -1,0 +1,30 @@
+date: 2026-10-13T10:23:31+00:00
+HEAD: 3c33b44dee94da1295a062fa96daa60685e40417
+tree: 4a98df69dd89dd7eae6de42fa0510589fb8eebfb
+commits: 25
+$ git log -8 --oneline
+3c33b44 Iteration 7: decision register, board/class/book comparison, trust levels, Q&A and integrity tests
+82cb99c Iteration 7 baseline: untouched Iteration 6 checkout re-run in sandbox; Mac log recorded separately
+beb9596 Iteration 6: final regression evidence (207 unit, 19 capture, 100 browser, 462 a11y), self-audit, live gate BLOCKED
+899357c Iteration 6: provider-label fix, claim corrections, guide additions, claim-integrity tests
+eb8a605 Iteration 6 baseline: untouched Iteration 5 checkout re-run, all nine commands exit 0
+aafa63f Iteration 5: final regression evidence, rehearsal mapping, guide self-audit, status and runbook updates
+9629263 Iteration 5: explanation set, claim matrix, documentation tests, gate records
+194d7ac Iteration 5 baseline: rerun of Iteration 4 package in sandbox, all gates exit 0
+$ git status --short
+?? evidence/iteration7/final/
+(entries above are evidence files being written, if any)
+Iteration 6 ZIP sha256: 1147807d06f546eb5e8d0bc60904101a0ae42f737c8abb28a40ade4b5ddeb735
+Iteration 6 patch sha256: 82a32c406183b81e3c4a270926ddee3a579f5853adb2cf0a54974250a099a847
+recorded in SHA256SUMS.txt:
+1147807d06f546eb5e8d0bc60904101a0ae42f737c8abb28a40ade4b5ddeb735  Pathasetu_MVP_iteration6_2026-10-13.zip
+82a32c406183b81e3c4a270926ddee3a579f5853adb2cf0a54974250a099a847  Iteration5_to_Iteration6.patch
+node v22.22.0; npm 10.9.4; os: Linux 6.18.44-fc-v114
+browser: Chromium 141.0.7390.37  (CHROME_PATH=/tmp/chromium)
+GROQ_API_KEY: NOT SET
+PATHASETU_MODEL_PROVIDER: NOT SET
+GROQ_MODEL: NOT SET
+PATHASETU_DEMO_ACCESS_CODE: NOT SET
+PATHASETU_PUBLIC_DEMO: NOT SET
+PATHASETU_ALLOWED_ORIGINS: NOT SET
+PATHASETU_PROVIDER_DATA_CONTROLS_ACK: NOT SET

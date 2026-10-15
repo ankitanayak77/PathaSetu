@@ -1,0 +1,47 @@
+{
+  "node": "v22.16.0",
+  "testFile": "tests/iteration11-retry-atomicity.test.js",
+  "note": "Mutants are applied to a temporary copy of src/core only. A killed mutant means the tests failed against the deliberate fault. This is evidence about test sensitivity, not about learning outcomes or model accuracy.",
+  "summary": {
+    "total": 1,
+    "killed": 1,
+    "survived": 0,
+    "errors": 0
+  },
+  "requiredFamilies": [
+    {
+      "family": "a",
+      "mutants": 1,
+      "killed": 1
+    },
+    {
+      "family": "b",
+      "mutants": 0,
+      "killed": 0
+    },
+    {
+      "family": "c",
+      "mutants": 0,
+      "killed": 0
+    }
+  ],
+  "results": [
+    {
+      "id": "G1",
+      "required": "a",
+      "description": "malformed clock is parsed without validation, allowing retry fields to mutate before timestamp failure",
+      "status": "KILLED",
+      "detail": "4 test(s) failed",
+      "exitCode": 1,
+      "tests": 6,
+      "failed": 4,
+      "failingTests": [
+        "scheduleAfterFailure rejects malformed timestamps before mutating any retry field",
+        "recordRecheckDeferred is atomic when the injected clock is invalid",
+        "invalid timestamps are rejected before pausing an entry at the automatic retry limit",
+        "a provider diagnosis rejected by the validator leaves the queue state unchanged when its clock is invalid"
+      ],
+      "durationMs": 358
+    }
+  ]
+}

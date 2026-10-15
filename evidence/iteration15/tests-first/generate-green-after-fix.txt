@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: writes accepted items as AI-generated unreviewed drafts and reports rejected ones with reasons; never touches content/
+ok 1 - writes accepted items as AI-generated unreviewed drafts and reports rejected ones with reasons; never touches content/
+  ---
+  duration_ms: 5.013567
+  type: 'test'
+  ...
+# Subtest: refuses to write inside the app, content, source or script folders so a draft can never be loaded by accident
+ok 2 - refuses to write inside the app, content, source or script folders so a draft can never be loaded by accident
+  ---
+  duration_ms: 2.070001
+  type: 'test'
+  ...
+# Subtest: an unknown concept, a missing provider setup, or zero valid items is a clear failure, not a silent empty file
+ok 3 - an unknown concept, a missing provider setup, or zero valid items is a clear failure, not a silent empty file
+  ---
+  duration_ms: 1.908215
+  type: 'test'
+  ...
+# Subtest: ids that collide with the pack or with each other in one batch are rejected
+ok 4 - ids that collide with the pack or with each other in one batch are rejected
+  ---
+  duration_ms: 1.612458
+  type: 'test'
+  ...
+# Subtest: --dry-run prints the request without contacting any model
+ok 5 - --dry-run prints the request without contacting any model
+  ---
+  duration_ms: 0.676453
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 97.959475

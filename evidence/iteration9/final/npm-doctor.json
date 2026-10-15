@@ -1,0 +1,46 @@
+
+> pathasetu-mvp@0.1.0 doctor
+> node scripts/doctor.mjs --json
+
+{
+  "status": "PASS",
+  "ok": true,
+  "checks": [
+    {
+      "id": "D01",
+      "label": "Node.js runtime",
+      "status": "PASS",
+      "summary": "Node 22.16.0; this project requires Node >= 20."
+    },
+    {
+      "id": "D02",
+      "label": "Required project files",
+      "status": "PASS",
+      "summary": "All 12 required project files are present."
+    },
+    {
+      "id": "D03",
+      "label": "JavaScript syntax checks",
+      "status": "PASS",
+      "summary": "The command exited successfully."
+    },
+    {
+      "id": "D04",
+      "label": "Curriculum pack consistency",
+      "status": "PASS",
+      "summary": "The pack, worksheet and evaluation files are consistent; this does not mean the content has been reviewed."
+    },
+    {
+      "id": "D05",
+      "label": "Local demo preflight",
+      "status": "PASS",
+      "summary": "The local mock-only preflight passed; it does not call a hosted model or validate a phone/tunnel."
+    },
+    {
+      "id": "D06",
+      "label": "Browser executable discovery",
+      "status": "PASS",
+      "summary": "Found an executable at /usr/bin/chromium (standard location). Discovery checks file availability only; it does not run capture, E2E or accessibility tests."
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+
+> pathasetu-mvp@0.1.0 a11y
+> node scripts/accessibility-audit.mjs
+
+BLOCKED: A managed browser policy blocked navigation. This run cannot establish whether the application journey passes or fails.

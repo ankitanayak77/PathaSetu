@@ -1,0 +1,24 @@
+{
+  "name": "pathasetu-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Pathasetu: offline-first bilingual science-learning agent MVP",
+  "scripts": {
+    "start": "node src/server/server.js",
+    "test": "node --test tests/*.test.js",
+    "check": "node --check src/server/server.js && node --check src/server/access.js && node --check public/app.js && node --check public/sw.js && node --check src/core/agent.js && node --check src/core/validator.js && node --check src/core/bridge.js && node --check src/core/retry.js && node --check src/core/recovery.js && node --check src/core/export.js && node --check src/core/persistence.js && node --check src/core/storage.js && node --check scripts/browser-regression.mjs && node --check scripts/lib/devtools.mjs && node --check scripts/lib/browser-path.mjs && node --check scripts/capture.mjs && node --check scripts/capture-screens.mjs && node --check scripts/evaluate-diagnosis.mjs && node --check scripts/lib/eval-metrics.mjs && node --check scripts/lib/eval-report.mjs && node --check scripts/lib/csv.mjs && node --check scripts/lib/content-consistency.mjs && node --check scripts/check-content-consistency.mjs && node --check scripts/generate-evaluation-template.mjs && node --check scripts/model-smoke.mjs && node --check scripts/accessibility-audit.mjs && node --check scripts/lib/a11y-audit.mjs && node --check scripts/generate-phone-test-matrix.mjs && node --check scripts/preflight.mjs && node --check scripts/lib/preflight.mjs",
+    "capture": "node scripts/capture.mjs",
+    "smoke": "node scripts/model-smoke.mjs",
+    "e2e": "node scripts/browser-regression.mjs",
+    "evaluate": "node scripts/evaluate-diagnosis.mjs",
+    "check:content": "node scripts/check-content-consistency.mjs",
+    "generate:eval-template": "node scripts/generate-evaluation-template.mjs",
+    "a11y": "node scripts/accessibility-audit.mjs",
+    "generate:phone-matrix": "node scripts/generate-phone-test-matrix.mjs",
+    "preflight": "node scripts/preflight.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

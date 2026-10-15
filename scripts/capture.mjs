@@ -5,6 +5,7 @@ import path from 'node:path';
 import net from 'node:net';
 import { fileURLToPath } from 'node:url';
 import { once } from 'node:events';
+import { requireBrowser, browserRecord, classifyNavigationError } from './lib/browser-path.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const HOST = '127.0.0.1';
@@ -93,7 +94,7 @@ try {
   BASE = `http://${HOST}:${PORT}`;
   result.baseUrl = BASE;
   BROWSER_BASE = `http://localhost:${PORT}`;
-  server = spawn(process.execPath, ['src/server/server.js'], { cwd: ROOT, env: { ...process.env, HOST, PORT: String(PORT), PATHASETU_MODEL_PROVIDER: 'mock', GROQ_API_KEY: '', PATHASETU_DEMO_ACCESS_CODE: '' }, stdio: ['ignore', 'pipe', 'pipe'] });
+  server = spawn(process.execPath, ['src/server/server.js'], { cwd: ROOT, env: { ...process.env, HOST, PORT: String(PORT), PATHASETU_MODEL_PROVIDER: 'mock', PATHASETU_MODEL_PROVIDERS: '', GROQ_API_KEY: '', PATHASETU_DEMO_ACCESS_CODE: '' }, stdio: ['ignore', 'pipe', 'pipe'] });
   let serverOutput = '';
   server.stdout.on('data', (chunk) => { serverOutput += chunk.toString(); });
   server.stderr.on('data', (chunk) => { serverOutput += chunk.toString(); });
@@ -122,8 +123,9 @@ try {
   const sw = await fetch(`${BASE}/sw.js`); const swText = await sw.text();
   add('service worker avoids caching API routes', sw.status === 200 && swText.includes("url.pathname.startsWith('/api/')"), `HTTP ${sw.status}`);
 
-  const chromePath = process.env.CHROME_PATH || '/usr/bin/chromium';
-  await fs.access(chromePath);
+  // Shared resolver: an invalid CHROME_PATH or a missing browser throws BrowserBlockedError, which is reported as BLOCKED below, never as a failed check.
+  const browserSelection = requireBrowser();
+  const chromePath = browserSelection.path;
   const remotePort = await freePort();
   const userData = `/tmp/pathasetu-chromium-${process.pid}`;
   chromium = spawn(chromePath, ['--headless=new', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage', '--disable-background-networking', '--no-first-run', '--disable-extensions', `--remote-debugging-port=${remotePort}`, `--user-data-dir=${userData}`, '--host-resolver-rules=MAP pathasetu.test 127.0.0.1', 'about:blank'], { stdio: ['ignore', 'ignore', 'pipe'] });
@@ -138,7 +140,7 @@ try {
   cdp.on('Runtime.consoleAPICalled', (params) => { if (params.type === 'error') pageErrors.push((params.args ?? []).map((arg) => arg.value ?? arg.description ?? '').join(' ')); });
   await cdp.call('Page.enable'); await cdp.call('Runtime.enable'); await cdp.call('Network.enable');
   const navResult = await cdp.call('Page.navigate', { url: `${BROWSER_BASE}/` });
-  if (navResult.errorText === 'net::ERR_BLOCKED_BY_ADMINISTRATOR') {
+  if (classifyNavigationError(navResult.errorText) === 'POLICY_BLOCKED') {
     const blockedError = new Error('The managed Chromium policy blocked localhost navigation (ERR_BLOCKED_BY_ADMINISTRATOR). Run npm run capture on a machine/browser that permits local development URLs.');
     blockedError.browserBlocked = true;
     throw blockedError;
@@ -170,7 +172,7 @@ try {
   await cdp.call('Network.emulateNetworkConditions', { offline: false, latency: 25, downloadThroughput: 5_000_000, uploadThroughput: 1_000_000, connectionType: 'wifi' });
   const afterReconnect = await waitFor(() => cdp.evaluate("({question:document.querySelector('.question-id')?.textContent||'', queue:document.querySelector('#queue-count')?.textContent, online:navigator.onLine, currentOption:document.querySelector('input[name=\\\"answer-option\\\"]:checked')?.value||'', draft:document.querySelector('#explanation-input')?.value||'', notice:document.querySelector('#notice-region')?.innerText||'', recommendation:document.querySelector('#recommendation')?.innerText||''})"), (value) => value.online && value.queue === '0' && value.notice.includes('Re-check processed'), 10000);
   add('reconnect drains queue and keeps draft attached to original question', afterReconnect.question.includes('EL03') && afterReconnect.currentOption === 'C' && afterReconnect.draft === draftValue, `current=${afterReconnect.question}; queue=${afterReconnect.queue}; option=${afterReconnect.currentOption}`);
-  add('reconnect exposes updated next-step plan without switching the active question', afterReconnect.recommendation.includes('EL01') && afterReconnect.question.includes('EL03'), `recommendation=${afterReconnect.recommendation.replace(/\s+/g, ' ').slice(0, 100)}`);
+  add('reconnect exposes updated next-step plan without switching the active question', afterReconnect.question.includes('EL03') && afterReconnect.notice.includes('your current question and its draft were preserved') && (afterReconnect.recommendation.trim() === '' || !afterReconnect.recommendation.includes('EL03')), `recommendation=${afterReconnect.recommendation.trim() === '' ? '(hidden: the updated plan points at the question already on screen) ' : ''}${afterReconnect.recommendation.replace(/\s+/g, ' ').slice(0, 100)}`);
 
   await cdp.evaluate("document.querySelector('#trace-toggle').click()");
   const trace = await cdp.evaluate("({visible:!document.querySelector('#trace-panel').classList.contains('hidden'), text:document.querySelector('#trace-list')?.innerText||''})");
@@ -181,11 +183,13 @@ try {
     await fs.writeFile(SCREENSHOT, Buffer.from(screenshot.data, 'base64'));
   } catch (error) { result.screenshotError = error.message; }
   add('no uncaught page exceptions or console errors', pageErrors.length === 0, pageErrors.slice(0, 3).join(' | ') || '0 browser page errors');
-  result.browser = { version: ((await fetch(`http://${HOST}:${remotePort}/json/version`).then((r) => r.json()).catch(() => ({}))).Browser) || 'unknown', errors: pageErrors, screenshot: SCREENSHOT };
+  const browserVersion = ((await fetch(`http://${HOST}:${remotePort}/json/version`).then((r) => r.json()).catch(() => ({}))).Browser) || 'unknown';
+  result.browser = { ...browserRecord(browserSelection, browserVersion), errors: pageErrors, screenshot: SCREENSHOT };
 } catch (error) {
   if (error.browserBlocked || String(error.message).includes('ERR_BLOCKED_BY_ADMINISTRATOR')) {
     addBlocked('Chromium E2E journey', error.message);
-    result.browserE2E = 'BLOCKED_BY_BROWSER_POLICY';
+    result.browserE2E = error.code === 'BROWSER_BLOCKED' ? 'BLOCKED_NO_USABLE_BROWSER' : 'BLOCKED_BY_BROWSER_POLICY';
+    if (error.code === 'BROWSER_BLOCKED') result.browser = { status: 'BLOCKED', executable: null, selectedBy: error.reason, version: null, tried: error.tried };
   } else {
     add('capture script completed', false, error.message);
     result.error = error.stack ?? error.message;

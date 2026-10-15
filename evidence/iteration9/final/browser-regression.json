@@ -1,0 +1,30 @@
+{
+  "startedAt": "2026-10-13T20:45:16.985Z",
+  "checks": [],
+  "scenarios": [
+    {
+      "id": "A",
+      "title": "initial load, labels, first visit",
+      "ms": 813,
+      "completed": false,
+      "blocked": true,
+      "reason": "browser_policy",
+      "error": "A managed browser policy blocked navigation. This run cannot establish whether the application journey passes or fails."
+    }
+  ],
+  "limitation": "Headless Chromium on one machine. Not a physical-phone test, not Samsung Internet, not iPhone Safari, not educational validation.",
+  "browser": {
+    "status": "FOUND",
+    "executable": "/usr/bin/chromium",
+    "selectedBy": "standard location",
+    "version": "Chrome/144.0.7559.96"
+  },
+  "blocked": true,
+  "blockReason": "browser_policy",
+  "blockSummary": "A managed browser policy blocked navigation. This run cannot establish whether the application journey passes or fails.",
+  "completedAt": "2026-10-13T20:45:17.800Z",
+  "status": "BLOCKED",
+  "passCount": 0,
+  "failCount": 0,
+  "blockedCount": 1
+}

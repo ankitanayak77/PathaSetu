@@ -1,0 +1,446 @@
+TAP version 13
+# Subtest: identity: ids of answers and queue entries are unique across many submissions, and every entry points at exactly one answer
+ok 1 - identity: ids of answers and queue entries are unique across many submissions, and every entry points at exactly one answer
+  ---
+  duration_ms: 10.573567
+  type: 'test'
+  ...
+# Subtest: identity (fault injection): ids stay unique when the clock and the random suffix repeat, so one re-check cannot swallow another entry
+not ok 2 - identity (fault injection): ids stay unique when the clock and the random suffix repeat, so one re-check cannot swallow another entry
+  ---
+  duration_ms: 1.396179
+  type: 'test'
+  location: '/tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:138:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    answer ids must be unique even with a frozen clock and a frozen random source
+    
+    1 !== 6
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 6
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    file:///tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:142:12
+    withIds (file:///tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:50:16)
+    TestContext.<anonymous> (file:///tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:139:3)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: duplicate submit (double tap) is refused before anything changes: no extra answer, queue entry, session or trace line
+ok 3 - duplicate submit (double tap) is refused before anything changes: no extra answer, queue entry, session or trace line
+  ---
+  duration_ms: 2.05586
+  type: 'test'
+  ...
+# Subtest: every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change
+ok 4 - every refused submission is atomic: unknown question, unknown option, duplicate and full queue leave no partial change
+  ---
+  duration_ms: 1.042787
+  type: 'test'
+  ...
+# Subtest: capacity boundary: the 100th entry is accepted, the 101st is refused, and a drain frees room again
+ok 5 - capacity boundary: the 100th entry is accepted, the 101st is refused, and a drain frees room again
+  ---
+  duration_ms: 1.278215
+  type: 'test'
+  ...
+# Subtest: a repeated failure report or a repeated manual retry never creates a second entry, answer or session
+ok 6 - a repeated failure report or a repeated manual retry never creates a second entry, answer or session
+  ---
+  duration_ms: 1.053414
+  type: 'test'
+  ...
+# Subtest: fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 7 - fault network_error: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.669731
+  type: 'test'
+  ...
+# Subtest: fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 8 - fault http_503: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.40595
+  type: 'test'
+  ...
+# Subtest: fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 9 - fault timeout: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.681517
+  type: 'test'
+  ...
+# Subtest: fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 10 - fault unexpected_provider: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.632269
+  type: 'test'
+  ...
+# Subtest: fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+not ok 11 - fault null_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.353841
+  type: 'test'
+  location: '/tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:213:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    null_body: the queue entry must stay
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:220:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+not ok 12 - fault undefined_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.277275
+  type: 'test'
+  location: '/tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:213:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    undefined_body: the queue entry must stay
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:220:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: fault string_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 13 - fault string_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.343545
+  type: 'test'
+  ...
+# Subtest: fault array_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 14 - fault array_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.194778
+  type: 'test'
+  ...
+# Subtest: fault number_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 15 - fault number_body: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.19669
+  type: 'test'
+  ...
+# Subtest: fault foreign_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 16 - fault foreign_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.216241
+  type: 'test'
+  ...
+# Subtest: fault made_up_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 17 - fault made_up_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.223176
+  type: 'test'
+  ...
+# Subtest: fault wrong_question: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 18 - fault wrong_question: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.168715
+  type: 'test'
+  ...
+# Subtest: fault confidence_nan: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 19 - fault confidence_nan: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.146458
+  type: 'test'
+  ...
+# Subtest: fault confidence_negative: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 20 - fault confidence_negative: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.186223
+  type: 'test'
+  ...
+# Subtest: fault confidence_above_one: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 21 - fault confidence_above_one: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.12235
+  type: 'test'
+  ...
+# Subtest: fault confidence_string: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 22 - fault confidence_string: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.12284
+  type: 'test'
+  ...
+# Subtest: fault low_confidence_misconception: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 23 - fault low_confidence_misconception: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.221766
+  type: 'test'
+  ...
+# Subtest: fault uncertain_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 24 - fault uncertain_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.150217
+  type: 'test'
+  ...
+# Subtest: fault none_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 25 - fault none_with_misconception_id: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.169042
+  type: 'test'
+  ...
+# Subtest: fault unknown_type: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 26 - fault unknown_type: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.268618
+  type: 'test'
+  ...
+# Subtest: fault rationale_too_long: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+ok 27 - fault rationale_too_long: the entry is not drained, the answer is untouched, one attempt is counted, and it recovers when the provider works
+  ---
+  duration_ms: 0.196065
+  type: 'test'
+  ...
+# Subtest: a rejected diagnosis never reaches the stored answer or the confirmed misconceptions, even when the caller marks the result trusted
+ok 28 - a rejected diagnosis never reaches the stored answer or the confirmed misconceptions, even when the caller marks the result trusted
+  ---
+  duration_ms: 0.395261
+  type: 'test'
+  ...
+# Subtest: a missing diagnosis from the provider is a failed attempt, never a silent local substitute
+not ok 29 - a missing diagnosis from the provider is a failed attempt, never a silent local substitute
+  ---
+  duration_ms: 0.361986
+  type: 'test'
+  location: '/tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:254:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    diagnosisOverride=null is a provider result that is missing, not permission to use the local rule
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:258:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again
+ok 30 - default policy: provider calls are exactly 5, at +5 s, +10 s, +20 s, +40 s, then the entry pauses and is never due again
+  ---
+  duration_ms: 0.462122
+  type: 'test'
+  ...
+# Subtest: custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts
+ok 31 - custom policies: the delay is base * factor^(n-1), never above maxDelayMs, and the number of provider calls equals maxAutomaticAttempts
+  ---
+  duration_ms: 1.177125
+  type: 'test'
+  ...
+# Subtest: a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention
+ok 32 - a paused entry is excluded from due work and from the next-attempt clock, but still counts as needing attention
+  ---
+  duration_ms: 0.450727
+  type: 'test'
+  ...
+# Subtest: manual retry changes only the retry fields of the chosen entry and nothing else in the state
+ok 33 - manual retry changes only the retry fields of the chosen entry and nothing else in the state
+  ---
+  duration_ms: 0.67424
+  type: 'test'
+  ...
+# Subtest: repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count
+ok 34 - repeating a manual retry is a no-op: state is identical, no new trace line, no extra manual-retry count
+  ---
+  duration_ms: 0.354177
+  type: 'test'
+  ...
+# Subtest: a fresh entry that never failed is not reset by a manual retry
+ok 35 - a fresh entry that never failed is not reset by a manual retry
+  ---
+  duration_ms: 0.222337
+  type: 'test'
+  ...
+# Subtest: after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again
+ok 36 - after a pause, a manual retry gives one new bounded cycle: five more automatic attempts, then paused again
+  ---
+  duration_ms: 0.595119
+  type: 'test'
+  ...
+# Subtest: success processes an entry exactly once; a second attempt on the same id does nothing and counts nothing twice
+ok 37 - success processes an entry exactly once; a second attempt on the same id does nothing and counts nothing twice
+  ---
+  duration_ms: 0.519683
+  type: 'test'
+  ...
+# Subtest: background re-check never switches the current question, discards the learner draft or spends a session
+ok 38 - background re-check never switches the current question, discards the learner draft or spends a session
+  ---
+  duration_ms: 0.354597
+  type: 'test'
+  ...
+# Subtest: uncertainty is never turned into a confirmed misconception, by the local rule or by a trusted provider result
+ok 39 - uncertainty is never turned into a confirmed misconception, by the local rule or by a trusted provider result
+  ---
+  duration_ms: 0.276568
+  type: 'test'
+  ...
+# Subtest: JSON save and restore preserves answers, drafts and every queue entry, and the restored entries behave identically
+ok 40 - JSON save and restore preserves answers, drafts and every queue entry, and the restored entries behave identically
+  ---
+  duration_ms: 1.720611
+  type: 'test'
+  ...
+# Subtest: legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success
+ok 41 - legacy entries without retry fields are recoverable: kept by repair, due now, bounded when they fail, and drained on success
+  ---
+  duration_ms: 0.639976
+  type: 'test'
+  ...
+# Subtest: a legacy entry missing its basic fields is kept, not dropped, and then works
+ok 42 - a legacy entry missing its basic fields is kept, not dropped, and then works
+  ---
+  duration_ms: 0.301562
+  type: 'test'
+  ...
+# Subtest: malformed records of every shape are repaired or replaced without throwing, and the repaired record is a fixed point
+ok 43 - malformed records of every shape are repaired or replaced without throwing, and the repaired record is a fixed point
+  ---
+  duration_ms: 2.987171
+  type: 'test'
+  ...
+# Subtest: repair keeps every usable record around the damage and removes duplicates and junk
+ok 44 - repair keeps every usable record around the damage and removes duplicates and junk
+  ---
+  duration_ms: 0.633128
+  type: 'test'
+  ...
+# Subtest: trace stays within its limit through repair, even when the saved trace is far over it
+ok 45 - trace stays within its limit through repair, even when the saved trace is far over it
+  ---
+  duration_ms: 6.877609
+  type: 'test'
+  ...
+# Subtest: seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries
+ok 46 - seeded fuzz: random damage to a valid record never throws, never leaves an unusable entry, is idempotent, and spares untouched entries
+  ---
+  duration_ms: 97.097584
+  type: 'test'
+  ...
+# Subtest: oversized saved collections are cut to their limits: the newest answers and the oldest queue entries are kept
+ok 47 - oversized saved collections are cut to their limits: the newest answers and the oldest queue entries are kept
+  ---
+  duration_ms: 3.657129
+  type: 'test'
+  ...
+# Subtest: persistence: a saved record comes back as an independent copy with the whole queue and retry state, and repair finds nothing to fix
+ok 48 - persistence: a saved record comes back as an independent copy with the whole queue and retry state, and repair finds nothing to fix
+  ---
+  duration_ms: 1.103038
+  type: 'test'
+  ...
+# Subtest: persistence fault: when a write is rejected, the older durable record is left alone, the newest state stays available in memory with its whole queue, and the reason holds no learner text
+ok 49 - persistence fault: when a write is rejected, the older durable record is left alone, the newest state stays available in memory with its whole queue, and the reason holds no learner text
+  ---
+  duration_ms: 1.962055
+  type: 'test'
+  ...
+# Subtest: adjacent repeats of the same failure for the same entry coalesce; any intervening event keeps them separate and readable
+ok 50 - adjacent repeats of the same failure for the same entry coalesce; any intervening event keeps them separate and readable
+  ---
+  duration_ms: 0.408746
+  type: 'test'
+  ...
+# Subtest: trace is bounded by 200 lines under thousands of failures, keeps the newest events, and pauses are reported once per entry
+ok 51 - trace is bounded by 200 lines under thousands of failures, keeps the newest events, and pauses are reported once per entry
+  ---
+  duration_ms: 15.440915
+  type: 'test'
+  ...
+# Subtest: validator: every own misconception id is accepted and every id that belongs only to a different question is rejected
+ok 52 - validator: every own misconception id is accepted and every id that belongs only to a different question is rejected
+  ---
+  duration_ms: 0.532484
+  type: 'test'
+  ...
+# Subtest: validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty
+ok 53 - validator, exhaustive grid: accepted if and only if the documented contract holds, and an accepted result never confirms uncertainty
+  ---
+  duration_ms: 6.979674
+  type: 'test'
+  ...
+# Subtest: generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)
+not ok 54 - generated operation sequences keep every queue, retry, restore and repair invariant (seeded, replayable)
+  ---
+  duration_ms: 18.959796
+  type: 'test'
+  location: '/tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:968:1'
+  failureType: 'testCodeFailure'
+  error: 'after submit: duplicate answer ids  seed=4 ops=[save+restore > fail(null_body) > submit(EL01A,on) > corrupt+repair > manual(q-lfls-i) > fail(confidence_string) > save+restore > advance(40000) > fail(made_up_misconception_id) > succeed > save+restore > corrupt+repair > advance(5000) > succeed > fail(confidence_string) > advance(5000) > advance(500) > advance(20000) > succeed > submit(EL01D,on,dup) > advance(500) > manual(all) > advance(1000) > corrupt+repair > succeed > save+restore > fail(unexpected_provider) > manual(all) > submit(EL01D,on,dup) > advance(3600000) > manual(all) > corrupt+repair > fail(low_confidence_misconception) > fail(foreign_misconception_id) > manual(all) > fail(made_up_misconception_id) > succeed > succeed > submit(EL01B,dup) > advance(5000) > manual(all) > fail(rationale_too_long) > succeed > continue > fail(rationale_too_long) > save+restore > advance(500) > submit(EL02A,on)]'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'fail'
+  stack: |-
+    fail (file:///tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:817:38)
+    need (file:///tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:818:60)
+    invariants (file:///tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:836:7)
+    file:///tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:962:7
+    withIds (file:///tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:50:16)
+    runSequence (file:///tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:814:10)
+    TestContext.<anonymous> (file:///tmp/it10-prefix-5EO1/tests/queue-invariants.test.js:972:21)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+  ...
+# Subtest: a fixed enumerated table of operation sequences, written out by hand, reaches the pause, the manual retry and the recovery
+ok 55 - a fixed enumerated table of operation sequences, written out by hand, reaches the pause, the manual retry and the recovery
+  ---
+  duration_ms: 1.224366
+  type: 'test'
+  ...
+# Subtest: this file uses no timers, network, browser or unseeded randomness
+ok 56 - this file uses no timers, network, browser or unseeded randomness
+  ---
+  duration_ms: 0.933698
+  type: 'test'
+  ...
+1..56
+# tests 56
+# suites 0
+# pass 51
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 341.987956
+exit=1
